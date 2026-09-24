@@ -307,11 +307,11 @@ DEV đã tiến hành tái thiết kế toàn diện chính sách bộ nhớ đ�
    [Browser Smoke Test] Testing directly against target URL: https://danabus.638686.xyz/index.html...
    [Check 1] Verifying initial Application state... -> PASS (23 routes loaded, Home view active)
    [Check 2] Navigating to Routes Catalog... -> PASS (23 route cards rendered)
-   [Check 3] Testing Map rendering for Route 02, 05, 11, TKY-TMY, 01DL, 01SB... -> PASS (05 & TKY-TMY render polylines; unverified routes show correct overlay)
-   [Check 4] Testing Direction Switch & Availability (Route 02, 11, 05, TKY-TMY, TKY-CHU)... -> PASS (Clean, TKY-CHU Outbound shows overlay, Inbound renders polyline + 10 stops; 05 & TKY-TMY verified 2 directions; 02 & 11 fail-closed)
+   [Check 3] Testing Map rendering for Route 02, 05, 11, TKY-TMY, TKY-NTH, 01DL, 01SB... -> PASS (05, TKY-TMY, TKY-NTH render polylines; unverified routes show correct overlay)
+   [Check 4] Testing Direction Switch & Availability (Route 02, 11, 05, TKY-TMY, TKY-NTH, TKY-CHU)... -> PASS (Clean, TKY-CHU Outbound shows overlay, Inbound renders polyline + 10 stops; 05, TKY-TMY, TKY-NTH verified 2 directions; 02 & 11 fail-closed)
    [Check 5] Testing Browser Geolocation with Mock & Error Handling... -> PASS (User marker & accuracy circle radius 25m created; error code 1 handled)
    [Check 6] Testing Route 05 Map Context Retention during Geolocation & fitRoute... -> PASS (Route 05 polyline intact, user marker distinct, fitRoute re-fits correctly, direction switch clean)
-   [Check 7] Testing Service Worker Lifecycle & Cache Policy Migration... -> PASS (swActive: True, danabus-cache-v7 active, stale caches purged, mapService.js & app.js have v=20260924_v7, fitRoute available)
+   [Check 7] Testing Service Worker Lifecycle & Cache Policy Migration... -> PASS (Pre-migration caches: ['danabus-cache-v7', 'danabus-cache-v4', 'danabus-cache-v5', 'danabus-cache-v6'] -> Post-migration: only ['danabus-cache-v7'] remaining, swActive: True, stale caches purged, mapService.js & app.js have v=20260924_v7, fitRoute available)
    [Check 8] Capturing deliverable screenshot... -> PASS (Saved to docs/reports/browser_smoke_evidence.png)
 
    >>> ALL BROWSER SMOKE CHECKS PASSED (8/8) <<<
@@ -319,4 +319,5 @@ DEV đã tiến hành tái thiết kế toàn diện chính sách bộ nhớ đ�
 
 Ảnh chụp minh chứng kiểm thử trình duyệt thực tế trên production URL:
 [`docs/reports/browser_smoke_evidence.png`](file:///home/opc/danabus/docs/reports/browser_smoke_evidence.png)
+
 

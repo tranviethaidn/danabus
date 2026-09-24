@@ -265,8 +265,8 @@ def run_browser_smoke_test(target_url=None):
         assert routes_view_state['currentView'] == 'routes', "Must be in routes view"
         assert routes_view_state['renderedCardsCount'] == 23, f"Expected 23 route cards rendered, got {routes_view_state['renderedCardsCount']}"
 
-        # 3. Test Route Detail & Map View for multiple routes (02, 05, 11, TKY-TMY, 01DL, 01SB)
-        test_routes = ['02', '05', '11', 'TKY-TMY', '01DL', '01SB']
+        # 3. Test Route Detail & Map View for multiple routes (02, 05, 11, TKY-TMY, TKY-NTH, 01DL, 01SB)
+        test_routes = ['02', '05', '11', 'TKY-TMY', 'TKY-NTH', '01DL', '01SB']
         for rid in test_routes:
             print(f"[Check 3] Testing Map rendering for Route {rid}...")
             map_state = eval_js(f"""
@@ -305,7 +305,7 @@ def run_browser_smoke_test(target_url=None):
                 f"while no-data overlay is also displayed ('{map_state['overlayText']}')"
             )
 
-            if rid in ['05', 'TKY-TMY']:
+            if rid in ['05', 'TKY-TMY', 'TKY-NTH']:
                 assert map_state['polylineExists'] is True, f"Route {rid} geometry is verified so Leaflet polyline must exist"
                 assert map_state['overlayText'] is None, f"Route {rid} overlay must be None when polyline exists"
                 assert map_state['markersCount'] >= 5, f"Route {rid} must render verified stop markers, got {map_state['markersCount']}"
@@ -314,7 +314,7 @@ def run_browser_smoke_test(target_url=None):
                 assert "Chưa có dữ liệu bản đồ cho tuyến này" in (map_state['overlayText'] or ""), f"Overlay message missing for unverified Route {rid}"
 
         # 4. Test Switching Outbound / Inbound, Stale Layer Cleanup & Single-direction verified availability
-        print("[Check 4] Testing Direction Switch & Availability on Route 02, Route 05, and single-direction Route TKY-CHU...")
+        print("[Check 4] Testing Direction Switch & Availability on Route 02, 11, 05, TKY-TMY, TKY-NTH, and single-direction Route TKY-CHU...")
         dir_switch_state = eval_js("""
             (() => {
                 // 4a. Test Route 02 (Both directions unverified geometry)
@@ -360,7 +360,17 @@ def run_browser_smoke_test(target_url=None):
                 const tkyTmy_inPolyline = !!window.mapService.routeLine;
                 const tkyTmy_inOverlay = !!document.getElementById('map-info-overlay');
 
-                // 4e. Test Route TKY-CHU (Outbound unverified -> Inbound verified)
+                // 4e. Test Route TKY-NTH (Both directions verified geometry)
+                const routeTkyNth = window.busService.getRouteById('TKY-NTH');
+                window.app.selectedRoute = routeTkyNth;
+                window.mapService.renderRoute(routeTkyNth, 'outbound');
+                const tkyNth_outPolyline = !!window.mapService.routeLine;
+                const tkyNth_outOverlay = !!document.getElementById('map-info-overlay');
+                window.mapService.renderRoute(routeTkyNth, 'inbound');
+                const tkyNth_inPolyline = !!window.mapService.routeLine;
+                const tkyNth_inOverlay = !!document.getElementById('map-info-overlay');
+
+                // 4f. Test Route TKY-CHU (Outbound unverified -> Inbound verified)
                 const routeTkyChu = window.busService.getRouteById('TKY-CHU');
                 window.app.selectedRoute = routeTkyChu;
                 window.mapService.renderRoute(routeTkyChu, 'outbound');
@@ -377,6 +387,7 @@ def run_browser_smoke_test(target_url=None):
                     r11: { inPolyline: r11_inPolyline, inOverlay: r11_inOverlay, outPolyline: r11_outPolyline, outOverlay: r11_outOverlay },
                     r05: { outPolyline: r05_outPolyline, outOverlay: r05_outOverlay, inPolyline: r05_inPolyline, inOverlay: r05_inOverlay },
                     tkyTmy: { outPolyline: tkyTmy_outPolyline, outOverlay: tkyTmy_outOverlay, inPolyline: tkyTmy_inPolyline, inOverlay: tkyTmy_inOverlay },
+                    tkyNth: { outPolyline: tkyNth_outPolyline, outOverlay: tkyNth_outOverlay, inPolyline: tkyNth_inPolyline, inOverlay: tkyNth_inOverlay },
                     tkyChu: {
                         outPolyline: tkyChu_outPolyline,
                         outOverlayText: tkyChu_outOverlayText,
@@ -397,6 +408,8 @@ def run_browser_smoke_test(target_url=None):
         assert dir_switch_state['r05']['inPolyline'] is True and dir_switch_state['r05']['inOverlay'] is False, "Route 05 Inbound must have polyline and no overlay"
         assert dir_switch_state['tkyTmy']['outPolyline'] is True and dir_switch_state['tkyTmy']['outOverlay'] is False, "TKY-TMY Outbound must have polyline and no overlay"
         assert dir_switch_state['tkyTmy']['inPolyline'] is True and dir_switch_state['tkyTmy']['inOverlay'] is False, "TKY-TMY Inbound must have polyline and no overlay"
+        assert dir_switch_state['tkyNth']['outPolyline'] is True and dir_switch_state['tkyNth']['outOverlay'] is False, "TKY-NTH Outbound must have polyline and no overlay"
+        assert dir_switch_state['tkyNth']['inPolyline'] is True and dir_switch_state['tkyNth']['inOverlay'] is False, "TKY-NTH Inbound must have polyline and no overlay"
         assert dir_switch_state['tkyChu']['outPolyline'] is False and "Chưa có dữ liệu" in (dir_switch_state['tkyChu']['outOverlayText'] or ""), "TKY-CHU Outbound must show no-data overlay"
         assert dir_switch_state['tkyChu']['inPolyline'] is True and dir_switch_state['tkyChu']['inOverlay'] is False, "TKY-CHU Inbound must render polyline and hide overlay"
         assert dir_switch_state['tkyChu']['inMarkers'] >= 10, "TKY-CHU Inbound must render stop markers"
@@ -528,30 +541,39 @@ def run_browser_smoke_test(target_url=None):
 
         # 7. Test Service Worker Lifecycle, Cache Policy & Stale Cache Eviction (Existing Client Update Simulation)
         print("[Check 7] Testing Service Worker Lifecycle & Cache Policy Migration...")
-        sw_cache_res = eval_js("""
+        # Step 7a: Pre-create obsolete cache stores from earlier versions (simulating legacy user client)
+        pre_cache_keys = eval_js("""
             (async () => {
-                // Check active service worker registration
-                const swReg = await navigator.serviceWorker.getRegistration();
-                const swScope = swReg ? swReg.scope : null;
-                const swActive = !!(swReg && swReg.active);
-
-                // Check Cache Storage state
-                const cacheKeys = await caches.keys();
-                
-                // Simulate old cache presence and ensure migration/purging works
                 await caches.open('danabus-cache-v4');
                 await caches.open('danabus-cache-v5');
-                const beforeKeys = await caches.keys();
+                await caches.open('danabus-cache-v6');
+                return await caches.keys();
+            })()
+        """)
+        print(f" -> Pre-migration cache keys: {pre_cache_keys}")
+        assert 'danabus-cache-v4' in pre_cache_keys, "danabus-cache-v4 must be present in pre-migration caches"
+        assert 'danabus-cache-v5' in pre_cache_keys, "danabus-cache-v5 must be present in pre-migration caches"
+        assert 'danabus-cache-v6' in pre_cache_keys, "danabus-cache-v6 must be present in pre-migration caches"
 
-                // Trigger SW activation cleanup logic
-                if (swReg && swReg.active) {
-                    // Send message or re-trigger activation check
-                }
-                // Directly verify that our new cache naming and network-first logic exists
-                const currentCache = 'danabus-cache-v7';
+        # Step 7b: Trigger Service Worker installation & activation lifecycle
+        eval_js("""
+            (async () => {
+                const regToken = Date.now();
+                await navigator.serviceWorker.register(`sw.js?migration_cycle=${regToken}`);
+            })()
+        """)
+
+        # Step 7c: Wait for SW activate handler to purge caches and controllerchange auto-reload to settle
+        time.sleep(3.0)
+
+        # Step 7d: Verify post-migration state (stale caches purged, active SW, fresh scripts)
+        post_sw_state = eval_js("""
+            (async () => {
+                const activeReg = await navigator.serviceWorker.getRegistration();
+                const cacheKeys = await caches.keys();
+                const swActive = !!(activeReg && (activeReg.active || activeReg.installing || activeReg.waiting));
+                const swScope = activeReg ? activeReg.scope : null;
                 const hasFitRoute = typeof window.mapService?.fitRoute === 'function';
-                
-                // Verify script versions in DOM
                 const scriptSrcs = Array.from(document.querySelectorAll('script[src]')).map(s => s.getAttribute('src'));
                 const mapScriptSrc = scriptSrcs.find(s => s.includes('mapService.js'));
                 const appScriptSrc = scriptSrcs.find(s => s.includes('app.js'));
@@ -559,18 +581,23 @@ def run_browser_smoke_test(target_url=None):
                 return {
                     swActive,
                     swScope,
-                    cacheKeys,
-                    beforeKeys,
+                    postMigrationCacheKeys: cacheKeys,
                     hasFitRoute,
                     mapScriptSrc,
                     appScriptSrc
                 };
             })()
         """)
-        print(f" -> SW and Cache migration state: {sw_cache_res}")
-        assert sw_cache_res['hasFitRoute'] is True, "window.mapService.fitRoute must be present in active client"
-        assert "v=20260924_v7" in (sw_cache_res['mapScriptSrc'] or ""), f"mapService.js must have cache-busting v=20260924_v7, got {sw_cache_res['mapScriptSrc']}"
-        assert "v=20260924_v7" in (sw_cache_res['appScriptSrc'] or ""), f"app.js must have cache-busting v=20260924_v7, got {sw_cache_res['appScriptSrc']}"
+        print(f" -> Post-migration SW & Cache state: {post_sw_state}")
+        assert post_sw_state is not None, "Post-migration check must return valid state"
+        assert post_sw_state['swActive'] is True, "Service Worker must be registered and active"
+        assert 'danabus-cache-v7' in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v7 must be present after SW activation"
+        assert 'danabus-cache-v4' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v4 must be strictly purged"
+        assert 'danabus-cache-v5' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v5 must be strictly purged"
+        assert 'danabus-cache-v6' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v6 must be strictly purged"
+        assert post_sw_state['hasFitRoute'] is True, "window.mapService.fitRoute must be present in active client"
+        assert "v=20260924_v7" in (post_sw_state['mapScriptSrc'] or ""), f"mapService.js must have cache-busting v=20260924_v7, got {post_sw_state['mapScriptSrc']}"
+        assert "v=20260924_v7" in (post_sw_state['appScriptSrc'] or ""), f"app.js must have cache-busting v=20260924_v7, got {post_sw_state['appScriptSrc']}"
 
         # 8. Take Screenshot for Deliverable Evidence
         print("[Check 8] Capturing deliverable screenshot...")

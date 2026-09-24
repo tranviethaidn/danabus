@@ -1,0 +1,16 @@
+{
+  "totalRoutes": 23,
+  "activeRoutes": 20,
+  "suspendedRoutes": 3,
+  "categories": {
+    "subsidized": 5,
+    "non_subsidized": 10,
+    "interprovincial": 3,
+    "tourist": 2,
+    "suspended": 3
+  },
+  "totalUniqueStops": 421,
+  "totalIndexedStreets": 337,
+  "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+  "updatedAt": "2026-09-22"
+}

@@ -1,0 +1,5979 @@
+[
+  {
+    "id": "05",
+    "routeNumber": "05",
+    "name": "Khu Chung cư Hòa Hiệp Nam – Công viên Biển Đông",
+    "shortName": "Hòa Hiệp Nam – CV Biển Đông",
+    "formerName": null,
+    "aliases": [],
+    "category": "subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Khu chung cư Hòa Hiệp Nam",
+      "destination": "Công viên biển Đông"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": null,
+      "outbound": null,
+      "inbound": null,
+      "raw": ""
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
+      "monthlyPriority": 80000,
+      "monthlyRegular": 160000
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Khu Chung cư Hoà Hiệp Nam (Bãi đỗ xe đường Xuân Thiều 1) - Nguyễn Tất Thành - Nguyễn Lương Bằng - Nguyễn Bá Phát - đường ven kênh khu Lakeside - Trung Lập 9 - Mê Linh - Nguyễn Lương Bằng - Tôn Đức Thắng - Ngô Thì Nhậm - Hồ Tùng Mậu - Hoàng Thị Loan - Phùng Hưng - Kinh Dương Vương - Lý Thái Tông - Dũng Sĩ Thanh Khê - Trần Cao vân - Quang Trung - Lê Lợi - Lê Duẩn - Cầu Sông Hàn - Phạm Văn Đồng - Võ Nguyên Giáp - Công viên Biển Đông.\nChiều về: Công viên Biển Đông - Võ Nguyên Giáp - Phạm Văn Đồng - Cầu",
+        "streets": [
+          "Khu Chung cư Hoà Hiệp Nam",
+          "Nguyễn Tất Thành",
+          "Nguyễn Lương Bằng",
+          "Nguyễn Bá Phát",
+          "đường ven kênh khu Lakeside",
+          "Trung Lập 9",
+          "Mê Linh",
+          "Tôn Đức Thắng",
+          "Ngô Thì Nhậm",
+          "Hồ Tùng Mậu",
+          "Hoàng Thị Loan",
+          "Phùng Hưng",
+          "Kinh Dương Vương",
+          "Lý Thái Tông",
+          "Dũng Sĩ Thanh Khê",
+          "Trần Cao vân",
+          "Quang Trung",
+          "Lê Lợi",
+          "Lê Duẩn",
+          "Cầu Sông Hàn",
+          "Phạm Văn Đồng",
+          "Võ Nguyên Giáp",
+          "Công viên Biển Đông.\nChiều về: Công viên Biển Đông",
+          "Cầu"
+        ]
+      },
+      "inbound": {
+        "text": "Công viên Biển Đông - Võ Nguyên Giáp - Phạm Văn Đồng - Cầu Sông Hàn - Lê Duẩn - Nguyễn Chí Thanh - Quang Trung - Trần Cao Vân - Dũng Sĩ Thanh Khê - Lý Thái Tông - Kinh Dương Vương - Phùng Hưng - Hoàng Thị Loan - Hồ Tùng Mậu - Ngô Thì Nhậm - Tôn Đức Thắng - Nguyễn Lương Bằng - Mê Linh - Trung Lập 9 - đường ven kênh khu Lakeside - Nguyễn Bá Phát - Nguyễn Lương Bằng - Nguyễn Tất Thành - Chung cư Hoà Hiệp Nam (Bãi đỗ xe đường Xuân Thiều 1).",
+        "streets": [
+          "Công viên Biển Đông",
+          "Võ Nguyên Giáp",
+          "Phạm Văn Đồng",
+          "Cầu Sông Hàn",
+          "Lê Duẩn",
+          "Nguyễn Chí Thanh",
+          "Quang Trung",
+          "Trần Cao Vân",
+          "Dũng Sĩ Thanh Khê",
+          "Lý Thái Tông",
+          "Kinh Dương Vương",
+          "Phùng Hưng",
+          "Hoàng Thị Loan",
+          "Hồ Tùng Mậu",
+          "Ngô Thì Nhậm",
+          "Tôn Đức Thắng",
+          "Nguyễn Lương Bằng",
+          "Mê Linh",
+          "Trung Lập 9",
+          "đường ven kênh khu Lakeside",
+          "Nguyễn Bá Phát",
+          "Nguyễn Tất Thành",
+          "Chung cư Hoà Hiệp Nam ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Khu chung cư Hoà Hiệp Nam",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 2,
+          "name": "Số nhà 817 Nguyễn Lương Bằng",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 3,
+          "name": "Số nhà 24",
+          "street": "Nguyễn Bá Phát"
+        },
+        {
+          "order": 4,
+          "name": "Kế ngã tư Chung cư Bầu Tràm Lake side",
+          "street": "Đối diện đường Trung Lập 7"
+        },
+        {
+          "order": 5,
+          "name": "Đối diện số nhà 9",
+          "street": "Mê Linh"
+        },
+        {
+          "order": 6,
+          "name": "Số nhà 495",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 7,
+          "name": "Đối diện số nhà 421",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 8,
+          "name": "Số nhà 339",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 9,
+          "name": "Số nhà 191",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 10,
+          "name": "Số nhà 141",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 11,
+          "name": "Số nhà 27",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 12,
+          "name": "Số nhà 775",
+          "street": "Tôn Đức Thắng"
+        },
+        {
+          "order": 13,
+          "name": "Số nhà 46",
+          "street": "Ngô Thì Nhậm"
+        },
+        {
+          "order": 14,
+          "name": "Chung cư Hồ Tùng Mậu",
+          "street": "Hồ Tùng Mậu"
+        },
+        {
+          "order": 15,
+          "name": "Đối diện số nhà 246",
+          "street": "Hồ Tùng Mậu"
+        },
+        {
+          "order": 16,
+          "name": "Bệnh viện Ung Bứu",
+          "street": "Hoàng Thị Loan"
+        },
+        {
+          "order": 17,
+          "name": "Số nhà 161",
+          "street": "Phùng Hưng"
+        },
+        {
+          "order": 18,
+          "name": "Chung cư Kinh Dương Vương",
+          "street": "Kinh Dương Vương"
+        },
+        {
+          "order": 19,
+          "name": "Số nhà 35",
+          "street": "Kinh Dương Vương"
+        },
+        {
+          "order": 20,
+          "name": "Số nhà 61",
+          "street": "Lý Thái Tông"
+        },
+        {
+          "order": 21,
+          "name": "Số nhà 91 (Bv Da liễu)",
+          "street": "Dũng Sĩ Thanh Khê"
+        },
+        {
+          "order": 22,
+          "name": "Trường Cao Đẳng Thương Mại",
+          "street": "Dũng Sĩ Thanh Khê"
+        },
+        {
+          "order": 23,
+          "name": "Số nhà 735, Trường THPT Thái Phiên",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 24,
+          "name": "Số nhà 581",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 25,
+          "name": "Phường Xuân Hà",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 26,
+          "name": "Số nhà 301",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 27,
+          "name": "Số nhà 187",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 28,
+          "name": "Đối diện số nhà 160",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 29,
+          "name": "Đối diện số nhà 210",
+          "street": "Quang Trung"
+        },
+        {
+          "order": 30,
+          "name": "Đối diện số nhà 122\n\n Nhà tang lễ",
+          "street": "Quang Trung"
+        },
+        {
+          "order": 31,
+          "name": "Số nhà 120",
+          "street": "Lê Lợi"
+        },
+        {
+          "order": 32,
+          "name": "Trường THPT Phan Châu Trinh",
+          "street": "Lê Lợi"
+        },
+        {
+          "order": 33,
+          "name": "Số nhà 9",
+          "street": "Lê Duẩn"
+        },
+        {
+          "order": 34,
+          "name": "Bãi đậu xe đầu đường Phạm Văn Đồng (ngã rẽ An Nhơn 12)",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 35,
+          "name": "Số nhà 124",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 36,
+          "name": "Khúc giao Chính Hữu + Phạm Văn Đồng",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 37,
+          "name": "Bãi tắm số 3 (Cv Biển đông",
+          "street": "Võ Nguyên giáp"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Bãi tắm số 3 (Cv Biển đông",
+          "street": "Võ Nguyên giáp"
+        },
+        {
+          "order": 2,
+          "name": "Khúc giao Phạm Văn Đồng + Hoàng Bích Sơn",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 3,
+          "name": "Số nhà 183",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 4,
+          "name": "Đối diện bãi xe đầu đường Phạm Văn Đồng",
+          "street": "Phạm Văn Đồng"
+        },
+        {
+          "order": 5,
+          "name": "Số nhà 10",
+          "street": "Lê Duẩn"
+        },
+        {
+          "order": 6,
+          "name": "Số nhà 121",
+          "street": "Nguyễn Chí Thanh"
+        },
+        {
+          "order": 7,
+          "name": "Trường THCS Nguyễn Huệ",
+          "street": "Quang Trung"
+        },
+        {
+          "order": 8,
+          "name": "Số nhà 312",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 9,
+          "name": "Số nhà 400",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 10,
+          "name": "Số nhà 570",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 11,
+          "name": "Số nhà 674",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 12,
+          "name": "Số nhà 856",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 13,
+          "name": "Trường Thể dục thể thao\n\n Đối diện số nhà 43",
+          "street": "Dũng Sĩ Thanh Khê"
+        },
+        {
+          "order": 14,
+          "name": "Số nhà 154",
+          "street": "Thanh Khê 6"
+        },
+        {
+          "order": 15,
+          "name": "Số nhà 58",
+          "street": "Lý Thái Tông"
+        },
+        {
+          "order": 16,
+          "name": "Số nhà 28",
+          "street": "Kinh Dương Vương"
+        },
+        {
+          "order": 17,
+          "name": "Số nhà 196",
+          "street": "Kinh Dương Vương"
+        },
+        {
+          "order": 18,
+          "name": "Số nhà 74",
+          "street": "Phùng Hưng"
+        },
+        {
+          "order": 19,
+          "name": "Số nhà 554",
+          "street": "Hoàng Thị Loan"
+        },
+        {
+          "order": 20,
+          "name": "Số nhà 252",
+          "street": "Hồ tùng Mậu"
+        },
+        {
+          "order": 21,
+          "name": "Số nhà 332",
+          "street": "Hồ Tùng Mậu"
+        },
+        {
+          "order": 22,
+          "name": "Số nhà 63",
+          "street": "Ngô Thì Nhậm"
+        },
+        {
+          "order": 23,
+          "name": "Số nhà 896",
+          "street": "Tôn Đức Thắng"
+        },
+        {
+          "order": 24,
+          "name": "Số 34",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 25,
+          "name": "Số nhà 138",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 26,
+          "name": "Số nhà 234",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 27,
+          "name": "Số nhà 290",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 28,
+          "name": "Số nhà 380",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 29,
+          "name": "Số nhà 436",
+          "street": "Nguyễn Lương Bằng"
+        },
+        {
+          "order": 30,
+          "name": "Số nhà 09",
+          "street": "Mê Linh"
+        },
+        {
+          "order": 31,
+          "name": "Kế ngã tư Chung cư Bầu Tràm Lake side",
+          "street": "Đối diện đường Trung Lập 7"
+        },
+        {
+          "order": 32,
+          "name": "Số nhà 43",
+          "street": "Nguyễn Bá Phát"
+        },
+        {
+          "order": 33,
+          "name": "Số nhà 636",
+          "street": "Nguyễn Lương Bằng"
+        }
+      ]
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2005.pdf"
+    ]
+  },
+  {
+    "id": "07",
+    "routeNumber": "07",
+    "name": "Xuân Diệu – Hoà Phước",
+    "shortName": "Xuân Diệu – Hoà Phước",
+    "formerName": "Xuân Diệu - Bến xe phía Nam",
+    "aliases": [],
+    "category": "subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Trạm xe buýt Xuân Diệu",
+      "destination": "Ngã ba Tứ Câu"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": 20.15,
+      "outbound": 20.2,
+      "inbound": 20.1,
+      "raw": "20,15 km (chiều đi: 20,2 km, chiều về: 20,1 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
+      "monthlyPriority": 80000,
+      "monthlyRegular": 160000
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Xuân Diệu - Xuân Diệu - Đường 3/2 - Trần Phú - Quang Trung - Lê Lợi - Phan Châu Trinh - Nguyễn Văn Linh - Hoàng Diệu - Trưng Nữ Vương - Núi Thành - Tiểu La - Lê Thanh Nghị - CMT8 - Cầu Nguyễn Tri Phương - Võ Chí Công - Đường 29/3 - Võ An Ninh - Mẹ Thứ - Phạm Hùng - QL1A - Ngã ba Tứ Câu (giáp ranh với Quảng Nam).\nChiều về: Ngã ba",
+        "streets": [
+          "Trạm xe buýt Xuân Diệu",
+          "Xuân Diệu",
+          "Đường 3/2",
+          "Trần Phú",
+          "Quang Trung",
+          "Lê Lợi",
+          "Phan Châu Trinh",
+          "Nguyễn Văn Linh",
+          "Hoàng Diệu",
+          "Trưng Nữ Vương",
+          "Núi Thành",
+          "Tiểu La",
+          "Lê Thanh Nghị",
+          "CMT8",
+          "Cầu Nguyễn Tri Phương",
+          "Võ Chí Công",
+          "Đường 29/3",
+          "Võ An Ninh",
+          "Mẹ Thứ",
+          "Phạm Hùng",
+          "QL1A",
+          "Ngã ba Tứ Câu .\nChiều về: Ngã ba"
+        ]
+      },
+      "inbound": {
+        "text": "Ngã ba Tứ Câu (giáp ranh với Quảng Nam) - QL1A - Phạm Hùng - Mẹ Thứ - Võ An Ninh - Đường 29/3 - Võ Chí Công - Cầu Nguyễn Tri Phương - CMT8 - Lê Thanh Nghị - Tiểu La - Núi Thành - Trưng Nữ Vương - Hoàng Diệu - Thái Phiên - Nguyễn Chí Thanh - Quang Trung - Bạch Đằng - Đường 3/2 - Xuân Diệu - Trạm xe buýt Xuân Diệu.",
+        "streets": [
+          "Ngã ba Tứ Câu",
+          "QL1A",
+          "Phạm Hùng",
+          "Mẹ Thứ",
+          "Võ An Ninh",
+          "Đường 29/3",
+          "Võ Chí Công",
+          "Cầu Nguyễn Tri Phương",
+          "CMT8",
+          "Lê Thanh Nghị",
+          "Tiểu La",
+          "Núi Thành",
+          "Trưng Nữ Vương",
+          "Hoàng Diệu",
+          "Thái Phiên",
+          "Nguyễn Chí Thanh",
+          "Quang Trung",
+          "Bạch Đằng",
+          "Đường 3/2",
+          "Xuân Diệu",
+          "Trạm xe buýt Xuân Diệu."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2007.pdf"
+    ]
+  },
+  {
+    "id": "08",
+    "routeNumber": "08",
+    "name": "Vũng Thùng – Bến xe buýt Phạm Hùng",
+    "shortName": "Vũng Thùng – BX Phạm Hùng",
+    "formerName": "Thọ Quang – Phạm Hùng",
+    "aliases": [],
+    "category": "subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Trạm xe buýt Bùi Dương Lịch",
+      "destination": "Trạm xe buýt Phạm Hùng"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": 15.0,
+      "outbound": 15.0,
+      "inbound": 15.0,
+      "raw": "15,0 km (chiều đi: 15,0 km, chiều về: 15,0 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
+      "monthlyPriority": 80000,
+      "monthlyRegular": 160000
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Vũng Thùng (Trạm xe buýt Bùi Dương Lịch) - Bùi Dương Lịch - Trần Thánh Tông - Ngô Quyền - Ngũ Hành Sơn - Đường Tiên Sơn - Cầu Tiên Sơn - Đường Tiên Sơn - Xô Viết Nghệ Tĩnh - Nguyễn Hữu Thọ - Lê Đại Hành - Ông Ích Đường - Cầu Cẩm Lệ - Phạm Hùng - Trạm xe buýt Phạm Hùng.\nChiều về:",
+        "streets": [
+          "Vũng Thùng",
+          "Bùi Dương Lịch",
+          "Trần Thánh Tông",
+          "Ngô Quyền",
+          "Ngũ Hành Sơn",
+          "Đường Tiên Sơn",
+          "Cầu Tiên Sơn",
+          "Xô Viết Nghệ Tĩnh",
+          "Nguyễn Hữu Thọ",
+          "Lê Đại Hành",
+          "Ông Ích Đường",
+          "Cầu Cẩm Lệ",
+          "Phạm Hùng",
+          "Trạm xe buýt Phạm Hùng.\nChiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Trạm xe buýt Phạm Hùng - Phạm Hùng - Cầu Cẩm Lệ - Ông Ích Đường - Lê Đại Hành - Nguyễn Hữu Thọ - Xô Viết Nghệ Tĩnh - Đường Tiên Sơn - Cầu Tiên Sơn - Đường Tiên Sơn - Ngũ Hành Sơn - Ngô Quyền - Trần Thánh Tông - Vũng Thùng (Trạm xe buýt Bùi Dương Lịch).",
+        "streets": [
+          "Trạm xe buýt Phạm Hùng",
+          "Phạm Hùng",
+          "Cầu Cẩm Lệ",
+          "Ông Ích Đường",
+          "Lê Đại Hành",
+          "Nguyễn Hữu Thọ",
+          "Xô Viết Nghệ Tĩnh",
+          "Đường Tiên Sơn",
+          "Cầu Tiên Sơn",
+          "Ngũ Hành Sơn",
+          "Ngô Quyền",
+          "Trần Thánh Tông",
+          "Vũng Thùng ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2008.pdf"
+    ]
+  },
+  {
+    "id": "11",
+    "routeNumber": "11",
+    "name": "Xuân Diệu – Bệnh viện Phụ sản Nhi",
+    "shortName": "Xuân Diệu – BV Phụ sản Nhi",
+    "formerName": "Xuân Diệu – Siêu thị Lotte – Đại học Việt Hàn",
+    "aliases": [],
+    "category": "subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Bến xe buýt Xuân Diệu",
+      "destination": "Bệnh viện Phụ sản Nhi"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": 14.0,
+      "outbound": 14.0,
+      "inbound": 14.0,
+      "raw": "14,0 km (chiều đi: 14,0 km, chiều về: 14,0 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
+      "monthlyPriority": 80000,
+      "monthlyRegular": 160000
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe buýt Xuân Diệu - Xuân Diệu - Đường 3/2 - Nguyễn Tất Thành - Ông Ích Khiêm - Hải Phòng - Hoàng Hoa Thám - Hàm Nghi - Lê Đình Lý - Nguyễn Hữu Thọ – Phan Đăng Lưu – Phan Đăng Lưu (Khu vui chơi Helio, Công viên Châu Á) – Nại Nam 3 – Doãn Khuê – Vũ Duy Thanh (Siêu thị Lotte) - Nại Nam - Đường Tiên Sơn - Cầu Tiên Sơn - Đường Tiên Sơn - Lê Văn Hiến – Bệnh viện Phụ sản Nhi Đà Nẵng.\nChiều về: Bệnh viện Phụ",
+        "streets": [
+          "Bến xe buýt Xuân Diệu",
+          "Xuân Diệu",
+          "Đường 3/2",
+          "Nguyễn Tất Thành",
+          "Ông Ích Khiêm",
+          "Hải Phòng",
+          "Hoàng Hoa Thám",
+          "Hàm Nghi",
+          "Lê Đình Lý",
+          "Nguyễn Hữu Thọ",
+          "Phan Đăng Lưu",
+          "Nại Nam 3",
+          "Doãn Khuê",
+          "Vũ Duy Thanh",
+          "Nại Nam",
+          "Đường Tiên Sơn",
+          "Cầu Tiên Sơn",
+          "Lê Văn Hiến",
+          "Bệnh viện Phụ sản Nhi Đà Nẵng.\nChiều về: Bệnh viện Phụ"
+        ]
+      },
+      "inbound": {
+        "text": "Bệnh viện Phụ sản Nhi Đà Nẵng - Lê Văn Hiến - Đường Tiên Sơn - Cầu Tiên Sơn - Đường Tiên Sơn – Vũ Duy Thanh (Siêu thị Lotte) – Doãn Khuê – Nại Nam 3 – Phan Đăng Lưu (Khu vui chơi Helio, Công viên Châu Á) – Phan Đăng Lưu – Nguyễn Hữu Thọ - Lê Đình Lý - Hàm Nghi - Hoàng Hoa Thám - Hải Phòng - Ông Ích Khiêm - Nguyễn Tất Thành - Đường 3/2 - Xuân Diệu - Bến xe buýt Xuân Diệu.",
+        "streets": [
+          "Bệnh viện Phụ sản Nhi Đà Nẵng",
+          "Lê Văn Hiến",
+          "Đường Tiên Sơn",
+          "Cầu Tiên Sơn",
+          "Vũ Duy Thanh",
+          "Doãn Khuê",
+          "Nại Nam 3",
+          "Phan Đăng Lưu",
+          "Nguyễn Hữu Thọ",
+          "Lê Đình Lý",
+          "Hàm Nghi",
+          "Hoàng Hoa Thám",
+          "Hải Phòng",
+          "Ông Ích Khiêm",
+          "Nguyễn Tất Thành",
+          "Đường 3/2",
+          "Xuân Diệu",
+          "Bến xe buýt Xuân Diệu."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2011.pdf"
+    ]
+  },
+  {
+    "id": "12",
+    "routeNumber": "12",
+    "name": "Xuân Diệu – Bến xe buýt Phạm Hùng",
+    "shortName": "Xuân Diệu – BX Phạm Hùng",
+    "formerName": "Công viên 29/3 - Vũng Thùng (BX Bùi Dương Lịch)",
+    "aliases": [],
+    "category": "subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Bến xe buýt Xuân Diệu",
+      "destination": "Bến xe buýt Phạm Hùng"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 đến 19h00 (10 phút/chuyến trong giờ cao điểm, 30 phút/chuyến trong giờ thấp điểm)"
+    },
+    "frequency": {
+      "peakMinutes": 10,
+      "offPeakMinutes": 30,
+      "raw": "10 phút/chuyến trong giờ cao điểm, 30 phút/chuyến trong giờ thấp điểm"
+    },
+    "distanceKm": {
+      "average": 16.5,
+      "outbound": 16.4,
+      "inbound": 16.6,
+      "raw": "16,5 km (chiều đi: 16,4 km, chiều về: 16,6 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
+      "monthlyPriority": 80000,
+      "monthlyRegular": 160000
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Xuân Diệu - Xuân Diệu - Đường 3/2 - Đống Đa - Lê Lợi - Lê Duẩn - Điện Biên Phủ - Nguyễn Tri Phương – Nguyễn Văn Linh - Sân bay Quốc tế Đà Nẵng (Trạm thu phí Nguyễn Văn Linh – đường nội bộ làn trong tầng 1 nhà ga quốc tế - đường nối sang nhà ga Quốc nội - đường nội bộ làn ngoài tầng 1 nhà ga quốc nội - đường nội bộ phía Đông bãi để xe) – Nguyễn Văn Linh - Nguyễn Tri Phương - Nguyễn Hữu Thọ - Cầu Nguyễn Tri Phương - Đinh Gia Trinh - Văn Tiến Dũng - Nguyễn Xuân Lâm - Phạm Hùng - Trạm xe buýt Phạm Hùng.\nChiều về:",
+        "streets": [
+          "Trạm xe buýt Xuân Diệu",
+          "Xuân Diệu",
+          "Đường 3/2",
+          "Đống Đa",
+          "Lê Lợi",
+          "Lê Duẩn",
+          "Điện Biên Phủ",
+          "Nguyễn Tri Phương",
+          "Nguyễn Văn Linh",
+          "Sân bay Quốc tế Đà Nẵng (Trạm thu phí Nguyễn Văn Linh",
+          "đường nội bộ làn trong tầng 1 nhà ga quốc tế",
+          "đường nối sang nhà ga Quốc nội",
+          "đường nội bộ làn ngoài tầng 1 nhà ga quốc nội",
+          "đường nội bộ phía Đông bãi để xe)",
+          "Nguyễn Hữu Thọ",
+          "Cầu Nguyễn Tri Phương",
+          "Đinh Gia Trinh",
+          "Văn Tiến Dũng",
+          "Nguyễn Xuân Lâm",
+          "Phạm Hùng",
+          "Trạm xe buýt Phạm Hùng.\nChiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Trạm xe buýt Phạm Hùng - Phạm Hùng - Nguyễn Xuân Lâm - Văn Tiến Dũng - Đinh Gia Trinh - Cầu Nguyễn Tri Phương - Nguyễn Hữu Thọ - Nguyễn Tri Phương - Nguyễn Văn Linh – Sân bay Quốc tế Đà Nẵng (Trạm thu phí Nguyễn Văn Linh – đường nội bộ làn trong tầng 1 nhà ga quốc tế - đường nối sang nhà ga Quốc nội - đường nội bộ làn ngoài tầng 1 nhà ga quốc nội - đường nội bộ phía Đông bãi để xe) – Nguyễn Văn Linh - Nguyễn Tri Phương - Điện Biên Phủ - Lê Duẩn - Nguyễn Chí Thanh - Lý Thường Kiệt - Đống Đa - Đường 3/2 - Xuân Diệu - Trạm xe buýt Xuân Diệu.",
+        "streets": [
+          "Trạm xe buýt Phạm Hùng",
+          "Phạm Hùng",
+          "Nguyễn Xuân Lâm",
+          "Văn Tiến Dũng",
+          "Đinh Gia Trinh",
+          "Cầu Nguyễn Tri Phương",
+          "Nguyễn Hữu Thọ",
+          "Nguyễn Tri Phương",
+          "Nguyễn Văn Linh",
+          "Sân bay Quốc tế Đà Nẵng (Trạm thu phí Nguyễn Văn Linh",
+          "đường nội bộ làn trong tầng 1 nhà ga quốc tế",
+          "đường nối sang nhà ga Quốc nội",
+          "đường nội bộ làn ngoài tầng 1 nhà ga quốc nội",
+          "đường nội bộ phía Đông bãi để xe)",
+          "Điện Biên Phủ",
+          "Lê Duẩn",
+          "Nguyễn Chí Thanh",
+          "Lý Thường Kiệt",
+          "Đống Đa",
+          "Đường 3/2",
+          "Xuân Diệu",
+          "Trạm xe buýt Xuân Diệu."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Sức chứa: 40 chỗ (bao gồm: 21 chỗ đứng và 19 chỗ ngồi);",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2012.pdf"
+    ]
+  },
+  {
+    "id": "02",
+    "routeNumber": "02",
+    "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng - Cửa Đại",
+    "shortName": "BX Trung tâm – TTHC TP – Cửa Đại",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Bến xe Trung tâm (97-99 Cao Sơn Pháo - Phường An Khê)",
+      "destination": "Bãi đỗ xe Bến thủy nội địa Cửa Đại (Phường Hội An Đông)"
+    },
+    "operatingHours": {
+      "start": "5:15",
+      "end": "18:30",
+      "raw": "từ 5h15 đến 18h30."
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 30,
+      "raw": "15-30 phút/lượt."
+    },
+    "distanceKm": {
+      "average": 10.0,
+      "outbound": null,
+      "inbound": null,
+      "raw": "+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt."
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - Suốt tuyến: 30.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khách/lượt.\n- Giá vé lượt áp d"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Trung tâm - Nam Trân - Lý Thái Tông - Nguyễn Tất Thành - đường 3/2 - Trần Phú (TTHC thành phố) - Nguyễn Văn Linh - đường 2/9 - Cầu Tiên Sơn - Lê Văn Hiến - Trần Đại Nghĩa - Đường ĐT607 - Nguyễn Tất Thành - Bến xe buýt Hội An - Lý Thường Kiệt - Trần Nhân Tông - Cửa Đại - Âu Cơ - Bãi đỗ xe Bến thủy nội địa Cửa Đại (Phường Hội An Đông).",
+        "streets": [
+          "Bến xe Trung tâm",
+          "Nam Trân",
+          "Lý Thái Tông",
+          "Nguyễn Tất Thành",
+          "đường 3/2",
+          "Trần Phú",
+          "Nguyễn Văn Linh",
+          "đường 2/9",
+          "Cầu Tiên Sơn",
+          "Lê Văn Hiến",
+          "Trần Đại Nghĩa",
+          "Đường ĐT607",
+          "Bến xe buýt Hội An",
+          "Lý Thường Kiệt",
+          "Trần Nhân Tông",
+          "Cửa Đại",
+          "Âu Cơ",
+          "Bãi đỗ xe Bến thủy nội địa Cửa Đại ."
+        ]
+      },
+      "inbound": {
+        "text": "Bãi đỗ xe Bến thủy nội địa Cửa Đại (Phường Hội An Đông) - Âu Cơ - Cửa Đại - Trần Nhân Tông - Lý Thường Kiệt - Nguyễn Tất Thành - Bến xe buýt Hội An - Đường ĐT 607 - Trần Đại Nghĩa - Lê Văn Hiến - Cầu Tiên Sơn - đường 2/9 - Bạch Đằng (TTHC thành phố) - đường 3/2 - Nguyễn Tất Thành - Lý Thái Tông - Nam Trân - Bến xe Trung tâm.",
+        "streets": [
+          "Bãi đỗ xe Bến thủy nội địa Cửa Đại",
+          "Âu Cơ",
+          "Cửa Đại",
+          "Trần Nhân Tông",
+          "Lý Thường Kiệt",
+          "Nguyễn Tất Thành",
+          "Bến xe buýt Hội An",
+          "Đường ĐT 607",
+          "Trần Đại Nghĩa",
+          "Lê Văn Hiến",
+          "Cầu Tiên Sơn",
+          "đường 2/9",
+          "Bạch Đằng",
+          "đường 3/2",
+          "Lý Thái Tông",
+          "Nam Trân",
+          "Bến xe Trung tâm."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Bến Xe TT Đà Nẵng - Cao Sơn Pháo",
+          "street": "Cao Sơn Pháo"
+        },
+        {
+          "order": 2,
+          "name": "59 Lý Thái Tông",
+          "street": "Lý Thái Tông"
+        },
+        {
+          "order": 3,
+          "name": "Gần khúc giao Hà Khê Nguyễn Tất Thành (cách 50m)",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 4,
+          "name": "65 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 5,
+          "name": "Đối diện sân Tennis Trần Phú",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 6,
+          "name": "Nhà thờ Con Gà (đối diện 151 Trần Phú)",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 7,
+          "name": "TTHC Quận Hải Châu",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 8,
+          "name": "đ/d Công viên Apec",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 9,
+          "name": "214 - 216 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 10,
+          "name": "Quảng trường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 11,
+          "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio - 470 đường 2/9)",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 12,
+          "name": "40 Lê Văn Hiến",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 13,
+          "name": "402 Lê Văn Hiến (Tường rào Bệnh viện phụ sản nhi 600 giường, đ/d 123)",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 14,
+          "name": "754 Lê Văn Hiến",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 15,
+          "name": "Bến xe buýt đại học Việt Hàn",
+          "street": "Trần Đại Nghĩa"
+        },
+        {
+          "order": 16,
+          "name": "158 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 17,
+          "name": "292 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 18,
+          "name": "584 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 19,
+          "name": "Đối Diện UBND Phường Điện Ngọc - 700 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 20,
+          "name": "828 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 21,
+          "name": "974 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 22,
+          "name": "126 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 23,
+          "name": "304 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 24,
+          "name": "488 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 25,
+          "name": "588 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 26,
+          "name": "Bể Bơi Vùng Đông TX Điện Bàn - Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 27,
+          "name": "832 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 28,
+          "name": "900 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 29,
+          "name": "1138 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 30,
+          "name": "1322 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 31,
+          "name": "601 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 32,
+          "name": "Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 33,
+          "name": "403 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 34,
+          "name": "269 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 35,
+          "name": "217 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 36,
+          "name": "Đối Diện Công Ty Cổ Phần Dệt May Hoà Thọ - Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 37,
+          "name": "Trường Phổ Thông Dân Tộc Nội Trú - 39 Nguyễn Tất Thành",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 38,
+          "name": "ÊMM Hotel - 187 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 39,
+          "name": "115 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 40,
+          "name": "Ngã 3 Lý Thường Kiêt - Lê Văn Đức",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 41,
+          "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 42,
+          "name": "108 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 43,
+          "name": "265 Cửa Đại - Công An Phường Cẩm Châu",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 44,
+          "name": "113 Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 45,
+          "name": "11 Cửa Đại - Bưu Điện Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 46,
+          "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 47,
+          "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+          "street": "Âu Cơ"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 2,
+          "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 3,
+          "name": "Đối Diện Bưu Điện Cửa Đại - 16 Cửa Đại Hội An",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 4,
+          "name": "Đối Diện 113 Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 5,
+          "name": "356 Cửa Đai - Trạm Y Tế Phường Cẩm Châu",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 6,
+          "name": "129 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 7,
+          "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 8,
+          "name": "Ngã 3 Lý Thường Kiệt - Lê Văn Đức",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 9,
+          "name": "214 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 10,
+          "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 11,
+          "name": "26 Nguyễn Tất Thành - Công Ty Cổ Phần Dệt May Hoà Thọ",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 12,
+          "name": "40 Nguyễn Tất Thành - Công Ty Cổ Phần Công Trình Công Cộng Hội An",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 13,
+          "name": "120 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 14,
+          "name": "172 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 15,
+          "name": "290 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 16,
+          "name": "362 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 17,
+          "name": "1563 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 18,
+          "name": "1455 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 19,
+          "name": "1271 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 20,
+          "name": "1097 Trần Thủ Độ - Đối Diện Cụm Công Nghiêp An Lưu",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 21,
+          "name": "863 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 22,
+          "name": "831 Trần Thủ Độ - Đối Diện Bể Bơi Vùng Đông TX Điện Bàn",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 23,
+          "name": "572 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 24,
+          "name": "285 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 25,
+          "name": "171 Trần Thủ Độ - Nhà Văn Hoá Khối Phố Cẩm Sa",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 26,
+          "name": "953 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 27,
+          "name": "811 Trần Hưng Đạo - Đối Diện Trường Tiểu Học Lê Hồng Phong",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 28,
+          "name": "677 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 29,
+          "name": "553 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 30,
+          "name": "333 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 31,
+          "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+          "street": "Trần Đại Nghĩa"
+        },
+        {
+          "order": 32,
+          "name": "Bến xe buýt đại học Việt Hàn",
+          "street": "Trần Đại Nghĩa"
+        },
+        {
+          "order": 33,
+          "name": "Đ/d 722-724 Lê Văn Hiến (Chùa Non Nước)",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 34,
+          "name": "Đ/d UBND quận Ngũ Hành Sơn",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 35,
+          "name": "125-127 Lê Văn Hiến",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 36,
+          "name": "Đ/d 50 Lê Văn Hiến",
+          "street": "Lê Văn Hiến"
+        },
+        {
+          "order": 37,
+          "name": "Rạp chiếu phim Metiz",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 38,
+          "name": "đ/d Quảng trường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 39,
+          "name": "Nhà hàng Phì lũ",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 40,
+          "name": "Công viên Apec",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 41,
+          "name": "Đài DRT (Đ/d 256 Bạch Đằng)",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 42,
+          "name": "Đ/d chợ Hàn (Đối diện 122 Bạch Đằng)",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 43,
+          "name": "Đối diện sân tenis bạch Đằng",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 44,
+          "name": "Đối Diện 65 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 45,
+          "name": "58 Lý Thái Tông",
+          "street": "Lý Thái Tông"
+        },
+        {
+          "order": 46,
+          "name": "Bến Xe TT Đà Nẵng - Cao Sơn Pháo",
+          "street": "Cao Sơn Pháo"
+        }
+      ]
+    },
+    "timetable": {},
+    "vehicleInfo": "15 xe (trong đó: 10 xe vận doanh, 05 xe dự phòng)\n- Nhãn hiệu: Kim Long; - Năm sản xuất: 2026; - Nước sản xuất: Việt Nam; - Sức chứa: 30 chỗ (bao gồm: 11 chỗ đứng và 19 chỗ ngồi); - Nhiên liệu: Điện; - Màu sơn: Đỏ cam và có 03 dải màu đặc trưng của xe buýt Đà Nẵng (gồm: vàng, trắng, xanh chạy dọc thân xe);",
+    "pdfUrls": []
+  },
+  {
+    "id": "03",
+    "routeNumber": "03",
+    "name": "Sân bay Đà Nẵng – Khu du lịch Bà Nà Hills",
+    "shortName": "Sân bay Đà Nẵng – Bà Nà Hills",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Trạm xe buýt Sân bay Đà Nẵng",
+      "destination": "Bãi đỗ xe KDL Bà Nà Hills"
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "18:00",
+      "raw": "32 lượt xe/ngày, hành trình 60 phút/chuyến"
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 45,
+      "raw": "32 lượt/ngày (khoảng 30-45 phút/chuyến)"
+    },
+    "distanceKm": {
+      "average": 25.0,
+      "outbound": 25.0,
+      "inbound": 25.0,
+      "raw": "25 km"
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n30.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 750.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Sân bay – Trường Thi 7 – Nguyễn Văn Linh - Nguyễn Tri Phương - Điện Biên Phủ - Cầu vượt ngã ba Huế (tầng 3) - Tôn Đức Thắng – Hoàng Văn Thái – Bà Nà – Suối Mơ - Bãi đỗ xe khu du lịch Bà Nà Hills.\n- Chiều về: Bãi đỗ xe khu du lịch Bà Nà Hill",
+        "streets": [
+          "Trạm xe buýt Sân bay",
+          "Trường Thi 7",
+          "Nguyễn Văn Linh",
+          "Nguyễn Tri Phương",
+          "Điện Biên Phủ",
+          "Cầu vượt ngã ba Huế",
+          "Tôn Đức Thắng",
+          "Hoàng Văn Thái",
+          "Bà Nà",
+          "Suối Mơ",
+          "Bãi đỗ xe khu du lịch Bà Nà Hills.",
+          "Chiều về: Bãi đỗ xe khu du lịch Bà Nà Hill"
+        ]
+      },
+      "inbound": {
+        "text": "Bãi đỗ xe khu du lịch Bà Nà Hills – Bà Nà – Suối Mơ – Hoàng Văn Thái – Tôn Đức Thắng – Cầu vượt ngã ba Huế (tầng 3) - Điện Biên Phủ - Nguyễn Tri Phương – Nguyễn Văn Linh – Trường Thi 7 - Trạm xe buýt Sân bay.",
+        "streets": [
+          "Bãi đỗ xe khu du lịch Bà Nà Hills",
+          "Bà Nà",
+          "Suối Mơ",
+          "Hoàng Văn Thái",
+          "Tôn Đức Thắng",
+          "Cầu vượt ngã ba Huế",
+          "Điện Biên Phủ",
+          "Nguyễn Tri Phương",
+          "Nguyễn Văn Linh",
+          "Trường Thi 7",
+          "Trạm xe buýt Sân bay."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "06 xe (trong đó: 04 xe vận doanh, 02 xe dự phòng);\n- Nhãn hiệu: Kim Long;",
+    "pdfUrls": []
+  },
+  {
+    "id": "06",
+    "routeNumber": "06",
+    "name": "Sân bay Đà Nẵng – Đại học Việt Hàn",
+    "shortName": "Sân bay Đà Nẵng – ĐH Việt Hàn",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Trạm xe buýt Sân bay Đà Nẵng",
+      "destination": "Trạm xe buýt Đại học Việt Hàn"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:25",
+      "raw": "Mở bến: 05h30 (ĐH Việt Hàn) / 05h45 (Sân bay) - Đóng bến: 19h00 (ĐH Việt Hàn) / 19h25 (Sân bay)"
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 60,
+      "raw": "30-60 phút/chuyến (48 lượt xe/ngày)"
+    },
+    "distanceKm": {
+      "average": 21.3,
+      "outbound": 21.3,
+      "inbound": 21.3,
+      "raw": "21,3 km"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 10,65km trở xuống): 15.000 đồng/hành khách/lượt.\n+ Trên ½ cự ly tuyến đến toàn cự ly tuyến (Trên 10,65km đến hết tuyến): 22.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/h"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Sân bay – Trường Thi 7 - Nguyễn Văn Linh - Sân bay Quốc tế Đà Nẵng (Vào cổng Trạm thu phí Nguyễn Văn Linh - đường nội bộ tầng 1 qua nhà ga quốc tế, nhà ga quốc nội) - Duy Tân – Nguyễn Văn Linh – Cầu Rồng – Võ Văn Kiệt – Võ Nguyên Giáp - Trường Sa - Võ Quý Huân– Hoàng Minh Thắng – Trần Quốc Vượng – Nam Kỳ Khởi Nghĩa - đường nội bộ khu đô thị FPT (đường trung tâm kéo dài tới ĐH FPT) – Nam Kỳ Khởi Nghĩa – Trần Đại Nghĩa – Trạm xe buýt Đại học Việt Hàn.\n- Chiều về:",
+        "streets": [
+          "Trạm xe buýt Sân bay",
+          "Trường Thi 7",
+          "Nguyễn Văn Linh",
+          "đường nội bộ tầng 1 qua nhà ga quốc tế, nhà ga quốc nội)",
+          "Duy Tân",
+          "Cầu Rồng",
+          "Võ Văn Kiệt",
+          "Võ Nguyên Giáp",
+          "Trường Sa",
+          "Võ Quý Huân",
+          "Hoàng Minh Thắng",
+          "Trần Quốc Vượng",
+          "Nam Kỳ Khởi Nghĩa",
+          "đường nội bộ khu đô thị FPT",
+          "Trần Đại Nghĩa",
+          "Trạm xe buýt Đại học Việt Hàn.",
+          "Chiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Trạm xe buýt ĐH Việt Hàn – Trần Đại Nghĩa - Nam Kỳ Khởi Nghĩa - Đường nội bộ khu đô thị FPT (đường trung tâm kéo dài tới ĐH FPT) - Nam Kỳ Khởi Nghĩa -Trần Quốc Vượng - Hoàng Minh Thắng - Võ Quý Huân - Trường Sa - Võ Nguyên Giáp - Võ Văn Kiệt - Cầu Rồng - Nguyễn Văn Linh – Sân bay Quốc tế Đà Nẵng (Vào cổng Trạm thu phí Nguyễn Văn Linh - đường nội bộ tầng 1 qua nhà ga quốc tế, nhà ga quốc nội) - Duy Tân - Nguyễn Văn Linh - Trường Thi 7 – Trạm xe buýt Sân bay.",
+        "streets": [
+          "Trạm xe buýt ĐH Việt Hàn",
+          "Trần Đại Nghĩa",
+          "Nam Kỳ Khởi Nghĩa",
+          "Đường nội bộ khu đô thị FPT",
+          "Trần Quốc Vượng",
+          "Hoàng Minh Thắng",
+          "Võ Quý Huân",
+          "Trường Sa",
+          "Võ Nguyên Giáp",
+          "Võ Văn Kiệt",
+          "Cầu Rồng",
+          "Nguyễn Văn Linh",
+          "đường nội bộ tầng 1 qua nhà ga quốc tế, nhà ga quốc nội)",
+          "Duy Tân",
+          "Trường Thi 7",
+          "Trạm xe buýt Sân bay."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Kim Long;\n- Sức chứa: 40 chỗ (bao gồm 21 chỗ đứng và 19 chỗ ngồi);",
+    "pdfUrls": []
+  },
+  {
+    "id": "09",
+    "routeNumber": "09",
+    "name": "Cảng Sông Hàn – Hòa Khương",
+    "shortName": "Cảng Sông Hàn – Hòa Khương",
+    "formerName": "Bệnh Viện Ung Bướu - Phạm Hùng (số hiệu cũ: 17 / R17A)",
+    "aliases": [
+      "17",
+      "R17A"
+    ],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Cảng sông Hàn",
+      "destination": "Cổng nghĩa trang Gò Cà"
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "19:00",
+      "raw": "từ 05h45 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": 25.7,
+      "outbound": 25.8,
+      "inbound": 25.6,
+      "raw": "25,7 km (chiều đi: 25,8 km; chiều về 25,6 km)"
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Số lượng phương tiện: 06 xe (trong đó: 05 xe vận doanh, 01 xe dự phòng);\n- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;\n- Nước sản x"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Cảng Sông Hàn (bãi đỗ xe trước Novotel) - Lý Tự Trọng - Trần Phú - Quang Trung - Đống Đa - Ông Ích Khiêm - Hoàng Diệu - Trưng Nữ Vương - Núi Thành - Đường 2/9 - CMT8 - Cầu vượt Hòa Cầm - Trường Sơn - Quốc lộ 14B - Quảng Xương - TTHC huyện Hòa Vang (Trạm xe buýt Hòa Vang) - Quốc lộ 14B – Hòa Khương (Cổng nghĩa trang Gò Cà)\n- Chiều về: Hòa Khương (Cổng nghĩa",
+        "streets": [
+          "Cảng Sông Hàn",
+          "Lý Tự Trọng",
+          "Trần Phú",
+          "Quang Trung",
+          "Đống Đa",
+          "Ông Ích Khiêm",
+          "Hoàng Diệu",
+          "Trưng Nữ Vương",
+          "Núi Thành",
+          "Đường 2/9",
+          "CMT8",
+          "Cầu vượt Hòa Cầm",
+          "Trường Sơn",
+          "Quốc lộ 14B",
+          "Quảng Xương",
+          "TTHC huyện Hòa Vang",
+          "Quốc lộ 14B",
+          "Hòa Khương",
+          "Chiều về: Hòa Khương (Cổng nghĩa"
+        ]
+      },
+      "inbound": {
+        "text": "Hòa Khương (Cổng nghĩa trang Gò Cà) - Quốc lộ 14B - TTHC huyện Hòa Vang (Trạm xe buýt Hòa Vang) - Quảng Xương - Quốc lộ 14B - Trường Sơn - Cầu Vượt Hòa Cầm - CMT8 - Đường 2/9 - Núi Thành - Trưng Nữ Vương - Hoàng Diệu - Ông Ích Khiêm - Đống Đa - Quang Trung - Bạch Đằng - Cảng Sông Hàn (bãi đỗ xe trước Novotel).",
+        "streets": [
+          "Hòa Khương",
+          "Quốc lộ 14B",
+          "TTHC huyện Hòa Vang",
+          "Quảng Xương",
+          "Trường Sơn",
+          "Cầu Vượt Hòa Cầm",
+          "CMT8",
+          "Đường 2/9",
+          "Núi Thành",
+          "Trưng Nữ Vương",
+          "Hoàng Diệu",
+          "Ông Ích Khiêm",
+          "Đống Đa",
+          "Quang Trung",
+          "Bạch Đằng",
+          "Cảng Sông Hàn ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Số lượng phương tiện: 06 xe (trong đó: 05 xe vận doanh, 01 xe dự phòng);\n- Nhãn hiệu: Kim Long;",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2017%281%29.pdf"
+    ]
+  },
+  {
+    "id": "13",
+    "routeNumber": "13",
+    "name": "Kim Liên – Đại học Việt Hàn",
+    "shortName": "Kim Liên – ĐH Việt Hàn",
+    "formerName": "Bệnh Viện Ung Bướu – Đại Học Việt Hàn (số hiệu cũ: 16 / R16)",
+    "aliases": [
+      "16",
+      "R16"
+    ],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Kim Liên",
+      "destination": "Đại học Việt Hàn (Nam Kỳ Khởi Nghĩa)"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "18:15",
+      "raw": "từ 05h30 đến 18h15."
+    },
+    "frequency": {
+      "peakMinutes": 60,
+      "offPeakMinutes": 60,
+      "raw": "15-60 phút/lượt."
+    },
+    "distanceKm": {
+      "average": 32.63,
+      "outbound": 32.63,
+      "inbound": 32.63,
+      "raw": "32,63 km (chiều đi: 32,63km; chiều về: 32,63km)."
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Kim Liên - Nguyễn Văn Cừ - Cầu Nam Ô - Nguyễn Lương Bằng - Tôn Đức Thắng - Cầu vượt ngã ba Huế (tầng 3) - Điện Biên Phủ - Lý Thái Tổ - Hùng Vương - Trần Phú - Nguyễn Văn Linh - Cầu Rồng - Võ Văn Kiệt - Ngô Quyền - Ngũ Hành Sơn - Lê Văn Hiến -Trần Đại Nghĩa – Nam Kỳ Khởi Nghĩa (quay đầu tại dải phân cách trước cổng trường ĐH Kỹ thuật Y Dược ĐN) - Trần Đại Nghĩa - Trạm xe buýt ĐH Việt Hàn.",
+        "streets": [
+          "Kim Liên",
+          "Nguyễn Văn Cừ",
+          "Cầu Nam Ô",
+          "Nguyễn Lương Bằng",
+          "Tôn Đức Thắng",
+          "Cầu vượt ngã ba Huế",
+          "Điện Biên Phủ",
+          "Lý Thái Tổ",
+          "Hùng Vương",
+          "Trần Phú",
+          "Nguyễn Văn Linh",
+          "Cầu Rồng",
+          "Võ Văn Kiệt",
+          "Ngô Quyền",
+          "Ngũ Hành Sơn",
+          "Lê Văn Hiến",
+          "Trần Đại Nghĩa",
+          "Nam Kỳ Khởi Nghĩa",
+          "Trạm xe buýt ĐH Việt Hàn."
+        ]
+      },
+      "inbound": {
+        "text": "Trạm xe buýt ĐH Việt Hàn - Trần Đại Nghĩa - Nam Kỳ Khởi Nghĩa (quay đầu trước cổng Trường ĐHKT Y Dược ĐN) - Trần Đại Nghĩa - Lê Văn Hiến - Ngũ Hành Sơn - Ngô Quyền - Võ Văn Kiệt - Cầu Rồng - Bạch Đằng - Hùng Vương - Lý Thái Tổ - Điện Biên Phủ - Cầu vượt ngã 3 Huế (tầng 3) - Tôn Đức Thắng - Nguyễn Lương Bằng - Cầu Nam Ô - Nguyễn Văn Cừ - Kim Liên.",
+        "streets": [
+          "Trạm xe buýt ĐH Việt Hàn",
+          "Trần Đại Nghĩa",
+          "Nam Kỳ Khởi Nghĩa",
+          "Lê Văn Hiến",
+          "Ngũ Hành Sơn",
+          "Ngô Quyền",
+          "Võ Văn Kiệt",
+          "Cầu Rồng",
+          "Bạch Đằng",
+          "Hùng Vương",
+          "Lý Thái Tổ",
+          "Điện Biên Phủ",
+          "Cầu vượt ngã 3 Huế",
+          "Tôn Đức Thắng",
+          "Nguyễn Lương Bằng",
+          "Cầu Nam Ô",
+          "Nguyễn Văn Cừ",
+          "Kim Liên."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Số lượng phương tiện: 07 xe (trong đó: 06 xe vận doanh, 01 xe dự phòng); - Nhãn hiệu: Kim Long; - Năm sản xuất: 2026; - Nước sản xuất: Việt Nam; - Sức chứa: 30 chỗ (bao gồm: 11 chỗ đứng và 19 chỗ ngồi); - Nhiên liệu: Điện; - Màu sơn: Xanh và có 03 dải màu đặc trưng của xe buýt Đà Nẵng (gồm: vàng, trắng, xanh chạy dọc thân xe); - Số lượt xe chạy trong ngày: 42 lượt; - Tần suất chạy xe: 15-60 phút/lượt.\ng) Biểu đồ chạy xe:",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2016%281%29.pdf"
+    ]
+  },
+  {
+    "id": "14",
+    "routeNumber": "14",
+    "name": "Cảng sông Hàn – Khu công nghệ cao",
+    "shortName": "Cảng Sông Hàn – Khu CNC",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Cảng sông Hàn (đầu đường Như Nguyệt)",
+      "destination": "Trạm xe buýt Khu Công nghệ cao"
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "18:00",
+      "raw": "Mở tuyến: 05h45 - Đóng tuyến: 18h00 (Hành trình 60 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 45,
+      "raw": "30-45 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": 26.5,
+      "outbound": 26.5,
+      "inbound": 26.5,
+      "raw": "26,5 km"
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n25.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 650.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Cảng sông Hàn (đầu đường Như Nguyệt) - Đống Đa – Trần Phú – Lê Duẩn – Điện Biên Phủ - Cầu vượt ngã ba Huế (tầng 2) – Hoàng Thị Loan – Nguyễn Sinh Sắc – Tôn Đức Thắng – Âu Cơ – DT602 – DT601 – Nguyễn Tất Thành – Đường tránh Nam Hải Vân – Trạm xe buýt Khu Công nghệ cao.\n- Chiều về:",
+        "streets": [
+          "Cảng sông Hàn",
+          "Đống Đa",
+          "Trần Phú",
+          "Lê Duẩn",
+          "Điện Biên Phủ",
+          "Cầu vượt ngã ba Huế",
+          "Hoàng Thị Loan",
+          "Nguyễn Sinh Sắc",
+          "Tôn Đức Thắng",
+          "Âu Cơ",
+          "DT602",
+          "DT601",
+          "Nguyễn Tất Thành",
+          "Đường tránh Nam Hải Vân",
+          "Trạm xe buýt Khu Công nghệ cao.",
+          "Chiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Trạm xe buýt Khu công nghệ cao – Đường tránh Nam Hải Vân – Nguyễn Tất Thành – DT601 – DT602 – Âu Cơ – Tôn Đức Thắng – Nguyễn Sinh Sắc – Hoàng Thị Loan – Cầu vượt ngã ba Huế (tầng 2) – Điện Biên Phủ - Lê Duẩn - Đường dẫn xuống đường Bạch Đằng – Bạch Đằng – Cảng sông Hàn (đầu đường Như Nguyệt).",
+        "streets": [
+          "Trạm xe buýt Khu công nghệ cao",
+          "Đường tránh Nam Hải Vân",
+          "Nguyễn Tất Thành",
+          "DT601",
+          "DT602",
+          "Âu Cơ",
+          "Tôn Đức Thắng",
+          "Nguyễn Sinh Sắc",
+          "Hoàng Thị Loan",
+          "Cầu vượt ngã ba Huế",
+          "Điện Biên Phủ",
+          "Lê Duẩn",
+          "Đường dẫn xuống đường Bạch Đằng",
+          "Bạch Đằng",
+          "Cảng sông Hàn ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "04 xe (trong đó: 02 xe vận doanh, 02 xe dự phòng);\n- Nhãn hiệu: Kim Long;",
+    "pdfUrls": []
+  },
+  {
+    "id": "21",
+    "routeNumber": "21",
+    "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng – Cầu Tam Kỳ",
+    "shortName": "BX Trung tâm – TTHC TP – Cầu Tam Kỳ",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Bến xe Trung tâm (97-99 Cao Sơn Pháo - Phường An Khê).",
+      "destination": "954 Phan Châu Trinh (Cầu Tam Kỳ - Phường Hương Trà)."
+    },
+    "operatingHours": {
+      "start": "4:45",
+      "end": "17:30",
+      "raw": "4h45-17h30."
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 30,
+      "raw": "05-30 phút/lượt."
+    },
+    "distanceKm": {
+      "average": 10.0,
+      "outbound": null,
+      "inbound": null,
+      "raw": "+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt."
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - 45km: 35.000 đồng/hành khách/lượt.\n+ Trên 45km - 65km: 45.000 đồng/hành khách/lượt.\n+ Trên 65km - Suốt tuyến: 48.000 đồng/hành khách/l"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Trung tâm - Tôn Đức Thắng - Cầu vượt ngã ba Huế (tầng 3) - Điện Biên Phủ - Nguyễn Đức Trung - Trần Cao Vân - Đống Đa - Lý Tự Trọng - Trần Phú (TTHC thành phố) - Nguyễn Văn Linh - Đường 2/9 - CMT8 - Ông Ích Đường - Cầu Cẩm Lệ - Phạm Hùng - Quốc lộ 1 - cầu Hương An cũ - Quốc lộ 1 - Bến xe khách Tam Kỳ - Phan Bội Châu - Phan Chu Trinh - 954 Phan Chu Trinh (Cầu Tam Kỳ - Phường Hương Trà).",
+        "streets": [
+          "Bến xe Trung tâm",
+          "Tôn Đức Thắng",
+          "Cầu vượt ngã ba Huế",
+          "Điện Biên Phủ",
+          "Nguyễn Đức Trung",
+          "Trần Cao Vân",
+          "Đống Đa",
+          "Lý Tự Trọng",
+          "Trần Phú",
+          "Nguyễn Văn Linh",
+          "Đường 2/9",
+          "CMT8",
+          "Ông Ích Đường",
+          "Cầu Cẩm Lệ",
+          "Phạm Hùng",
+          "Quốc lộ 1",
+          "cầu Hương An cũ",
+          "Bến xe khách Tam Kỳ",
+          "Phan Bội Châu",
+          "Phan Chu Trinh",
+          "954 Phan Chu Trinh (Cầu Tam Kỳ",
+          "Phường Hương Trà)."
+        ]
+      },
+      "inbound": {
+        "text": "954 Phan Chu Trinh (Cầu Tam Kỳ - Phường Hương Trà) - Phan Chu Trinh - Phan Bội Châu - Bến xe khách Tam Kỳ - Quốc lộ 1 - cầu Hương An cũ - Quốc lộ 1 - Phạm Hùng - Cầu Cẩm Lệ - Ông Ích Đường - CMT8 - Đường 2/9 - Bạch Đằng - Lý Tự Trọng (TTHC thành phố) - Đống Đa - Trần Cao Vân - Nguyễn Đức Trung - Điện Biên Phủ - Cầu vượt ngã ba Huế (tầng 3) - Tôn Đức Thắng - Bến xe Trung tâm.",
+        "streets": [
+          "954 Phan Chu Trinh (Cầu Tam Kỳ",
+          "Phường Hương Trà)",
+          "Phan Chu Trinh",
+          "Phan Bội Châu",
+          "Bến xe khách Tam Kỳ",
+          "Quốc lộ 1",
+          "cầu Hương An cũ",
+          "Phạm Hùng",
+          "Cầu Cẩm Lệ",
+          "Ông Ích Đường",
+          "CMT8",
+          "Đường 2/9",
+          "Bạch Đằng",
+          "Lý Tự Trọng",
+          "Đống Đa",
+          "Trần Cao Vân",
+          "Nguyễn Đức Trung",
+          "Điện Biên Phủ",
+          "Cầu vượt ngã ba Huế",
+          "Tôn Đức Thắng",
+          "Bến xe Trung tâm."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Bến xe Trung tâm (97-99 Cao Sơn Pháo)",
+          "street": "Cao Sơn Pháo"
+        },
+        {
+          "order": 2,
+          "name": "171 Tôn Đức Thắng",
+          "street": "Tôn Đức Thắng"
+        },
+        {
+          "order": 3,
+          "name": "557 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 4,
+          "name": "57 Nguyễn Đức Trung",
+          "street": "Nguyễn Đức Trung"
+        },
+        {
+          "order": 5,
+          "name": "581 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 6,
+          "name": "Số 495 UBND Xuân Hà",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 7,
+          "name": "301 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 8,
+          "name": "189 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 9,
+          "name": "73 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 10,
+          "name": "Đ/d 206 – 208 CV Quang Trung",
+          "street": "Quang Trung"
+        },
+        {
+          "order": 11,
+          "name": "249 Đống đa",
+          "street": "Đống đa"
+        },
+        {
+          "order": 12,
+          "name": "12 Lý Tự Trọng",
+          "street": "Lý Tự Trọng"
+        },
+        {
+          "order": 13,
+          "name": "Bãi Đậu Xe Trung Tâm hành Chính đường Trần Phú",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 14,
+          "name": "Nhà thờ Con Gà (đối diện 151 Trần Phú)",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 15,
+          "name": "TTHC Quận Hải Châu (270 Trần Phú)",
+          "street": "Trần Phú"
+        },
+        {
+          "order": 16,
+          "name": "đ/d Công viên Apec",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 17,
+          "name": "152 - 154A đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 18,
+          "name": "214 - 216 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 19,
+          "name": "332 Đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 20,
+          "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio 470-472 đường 2/9)",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 21,
+          "name": "518 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 22,
+          "name": "Đối diện siêu thị Mega",
+          "street": "CMT8"
+        },
+        {
+          "order": 23,
+          "name": "Bệnh viện Tâm Trí",
+          "street": "CMT8"
+        },
+        {
+          "order": 24,
+          "name": "178 Cách Mạng Tháng 8",
+          "street": "CMT8"
+        },
+        {
+          "order": 25,
+          "name": "58 Ông Ích Đường",
+          "street": "Ông Ích Đường"
+        },
+        {
+          "order": 26,
+          "name": "164 -166 đường Ông Ích Đường",
+          "street": "Ông Ích Đường"
+        },
+        {
+          "order": 27,
+          "name": "50 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 28,
+          "name": "182 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 29,
+          "name": "Trạm xe buýt Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 30,
+          "name": "334 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 31,
+          "name": "542 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 32,
+          "name": "Đ/d 461 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 33,
+          "name": "Bưu Điện Miếu Bông - QL1A",
+          "street": "QL1A"
+        },
+        {
+          "order": 34,
+          "name": "ISUZU-QL1A",
+          "street": "QL1A"
+        },
+        {
+          "order": 35,
+          "name": "Bến Xe Phía Nam",
+          "street": "QL1A"
+        },
+        {
+          "order": 36,
+          "name": "Ô Tô Hồng Sơn - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 37,
+          "name": "Đối Diện UBND Xã Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 38,
+          "name": "Trạm CSGT Cửa Ô Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 39,
+          "name": "Ngã 3 Tứ Câu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 40,
+          "name": "Trường Trung Cấp Quảng Đông - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 41,
+          "name": "Đầu Cầu Thanh Quýt - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 42,
+          "name": "Bến Xe Bắc Quảng Nam - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 43,
+          "name": "8 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 44,
+          "name": "134 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 45,
+          "name": "278 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 46,
+          "name": "Ngã 3 Đường Tránh QL1A",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 47,
+          "name": "58 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 48,
+          "name": "216 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 49,
+          "name": "Bến Xe TT Nam Phước Quảng Nam",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 50,
+          "name": "Ngã 3 Đông Lành",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 51,
+          "name": "Cầu Phú Phong",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 52,
+          "name": "Chợ Mộc Bài - Quế Sơn",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 53,
+          "name": "Đối Diện Điện Máy Xanh Hương An",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 54,
+          "name": "Ngã 3 Hương An Cũ",
+          "street": "Tỉnh Lộ 611"
+        },
+        {
+          "order": 55,
+          "name": "Ngã 3 Hương An Mới",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 56,
+          "name": "Ngã 3 Sát Hạch Bình Nguyên",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 57,
+          "name": "Bệnh Viện Đa Khoa Thăng Hoa",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 58,
+          "name": "Cổng Làng Quán Hương",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 59,
+          "name": "Ngã 3 Cây Cóc - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 60,
+          "name": "Qua Cầu Gò Phật - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 61,
+          "name": "Ngã 3 Ngọc Phô",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 62,
+          "name": "Sân Vận Động Xã Bình Tú",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 63,
+          "name": "Trường THCS Phan Bội Châu",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 64,
+          "name": "Ngã 3 Xóm Mới - Bình Trung",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 65,
+          "name": "Ngã 4 Quán Gò",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 66,
+          "name": "An Thọ - Tam An - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 67,
+          "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 68,
+          "name": "Ngã 3 KCN Tam Thăng",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 69,
+          "name": "Ngã 4 Kỳ Lý",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 70,
+          "name": "Công Ty Bảo Việt Nhân Thọ",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 71,
+          "name": "10 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 72,
+          "name": "32 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 73,
+          "name": "Đối Diện Bệnh Viện Minh Thiên - Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 74,
+          "name": "94 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 75,
+          "name": "112 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 76,
+          "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 77,
+          "name": "120 Phan Bội Châu - Ngân Hàng Agribank",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 78,
+          "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 79,
+          "name": "156 Phan Bội Châu - Toà Án Nhân Dân Tam Kỳ",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 80,
+          "name": "26 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 81,
+          "name": "238 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 82,
+          "name": "324 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 83,
+          "name": "394 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 84,
+          "name": "494 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 85,
+          "name": "546 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 86,
+          "name": "608 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 87,
+          "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 88,
+          "name": "816 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 89,
+          "name": "Điểm Cuối Tam Kỳ - 954 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Điểm Đầu Tam Kỳ - 954 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 2,
+          "name": "781 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 3,
+          "name": "531 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 4,
+          "name": "467 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 5,
+          "name": "341 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 6,
+          "name": "275 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 7,
+          "name": "73 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 8,
+          "name": "Siêu Thị Coop Mart - Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 9,
+          "name": "379 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 10,
+          "name": "283 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 11,
+          "name": "281 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 12,
+          "name": "239 Phan Bội Châu - Ngân Hàng BIDV",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 13,
+          "name": "201 Phan Bội Châu - Đối Diện Ngân Hàng Đông Á",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 14,
+          "name": "135 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 15,
+          "name": "Bệnh Viện Minh Thiện - Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 16,
+          "name": "65 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 17,
+          "name": "1 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 18,
+          "name": "Ngã 4 Kỳ Lý - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 19,
+          "name": "Ngã 3 Tam Thăng - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 20,
+          "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 21,
+          "name": "An Thọ - Tam An QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 22,
+          "name": "Ngã 4 Quán Gò - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 23,
+          "name": "Xóm Mới - Bình Trung - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 24,
+          "name": "Trường THCS Phan Bội Châu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 25,
+          "name": "Nghĩa Trang Xã Bình Tú - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 26,
+          "name": "Ngã 3 Ngọc Phô - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 27,
+          "name": "Cầu Gò Phật - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 28,
+          "name": "Ngã 3 Cây Cóc - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 29,
+          "name": "Đối Diện Bệnh Viện Đa Khoa Thăng Hoa - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 30,
+          "name": "Ngã 3 Sát Hạch Bình Nguyên - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 31,
+          "name": "Ngã 3 Hương An Mới - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 32,
+          "name": "Điện Máy Xanh Hương An - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 33,
+          "name": "Cây Xăng Dầu Mộc Bài - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 34,
+          "name": "Qua Cầu Phú Phong - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 35,
+          "name": "Ngã 3 Đông Lành - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 36,
+          "name": "Đối Diện Bến Xe TT Nam Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 37,
+          "name": "53 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 38,
+          "name": "Sân Vận Động Phường Điện Minh",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 39,
+          "name": "215 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 40,
+          "name": "Công Viên Thanh Niên",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 41,
+          "name": "5 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 42,
+          "name": "Bệnh Viện Đa Khoa Vĩnh Đức - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 43,
+          "name": "Gần Trạm Thu Phí Điện Bàn - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 44,
+          "name": "Nghĩa Trang Liệt Sỹ Điện Bàn - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 45,
+          "name": "Ngã 3 Lầu Sụp - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 46,
+          "name": "Ngã 3 Tứ Câu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 47,
+          "name": "UBND Xã Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 48,
+          "name": "Kho Đá Đông Ấn - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 49,
+          "name": "Bến Xe Khách Phía Nam",
+          "street": "Nam Kỳ Khởi Nghĩa"
+        },
+        {
+          "order": 50,
+          "name": "467 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 51,
+          "name": "333 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 52,
+          "name": "171 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 53,
+          "name": "Đ/d trạm xe buýt Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 54,
+          "name": "121 Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 55,
+          "name": "Cty Toyota Phạm Hùng",
+          "street": "Phạm Hùng"
+        },
+        {
+          "order": 56,
+          "name": "297 Đường Ông Ích Đường",
+          "street": "Ông Ích Đường"
+        },
+        {
+          "order": 57,
+          "name": "175 Ông Ích Đường",
+          "street": "Ông Ích Đường"
+        },
+        {
+          "order": 58,
+          "name": "151 Cách mạng tháng 8",
+          "street": "CMT8"
+        },
+        {
+          "order": 59,
+          "name": "25 Cách mạng tháng 8",
+          "street": "CMT8"
+        },
+        {
+          "order": 60,
+          "name": "Metro Đà Nẵng",
+          "street": "CMT8"
+        },
+        {
+          "order": 61,
+          "name": "105 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 62,
+          "name": "Trung tâm giải trí Helio",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 63,
+          "name": "Đ/d lilama 7 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 64,
+          "name": "Nhà hàng Phì Lũ đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 65,
+          "name": "Đ/d 156 đường 2/9",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 66,
+          "name": "Công viên apec",
+          "street": "đường 2/9"
+        },
+        {
+          "order": 67,
+          "name": "Đ/d 256 Bạc Đằng",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 68,
+          "name": "Đ/d 122 Bạch Đằng",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 69,
+          "name": "Đ/d 66 Bạch Đằng (đ/d bưu điện tp)",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 70,
+          "name": "Đ/d sân Tenis Bạch Đằng",
+          "street": "Bạch Đằng"
+        },
+        {
+          "order": 71,
+          "name": "23 Lý Tự Trọng",
+          "street": "Lý Tự Trọng"
+        },
+        {
+          "order": 72,
+          "name": "326 Đống Đa",
+          "street": "Đống đa"
+        },
+        {
+          "order": 73,
+          "name": "24 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 74,
+          "name": "162 Trần Cao Vân (Trường THCS Hoàng Diệu)",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 75,
+          "name": "312 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 76,
+          "name": "396 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 77,
+          "name": "574 Trần Cao Vân (Bảo hiểm xã hội Thanh Khê )",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 78,
+          "name": "674 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 79,
+          "name": "Đ/d Trạm điện Nguyễn Đức Trung",
+          "street": "Nguyễn Đức Trung"
+        },
+        {
+          "order": 80,
+          "name": "Bến xe Trung tâm (97-99 Cao Sơn Pháo)",
+          "street": "Cao Sơn Pháo"
+        }
+      ]
+    },
+    "timetable": {},
+    "vehicleInfo": "25 xe (trong đó: 21 xe vận doanh gồm 16 xe B30 và 05 xe B60, 04 xe B30 dự phòng).",
+    "pdfUrls": []
+  },
+  {
+    "id": "TKY-TMY",
+    "routeNumber": "02 (Quảng Nam)",
+    "name": "Tam Kỳ – Trà My",
+    "shortName": "Tam Kỳ – Trà My",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty TNHH Hợp Nhất Quảng Nam",
+    "terminals": {
+      "origin": "Bến xe Tam Kỳ.",
+      "destination": "Bến xe khách Bắc Trà My đến Ngã 3 Trà Đốc (một số chuyến trong ngày kết nối Bến xe khách Nam Trà My (nếu có))."
+    },
+    "operatingHours": {
+      "start": "5:00",
+      "end": "17:00",
+      "raw": "từ 5h00 đến 17h00 (35 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 35,
+      "offPeakMinutes": 35,
+      "raw": "35 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": null,
+      "outbound": null,
+      "inbound": null,
+      "raw": ""
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "a) Tam Kỳ đi Trà My:\n- Nội thành Tam Kỳ - Ngã 4 Trường Xuân\n12.000\n- Tam Kỳ - chợ Tam Dân\n18.000\n- Tam Kỳ - chợ Tiên Thọ\n24.000\n- Tam Kỳ - Thị trấn Tiên Kỳ\n30.000\n- Tam Kỳ - Ngã 3 cụ Huỳnh\n36.000\n- Tam Kỳ - Ngã 3 Tiên Hiệp\n42.000\n- Tam Kỳ - Trà My, ngã 3 Trà Đốc\n52.000\nb) Trà My đi Tam Kỳ:\n- Trà My, ngã 3 Trà Đốc - Trà Dương\n12.000\n- Trà My – Ngã 3"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Tam Kỳ - đường Phan Bội Châu - Nguyễn Du - Lê Lợi - Hùng Vương - Huỳnh Thúc Kháng – Phan Châu Trinh – Trần Cao Vân – Nguyễn Hoàng - ga Tam Kỳ (đường Nguyễn Hoàng) - Trần Cao Vân – Lê Tấn Trung - QL 40B – Bến xe khách Bắc Trà My đến Ngã 3 Trà Đốc (một số chuyến trong ngày kết nối Bến xe khách Nam Trà My (nếu có)).\n- Chiều về: Ngã",
+        "streets": [
+          "Bến xe Tam Kỳ",
+          "đường Phan Bội Châu",
+          "Nguyễn Du",
+          "Lê Lợi",
+          "Hùng Vương",
+          "Huỳnh Thúc Kháng",
+          "Phan Châu Trinh",
+          "Trần Cao Vân",
+          "Nguyễn Hoàng",
+          "ga Tam Kỳ",
+          "Lê Tấn Trung",
+          "QL 40B",
+          "Bến xe khách Bắc Trà My đến Ngã 3 Trà Đốc ).",
+          "Chiều về: Ngã"
+        ]
+      },
+      "inbound": {
+        "text": "Ngã 3 trà Đốc (một số chuyến trong ngày kết nối Bến xe khách Nam Trà My (nếu có)) đến Bến xe khách Bắc Trà My – QL40B – Lê Tấn Trung – Trần Cao Vân – đường Nguyễn Hoàng – ga Tam Kỳ (đường Nguyễn Hoàng) – Trần Cao Vân – Phan Châu trinh – Huỳnh Thúc Kháng – Hùng Vương – Lê Lợi – Nguyễn Du – đường Phan Bội Châu – Bến xe Tam Kỳ.",
+        "streets": [
+          "Ngã 3 trà Đốc ) đến Bến xe khách Bắc Trà My",
+          "QL40B",
+          "Lê Tấn Trung",
+          "Trần Cao Vân",
+          "đường Nguyễn Hoàng",
+          "ga Tam Kỳ",
+          "Phan Châu trinh",
+          "Huỳnh Thúc Kháng",
+          "Hùng Vương",
+          "Lê Lợi",
+          "Nguyễn Du",
+          "đường Phan Bội Châu",
+          "Bến xe Tam Kỳ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Bến xe Tam Kỳ",
+          "street": "QL1A"
+        },
+        {
+          "order": 2,
+          "name": "Số 10 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 3,
+          "name": "Bờ hồ trước Bệnh Viện Minh Thiện",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 4,
+          "name": "Ngân hàng BIDV Quảng Nam",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 5,
+          "name": "VNPT Quảng Nam",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 6,
+          "name": "Chùa Đạo Nguyên",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 7,
+          "name": "Số 156 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 8,
+          "name": "Đối diện Nhà thuốc Long Châu",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 9,
+          "name": "Đối diện Trường Cao đẳng y tế Quảng Nam",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 10,
+          "name": "Cách cổng trường Đại học Quảng Nam 30 m",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 11,
+          "name": "258 Hùng Vương – Nhà khách Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 12,
+          "name": "Đối diện Cổng trường CĐ Quảng Nam",
+          "street": "Huỳnh Thúc Kháng"
+        },
+        {
+          "order": 13,
+          "name": "394 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 14,
+          "name": "36 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 15,
+          "name": "170 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 16,
+          "name": "324 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 17,
+          "name": "Bến xe Trà My",
+          "street": "QL40B"
+        },
+        {
+          "order": 18,
+          "name": "Ngã 3 Trà Đốc",
+          "street": "QL40B"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Ngã 3 Trà Đốc",
+          "street": "QL40B"
+        },
+        {
+          "order": 2,
+          "name": "Bến xe Trà My",
+          "street": "QL40B"
+        },
+        {
+          "order": 3,
+          "name": "67 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 4,
+          "name": "341 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 5,
+          "name": "56 Huỳnh Thúc Kháng",
+          "street": "Huỳnh Thúc Kháng"
+        },
+        {
+          "order": 6,
+          "name": "Đối diện nhà khách 258 Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 7,
+          "name": "Cây xăng dầu Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 8,
+          "name": "141 Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 9,
+          "name": "Đối diện cổng KTX CĐ Y tế Quảng Nam",
+          "street": "Lê Lợi"
+        },
+        {
+          "order": 10,
+          "name": "Cách cổng Trường CĐ Y tế Quảng Nam 10 m",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 11,
+          "name": "Trạm chờ Bờ hồ Nguyễn Du",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 12,
+          "name": "379 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 13,
+          "name": "239 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 14,
+          "name": "281 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 15,
+          "name": "201 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 16,
+          "name": "Bệnh viện Minh Thiện",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 17,
+          "name": "65 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 18,
+          "name": "Bến xe Tam Kỳ",
+          "street": "QL1A"
+        }
+      ]
+    },
+    "timetable": {
+      "outbound": [
+        {
+          "trip": 1,
+          "timeline": {
+            "Bến xe Tam Kỳ": "5:00",
+            "Đại học Quảng Nam": "5:10",
+            "Trần Cao Vân – Nguyễn Hoàng": "5:20",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "6:05",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "6:50"
+          },
+          "departureTime": "5:00"
+        },
+        {
+          "trip": 2,
+          "timeline": {
+            "Bến xe Tam Kỳ": "5:35",
+            "Đại học Quảng Nam": "5:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "5:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "6:40",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "7:25"
+          },
+          "departureTime": "5:35"
+        },
+        {
+          "trip": 3,
+          "timeline": {
+            "Bến xe Tam Kỳ": "6:10",
+            "Đại học Quảng Nam": "6:20",
+            "Trần Cao Vân – Nguyễn Hoàng": "6:30",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "7:15",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "8:00"
+          },
+          "departureTime": "6:10"
+        },
+        {
+          "trip": 4,
+          "timeline": {
+            "Bến xe Tam Kỳ": "6:45",
+            "Đại học Quảng Nam": "6:55",
+            "Trần Cao Vân – Nguyễn Hoàng": "7:05",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "7:50",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "8:35"
+          },
+          "departureTime": "6:45"
+        },
+        {
+          "trip": 5,
+          "timeline": {
+            "Bến xe Tam Kỳ": "7:20",
+            "Đại học Quảng Nam": "7:30",
+            "Trần Cao Vân – Nguyễn Hoàng": "7:40",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "8:25",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "9:10"
+          },
+          "departureTime": "7:20"
+        },
+        {
+          "trip": 6,
+          "timeline": {
+            "Bến xe Tam Kỳ": "7:55",
+            "Đại học Quảng Nam": "8:05",
+            "Trần Cao Vân – Nguyễn Hoàng": "8:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "9:00",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "9:45"
+          },
+          "departureTime": "7:55"
+        },
+        {
+          "trip": 7,
+          "timeline": {
+            "Bến xe Tam Kỳ": "8:30",
+            "Đại học Quảng Nam": "8:40",
+            "Trần Cao Vân – Nguyễn Hoàng": "8:50",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "9:35",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "10:20"
+          },
+          "departureTime": "8:30"
+        },
+        {
+          "trip": 8,
+          "timeline": {
+            "Bến xe Tam Kỳ": "9:05",
+            "Đại học Quảng Nam": "9:15",
+            "Trần Cao Vân – Nguyễn Hoàng": "9:25",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "10:10",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "10:55"
+          },
+          "departureTime": "9:05"
+        },
+        {
+          "trip": 9,
+          "timeline": {
+            "Bến xe Tam Kỳ": "9:40",
+            "Đại học Quảng Nam": "9:50",
+            "Trần Cao Vân – Nguyễn Hoàng": "10:00",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "10:45",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "11:30"
+          },
+          "departureTime": "9:40"
+        },
+        {
+          "trip": 10,
+          "timeline": {
+            "Bến xe Tam Kỳ": "10:15",
+            "Đại học Quảng Nam": "10:25",
+            "Trần Cao Vân – Nguyễn Hoàng": "10:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "11:20",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "12:05"
+          },
+          "departureTime": "10:15"
+        },
+        {
+          "trip": 11,
+          "timeline": {
+            "Bến xe Tam Kỳ": "10:55",
+            "Đại học Quảng Nam": "11:05",
+            "Trần Cao Vân – Nguyễn Hoàng": "11:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "12:00",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "12:45"
+          },
+          "departureTime": "10:55"
+        },
+        {
+          "trip": 12,
+          "timeline": {
+            "Bến xe Tam Kỳ": "11:35",
+            "Đại học Quảng Nam": "11:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "11:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "12:40",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "13:25"
+          },
+          "departureTime": "11:35"
+        },
+        {
+          "trip": 13,
+          "timeline": {
+            "Bến xe Tam Kỳ": "12:15",
+            "Đại học Quảng Nam": "12:25",
+            "Trần Cao Vân – Nguyễn Hoàng": "12:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "13:20",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "14:05"
+          },
+          "departureTime": "12:15"
+        },
+        {
+          "trip": 14,
+          "timeline": {
+            "Bến xe Tam Kỳ": "12:55",
+            "Đại học Quảng Nam": "13:05",
+            "Trần Cao Vân – Nguyễn Hoàng": "13:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "14:00",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "14:45"
+          },
+          "departureTime": "12:55"
+        },
+        {
+          "trip": 15,
+          "timeline": {
+            "Bến xe Tam Kỳ": "13:35",
+            "Đại học Quảng Nam": "13:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "13:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "14:40",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "15:25"
+          },
+          "departureTime": "13:35"
+        },
+        {
+          "trip": 16,
+          "timeline": {
+            "Bến xe Tam Kỳ": "14:15",
+            "Đại học Quảng Nam": "14:25",
+            "Trần Cao Vân – Nguyễn Hoàng": "14:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "15:20",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "16:05"
+          },
+          "departureTime": "14:15"
+        },
+        {
+          "trip": 17,
+          "timeline": {
+            "Bến xe Tam Kỳ": "14:55",
+            "Đại học Quảng Nam": "15:05",
+            "Trần Cao Vân – Nguyễn Hoàng": "15:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "16:00",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "16:45"
+          },
+          "departureTime": "14:55"
+        },
+        {
+          "trip": 18,
+          "timeline": {
+            "Bến xe Tam Kỳ": "15:35",
+            "Đại học Quảng Nam": "15:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "15:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "16:40",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "17:25"
+          },
+          "departureTime": "15:35"
+        },
+        {
+          "trip": 19,
+          "timeline": {
+            "Bến xe Tam Kỳ": "16:15",
+            "Đại học Quảng Nam": "16:25",
+            "Trần Cao Vân – Nguyễn Hoàng": "16:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "17:20",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "18:05"
+          },
+          "departureTime": "16:15"
+        },
+        {
+          "trip": 20,
+          "timeline": {
+            "Bến xe Tam Kỳ": "17:00",
+            "Đại học Quảng Nam": "17:10",
+            "Trần Cao Vân – Nguyễn Hoàng": "17:20",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "18:05",
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "18:50"
+          },
+          "departureTime": "17:00"
+        }
+      ],
+      "inbound": [
+        {
+          "trip": 1,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "5:00",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "5:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "6:30",
+            "Đại học Quảng Nam": "6:40",
+            "Bến xe Tam Kỳ": "6:50"
+          },
+          "departureTime": "5:00"
+        },
+        {
+          "trip": 2,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "5:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "6:20",
+            "Trần Cao Vân – Nguyễn Hoàng": "7:05",
+            "Đại học Quảng Nam": "7:15",
+            "Bến xe Tam Kỳ": "7:25"
+          },
+          "departureTime": "5:35"
+        },
+        {
+          "trip": 3,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "6:10",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "6:55",
+            "Trần Cao Vân – Nguyễn Hoàng": "7:40",
+            "Đại học Quảng Nam": "7:50",
+            "Bến xe Tam Kỳ": "8:00"
+          },
+          "departureTime": "6:10"
+        },
+        {
+          "trip": 4,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "6:45",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "7:30",
+            "Trần Cao Vân – Nguyễn Hoàng": "8:15",
+            "Đại học Quảng Nam": "8:25",
+            "Bến xe Tam Kỳ": "8:35"
+          },
+          "departureTime": "6:45"
+        },
+        {
+          "trip": 5,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "7:20",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "8:05",
+            "Trần Cao Vân – Nguyễn Hoàng": "8:50",
+            "Đại học Quảng Nam": "9:00",
+            "Bến xe Tam Kỳ": "9:10"
+          },
+          "departureTime": "7:20"
+        },
+        {
+          "trip": 6,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "7:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "8:40",
+            "Trần Cao Vân – Nguyễn Hoàng": "9:25",
+            "Đại học Quảng Nam": "9:35",
+            "Bến xe Tam Kỳ": "9:45"
+          },
+          "departureTime": "7:55"
+        },
+        {
+          "trip": 7,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "8:30",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "9:15",
+            "Trần Cao Vân – Nguyễn Hoàng": "10:00",
+            "Đại học Quảng Nam": "10:10",
+            "Bến xe Tam Kỳ": "10:20"
+          },
+          "departureTime": "8:30"
+        },
+        {
+          "trip": 8,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "9:05",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "9:50",
+            "Trần Cao Vân – Nguyễn Hoàng": "10:35",
+            "Đại học Quảng Nam": "10:45",
+            "Bến xe Tam Kỳ": "10:55"
+          },
+          "departureTime": "9:05"
+        },
+        {
+          "trip": 9,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "9:40",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "10:25",
+            "Trần Cao Vân – Nguyễn Hoàng": "11:10",
+            "Đại học Quảng Nam": "11:20",
+            "Bến xe Tam Kỳ": "11:30"
+          },
+          "departureTime": "9:40"
+        },
+        {
+          "trip": 10,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "10:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "11:00",
+            "Trần Cao Vân – Nguyễn Hoàng": "11:45",
+            "Đại học Quảng Nam": "11:55",
+            "Bến xe Tam Kỳ": "12:05"
+          },
+          "departureTime": "10:15"
+        },
+        {
+          "trip": 11,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "10:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "11:40",
+            "Trần Cao Vân – Nguyễn Hoàng": "12:25",
+            "Đại học Quảng Nam": "12:35",
+            "Bến xe Tam Kỳ": "12:45"
+          },
+          "departureTime": "10:55"
+        },
+        {
+          "trip": 12,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "11:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "12:20",
+            "Trần Cao Vân – Nguyễn Hoàng": "13:05",
+            "Đại học Quảng Nam": "13:15",
+            "Bến xe Tam Kỳ": "13:25"
+          },
+          "departureTime": "11:35"
+        },
+        {
+          "trip": 13,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "12:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "13:00",
+            "Trần Cao Vân – Nguyễn Hoàng": "13:45",
+            "Đại học Quảng Nam": "13:55",
+            "Bến xe Tam Kỳ": "14:05"
+          },
+          "departureTime": "12:15"
+        },
+        {
+          "trip": 14,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "12:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "13:40",
+            "Trần Cao Vân – Nguyễn Hoàng": "14:25",
+            "Đại học Quảng Nam": "14:35",
+            "Bến xe Tam Kỳ": "14:45"
+          },
+          "departureTime": "12:55"
+        },
+        {
+          "trip": 15,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "13:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "14:20",
+            "Trần Cao Vân – Nguyễn Hoàng": "15:05",
+            "Đại học Quảng Nam": "15:15",
+            "Bến xe Tam Kỳ": "15:25"
+          },
+          "departureTime": "13:35"
+        },
+        {
+          "trip": 16,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "14:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "15:00",
+            "Trần Cao Vân – Nguyễn Hoàng": "15:45",
+            "Đại học Quảng Nam": "15:55",
+            "Bến xe Tam Kỳ": "16:05"
+          },
+          "departureTime": "14:15"
+        },
+        {
+          "trip": 17,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "14:55",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "15:40",
+            "Trần Cao Vân – Nguyễn Hoàng": "16:25",
+            "Đại học Quảng Nam": "16:35",
+            "Bến xe Tam Kỳ": "16:45"
+          },
+          "departureTime": "14:55"
+        },
+        {
+          "trip": 18,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "15:35",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "16:20",
+            "Trần Cao Vân – Nguyễn Hoàng": "17:05",
+            "Đại học Quảng Nam": "17:15",
+            "Bến xe Tam Kỳ": "17:25"
+          },
+          "departureTime": "15:35"
+        },
+        {
+          "trip": 19,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "16:15",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "17:00",
+            "Trần Cao Vân – Nguyễn Hoàng": "17:45",
+            "Đại học Quảng Nam": "17:55",
+            "Bến xe Tam Kỳ": "18:05"
+          },
+          "departureTime": "16:15"
+        },
+        {
+          "trip": 20,
+          "timeline": {
+            "Bến xe khách Bắc Trà My (thị trấn Trà My)": "17:00",
+            "Huỳnh Thúc Kháng – Quốc lộ 40B (thị trấn Tiên Kỳ)": "17:45",
+            "Trần Cao Vân – Nguyễn Hoàng": "18:30",
+            "Đại học Quảng Nam": "18:40",
+            "Bến xe Tam Kỳ": "18:50"
+          },
+          "departureTime": "17:00"
+        }
+      ]
+    },
+    "vehicleInfo": "- Nhãn hiệu: Thaco\n- Sức chứa: 39 chỗ; trong đó có 12 xe (19 chỗ ngồi, 20 chỗ đứng), 02 xe (23 chỗ ngồi, 16 chỗ đứng)",
+    "pdfUrls": []
+  },
+  {
+    "id": "TKY-NTH",
+    "routeNumber": "05 (Quảng Nam)",
+    "name": "Tam Kỳ – Núi Thành (Cảng Kỳ Hà)",
+    "shortName": "Tam Kỳ – Núi Thành",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty TNHH MTV Mai Linh Hội An",
+    "terminals": {
+      "origin": "",
+      "destination": ""
+    },
+    "operatingHours": {
+      "start": "6:00",
+      "end": "17:00",
+      "raw": "từ 6h00 đến 17h00 (60 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 60,
+      "offPeakMinutes": 60,
+      "raw": "60 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": null,
+      "outbound": null,
+      "inbound": null,
+      "raw": ""
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "a) Tam Kỳ đi Cảng Kỳ Hà:\n- Tam Kỳ - Tam Xuân I\n12.000\n- Tam Kỳ - Bà Bầu\n18.000\n- Tam Kỳ - Tam Anh, Trường Hải\n22.000\n- Tam Kỳ - thị trấn Núi Thành\n27.000\n- Tam Kỳ - Cảng Kỳ Hà\n29.000\nb) Cảng Kỳ Hà đi tam Kỳ:\n- Cảng Kỳ Hà – thị trấn Núi Thành\n12.000\n- Cảng Kỳ Hà – Trường Hải\n18.000\n- Cảng Kỳ Hà – Bà Bầu\n22.000\n- Thị trấn Núi Thành – Tam Kỳ\n27.000\n- "
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Tam Kỳ - đường Phan Bội Châu – Hùng Vương – Trần Quý Cáp – Nguyễn Chí Thanh – Nguyễn Du – Trưng Nữ Vương – Hùng Vương – Huỳnh Thúc Kháng – ga Tam Kỳ - đường Nguyễn Hoàng – Trần Cao Vân – Phan Châu Trinh – QL1 – ga Núi Thành – đường Lê Lợi – Lê Hồng Phong – Trần Hưng Đạo – ĐT 618 – cảng Kỳ Hà.\n- Chiều về: Cảng Kỳ Hà – Đ",
+        "streets": [
+          "Bến xe Tam Kỳ",
+          "đường Phan Bội Châu",
+          "Hùng Vương",
+          "Trần Quý Cáp",
+          "Nguyễn Chí Thanh",
+          "Nguyễn Du",
+          "Trưng Nữ Vương",
+          "Huỳnh Thúc Kháng",
+          "ga Tam Kỳ",
+          "đường Nguyễn Hoàng",
+          "Trần Cao Vân",
+          "Phan Châu Trinh",
+          "QL1",
+          "ga Núi Thành",
+          "đường Lê Lợi",
+          "Lê Hồng Phong",
+          "Trần Hưng Đạo",
+          "ĐT 618",
+          "cảng Kỳ Hà.",
+          "Chiều về: Cảng Kỳ Hà"
+        ]
+      },
+      "inbound": {
+        "text": "Cảng Kỳ Hà – ĐT 618 – Trần Hưng Đạo – Lê Hồng Phong – đường lê Lợi – ga Núi Thành – QL1 – Phan Châu Trinh – Trần Cao Vân – đường Nguyễn Hoàng (ga Tam Kỳ) – Huỳnh Thúc Kháng – Hùng Vương – Trưng Nữ Vương – Nguyễn Du – Nguyễn Chí Thanh – Trần Quý Cáp – Hùng Vương – đường Phan Bội Châu – Bến xe Tam Kỳ.",
+        "streets": [
+          "Cảng Kỳ Hà",
+          "ĐT 618",
+          "Trần Hưng Đạo",
+          "Lê Hồng Phong",
+          "đường lê Lợi",
+          "ga Núi Thành",
+          "QL1",
+          "Phan Châu Trinh",
+          "Trần Cao Vân",
+          "đường Nguyễn Hoàng",
+          "Huỳnh Thúc Kháng",
+          "Hùng Vương",
+          "Trưng Nữ Vương",
+          "Nguyễn Du",
+          "Nguyễn Chí Thanh",
+          "Trần Quý Cáp",
+          "đường Phan Bội Châu",
+          "Bến xe Tam Kỳ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Bến xe Tam Kỳ",
+          "street": "QL1A"
+        },
+        {
+          "order": 2,
+          "name": "10 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 3,
+          "name": "Cách cổng chính Bộ đội biên phòng Quảng Nam 20m",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 4,
+          "name": "Nhà chờ đường Nguyễn Chí Thanh",
+          "street": "Nguyễn Chí Thanh"
+        },
+        {
+          "order": 5,
+          "name": "Đối diện trường Cao đẳng Y tế Quảng Nam",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 6,
+          "name": "Cách cổng UBND phường Tam Kỳ 10m",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 7,
+          "name": "Cách cổng Trường Đại học Quảng Nam 30 m",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 8,
+          "name": "258 Hùng Vương – Nhà khách Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 9,
+          "name": "67 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 10,
+          "name": "546 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 11,
+          "name": "608 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 12,
+          "name": "Nhà thờ Tin Lành- Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 13,
+          "name": "816 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 14,
+          "name": "954 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 15,
+          "name": "Tam Anh",
+          "street": "QL1"
+        },
+        {
+          "order": 16,
+          "name": "Tam Anh Nam",
+          "street": "QL1"
+        },
+        {
+          "order": 17,
+          "name": "Cầu vượt Trường Hải",
+          "street": "QL1"
+        },
+        {
+          "order": 18,
+          "name": "Cách Cổng Khu công nghiệp Băc Chu Lai 50m",
+          "street": "QL1"
+        },
+        {
+          "order": 19,
+          "name": "Khu công nghiệp Bắc Chu Lai",
+          "street": "QL1"
+        },
+        {
+          "order": 20,
+          "name": "Cảng Kỳ Hà",
+          "street": "ĐT 618"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Cảng Kỳ Hà",
+          "street": "ĐT 618"
+        },
+        {
+          "order": 2,
+          "name": "Ngã 3 Kỳ Hà cũ",
+          "street": "QL1"
+        },
+        {
+          "order": 3,
+          "name": "Chùa An Tân",
+          "street": "QL1"
+        },
+        {
+          "order": 4,
+          "name": "Ngã 4 Tam Giang",
+          "street": "QL1"
+        },
+        {
+          "order": 5,
+          "name": "Thư viện Núi Thành",
+          "street": "QL1"
+        },
+        {
+          "order": 6,
+          "name": "Bệnh viện Hàn Quốc",
+          "street": "QL1"
+        },
+        {
+          "order": 7,
+          "name": "Cách khu phức hợp ô tô Trường Hải 100m",
+          "street": "QL1"
+        },
+        {
+          "order": 8,
+          "name": "781 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 9,
+          "name": "531 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 10,
+          "name": "467 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 11,
+          "name": "36 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 12,
+          "name": "170 Trần Cao Vân",
+          "street": "Trần Cao Vân"
+        },
+        {
+          "order": 13,
+          "name": "Đối diện Nhà khách 258 Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 14,
+          "name": "Cây xăng dầu Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 15,
+          "name": "141 Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 16,
+          "name": "101 Hùng Vương",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 17,
+          "name": "63 Nguyễn Du",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 18,
+          "name": "Cách Cổng trường CĐ y Tế Quảng Nam 10m",
+          "street": "Nguyễn Du"
+        },
+        {
+          "order": 19,
+          "name": "Đường Nguyễn Chí Thanh – Bên hông Sở GTVT Quảng Nam",
+          "street": "Nguyễn Chí Thanh"
+        },
+        {
+          "order": 20,
+          "name": "Trường Cao đẳng Phương Đông",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 21,
+          "name": "65 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 22,
+          "name": "Bến xe Tam Kỳ",
+          "street": "QL1A"
+        }
+      ]
+    },
+    "timetable": {
+      "outbound": [
+        {
+          "trip": 1,
+          "timeline": {
+            "Bến xe Tam Kỳ": "6:00",
+            "Đại học Quảng Nam": "6:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "6:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "6:55",
+            "Cảng Kỳ Hà": "7:10"
+          },
+          "departureTime": "6:00"
+        },
+        {
+          "trip": 2,
+          "timeline": {
+            "Bến xe Tam Kỳ": "7:00",
+            "Đại học Quảng Nam": "7:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "7:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "7:55",
+            "Cảng Kỳ Hà": "8:10"
+          },
+          "departureTime": "7:00"
+        },
+        {
+          "trip": 3,
+          "timeline": {
+            "Bến xe Tam Kỳ": "8:00",
+            "Đại học Quảng Nam": "8:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "8:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "8:55",
+            "Cảng Kỳ Hà": "9:10"
+          },
+          "departureTime": "8:00"
+        },
+        {
+          "trip": 4,
+          "timeline": {
+            "Bến xe Tam Kỳ": "9:00",
+            "Đại học Quảng Nam": "9:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "9:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "9:55",
+            "Cảng Kỳ Hà": "10:10"
+          },
+          "departureTime": "9:00"
+        },
+        {
+          "trip": 5,
+          "timeline": {
+            "Bến xe Tam Kỳ": "10:00",
+            "Đại học Quảng Nam": "10:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "10:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "10:55",
+            "Cảng Kỳ Hà": "11:10"
+          },
+          "departureTime": "10:00"
+        },
+        {
+          "trip": 6,
+          "timeline": {
+            "Bến xe Tam Kỳ": "11:00",
+            "Đại học Quảng Nam": "11:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "11:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "11:55",
+            "Cảng Kỳ Hà": "12:10"
+          },
+          "departureTime": "11:00"
+        },
+        {
+          "trip": 7,
+          "timeline": {
+            "Bến xe Tam Kỳ": "12:00",
+            "Đại học Quảng Nam": "12:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "12:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "12:55",
+            "Cảng Kỳ Hà": "13:10"
+          },
+          "departureTime": "12:00"
+        },
+        {
+          "trip": 8,
+          "timeline": {
+            "Bến xe Tam Kỳ": "13:00",
+            "Đại học Quảng Nam": "13:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "13:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "13:55",
+            "Cảng Kỳ Hà": "14:10"
+          },
+          "departureTime": "13:00"
+        },
+        {
+          "trip": 9,
+          "timeline": {
+            "Bến xe Tam Kỳ": "14:00",
+            "Đại học Quảng Nam": "14:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "14:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "14:55",
+            "Cảng Kỳ Hà": "15:10"
+          },
+          "departureTime": "14:00"
+        },
+        {
+          "trip": 10,
+          "timeline": {
+            "Bến xe Tam Kỳ": "15:00",
+            "Đại học Quảng Nam": "15:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "15:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "15:55",
+            "Cảng Kỳ Hà": "16:10"
+          },
+          "departureTime": "15:00"
+        },
+        {
+          "trip": 11,
+          "timeline": {
+            "Bến xe Tam Kỳ": "16:00",
+            "Đại học Quảng Nam": "16:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "16:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "16:55",
+            "Cảng Kỳ Hà": "17:10"
+          },
+          "departureTime": "16:00"
+        },
+        {
+          "trip": 12,
+          "timeline": {
+            "Bến xe Tam Kỳ": "17:00",
+            "Đại học Quảng Nam": "17:10",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "17:20",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "17:55",
+            "Cảng Kỳ Hà": "18:10"
+          },
+          "departureTime": "17:00"
+        }
+      ],
+      "inbound": [
+        {
+          "trip": 1,
+          "timeline": {
+            "Cảng Kỳ Hà": "6:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "6:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "6:50",
+            "Đại học Quảng Nam": "7:00",
+            "Bến xe Tam Kỳ": "7:10"
+          },
+          "departureTime": "6:00"
+        },
+        {
+          "trip": 2,
+          "timeline": {
+            "Cảng Kỳ Hà": "7:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "7:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "7:50",
+            "Đại học Quảng Nam": "8:00",
+            "Bến xe Tam Kỳ": "8:10"
+          },
+          "departureTime": "7:00"
+        },
+        {
+          "trip": 3,
+          "timeline": {
+            "Cảng Kỳ Hà": "8:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "8:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "8:50",
+            "Đại học Quảng Nam": "9:00",
+            "Bến xe Tam Kỳ": "9:10"
+          },
+          "departureTime": "8:00"
+        },
+        {
+          "trip": 4,
+          "timeline": {
+            "Cảng Kỳ Hà": "9:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "9:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "9:50",
+            "Đại học Quảng Nam": "10:00",
+            "Bến xe Tam Kỳ": "10:10"
+          },
+          "departureTime": "9:00"
+        },
+        {
+          "trip": 5,
+          "timeline": {
+            "Cảng Kỳ Hà": "10:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "10:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "10:50",
+            "Đại học Quảng Nam": "11:00",
+            "Bến xe Tam Kỳ": "11:10"
+          },
+          "departureTime": "10:00"
+        },
+        {
+          "trip": 6,
+          "timeline": {
+            "Cảng Kỳ Hà": "11:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "11:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "11:50",
+            "Đại học Quảng Nam": "12:00",
+            "Bến xe Tam Kỳ": "12:10"
+          },
+          "departureTime": "11:00"
+        },
+        {
+          "trip": 7,
+          "timeline": {
+            "Cảng Kỳ Hà": "12:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "12:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "12:50",
+            "Đại học Quảng Nam": "13:00",
+            "Bến xe Tam Kỳ": "13:10"
+          },
+          "departureTime": "12:00"
+        },
+        {
+          "trip": 8,
+          "timeline": {
+            "Cảng Kỳ Hà": "13:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "13:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "13:50",
+            "Đại học Quảng Nam": "14:00",
+            "Bến xe Tam Kỳ": "14:10"
+          },
+          "departureTime": "13:00"
+        },
+        {
+          "trip": 9,
+          "timeline": {
+            "Cảng Kỳ Hà": "14:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "14:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "14:50",
+            "Đại học Quảng Nam": "15:00",
+            "Bến xe Tam Kỳ": "15:10"
+          },
+          "departureTime": "14:00"
+        },
+        {
+          "trip": 10,
+          "timeline": {
+            "Cảng Kỳ Hà": "15:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "15:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "15:50",
+            "Đại học Quảng Nam": "16:00",
+            "Bến xe Tam Kỳ": "16:10"
+          },
+          "departureTime": "15:00"
+        },
+        {
+          "trip": 11,
+          "timeline": {
+            "Cảng Kỳ Hà": "16:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "16:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "16:50",
+            "Đại học Quảng Nam": "17:00",
+            "Bến xe Tam Kỳ": "17:10"
+          },
+          "departureTime": "16:00"
+        },
+        {
+          "trip": 12,
+          "timeline": {
+            "Cảng Kỳ Hà": "17:00",
+            "Lê Lợi – Phạm Văn Đồng (thị trấn Núi Thành)": "17:15",
+            "Phan Chu Trinh – Thanh Hóa (Tam Kỳ)": "17:50",
+            "Đại học Quảng Nam": "18:00",
+            "Bến xe Tam Kỳ": "18:10"
+          },
+          "departureTime": "17:00"
+        }
+      ]
+    },
+    "vehicleInfo": "- Nhãn hiệu: Transinco\n- Sức chứa: 01 xe 41 chỗ (25 chỗ ngồi, 16 chỗ đứng), 02 xe 28 chỗ (19 chỗ ngồi, 9 chỗ đứng), 3 xe 42 chỗ (26 ngồi, 16 đứng)",
+    "pdfUrls": []
+  },
+  {
+    "id": "TKY-CHU",
+    "routeNumber": "12 (Quảng Nam)",
+    "name": "Tam Kỳ – Sân bay Chu Lai",
+    "shortName": "Tam Kỳ – SB Chu Lai",
+    "formerName": null,
+    "aliases": [],
+    "category": "non_subsidized",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty TNHH MTV Mai Linh Hội An",
+    "terminals": {
+      "origin": "90 Phan Bội Châu (Tam Kỳ)",
+      "destination": "Sân bay Chu Lai"
+    },
+    "operatingHours": {
+      "start": "05:00",
+      "end": "18:00",
+      "raw": "Xuất bến trước giờ bay 130 phút, lượt về sau máy bay đến 20 phút"
+    },
+    "frequency": {
+      "peakMinutes": 60,
+      "offPeakMinutes": 90,
+      "raw": "Theo lịch trình chuyến bay tại Sân bay Chu Lai"
+    },
+    "distanceKm": {
+      "average": null,
+      "outbound": null,
+      "inbound": null,
+      "raw": ""
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "- Vé lượt ½ chặng: 40.000 đồng/lượt;\n- Vé lượt suốt tuyến: 60.000 đồng/lượt.\nThực hiện miễn giá vé cho người khuyết tật đặc biệt nặng và trẻ em dưới 6 tuổi, giảm 50% giá vé đối với người khuyết tật nặng, giảm 25% giá vé đối với người khuyết tật nhẹ và người cao tuổi.\nHành lý được miễn cước: Không quá 10kg, kích thước không quá 30x40x60cm.\nHành lý v"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Đường Phan Bội Châu (P. Bàn Thạch) – Đường Phan Chu Trinh (P. Tam Kỳ) - QL1A – Đường Phạm Văn Đồng (Núi Thành) - ĐT619 (Núi Thành) - Đường Võ Chí Công (Núi Thành) - Sảnh nhà ga sân bay Chu Lai.\n- Chiều về:",
+        "streets": [
+          "Đường Phan Bội Châu",
+          "Đường Phan Chu Trinh",
+          "QL1A",
+          "Đường Phạm Văn Đồng",
+          "ĐT619",
+          "Đường Võ Chí Công",
+          "Sảnh nhà ga sân bay Chu Lai.",
+          "Chiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Sảnh nhà ga sân bay Chu Lai – Đường Võ Chí Công (Núi Thành) - ĐT619 (Núi Thành) - Đường Phạm Văn Đồng (Núi Thành) – QL1A – Đường Phan Châu Trinh (P. Tam Kỳ) - Đường Phan Bội Châu (P. Bàn Thạch).",
+        "streets": [
+          "Sảnh nhà ga sân bay Chu Lai",
+          "Đường Võ Chí Công",
+          "ĐT619",
+          "Đường Phạm Văn Đồng",
+          "QL1A",
+          "Đường Phan Châu Trinh",
+          "Đường Phan Bội Châu ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "90 Phan Bội Châu",
+          "street": "Phan Bội Châu - Bàn Thạch"
+        },
+        {
+          "order": 2,
+          "name": "110 Phan Bội Châu (Ngân Hàng BIDV)",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 3,
+          "name": "02 Phan Bội Châu (VNPT)",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 4,
+          "name": "06 Phan Bội Châu (Ngân hàng Agibank)",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 5,
+          "name": "140 Phan Bội Châu (Chùa Đạo Nguyên)",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 6,
+          "name": "463 Phan Bội Châu (Kho bạc cũ)",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 7,
+          "name": "20A Phan Châu Trinh (KS Anh Huy)",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 8,
+          "name": "136 Phan Châu Trinh (Chùa Hòa An )",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 9,
+          "name": "320 Phan Châu Trinh (Chùa Hòa An )",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 10,
+          "name": "394 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 11,
+          "name": "484 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 12,
+          "name": "544 Phan Châu Trinh (Cầu Ngân hàng)",
+          "street": "Phan Châu Trinh – Hương Trà"
+        },
+        {
+          "order": 13,
+          "name": "608 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Hương Trà"
+        },
+        {
+          "order": 14,
+          "name": "636 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Hương Trà"
+        },
+        {
+          "order": 15,
+          "name": "706 Phan Châu Trinh (Nhà thờ)",
+          "street": "Phan Châu Trinh – Hương Trà"
+        },
+        {
+          "order": 16,
+          "name": "878 Phan Châu Trinh (Tin Lành)",
+          "street": "Phan Châu Trinh – Hương Trà"
+        },
+        {
+          "order": 17,
+          "name": "Đối diện cây xăng Hòa Mỹ",
+          "street": "QL1"
+        },
+        {
+          "order": 18,
+          "name": "UBND xã Tam Xuân I cũ",
+          "street": "QL1"
+        },
+        {
+          "order": 19,
+          "name": "Cách cầu Bà Bầu 20m hướng về Núi Thành",
+          "street": "QL1"
+        },
+        {
+          "order": 20,
+          "name": "Ngã 3 Đức Bố",
+          "street": "QL1"
+        },
+        {
+          "order": 21,
+          "name": "Cổng Khu Công nghiệp Bắc Chu Lai",
+          "street": "QL1"
+        },
+        {
+          "order": 22,
+          "name": "Sảnh nhà ga sân bay Chu Lai",
+          "street": "Sân bay Chu Lai"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Sảnh nhà ga sân bay Chu Lai",
+          "street": "Sân bay Chu Lai"
+        },
+        {
+          "order": 2,
+          "name": "Thư viện Núi Thành",
+          "street": "QL1"
+        },
+        {
+          "order": 3,
+          "name": "Ngã 4 Tam Giang",
+          "street": "QL1"
+        },
+        {
+          "order": 4,
+          "name": "Bệnh viện Hàn Quốc",
+          "street": "QL1"
+        },
+        {
+          "order": 5,
+          "name": "Cầu vượt Trường Hải",
+          "street": "QL1"
+        },
+        {
+          "order": 6,
+          "name": "Cầu Máng",
+          "street": "QL1"
+        },
+        {
+          "order": 7,
+          "name": "781 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 8,
+          "name": "531 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 9,
+          "name": "467 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 10,
+          "name": "341 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 11,
+          "name": "275 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 12,
+          "name": "73 Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 13,
+          "name": "Siêu thị Coop Mart - Phan Châu Trinh",
+          "street": "Phan Châu Trinh – Tam Kỳ"
+        },
+        {
+          "order": 14,
+          "name": "379 Phan Bội Châu",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 15,
+          "name": "283 Phan Bội Châu",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 16,
+          "name": "281 Phan Bội Châu",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 17,
+          "name": "239 Phan Bội Châu – Ngân hàng BIDV",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 18,
+          "name": "201 Phan Bội Châu – Đối diện ngân hàng Đông Á",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        },
+        {
+          "order": 19,
+          "name": "135 Phan Bội Châu",
+          "street": "Phan Bội Châu – Bàn Thạch"
+        }
+      ]
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Samco\n- Sức chứa: 40 chỗ (23 chỗ ngồi, 17 chỗ đứng)",
+    "pdfUrls": []
+  },
+  {
+    "id": "LK01",
+    "routeNumber": "LK01",
+    "name": "Đà Nẵng – Huế",
+    "shortName": "Đà Nẵng – Huế",
+    "formerName": null,
+    "aliases": [],
+    "category": "interprovincial",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Liên danh các đơn vị vận tải (Hải Vân, Vitraco, HTX)",
+    "terminals": {
+      "origin": "Bến xe Trung tâm Đà Nẵng",
+      "destination": "Bến xe phía Nam Huế"
+    },
+    "operatingHours": {
+      "start": "05:30",
+      "end": "19:00",
+      "raw": "từ 05h30 - 19h00 tất cả các ngày trong tuần (14 - 15 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 15,
+      "raw": "14 - 15 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": 100.0,
+      "outbound": null,
+      "inbound": null,
+      "raw": "100 km"
+    },
+    "fares": {
+      "singleTicket": 80000,
+      "rawSummary": "80.000 đồng/ lượt\nc) Cự ly tuyến: 100 km\nd) Thời gian bắt đầu vận hành: Từ 01/01/2020"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Trung tâm Đà Nẵng - Tôn Đức Thắng - Nguyễn Lương Bằng - Nguyễn Văn Cừ - Đường Tạ Quang Bửu - đường Hầm Hải Vân Túy Loan - Hầm Hải Vân - QL1A - Nguyễn Tất Thành - An Dương Lương - Bến xe phía Nam Huế.\nChiều về: Bến xe phía Nam Huế - An Dương Vương - Nguyễn",
+        "streets": [
+          "Bến xe Trung tâm Đà Nẵng",
+          "Tôn Đức Thắng",
+          "Nguyễn Lương Bằng",
+          "Nguyễn Văn Cừ",
+          "Đường Tạ Quang Bửu",
+          "đường Hầm Hải Vân Túy Loan",
+          "Hầm Hải Vân",
+          "QL1A",
+          "Nguyễn Tất Thành",
+          "An Dương Lương",
+          "Bến xe phía Nam Huế.\nChiều về: Bến xe phía Nam Huế",
+          "An Dương Vương",
+          "Nguyễn"
+        ]
+      },
+      "inbound": {
+        "text": "Bến xe phía Nam Huế - An Dương Vương - Nguyễn Tất Thành - QL1A - Hầm Hải Vân - đường hầm Hải Vân Túy Loan - Tạ Quang Bửu - Nguyễn Văn Cừ - Nguyễn Lương Bằng - Tôn Đức Thắng - Bến xe Trung tâm Đà Nẵng.\nb) Giá vé",
+        "streets": [
+          "Bến xe phía Nam Huế",
+          "An Dương Vương",
+          "Nguyễn Tất Thành",
+          "QL1A",
+          "Hầm Hải Vân",
+          "đường hầm Hải Vân Túy Loan",
+          "Tạ Quang Bửu",
+          "Nguyễn Văn Cừ",
+          "Nguyễn Lương Bằng",
+          "Tôn Đức Thắng",
+          "Bến xe Trung tâm Đà Nẵng.\nb) Giá vé"
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "",
+    "pdfUrls": []
+  },
+  {
+    "id": "01DL",
+    "routeNumber": "01DL",
+    "name": "Tuyến buýt du lịch: Hội An – Mỹ Sơn – Cổng trời Đông Giang",
+    "shortName": "Hội An – Mỹ Sơn – Cổng Trời",
+    "formerName": null,
+    "aliases": [],
+    "category": "tourist",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty CP Du lịch FVG Travel",
+    "terminals": {
+      "origin": "KĐT Nam Hội An City",
+      "destination": "Bãi đỗ xe KDL Cổng Trời Đông Giang"
+    },
+    "operatingHours": {
+      "start": "08:00",
+      "end": "17:30",
+      "raw": "Mở tuyến: 08h00 - Đóng tuyến: 17h30"
+    },
+    "frequency": {
+      "peakMinutes": 60,
+      "offPeakMinutes": 120,
+      "raw": "Theo các khung giờ tham quan du lịch"
+    },
+    "distanceKm": {
+      "average": 105.0,
+      "outbound": 105.0,
+      "inbound": 105.0,
+      "raw": "105 km"
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "- Tuyến Hội An - Mỹ Sơn - CT Đông Giang: 250.000 đồng/lượt.\n- Vé xe buýt chặng Hội An - Mỹ Sơn: 150.000 đồng/lượt.\n- Vé xe buýt chặng Mỹ Sơn – CT Đông Giang: 150.000 đồng/lượt.\n* Giá vé giảm 50% đối với người có công với cách mạng, người cao tuổi, người khuyết tật, trẻ em dưới 6 tuổi.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: GAZ\n- Sức chứa: "
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Khu Đô Thị du Lịch Nam Hội An City (Xã Duy Nghĩa) - Cầu Cửa Đại - đường Võ Chí Công - Đường Cửa Đại - đường Trần Nhân Tông - đường Lý Thường Kiệt - đường Hai Bà Trưng - đường Nguyễn Tất Thành - đường 28 tháng 3 - đường Hùng Vương - đường ĐT608 - đường Mẹ Thứ - đường Trần Nhân Tông - đường ĐT609 - đường Hùng Vương - đường Đỗ Đăng Tuyển - cầu Giao Thủy - đường QL 14H - đền Tháp Mỹ Sơn (khách dừng tham quan tại đền Tháp Mỹ Sơn) - đường QL 14H - cầu Giao Thủy - đường Đỗ Đăng Tuyển - đường Hùng Vương - đường Nguyễn Tất Thành - đường ĐT609 - Bãi đỗ xe Cổng Trời Đông Giang.\n- Chiều về: Bãi đỗ xe Cổng",
+        "streets": [
+          "Khu Đô Thị du Lịch Nam Hội An City",
+          "Cầu Cửa Đại",
+          "đường Võ Chí Công",
+          "Đường Cửa Đại",
+          "đường Trần Nhân Tông",
+          "đường Lý Thường Kiệt",
+          "đường Hai Bà Trưng",
+          "đường Nguyễn Tất Thành",
+          "đường 28 tháng 3",
+          "đường Hùng Vương",
+          "đường ĐT608",
+          "đường Mẹ Thứ",
+          "đường ĐT609",
+          "đường Đỗ Đăng Tuyển",
+          "cầu Giao Thủy",
+          "đường QL 14H",
+          "đền Tháp Mỹ Sơn",
+          "Bãi đỗ xe Cổng Trời Đông Giang.",
+          "Chiều về: Bãi đỗ xe Cổng"
+        ]
+      },
+      "inbound": {
+        "text": "Bãi đỗ xe Cổng Trời Đông Giang - đường ĐT609 - đường Nguyễn Tất Thành - đường Hùng Vương - đường Đỗ Đăng Tuyển - cầu Giao Thủy - đường QL 14H - đền Tháp Mỹ Sơn (khách dừng tham quan tại đền Tháp Mỹ Sơn) - đường QL 14H - cầu Giao Thủy - đường Đỗ Đăng Tuyển - đường Hùng Vương - đường ĐT609 - đường Trần Nhân Tông - đường Mẹ Thứ - đường ĐT608 - đường Hùng Vương - đường 28 tháng 3 - đường Nguyễn Tất Thành - đường Hai Bà Trưng - đường Lý Thường Kiệt - đường Trần Nhân Tông - Đường Cửa Đại - đường Võ Chí Công - Cầu Cửa Đại - Khu Đô Thị du Lịch Nam Hội An City (Xã Duy Nghĩa)",
+        "streets": [
+          "Bãi đỗ xe Cổng Trời Đông Giang",
+          "đường ĐT609",
+          "đường Nguyễn Tất Thành",
+          "đường Hùng Vương",
+          "đường Đỗ Đăng Tuyển",
+          "cầu Giao Thủy",
+          "đường QL 14H",
+          "đền Tháp Mỹ Sơn",
+          "đường Trần Nhân Tông",
+          "đường Mẹ Thứ",
+          "đường ĐT608",
+          "đường 28 tháng 3",
+          "đường Hai Bà Trưng",
+          "đường Lý Thường Kiệt",
+          "Đường Cửa Đại",
+          "đường Võ Chí Công",
+          "Cầu Cửa Đại",
+          "Khu Đô Thị du Lịch Nam Hội An City"
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Khu đô thị Nam Hội An City",
+          "street": "Trường Giang 1, Duy Nghĩa, TP Đà Nẵng"
+        },
+        {
+          "order": 2,
+          "name": "Bãi đỗ xe đường Hai Bà Trưng",
+          "street": "497 Đường Hai Bà Trưng, Hội An"
+        },
+        {
+          "order": 3,
+          "name": "Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+          "street": "Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn"
+        },
+        {
+          "order": 4,
+          "name": "Bãi đỗ xe Khu du lịch Cổng trời Đông Giang",
+          "street": "Xã Bến Hiên, TP. Đà Nẵng"
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Bãi đỗ xe Khu du lịch Cổng trời Đông Giang",
+          "street": "Xã Bến Hiên, TP. Đà Nẵng"
+        },
+        {
+          "order": 2,
+          "name": "Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+          "street": "Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn"
+        },
+        {
+          "order": 3,
+          "name": "Bãi đỗ xe đường Hai Bà Trưng",
+          "street": "497 Đường Hai Bà Trưng, Hội An"
+        },
+        {
+          "order": 4,
+          "name": "Khu đô thị Nam Hội An City",
+          "street": "Trường Giang 1, Duy Nghĩa, TP Đà Nẵng"
+        }
+      ]
+    },
+    "timetable": {
+      "outbound": []
+    },
+    "vehicleInfo": "- Nhãn hiệu: GAZ\n- Sức chứa: 24 chỗ (16 chỗ ngồi, 8 chỗ đứng)",
+    "pdfUrls": []
+  },
+  {
+    "id": "01SB",
+    "routeNumber": "01SB",
+    "name": "Tuyến xe buýt Sân bay Đà Nẵng – Hội An",
+    "shortName": "Sân bay Đà Nẵng – Hội An",
+    "formerName": null,
+    "aliases": [],
+    "category": "tourist",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty TNHH Vận tải & Du lịch Hải Vân",
+    "terminals": {
+      "origin": "Cảng HKQT Đà Nẵng (Bãi đỗ xe Ga T1)",
+      "destination": "Bãi đỗ xe Bến tàu Cửa Đại (Hội An)"
+    },
+    "operatingHours": {
+      "start": "06:00",
+      "end": "22:00",
+      "raw": "Từ 6h00 đến 22h00 theo lịch các chuyến bay"
+    },
+    "frequency": {
+      "peakMinutes": 30,
+      "offPeakMinutes": 60,
+      "raw": "Theo lịch bay Cảng hàng không Quốc tế Đà Nẵng"
+    },
+    "distanceKm": {
+      "average": 30.0,
+      "outbound": 30.0,
+      "inbound": 30.0,
+      "raw": "30 km"
+    },
+    "fares": {
+      "singleTicket": null,
+      "rawSummary": "- Vé lượt: 120,000 đồng/lượt.\nNgười có công cách mạng, người khuyết tật, trẻ em dưới 6 tuổi giảm 50% giá vé.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Huyndai Solati\n- Sức chứa: 10 chỗ ( 10 chỗ ngồi, 0 chỗ đứng)\n- Số lượng xe: 03 xe (03 xe vận doanh + 0 xe dự phòng)\nf) Đơn vị vận hành: Chi nhánh Công ty liên doanh vận chuyển quốc tế Hải Vân t"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Thành phố Hội An (bãi đỗ xe Bến tàu Cửa Đại) – đường Âu Cơ – đường Cửa Đại – đường Trần Nhân Tông – đường Lý Thường Kiệt – đường Nguyễn Tất Thành – đường Trần Thủ Độ (Điện Bàn) – đường Trần Hưng Đạo (Điện Bàn) - đường Dũng Sỹ Điện Ngọc (Điện Bàn - địa phận thành phố Đà Nẵng (đường Trường Sa – đường Võ Nguyên Giáp – đường Nguyễn Văn Thoại - cầu Trần Thị Lý – đường Duy Tân - Cổng trạm thu phí đường Duy Tân - đường Duy Tân trong Sân bay - Ga đến Quốc tế T2 - Ga đến Quốc nội T1 - Cảng hàng không Quốc tế Đà Nẵng (Bãi đỗ xe nhà ga Quốc nội T1).\n- Chiều về: Cảng hàng không Quốc",
+        "streets": [
+          "Thành phố Hội An",
+          "đường Âu Cơ",
+          "đường Cửa Đại",
+          "đường Trần Nhân Tông",
+          "đường Lý Thường Kiệt",
+          "đường Nguyễn Tất Thành",
+          "đường Trần Thủ Độ",
+          "đường Trần Hưng Đạo",
+          "đường Dũng Sỹ Điện Ngọc (Điện Bàn",
+          "địa phận thành phố Đà Nẵng (đường Trường Sa",
+          "đường Võ Nguyên Giáp",
+          "đường Nguyễn Văn Thoại",
+          "cầu Trần Thị Lý",
+          "đường Duy Tân",
+          "Cổng trạm thu phí đường Duy Tân",
+          "đường Duy Tân trong Sân bay",
+          "Ga đến Quốc tế T2",
+          "Ga đến Quốc nội T1",
+          "Cảng hàng không Quốc tế Đà Nẵng .",
+          "Chiều về: Cảng hàng không Quốc"
+        ]
+      },
+      "inbound": {
+        "text": "Cảng hàng không Quốc tế Đà Nẵng (Bãi đỗ xe nhà ga Quốc nội T1) - Ga đến Quốc nội T1 - đường Duy Tân trong sân bay - Ga đến Quốc tế T2 - đường nội bộ sân bay đối diện Ga đến Quốc nội T1 - đường Duy Tân trong sân bay - Cổng trạm thu phí tại đường Duy Tân - cầu Trần Thị Lý – đường Nguyễn Văn Thoại – đường Võ Nguyên Giáp – đường Trường Sa - địa phận tỉnh Quảng Nam (đường Dũng Sỹ Điện Ngọc (Điện Bàn) - đường Trần Hưng Đạo (Điện Bàn) – đường Trần Thủ Độ (Điện Bàn) - đường Nguyễn Tất Thành – đường Lý Thường Kiệt – đường Trần Nhân Tông – đường Cửa Đại – đường Âu Cơ - bãi đỗ xe Bến tàu Cửa Đại, Thành phố Hội An.",
+        "streets": [
+          "Cảng hàng không Quốc tế Đà Nẵng",
+          "Ga đến Quốc nội T1",
+          "đường Duy Tân trong sân bay",
+          "Ga đến Quốc tế T2",
+          "đường nội bộ sân bay đối diện Ga đến Quốc nội T1",
+          "Cổng trạm thu phí tại đường Duy Tân",
+          "cầu Trần Thị Lý",
+          "đường Nguyễn Văn Thoại",
+          "đường Võ Nguyên Giáp",
+          "đường Trường Sa",
+          "địa phận tỉnh Quảng Nam",
+          "đường Trần Hưng Đạo",
+          "đường Trần Thủ Độ",
+          "đường Nguyễn Tất Thành",
+          "đường Lý Thường Kiệt",
+          "đường Trần Nhân Tông",
+          "đường Cửa Đại",
+          "đường Âu Cơ",
+          "bãi đỗ xe Bến tàu Cửa Đại, Thành phố Hội An."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Cảng hàng không Quốc tế Đà Nẵng",
+          "street": ""
+        },
+        {
+          "order": 2,
+          "name": "Cung hội nghị Quốc tế Đà Nẵng",
+          "street": "Võ Nguyên Giáp"
+        },
+        {
+          "order": 3,
+          "name": "The Ocean Estates",
+          "street": "Trường Sa"
+        },
+        {
+          "order": 4,
+          "name": "Bến tàu Cửa Đại",
+          "street": ""
+        }
+      ],
+      "inbound": [
+        {
+          "order": 1,
+          "name": "Bến tàu Cửa Đại",
+          "street": ""
+        },
+        {
+          "order": 2,
+          "name": "The Ocean Estates",
+          "street": "Trường Sa"
+        },
+        {
+          "order": 3,
+          "name": "Aria – Đà Nẵng Hotel & Resort",
+          "street": "Trường Sa"
+        },
+        {
+          "order": 4,
+          "name": "Resort Hyatt Regency",
+          "street": "Trường Sa"
+        },
+        {
+          "order": 5,
+          "name": "Crown international Club",
+          "street": "Võ Nguyên Giáp"
+        },
+        {
+          "order": 6,
+          "name": "Cung hội nghị Quốc tế Đà Nẵng",
+          "street": "Võ Nguyên Giáp"
+        },
+        {
+          "order": 7,
+          "name": "Cảng hàng không Quốc tế Đà Nẵng",
+          "street": ""
+        }
+      ]
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Huyndai Solati\n- Sức chứa: 10 chỗ ( 10 chỗ ngồi, 0 chỗ đứng)",
+    "pdfUrls": []
+  },
+  {
+    "id": "LK02",
+    "routeNumber": "LK02",
+    "name": "Đà Nẵng (Đại học Việt Hàn) – Hội An (Cửa Đại)",
+    "shortName": "ĐH Việt Hàn – Hội An (Cửa Đại)",
+    "formerName": null,
+    "aliases": [],
+    "category": "interprovincial",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Trạm xe buýt Đại học Việt Hàn (Đà Nẵng)",
+      "destination": "Bãi đỗ xe Bến thủy nội địa Cửa Đại (Hội An)"
+    },
+    "operatingHours": {
+      "start": "05:00",
+      "end": "19:05",
+      "raw": "Mở: 05h00 (Cửa Đại) / 06h05 (ĐH Việt Hàn) - Đóng: 18h00 (Cửa Đại) / 19h05 (ĐH Việt Hàn)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15-30 phút/chuyến (72 lượt xe/ngày)"
+    },
+    "distanceKm": {
+      "average": 23.2,
+      "outbound": 23.2,
+      "inbound": 23.2,
+      "raw": "23,2 km"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 11,6km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ ½ cự ly tuyến đến toàn cự ly tuyến (Từ 11,6km đến hết tuyến): 15.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khá"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Đại học Việt Hàn - Đường ĐT607 - Nguyễn Tất Thành - Bến xe buýt Hội An - Lý Thường Kiệt - Trần Nhân Tông - Cửa Đại - ÂuCơ - Bãi đỗ xe Bến thủy nội địa Cửa Đại.\n- Chiều về: Bãi đỗ xe Bến",
+        "streets": [
+          "Trạm xe buýt Đại học Việt Hàn",
+          "Đường ĐT607",
+          "Nguyễn Tất Thành",
+          "Bến xe buýt Hội An",
+          "Lý Thường Kiệt",
+          "Trần Nhân Tông",
+          "Cửa Đại",
+          "ÂuCơ",
+          "Bãi đỗ xe Bến thủy nội địa Cửa Đại.",
+          "Chiều về: Bãi đỗ xe Bến"
+        ]
+      },
+      "inbound": {
+        "text": "Bãi đỗ xe Bến thủy nội địa Cửa Đại - Âu Cơ - Cửa Đại - Trần-Nhân Tông - Lý Thường Kiệt - Nguyễn Tất Thành - Bến xe buýt Hội An - Đường ĐT 607 - Trạm xe buýt Đại học Việt Hàn.",
+        "streets": [
+          "Bãi đỗ xe Bến thủy nội địa Cửa Đại",
+          "Âu Cơ",
+          "Cửa Đại",
+          "Trần",
+          "Nhân Tông",
+          "Lý Thường Kiệt",
+          "Nguyễn Tất Thành",
+          "Bến xe buýt Hội An",
+          "Đường ĐT 607",
+          "Trạm xe buýt Đại học Việt Hàn."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 2,
+          "name": "158 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 3,
+          "name": "292 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 4,
+          "name": "584 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 5,
+          "name": "Đối Diện UBND Phường Điện Ngọc - 700 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 6,
+          "name": "828 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 7,
+          "name": "974 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 8,
+          "name": "126 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 9,
+          "name": "304 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 10,
+          "name": "488 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 11,
+          "name": "588 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 12,
+          "name": "Bể Bơi Vùng Đông TX Điện Bàn - Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 13,
+          "name": "832 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 14,
+          "name": "900 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 15,
+          "name": "1138 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 16,
+          "name": "1322 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 17,
+          "name": "601 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 18,
+          "name": "Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 19,
+          "name": "403 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 20,
+          "name": "269 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 21,
+          "name": "217 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 22,
+          "name": "Đối Diện Công Ty Cổ Phần Dệt May Hoà Thọ - Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 23,
+          "name": "Trường Phổ Thông Dân Tộc Nội Trú - 39 Nguyễn Tất Thành",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 24,
+          "name": "ÊMM Hotel - 187 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 25,
+          "name": "115 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 26,
+          "name": "Ngã 3 Lý Thường Kiêt - Lê Văn Đức",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 27,
+          "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 28,
+          "name": "108 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 29,
+          "name": "265 Cửa Đại - Công An Phường Cẩm Châu",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 30,
+          "name": "113 Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 31,
+          "name": "11 Cửa Đại - Bưu Điện Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 32,
+          "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 33,
+          "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 34,
+          "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 35,
+          "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+          "street": "Âu Cơ"
+        },
+        {
+          "order": 36,
+          "name": "Đối Diện Bưu Điện Cửa Đại - 16 Cửa Đại Hội An",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 37,
+          "name": "Đối Diện 113 Cửa Đại",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 38,
+          "name": "356 Cửa Đai - Trạm Y Tế Phường Cẩm Châu",
+          "street": "Cửa Đại"
+        },
+        {
+          "order": 39,
+          "name": "129 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 40,
+          "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 41,
+          "name": "Ngã 3 Lý Thường Kiệt - Lê Văn Đức",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 42,
+          "name": "214 Lý Thường Kiệt",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 43,
+          "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
+          "street": "Lý Thường Kiệt"
+        },
+        {
+          "order": 44,
+          "name": "26 Nguyễn Tất Thành - Công Ty Cổ Phần Dệt May Hoà Thọ",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 45,
+          "name": "40 Nguyễn Tất Thành - Công Ty Cổ Phần Công Trình Công Cộng Hội An",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 46,
+          "name": "120 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 47,
+          "name": "172 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 48,
+          "name": "290 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 49,
+          "name": "362 Nguyễn Tất Thành",
+          "street": "Nguyễn Tất Thành"
+        },
+        {
+          "order": 50,
+          "name": "1563 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 51,
+          "name": "1455 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 52,
+          "name": "1271 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 53,
+          "name": "1097 Trần Thủ Độ - Đối Diện Cụm Công Nghiêp An Lưu",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 54,
+          "name": "863 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 55,
+          "name": "831 Trần Thủ Độ - Đối Diện Bể Bơi Vùng Đông TX Điện Bàn",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 56,
+          "name": "572 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 57,
+          "name": "285 Trần Thủ Độ",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 58,
+          "name": "171 Trần Thủ Độ - Nhà Văn Hoá Khối Phố Cẩm Sa",
+          "street": "Trần Thủ Độ"
+        },
+        {
+          "order": 59,
+          "name": "953 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 60,
+          "name": "811 Trần Hưng Đạo - Đối Diện Trường Tiểu Học Lê Hồng Phong",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 61,
+          "name": "677 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 62,
+          "name": "553 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 63,
+          "name": "333 Trần Hưng Đạo",
+          "street": "Trần Hưng Đạo"
+        },
+        {
+          "order": 64,
+          "name": "Trạm Xe Buýt Đại Học Việt Hàn - Trần Đại Nghĩa",
+          "street": "Trần Hưng Đạo"
+        }
+      ],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "GAZ\n- Sức chứa: 26 chỗ (18 chỗ ngồi, 08 chỗ đứng).",
+    "pdfUrls": []
+  },
+  {
+    "id": "LK21",
+    "routeNumber": "LK21",
+    "name": "Đà Nẵng (Bến xe phía Nam) – Tam Kỳ",
+    "shortName": "BX Phía Nam – Tam Kỳ",
+    "formerName": null,
+    "aliases": [],
+    "category": "interprovincial",
+    "status": "active",
+    "statusNote": null,
+    "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
+    "terminals": {
+      "origin": "Bến xe phía Nam (Đà Nẵng)",
+      "destination": "954 Phan Châu Trinh (Cầu Tam Kỳ)"
+    },
+    "operatingHours": {
+      "start": "04:45",
+      "end": "18:15",
+      "raw": "Mở: 04h45 (Tam Kỳ) / 05h30 (BX Phía Nam) - Đóng: 17h30 (Tam Kỳ) / 18h15 (BX Phía Nam)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 25,
+      "raw": "15-25 phút/chuyến (64 lượt xe/ngày)"
+    },
+    "distanceKm": {
+      "average": 56.5,
+      "outbound": 56.5,
+      "inbound": 56.5,
+      "raw": "56,5 km"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng 1/5 cự ly tuyến (Từ 11,3km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ 1/5 cự ly tuyến đến hoặc bằng 2/5 cự ly tuyến (Từ 11,3km đến 22,6km): 15.000 đồng/hành khách/lượt.\n+ Từ 2/5 cự ly tuyến đến hoặc bằng 3/5 cự ly tuyến (Từ 2"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe phía Nam (Đà Nẵng) - Nam Kỳ Khởi Nghĩa - Quốc lộ 1A – Quốc lộ 1A cũ (Nam Phước - Điện Phương - Điện Minh - Vĩnh Điện) - Quốc lộ 1A - Cầu Hương An cũ - Quốc lộ 1A - Bến xe khách Tam Kỳ - Phan Bội Châu - Phan Châu Trinh - 954 Phan Châu Trinh (Cầu Tam Kỳ - Quảng Nam).",
+        "streets": [
+          "Bến xe phía Nam",
+          "Nam Kỳ Khởi Nghĩa",
+          "Quốc lộ 1A",
+          "Quốc lộ 1A cũ (Nam Phước",
+          "Điện Phương",
+          "Điện Minh",
+          "Vĩnh Điện)",
+          "Cầu Hương An cũ",
+          "Bến xe khách Tam Kỳ",
+          "Phan Bội Châu",
+          "Phan Châu Trinh",
+          "954 Phan Châu Trinh (Cầu Tam Kỳ",
+          "Quảng Nam)."
+        ]
+      },
+      "inbound": {
+        "text": "954 Phan Châu Trinh (Cầu Tam Kỳ - Quảng Nam) - Phan Châu Trinh - Phan Bội Châu - Bến xe khách Tam Kỳ - Quốc lộ 1A - Cầu Hương An cũ - Quốc lộ 1A - Quốc lộ 1A cũ (Nam Phước - Điện Phương - Điện Minh - Vĩnh Điện) - Quốc lộ 1A - Nam Kỳ Khởi Nghĩa - Bến xe phía Nam (Đà Nẵng).",
+        "streets": [
+          "954 Phan Châu Trinh (Cầu Tam Kỳ",
+          "Quảng Nam)",
+          "Phan Châu Trinh",
+          "Phan Bội Châu",
+          "Bến xe khách Tam Kỳ",
+          "Quốc lộ 1A",
+          "Cầu Hương An cũ",
+          "Quốc lộ 1A cũ (Nam Phước",
+          "Điện Phương",
+          "Điện Minh",
+          "Vĩnh Điện)",
+          "Nam Kỳ Khởi Nghĩa",
+          "Bến xe phía Nam ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [
+        {
+          "order": 1,
+          "name": "Bến Xe Phía Nam",
+          "street": "Nam Kỳ Khởi Nghĩa"
+        },
+        {
+          "order": 2,
+          "name": "Ô Tô Hồng Sơn - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 3,
+          "name": "Đối Diện UBND Xã Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 4,
+          "name": "Trạm CSGT Cửa Ô Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 5,
+          "name": "Ngã 3 Tứ Câu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 6,
+          "name": "Trường Trung Cấp Quảng Đông - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 7,
+          "name": "Đầu Cầu Thanh Quýt - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 8,
+          "name": "Bến Xe Bắc Quảng Nam - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 9,
+          "name": "8 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 10,
+          "name": "134 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 11,
+          "name": "278 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 12,
+          "name": "Ngã 3 Đường Tránh QL1A",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 13,
+          "name": "58 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 14,
+          "name": "216 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 15,
+          "name": "Bến Xe TT Nam Phước Quảng Nam",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 16,
+          "name": "Ngã 3 Đông Lành",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 17,
+          "name": "Cầu Phú Phong",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 18,
+          "name": "Chợ Mộc Bài - Quế Sơn",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 19,
+          "name": "Đối Diện Điện Máy Xanh Hương An",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 20,
+          "name": "Ngã 3 Hương An Cũ",
+          "street": "Tỉnh Lộ 611"
+        },
+        {
+          "order": 21,
+          "name": "Ngã 3 Hương An Mới",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 22,
+          "name": "Ngã 3 Sát Hạch Bình Nguyên",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 23,
+          "name": "Bệnh Viện Đa Khoa Thăng Hoa",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 24,
+          "name": "Cổng Làng Quán Hương",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 25,
+          "name": "Ngã 3 Cây Cóc - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 26,
+          "name": "Qua Cầu Gò Phật - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 27,
+          "name": "Ngã 3 Ngọc Phô",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 28,
+          "name": "Sân Vận Động Xã Bình Tú",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 29,
+          "name": "Trường THCS Phan Bội Châu",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 30,
+          "name": "Ngã 3 Xóm Mới - Bình Trung",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 31,
+          "name": "Ngã 4 Quán Gò",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 32,
+          "name": "An Thọ - Tam An - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 33,
+          "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 34,
+          "name": "Ngã 3 KCN Tam Thăng",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 35,
+          "name": "Ngã 4 Kỳ Lý",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 36,
+          "name": "Công Ty Bảo Việt Nhân Thọ",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 37,
+          "name": "10 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 38,
+          "name": "32 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 39,
+          "name": "Đối Diện Bệnh Viện Minh Thiên - Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 40,
+          "name": "94 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 41,
+          "name": "112 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 42,
+          "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 43,
+          "name": "120 Phan Bội Châu - Ngân Hàng Agribank",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 44,
+          "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 45,
+          "name": "156 Phan Bội Châu - Toà Án Nhân Dân Tam Kỳ",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 46,
+          "name": "26 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 47,
+          "name": "238 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 48,
+          "name": "324 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 49,
+          "name": "394 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 50,
+          "name": "494 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 51,
+          "name": "546 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 52,
+          "name": "608 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 53,
+          "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 54,
+          "name": "816 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 55,
+          "name": "Điểm Cuối Tam Kỳ - 954 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 56,
+          "name": "Điểm Đầu Tam Kỳ - 954 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 57,
+          "name": "781 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 58,
+          "name": "531 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 59,
+          "name": "467 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 60,
+          "name": "341 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 61,
+          "name": "275 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 62,
+          "name": "73 Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 63,
+          "name": "Siêu Thị Coop Mart - Phan Châu Trinh",
+          "street": "Phan Châu Trinh"
+        },
+        {
+          "order": 64,
+          "name": "379 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 65,
+          "name": "283 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 66,
+          "name": "281 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 67,
+          "name": "239 Phan Bội Châu - Ngân Hàng BIDV",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 68,
+          "name": "201 Phan Bội Châu - Đối Diện Ngân Hàng Đông Á",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 69,
+          "name": "135 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 70,
+          "name": "Bệnh Viện Minh Thiện - Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 71,
+          "name": "65 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 72,
+          "name": "1 Phan Bội Châu",
+          "street": "Phan Bội Châu"
+        },
+        {
+          "order": 73,
+          "name": "Ngã 4 Kỳ Lý - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 74,
+          "name": "Ngã 3 Tam Thăng - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 75,
+          "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 76,
+          "name": "An Thọ - Tam An QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 77,
+          "name": "Ngã 4 Quán Gò - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 78,
+          "name": "Xóm Mới - Bình Trung - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 79,
+          "name": "Trường THCS Phan Bội Châu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 80,
+          "name": "Nghĩa Trang Xã Bình Tú - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 81,
+          "name": "Ngã 3 Ngọc Phô - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 82,
+          "name": "Cầu Gò Phật - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 83,
+          "name": "Ngã 3 Cây Cóc - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 84,
+          "name": "Đối Diện Bệnh Viện Đa Khoa Thăng Hoa - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 85,
+          "name": "Ngã 3 Sát Hạch Bình Nguyên - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 86,
+          "name": "Ngã 3 Hương An Mới - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 87,
+          "name": "Điện Máy Xanh Hương An - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 88,
+          "name": "Cây Xăng Dầu Mộc Bài - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 89,
+          "name": "Qua Cầu Phú Phong - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 90,
+          "name": "Ngã 3 Đông Lành - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 91,
+          "name": "Đối Diện Bến Xe TT Nam Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 92,
+          "name": "53 Điện Biên Phủ",
+          "street": "Điện Biên Phủ"
+        },
+        {
+          "order": 93,
+          "name": "Sân Vận Động Phường Điện Minh",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 94,
+          "name": "215 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 95,
+          "name": "Công Viên Thanh Niên",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 96,
+          "name": "5 Trần Nhân Tông",
+          "street": "Trần Nhân Tông"
+        },
+        {
+          "order": 97,
+          "name": "Bệnh Viện Đa Khoa Vĩnh Đức - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 98,
+          "name": "Gần Trạm Thu Phí Điện Bàn - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 99,
+          "name": "Nghĩa Trang Liệt Sỹ Điện Bàn - QL1A",
+          "street": "Hùng Vương"
+        },
+        {
+          "order": 100,
+          "name": "Ngã 3 Lầu Sụp - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 101,
+          "name": "Ngã 3 Tứ Câu - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 102,
+          "name": "UBND Xã Hoà Phước - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 103,
+          "name": "Kho Đá Đông Ấn - QL1A",
+          "street": "Quốc Lộ 1A"
+        },
+        {
+          "order": 104,
+          "name": "Bến Xe Khách Phía Nam",
+          "street": "Nam Kỳ Khởi Nghĩa"
+        }
+      ],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "GAZ\n- Sức chứa: 26 chỗ (18 chỗ ngồi, 08 chỗ đứng).",
+    "pdfUrls": []
+  },
+  {
+    "id": "04",
+    "routeNumber": "04",
+    "name": "Cầu Trần Thị Lý – Hoà Tiến",
+    "shortName": "Trần Thị Lý – Hoà Tiến",
+    "formerName": "R4A",
+    "aliases": [
+      "R4A"
+    ],
+    "category": "suspended",
+    "status": "suspended",
+    "statusNote": "Tạm dừng hoạt động",
+    "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
+    "terminals": {
+      "origin": "cầu Trần Thị Lý",
+      "destination": "Khu đất tại Trung tâm Thể dục thể thao xã Hòa Tiến (hiện tại sử dụng tạm thời vịnh đỗ xe trên đường ĐT605, xã Hòa Tiến)."
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "19:00",
+      "raw": "từ 05h45 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
+    },
+    "frequency": {
+      "peakMinutes": 15,
+      "offPeakMinutes": 30,
+      "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
+    },
+    "distanceKm": {
+      "average": 15.4,
+      "outbound": 15.6,
+      "inbound": 15.2,
+      "raw": "15,4 km (chiều đi: 15,6 km; chiều về: 15,2 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bãi đỗ xe Cầu Trần Thị Lý (đường Bình Minh 10)- Trần Văn Trứ - Bình Minh 6 - Đường 2/9 - Xô Viết Nghệ Tĩnh - Nguyễn Hữu Thọ - Lê Đại Hành - Ông Ích Đường - CMT8 - Nguyễn Nhàn - Đinh Châu - Nguyễn Hữu Tiến - Trần Quý Hai - Trần Ngọc Sương - Trường Chinh - Cầu Đỏ - QL1A - ĐT605 - Chợ Lệ Trạch - Hòa Tiến (Khu đất đối diện Nghĩa trang xã Hòa Tiến).\nChiều về: Hòa",
+        "streets": [
+          "Bãi đỗ xe Cầu Trần Thị Lý",
+          "Trần Văn Trứ",
+          "Bình Minh 6",
+          "Đường 2/9",
+          "Xô Viết Nghệ Tĩnh",
+          "Nguyễn Hữu Thọ",
+          "Lê Đại Hành",
+          "Ông Ích Đường",
+          "CMT8",
+          "Nguyễn Nhàn",
+          "Đinh Châu",
+          "Nguyễn Hữu Tiến",
+          "Trần Quý Hai",
+          "Trần Ngọc Sương",
+          "Trường Chinh",
+          "Cầu Đỏ",
+          "QL1A",
+          "ĐT605",
+          "Chợ Lệ Trạch",
+          "Hòa Tiến .\nChiều về: Hòa"
+        ]
+      },
+      "inbound": {
+        "text": "Hòa Tiến (DT605, đối diện Nghĩa trang xã Hòa Tiến) - Chợ Lệ Trạch - ĐT605 - QL1A - Cầu Đỏ - Trường Chinh - Trần Ngọc Sương - Trần Quý Hai - Nguyễn Hữu Tiến - Đinh Châu - Nguyễn Nhàn - CMT8 - Ông Ích Đường - Lê Đại Hành - Nguyễn Hữu Thọ - Xô Viết Nghệ Tĩnh - Đường 2/9 – Bình Minh 8 – Trần Văn Trứ - Bãi đỗ xe Cầu Trần Thị Lý (đường Bình Minh 10).",
+        "streets": [
+          "Hòa Tiến",
+          "Chợ Lệ Trạch",
+          "ĐT605",
+          "QL1A",
+          "Cầu Đỏ",
+          "Trường Chinh",
+          "Trần Ngọc Sương",
+          "Trần Quý Hai",
+          "Nguyễn Hữu Tiến",
+          "Đinh Châu",
+          "Nguyễn Nhàn",
+          "CMT8",
+          "Ông Ích Đường",
+          "Lê Đại Hành",
+          "Nguyễn Hữu Thọ",
+          "Xô Viết Nghệ Tĩnh",
+          "Đường 2/9",
+          "Bình Minh 8",
+          "Trần Văn Trứ",
+          "Bãi đỗ xe Cầu Trần Thị Lý ."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Xe buýt TRACOMECO (B40);\n- Sức chứa: 18 chỗ ngồi + 01 chỗ xe lăn và 21 chỗ đứng.",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2004%281%29.pdf"
+    ]
+  },
+  {
+    "id": "10",
+    "routeNumber": "10",
+    "name": "Sân bay Đà Nẵng – Thọ Quang",
+    "shortName": "Sân bay Đà Nẵng – Thọ Quang",
+    "formerName": null,
+    "aliases": [],
+    "category": "suspended",
+    "status": "suspended",
+    "statusNote": "Tạm dừng hoạt động",
+    "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
+    "terminals": {
+      "origin": "Sân bay Đà Nẵng",
+      "destination": "Thọ Quang"
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "18:00",
+      "raw": "từ 05h45 đến 18h00 (Giãn cách 45 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 45,
+      "offPeakMinutes": 45,
+      "raw": "Giãn cách 45 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": 10.4,
+      "outbound": 10.5,
+      "inbound": 10.3,
+      "raw": "10.4 km (chiều đi:10.5 km; chiều về: 10.3 km)"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Trạm xe buýt Sân bay - Man Thiện - Nguyễn Văn Linh - Nguyễn Tri Phương - Điện Biên Phủ - Ngã 3 Cai Lang - Điện Biên Phủ - Hải Phòng - Nguyễn Thị Minh Khai - Lê Duẩn - Cầu Sông Hàn - Ngô Quyền - Trần Thánh Tông - Chu Huy Mân - Ngô Quyền - Nguyễn Phan Vinh - Thọ Quang (Ngã 3 Nguyễn Phan Vinh - Hoàng Sa).\n- Chiều về:",
+        "streets": [
+          "Trạm xe buýt Sân bay",
+          "Man Thiện",
+          "Nguyễn Văn Linh",
+          "Nguyễn Tri Phương",
+          "Điện Biên Phủ",
+          "Ngã 3 Cai Lang",
+          "Hải Phòng",
+          "Nguyễn Thị Minh Khai",
+          "Lê Duẩn",
+          "Cầu Sông Hàn",
+          "Ngô Quyền",
+          "Trần Thánh Tông",
+          "Chu Huy Mân",
+          "Nguyễn Phan Vinh",
+          "Thọ Quang (Ngã 3 Nguyễn Phan Vinh",
+          "Hoàng Sa).",
+          "Chiều về:"
+        ]
+      },
+      "inbound": {
+        "text": "Thọ Quang (Ngã 3 Nguyễn Phan Vinh - Hoàng Sa) - Nguyễn Phan Vinh - Ngô Quyền - Chu Huy Mân - Trần Thánh Tông - Ngô Quyền - Cầu Sông Hàn - Lê Duẩn - Nguyễn Thị Minh Khai - Hải Phòng - Điện Biên Phủ - Nguyễn Tri Phương - Nguyễn Văn Linh - Man Thiện - Trạm xe buýt Sân bay.",
+        "streets": [
+          "Thọ Quang (Ngã 3 Nguyễn Phan Vinh",
+          "Hoàng Sa)",
+          "Nguyễn Phan Vinh",
+          "Ngô Quyền",
+          "Chu Huy Mân",
+          "Trần Thánh Tông",
+          "Cầu Sông Hàn",
+          "Lê Duẩn",
+          "Nguyễn Thị Minh Khai",
+          "Hải Phòng",
+          "Điện Biên Phủ",
+          "Nguyễn Tri Phương",
+          "Nguyễn Văn Linh",
+          "Man Thiện",
+          "Trạm xe buýt Sân bay."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Xe buýt TRACOMECO (B40);\n- Sức chứa: 18 chỗ ngồi + 01 chỗ xe lăn và 21 chỗ đứng.",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2010%281%29.pdf"
+    ]
+  },
+  {
+    "id": "15",
+    "routeNumber": "R15",
+    "name": "Bến xe Trung tâm – Bến xe Phía Nam",
+    "shortName": "BX Trung tâm – BX Phía Nam",
+    "formerName": null,
+    "aliases": [
+      "15"
+    ],
+    "category": "suspended",
+    "status": "suspended",
+    "statusNote": "Tạm dừng hoạt động",
+    "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
+    "terminals": {
+      "origin": "Bến xe Trung tâm Đà Nẵng;",
+      "destination": "Bến xe Phía Nam"
+    },
+    "operatingHours": {
+      "start": "05:45",
+      "end": "18:00",
+      "raw": "từ 05h45 đến 18h00 (45 phút/chuyến)"
+    },
+    "frequency": {
+      "peakMinutes": 45,
+      "offPeakMinutes": 45,
+      "raw": "45 phút/chuyến"
+    },
+    "distanceKm": {
+      "average": 13.4,
+      "outbound": null,
+      "inbound": null,
+      "raw": "13.4 km"
+    },
+    "fares": {
+      "singleTicket": 8000,
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý"
+    },
+    "routePaths": {
+      "outbound": {
+        "text": "Bến xe Trung tâm Đà Nẵng - Tôn Đức Thắng - Cầu vượt ngã Ba Huế (tầng 2) - Trường Chinh - Quốc lộ 1A - Nam Kỳ Khởi Nghĩa – Bến xe Phía Nam.\n- Chiều về: Bến xe Phía Nam - Nam Kỳ Khởi Nghĩa - Quốc lộ",
+        "streets": [
+          "Bến xe Trung tâm Đà Nẵng",
+          "Tôn Đức Thắng",
+          "Cầu vượt ngã Ba Huế",
+          "Trường Chinh",
+          "Quốc lộ 1A",
+          "Nam Kỳ Khởi Nghĩa",
+          "Bến xe Phía Nam.",
+          "Chiều về: Bến xe Phía Nam",
+          "Quốc lộ"
+        ]
+      },
+      "inbound": {
+        "text": "Bến xe Phía Nam - Nam Kỳ Khởi Nghĩa - Quốc lộ 1A - Trường Chinh - Cầu vượt ngã Ba Huế (tầng 2) - Tôn Đức Thắng - Bến xe Trung tâm Đà Nẵng.",
+        "streets": [
+          "Bến xe Phía Nam",
+          "Nam Kỳ Khởi Nghĩa",
+          "Quốc lộ 1A",
+          "Trường Chinh",
+          "Cầu vượt ngã Ba Huế",
+          "Tôn Đức Thắng",
+          "Bến xe Trung tâm Đà Nẵng."
+        ]
+      }
+    },
+    "stops": {
+      "outbound": [],
+      "inbound": []
+    },
+    "timetable": {},
+    "vehicleInfo": "- Nhãn hiệu: Xe buýt TRACOMECO (B40);\n- Sức chứa: 18 chỗ ngồi + 01 chỗ xe lăn và 21 chỗ đứng.",
+    "pdfUrls": [
+      "https://www.danangbus.vn/UploadImages/files/x%C6%B0%C6%A1ng%20c%C3%A1%2015%281%29.pdf"
+    ]
+  }
+]

@@ -1,0 +1,103 @@
+/* Danabus PWA Custom Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #059669;
+  --primary-dark: #047857;
+  --primary-light: #ecfdf5;
+  --surface: #faf8ff;
+  --surface-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--surface);
+  color: var(--text-main);
+  font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Safe area padding for mobile notches */
+.pb-safe {
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+}
+
+.pt-safe {
+  padding-top: max(12px, env(safe-area-inset-top, 12px));
+}
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Screen Transitions */
+.view-screen {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.view-screen.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Modal Bottom Sheet */
+.modal-overlay {
+  transition: opacity 0.25s ease-out;
+}
+
+.modal-content {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-hidden .modal-content {
+  transform: translateY(100%);
+}
+
+/* Custom Leaflet Map adjustments */
+.leaflet-container {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+  background-color: #e2e8f0;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px !important;
+}
+
+.custom-bus-stop-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Active bottom nav indicator */
+.nav-tab.active {
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+}
+.nav-tab.active .material-symbols-outlined {
+  font-variation-settings: 'FILL' 1;
+}

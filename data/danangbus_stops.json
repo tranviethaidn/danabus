@@ -1,0 +1,6777 @@
+[
+  {
+    "id": "stop_0001",
+    "name": "Khu chung cư Hoà Hiệp Nam",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0002",
+    "name": "Số nhà 817 Nguyễn Lương Bằng",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0003",
+    "name": "Số nhà 24",
+    "street": "Nguyễn Bá Phát",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0004",
+    "name": "Kế ngã tư Chung cư Bầu Tràm Lake side",
+    "street": "Đối diện đường Trung Lập 7",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0005",
+    "name": "Đối diện số nhà 9",
+    "street": "Mê Linh",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0006",
+    "name": "Số nhà 495",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0007",
+    "name": "Đối diện số nhà 421",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0008",
+    "name": "Số nhà 339",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0009",
+    "name": "Số nhà 191",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0010",
+    "name": "Số nhà 141",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0011",
+    "name": "Số nhà 27",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0012",
+    "name": "Số nhà 775",
+    "street": "Tôn Đức Thắng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0013",
+    "name": "Số nhà 46",
+    "street": "Ngô Thì Nhậm",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0014",
+    "name": "Chung cư Hồ Tùng Mậu",
+    "street": "Hồ Tùng Mậu",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0015",
+    "name": "Đối diện số nhà 246",
+    "street": "Hồ Tùng Mậu",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0016",
+    "name": "Bệnh viện Ung Bứu",
+    "street": "Hoàng Thị Loan",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0017",
+    "name": "Số nhà 161",
+    "street": "Phùng Hưng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0018",
+    "name": "Chung cư Kinh Dương Vương",
+    "street": "Kinh Dương Vương",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0019",
+    "name": "Số nhà 35",
+    "street": "Kinh Dương Vương",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0020",
+    "name": "Số nhà 61",
+    "street": "Lý Thái Tông",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0021",
+    "name": "Số nhà 91 (Bv Da liễu)",
+    "street": "Dũng Sĩ Thanh Khê",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0022",
+    "name": "Trường Cao Đẳng Thương Mại",
+    "street": "Dũng Sĩ Thanh Khê",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0023",
+    "name": "Số nhà 735, Trường THPT Thái Phiên",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 23
+      }
+    ]
+  },
+  {
+    "id": "stop_0024",
+    "name": "Số nhà 581",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 24
+      }
+    ]
+  },
+  {
+    "id": "stop_0025",
+    "name": "Phường Xuân Hà",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 25
+      }
+    ]
+  },
+  {
+    "id": "stop_0026",
+    "name": "Số nhà 301",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 26
+      }
+    ]
+  },
+  {
+    "id": "stop_0027",
+    "name": "Số nhà 187",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 27
+      }
+    ]
+  },
+  {
+    "id": "stop_0028",
+    "name": "Đối diện số nhà 160",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 28
+      }
+    ]
+  },
+  {
+    "id": "stop_0029",
+    "name": "Đối diện số nhà 210",
+    "street": "Quang Trung",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 29
+      }
+    ]
+  },
+  {
+    "id": "stop_0030",
+    "name": "Đối diện số nhà 122\n\n Nhà tang lễ",
+    "street": "Quang Trung",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 30
+      }
+    ]
+  },
+  {
+    "id": "stop_0031",
+    "name": "Số nhà 120",
+    "street": "Lê Lợi",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0032",
+    "name": "Trường THPT Phan Châu Trinh",
+    "street": "Lê Lợi",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 32
+      }
+    ]
+  },
+  {
+    "id": "stop_0033",
+    "name": "Số nhà 9",
+    "street": "Lê Duẩn",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 33
+      }
+    ]
+  },
+  {
+    "id": "stop_0034",
+    "name": "Bãi đậu xe đầu đường Phạm Văn Đồng (ngã rẽ An Nhơn 12)",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 34
+      }
+    ]
+  },
+  {
+    "id": "stop_0035",
+    "name": "Số nhà 124",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 35
+      }
+    ]
+  },
+  {
+    "id": "stop_0036",
+    "name": "Khúc giao Chính Hữu + Phạm Văn Đồng",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 36
+      }
+    ]
+  },
+  {
+    "id": "stop_0037",
+    "name": "Bãi tắm số 3 (Cv Biển đông",
+    "street": "Võ Nguyên giáp",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "outbound",
+        "stopOrder": 37
+      },
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0038",
+    "name": "Khúc giao Phạm Văn Đồng + Hoàng Bích Sơn",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0039",
+    "name": "Số nhà 183",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0040",
+    "name": "Đối diện bãi xe đầu đường Phạm Văn Đồng",
+    "street": "Phạm Văn Đồng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0041",
+    "name": "Số nhà 10",
+    "street": "Lê Duẩn",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0042",
+    "name": "Số nhà 121",
+    "street": "Nguyễn Chí Thanh",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0043",
+    "name": "Trường THCS Nguyễn Huệ",
+    "street": "Quang Trung",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0044",
+    "name": "Số nhà 312",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0045",
+    "name": "Số nhà 400",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0046",
+    "name": "Số nhà 570",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0047",
+    "name": "Số nhà 674",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0048",
+    "name": "Số nhà 856",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0049",
+    "name": "Trường Thể dục thể thao\n\n Đối diện số nhà 43",
+    "street": "Dũng Sĩ Thanh Khê",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0050",
+    "name": "Số nhà 154",
+    "street": "Thanh Khê 6",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0051",
+    "name": "Số nhà 58",
+    "street": "Lý Thái Tông",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0052",
+    "name": "Số nhà 28",
+    "street": "Kinh Dương Vương",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0053",
+    "name": "Số nhà 196",
+    "street": "Kinh Dương Vương",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0054",
+    "name": "Số nhà 74",
+    "street": "Phùng Hưng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0055",
+    "name": "Số nhà 554",
+    "street": "Hoàng Thị Loan",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0056",
+    "name": "Số nhà 252",
+    "street": "Hồ tùng Mậu",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0057",
+    "name": "Số nhà 332",
+    "street": "Hồ Tùng Mậu",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0058",
+    "name": "Số nhà 63",
+    "street": "Ngô Thì Nhậm",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0059",
+    "name": "Số nhà 896",
+    "street": "Tôn Đức Thắng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 23
+      }
+    ]
+  },
+  {
+    "id": "stop_0060",
+    "name": "Số 34",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 24
+      }
+    ]
+  },
+  {
+    "id": "stop_0061",
+    "name": "Số nhà 138",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 25
+      }
+    ]
+  },
+  {
+    "id": "stop_0062",
+    "name": "Số nhà 234",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 26
+      }
+    ]
+  },
+  {
+    "id": "stop_0063",
+    "name": "Số nhà 290",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 27
+      }
+    ]
+  },
+  {
+    "id": "stop_0064",
+    "name": "Số nhà 380",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 28
+      }
+    ]
+  },
+  {
+    "id": "stop_0065",
+    "name": "Số nhà 436",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 29
+      }
+    ]
+  },
+  {
+    "id": "stop_0066",
+    "name": "Số nhà 09",
+    "street": "Mê Linh",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 30
+      }
+    ]
+  },
+  {
+    "id": "stop_0067",
+    "name": "Số nhà 43",
+    "street": "Nguyễn Bá Phát",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 32
+      }
+    ]
+  },
+  {
+    "id": "stop_0068",
+    "name": "Số nhà 636",
+    "street": "Nguyễn Lương Bằng",
+    "routes": [
+      {
+        "routeId": "05",
+        "routeNumber": "05",
+        "direction": "inbound",
+        "stopOrder": 33
+      }
+    ]
+  },
+  {
+    "id": "stop_0069",
+    "name": "Bến Xe TT Đà Nẵng - Cao Sơn Pháo",
+    "street": "Cao Sơn Pháo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 46
+      }
+    ]
+  },
+  {
+    "id": "stop_0070",
+    "name": "59 Lý Thái Tông",
+    "street": "Lý Thái Tông",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0071",
+    "name": "Gần khúc giao Hà Khê Nguyễn Tất Thành (cách 50m)",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0072",
+    "name": "65 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0073",
+    "name": "Đối diện sân Tennis Trần Phú",
+    "street": "Trần Phú",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0074",
+    "name": "Nhà thờ Con Gà (đối diện 151 Trần Phú)",
+    "street": "Trần Phú",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 6
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0075",
+    "name": "TTHC Quận Hải Châu",
+    "street": "Trần Phú",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0076",
+    "name": "đ/d Công viên Apec",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 8
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0077",
+    "name": "214 - 216 đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 9
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0078",
+    "name": "Quảng trường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0079",
+    "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio - 470 đường 2/9)",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0080",
+    "name": "40 Lê Văn Hiến",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0081",
+    "name": "402 Lê Văn Hiến (Tường rào Bệnh viện phụ sản nhi 600 giường, đ/d 123)",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0082",
+    "name": "754 Lê Văn Hiến",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0083",
+    "name": "Bến xe buýt đại học Việt Hàn",
+    "street": "Trần Đại Nghĩa",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 15
+      },
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 32
+      }
+    ]
+  },
+  {
+    "id": "stop_0084",
+    "name": "158 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 16
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0085",
+    "name": "292 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0086",
+    "name": "584 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 18
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0087",
+    "name": "Đối Diện UBND Phường Điện Ngọc - 700 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 19
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0088",
+    "name": "828 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 20
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0089",
+    "name": "974 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 21
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0090",
+    "name": "126 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 22
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0091",
+    "name": "304 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 23
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0092",
+    "name": "488 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 24
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0093",
+    "name": "588 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 25
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0094",
+    "name": "Bể Bơi Vùng Đông TX Điện Bàn - Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 26
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0095",
+    "name": "832 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 27
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0096",
+    "name": "900 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 28
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0097",
+    "name": "1138 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 29
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0098",
+    "name": "1322 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 30
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0099",
+    "name": "601 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 31
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0100",
+    "name": "Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 32
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0101",
+    "name": "403 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 33
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0102",
+    "name": "269 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 34
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0103",
+    "name": "217 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 35
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0104",
+    "name": "Đối Diện Công Ty Cổ Phần Dệt May Hoà Thọ - Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 36
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0105",
+    "name": "Trường Phổ Thông Dân Tộc Nội Trú - 39 Nguyễn Tất Thành",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 37
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 23
+      }
+    ]
+  },
+  {
+    "id": "stop_0106",
+    "name": "ÊMM Hotel - 187 Lý Thường Kiệt",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 38
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 24
+      }
+    ]
+  },
+  {
+    "id": "stop_0107",
+    "name": "115 Lý Thường Kiệt",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 39
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 25
+      }
+    ]
+  },
+  {
+    "id": "stop_0108",
+    "name": "Ngã 3 Lý Thường Kiêt - Lê Văn Đức",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 40
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 26
+      }
+    ]
+  },
+  {
+    "id": "stop_0109",
+    "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 41
+      },
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 7
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 27
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 40
+      }
+    ]
+  },
+  {
+    "id": "stop_0110",
+    "name": "108 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 42
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 28
+      }
+    ]
+  },
+  {
+    "id": "stop_0111",
+    "name": "265 Cửa Đại - Công An Phường Cẩm Châu",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 43
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 29
+      }
+    ]
+  },
+  {
+    "id": "stop_0112",
+    "name": "113 Cửa Đại",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 44
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 30
+      }
+    ]
+  },
+  {
+    "id": "stop_0113",
+    "name": "11 Cửa Đại - Bưu Điện Cửa Đại",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 45
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0114",
+    "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+    "street": "Âu Cơ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 46
+      },
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 2
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 32
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 35
+      }
+    ]
+  },
+  {
+    "id": "stop_0115",
+    "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+    "street": "Âu Cơ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "outbound",
+        "stopOrder": 47
+      },
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 33
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 34
+      }
+    ]
+  },
+  {
+    "id": "stop_0116",
+    "name": "Đối Diện Bưu Điện Cửa Đại - 16 Cửa Đại Hội An",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 3
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 36
+      }
+    ]
+  },
+  {
+    "id": "stop_0117",
+    "name": "Đối Diện 113 Cửa Đại",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 37
+      }
+    ]
+  },
+  {
+    "id": "stop_0118",
+    "name": "356 Cửa Đai - Trạm Y Tế Phường Cẩm Châu",
+    "street": "Cửa Đại",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 5
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 38
+      }
+    ]
+  },
+  {
+    "id": "stop_0119",
+    "name": "129 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 6
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 39
+      }
+    ]
+  },
+  {
+    "id": "stop_0120",
+    "name": "Ngã 3 Lý Thường Kiệt - Lê Văn Đức",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 8
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 41
+      }
+    ]
+  },
+  {
+    "id": "stop_0121",
+    "name": "214 Lý Thường Kiệt",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 9
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 42
+      }
+    ]
+  },
+  {
+    "id": "stop_0122",
+    "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
+    "street": "Lý Thường Kiệt",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 10
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 43
+      }
+    ]
+  },
+  {
+    "id": "stop_0123",
+    "name": "26 Nguyễn Tất Thành - Công Ty Cổ Phần Dệt May Hoà Thọ",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 11
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 44
+      }
+    ]
+  },
+  {
+    "id": "stop_0124",
+    "name": "40 Nguyễn Tất Thành - Công Ty Cổ Phần Công Trình Công Cộng Hội An",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 12
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 45
+      }
+    ]
+  },
+  {
+    "id": "stop_0125",
+    "name": "120 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 13
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 46
+      }
+    ]
+  },
+  {
+    "id": "stop_0126",
+    "name": "172 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 14
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 47
+      }
+    ]
+  },
+  {
+    "id": "stop_0127",
+    "name": "290 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 15
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 48
+      }
+    ]
+  },
+  {
+    "id": "stop_0128",
+    "name": "362 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 16
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 49
+      }
+    ]
+  },
+  {
+    "id": "stop_0129",
+    "name": "1563 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 50
+      }
+    ]
+  },
+  {
+    "id": "stop_0130",
+    "name": "1455 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 18
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 51
+      }
+    ]
+  },
+  {
+    "id": "stop_0131",
+    "name": "1271 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 19
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 52
+      }
+    ]
+  },
+  {
+    "id": "stop_0132",
+    "name": "1097 Trần Thủ Độ - Đối Diện Cụm Công Nghiêp An Lưu",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 20
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 53
+      }
+    ]
+  },
+  {
+    "id": "stop_0133",
+    "name": "863 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 21
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 54
+      }
+    ]
+  },
+  {
+    "id": "stop_0134",
+    "name": "831 Trần Thủ Độ - Đối Diện Bể Bơi Vùng Đông TX Điện Bàn",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 22
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 55
+      }
+    ]
+  },
+  {
+    "id": "stop_0135",
+    "name": "572 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 23
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 56
+      }
+    ]
+  },
+  {
+    "id": "stop_0136",
+    "name": "285 Trần Thủ Độ",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 24
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 57
+      }
+    ]
+  },
+  {
+    "id": "stop_0137",
+    "name": "171 Trần Thủ Độ - Nhà Văn Hoá Khối Phố Cẩm Sa",
+    "street": "Trần Thủ Độ",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 25
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 58
+      }
+    ]
+  },
+  {
+    "id": "stop_0138",
+    "name": "953 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 26
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 59
+      }
+    ]
+  },
+  {
+    "id": "stop_0139",
+    "name": "811 Trần Hưng Đạo - Đối Diện Trường Tiểu Học Lê Hồng Phong",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 27
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 60
+      }
+    ]
+  },
+  {
+    "id": "stop_0140",
+    "name": "677 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 28
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 61
+      }
+    ]
+  },
+  {
+    "id": "stop_0141",
+    "name": "553 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 29
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 62
+      }
+    ]
+  },
+  {
+    "id": "stop_0142",
+    "name": "333 Trần Hưng Đạo",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 30
+      },
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 63
+      }
+    ]
+  },
+  {
+    "id": "stop_0143",
+    "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+    "street": "Trần Đại Nghĩa",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0144",
+    "name": "Đ/d 722-724 Lê Văn Hiến (Chùa Non Nước)",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 33
+      }
+    ]
+  },
+  {
+    "id": "stop_0145",
+    "name": "Đ/d UBND quận Ngũ Hành Sơn",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 34
+      }
+    ]
+  },
+  {
+    "id": "stop_0146",
+    "name": "125-127 Lê Văn Hiến",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 35
+      }
+    ]
+  },
+  {
+    "id": "stop_0147",
+    "name": "Đ/d 50 Lê Văn Hiến",
+    "street": "Lê Văn Hiến",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 36
+      }
+    ]
+  },
+  {
+    "id": "stop_0148",
+    "name": "Rạp chiếu phim Metiz",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 37
+      }
+    ]
+  },
+  {
+    "id": "stop_0149",
+    "name": "đ/d Quảng trường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 38
+      }
+    ]
+  },
+  {
+    "id": "stop_0150",
+    "name": "Nhà hàng Phì lũ",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 39
+      }
+    ]
+  },
+  {
+    "id": "stop_0151",
+    "name": "Công viên Apec",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 40
+      }
+    ]
+  },
+  {
+    "id": "stop_0152",
+    "name": "Đài DRT (Đ/d 256 Bạch Đằng)",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 41
+      }
+    ]
+  },
+  {
+    "id": "stop_0153",
+    "name": "Đ/d chợ Hàn (Đối diện 122 Bạch Đằng)",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 42
+      }
+    ]
+  },
+  {
+    "id": "stop_0154",
+    "name": "Đối diện sân tenis bạch Đằng",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 43
+      }
+    ]
+  },
+  {
+    "id": "stop_0155",
+    "name": "Đối Diện 65 Nguyễn Tất Thành",
+    "street": "Nguyễn Tất Thành",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 44
+      }
+    ]
+  },
+  {
+    "id": "stop_0156",
+    "name": "58 Lý Thái Tông",
+    "street": "Lý Thái Tông",
+    "routes": [
+      {
+        "routeId": "02",
+        "routeNumber": "02",
+        "direction": "inbound",
+        "stopOrder": 45
+      }
+    ]
+  },
+  {
+    "id": "stop_0157",
+    "name": "Bến xe Trung tâm (97-99 Cao Sơn Pháo)",
+    "street": "Cao Sơn Pháo",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 80
+      }
+    ]
+  },
+  {
+    "id": "stop_0158",
+    "name": "171 Tôn Đức Thắng",
+    "street": "Tôn Đức Thắng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0159",
+    "name": "557 Điện Biên Phủ",
+    "street": "Điện Biên Phủ",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0160",
+    "name": "57 Nguyễn Đức Trung",
+    "street": "Nguyễn Đức Trung",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0161",
+    "name": "581 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0162",
+    "name": "Số 495 UBND Xuân Hà",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0163",
+    "name": "301 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0164",
+    "name": "189 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0165",
+    "name": "73 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0166",
+    "name": "Đ/d 206 – 208 CV Quang Trung",
+    "street": "Quang Trung",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0167",
+    "name": "249 Đống đa",
+    "street": "Đống đa",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0168",
+    "name": "12 Lý Tự Trọng",
+    "street": "Lý Tự Trọng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0169",
+    "name": "Bãi Đậu Xe Trung Tâm hành Chính đường Trần Phú",
+    "street": "Trần Phú",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0170",
+    "name": "TTHC Quận Hải Châu (270 Trần Phú)",
+    "street": "Trần Phú",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0171",
+    "name": "152 - 154A đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0172",
+    "name": "332 Đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0173",
+    "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio 470-472 đường 2/9)",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0174",
+    "name": "518 đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0175",
+    "name": "Đối diện siêu thị Mega",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0176",
+    "name": "Bệnh viện Tâm Trí",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 23
+      }
+    ]
+  },
+  {
+    "id": "stop_0177",
+    "name": "178 Cách Mạng Tháng 8",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 24
+      }
+    ]
+  },
+  {
+    "id": "stop_0178",
+    "name": "58 Ông Ích Đường",
+    "street": "Ông Ích Đường",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 25
+      }
+    ]
+  },
+  {
+    "id": "stop_0179",
+    "name": "164 -166 đường Ông Ích Đường",
+    "street": "Ông Ích Đường",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 26
+      }
+    ]
+  },
+  {
+    "id": "stop_0180",
+    "name": "50 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 27
+      }
+    ]
+  },
+  {
+    "id": "stop_0181",
+    "name": "182 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 28
+      }
+    ]
+  },
+  {
+    "id": "stop_0182",
+    "name": "Trạm xe buýt Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 29
+      }
+    ]
+  },
+  {
+    "id": "stop_0183",
+    "name": "334 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 30
+      }
+    ]
+  },
+  {
+    "id": "stop_0184",
+    "name": "542 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0185",
+    "name": "Đ/d 461 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 32
+      }
+    ]
+  },
+  {
+    "id": "stop_0186",
+    "name": "Bưu Điện Miếu Bông - QL1A",
+    "street": "QL1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 33
+      }
+    ]
+  },
+  {
+    "id": "stop_0187",
+    "name": "ISUZU-QL1A",
+    "street": "QL1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 34
+      }
+    ]
+  },
+  {
+    "id": "stop_0188",
+    "name": "Bến Xe Phía Nam",
+    "street": "QL1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 35
+      }
+    ]
+  },
+  {
+    "id": "stop_0189",
+    "name": "Ô Tô Hồng Sơn - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 36
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0190",
+    "name": "Đối Diện UBND Xã Hoà Phước - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 37
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0191",
+    "name": "Trạm CSGT Cửa Ô Hoà Phước - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 38
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0192",
+    "name": "Ngã 3 Tứ Câu - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 39
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 46
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 5
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 101
+      }
+    ]
+  },
+  {
+    "id": "stop_0193",
+    "name": "Trường Trung Cấp Quảng Đông - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 40
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0194",
+    "name": "Đầu Cầu Thanh Quýt - QL1A",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 41
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0195",
+    "name": "Bến Xe Bắc Quảng Nam - QL1A",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 42
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0196",
+    "name": "8 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 43
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0197",
+    "name": "134 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 44
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0198",
+    "name": "278 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 45
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0199",
+    "name": "Ngã 3 Đường Tránh QL1A",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 46
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0200",
+    "name": "58 Điện Biên Phủ",
+    "street": "Điện Biên Phủ",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 47
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0201",
+    "name": "216 Điện Biên Phủ",
+    "street": "Điện Biên Phủ",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 48
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0202",
+    "name": "Bến Xe TT Nam Phước Quảng Nam",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 49
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0203",
+    "name": "Ngã 3 Đông Lành",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 50
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0204",
+    "name": "Cầu Phú Phong",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 51
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0205",
+    "name": "Chợ Mộc Bài - Quế Sơn",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 52
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0206",
+    "name": "Đối Diện Điện Máy Xanh Hương An",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 53
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0207",
+    "name": "Ngã 3 Hương An Cũ",
+    "street": "Tỉnh Lộ 611",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 54
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0208",
+    "name": "Ngã 3 Hương An Mới",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 55
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0209",
+    "name": "Ngã 3 Sát Hạch Bình Nguyên",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 56
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0210",
+    "name": "Bệnh Viện Đa Khoa Thăng Hoa",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 57
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 23
+      }
+    ]
+  },
+  {
+    "id": "stop_0211",
+    "name": "Cổng Làng Quán Hương",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 58
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 24
+      }
+    ]
+  },
+  {
+    "id": "stop_0212",
+    "name": "Ngã 3 Cây Cóc - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 59
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 28
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 25
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 83
+      }
+    ]
+  },
+  {
+    "id": "stop_0213",
+    "name": "Qua Cầu Gò Phật - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 60
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 26
+      }
+    ]
+  },
+  {
+    "id": "stop_0214",
+    "name": "Ngã 3 Ngọc Phô",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 61
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 27
+      }
+    ]
+  },
+  {
+    "id": "stop_0215",
+    "name": "Sân Vận Động Xã Bình Tú",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 62
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 28
+      }
+    ]
+  },
+  {
+    "id": "stop_0216",
+    "name": "Trường THCS Phan Bội Châu",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 63
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 29
+      }
+    ]
+  },
+  {
+    "id": "stop_0217",
+    "name": "Ngã 3 Xóm Mới - Bình Trung",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 64
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 30
+      }
+    ]
+  },
+  {
+    "id": "stop_0218",
+    "name": "Ngã 4 Quán Gò",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 65
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 31
+      }
+    ]
+  },
+  {
+    "id": "stop_0219",
+    "name": "An Thọ - Tam An - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 66
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 32
+      }
+    ]
+  },
+  {
+    "id": "stop_0220",
+    "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 67
+      },
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 20
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 33
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 75
+      }
+    ]
+  },
+  {
+    "id": "stop_0221",
+    "name": "Ngã 3 KCN Tam Thăng",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 68
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 34
+      }
+    ]
+  },
+  {
+    "id": "stop_0222",
+    "name": "Ngã 4 Kỳ Lý",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 69
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 35
+      }
+    ]
+  },
+  {
+    "id": "stop_0223",
+    "name": "Công Ty Bảo Việt Nhân Thọ",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 70
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 36
+      }
+    ]
+  },
+  {
+    "id": "stop_0224",
+    "name": "10 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 71
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 2
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 37
+      }
+    ]
+  },
+  {
+    "id": "stop_0225",
+    "name": "32 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 72
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 38
+      }
+    ]
+  },
+  {
+    "id": "stop_0226",
+    "name": "Đối Diện Bệnh Viện Minh Thiên - Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 73
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 39
+      }
+    ]
+  },
+  {
+    "id": "stop_0227",
+    "name": "94 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 74
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 40
+      }
+    ]
+  },
+  {
+    "id": "stop_0228",
+    "name": "112 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 75
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 41
+      }
+    ]
+  },
+  {
+    "id": "stop_0229",
+    "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 76
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 42
+      }
+    ]
+  },
+  {
+    "id": "stop_0230",
+    "name": "120 Phan Bội Châu - Ngân Hàng Agribank",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 77
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 43
+      }
+    ]
+  },
+  {
+    "id": "stop_0231",
+    "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 78
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 44
+      }
+    ]
+  },
+  {
+    "id": "stop_0232",
+    "name": "156 Phan Bội Châu - Toà Án Nhân Dân Tam Kỳ",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 79
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 45
+      }
+    ]
+  },
+  {
+    "id": "stop_0233",
+    "name": "26 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 80
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 46
+      }
+    ]
+  },
+  {
+    "id": "stop_0234",
+    "name": "238 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 81
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 47
+      }
+    ]
+  },
+  {
+    "id": "stop_0235",
+    "name": "324 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 82
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 48
+      }
+    ]
+  },
+  {
+    "id": "stop_0236",
+    "name": "394 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 83
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 13
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 49
+      }
+    ]
+  },
+  {
+    "id": "stop_0237",
+    "name": "494 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 84
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 50
+      }
+    ]
+  },
+  {
+    "id": "stop_0238",
+    "name": "546 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 85
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 10
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 51
+      }
+    ]
+  },
+  {
+    "id": "stop_0239",
+    "name": "608 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 86
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 11
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 52
+      }
+    ]
+  },
+  {
+    "id": "stop_0240",
+    "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 87
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 53
+      }
+    ]
+  },
+  {
+    "id": "stop_0241",
+    "name": "816 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 88
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 13
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 54
+      }
+    ]
+  },
+  {
+    "id": "stop_0242",
+    "name": "Điểm Cuối Tam Kỳ - 954 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "outbound",
+        "stopOrder": 89
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 55
+      }
+    ]
+  },
+  {
+    "id": "stop_0243",
+    "name": "Điểm Đầu Tam Kỳ - 954 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 56
+      }
+    ]
+  },
+  {
+    "id": "stop_0244",
+    "name": "781 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 2
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 8
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 57
+      }
+    ]
+  },
+  {
+    "id": "stop_0245",
+    "name": "531 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 3
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 9
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 58
+      }
+    ]
+  },
+  {
+    "id": "stop_0246",
+    "name": "467 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 10
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 59
+      }
+    ]
+  },
+  {
+    "id": "stop_0247",
+    "name": "341 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 5
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 60
+      }
+    ]
+  },
+  {
+    "id": "stop_0248",
+    "name": "275 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 6
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 61
+      }
+    ]
+  },
+  {
+    "id": "stop_0249",
+    "name": "73 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 7
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 62
+      }
+    ]
+  },
+  {
+    "id": "stop_0250",
+    "name": "Siêu Thị Coop Mart - Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 8
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 63
+      }
+    ]
+  },
+  {
+    "id": "stop_0251",
+    "name": "379 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 9
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 12
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 64
+      }
+    ]
+  },
+  {
+    "id": "stop_0252",
+    "name": "283 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 10
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 65
+      }
+    ]
+  },
+  {
+    "id": "stop_0253",
+    "name": "281 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 11
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 14
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 66
+      }
+    ]
+  },
+  {
+    "id": "stop_0254",
+    "name": "239 Phan Bội Châu - Ngân Hàng BIDV",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 12
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 67
+      }
+    ]
+  },
+  {
+    "id": "stop_0255",
+    "name": "201 Phan Bội Châu - Đối Diện Ngân Hàng Đông Á",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 13
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 68
+      }
+    ]
+  },
+  {
+    "id": "stop_0256",
+    "name": "135 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 14
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 69
+      }
+    ]
+  },
+  {
+    "id": "stop_0257",
+    "name": "Bệnh Viện Minh Thiện - Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 15
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 70
+      }
+    ]
+  },
+  {
+    "id": "stop_0258",
+    "name": "65 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 16
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 21
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 71
+      }
+    ]
+  },
+  {
+    "id": "stop_0259",
+    "name": "1 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 72
+      }
+    ]
+  },
+  {
+    "id": "stop_0260",
+    "name": "Ngã 4 Kỳ Lý - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 18
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 73
+      }
+    ]
+  },
+  {
+    "id": "stop_0261",
+    "name": "Ngã 3 Tam Thăng - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 19
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 74
+      }
+    ]
+  },
+  {
+    "id": "stop_0262",
+    "name": "An Thọ - Tam An QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 21
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 76
+      }
+    ]
+  },
+  {
+    "id": "stop_0263",
+    "name": "Ngã 4 Quán Gò - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 22
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 77
+      }
+    ]
+  },
+  {
+    "id": "stop_0264",
+    "name": "Xóm Mới - Bình Trung - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 23
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 78
+      }
+    ]
+  },
+  {
+    "id": "stop_0265",
+    "name": "Trường THCS Phan Bội Châu - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 24
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 79
+      }
+    ]
+  },
+  {
+    "id": "stop_0266",
+    "name": "Nghĩa Trang Xã Bình Tú - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 25
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 80
+      }
+    ]
+  },
+  {
+    "id": "stop_0267",
+    "name": "Ngã 3 Ngọc Phô - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 26
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 81
+      }
+    ]
+  },
+  {
+    "id": "stop_0268",
+    "name": "Cầu Gò Phật - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 27
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 82
+      }
+    ]
+  },
+  {
+    "id": "stop_0269",
+    "name": "Đối Diện Bệnh Viện Đa Khoa Thăng Hoa - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 29
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 84
+      }
+    ]
+  },
+  {
+    "id": "stop_0270",
+    "name": "Ngã 3 Sát Hạch Bình Nguyên - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 30
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 85
+      }
+    ]
+  },
+  {
+    "id": "stop_0271",
+    "name": "Ngã 3 Hương An Mới - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 31
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 86
+      }
+    ]
+  },
+  {
+    "id": "stop_0272",
+    "name": "Điện Máy Xanh Hương An - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 32
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 87
+      }
+    ]
+  },
+  {
+    "id": "stop_0273",
+    "name": "Cây Xăng Dầu Mộc Bài - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 33
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 88
+      }
+    ]
+  },
+  {
+    "id": "stop_0274",
+    "name": "Qua Cầu Phú Phong - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 34
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 89
+      }
+    ]
+  },
+  {
+    "id": "stop_0275",
+    "name": "Ngã 3 Đông Lành - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 35
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 90
+      }
+    ]
+  },
+  {
+    "id": "stop_0276",
+    "name": "Đối Diện Bến Xe TT Nam Phước - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 36
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 91
+      }
+    ]
+  },
+  {
+    "id": "stop_0277",
+    "name": "53 Điện Biên Phủ",
+    "street": "Điện Biên Phủ",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 37
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 92
+      }
+    ]
+  },
+  {
+    "id": "stop_0278",
+    "name": "Sân Vận Động Phường Điện Minh",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 38
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 93
+      }
+    ]
+  },
+  {
+    "id": "stop_0279",
+    "name": "215 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 39
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 94
+      }
+    ]
+  },
+  {
+    "id": "stop_0280",
+    "name": "Công Viên Thanh Niên",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 40
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 95
+      }
+    ]
+  },
+  {
+    "id": "stop_0281",
+    "name": "5 Trần Nhân Tông",
+    "street": "Trần Nhân Tông",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 41
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 96
+      }
+    ]
+  },
+  {
+    "id": "stop_0282",
+    "name": "Bệnh Viện Đa Khoa Vĩnh Đức - QL1A",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 42
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 97
+      }
+    ]
+  },
+  {
+    "id": "stop_0283",
+    "name": "Gần Trạm Thu Phí Điện Bàn - QL1A",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 43
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 98
+      }
+    ]
+  },
+  {
+    "id": "stop_0284",
+    "name": "Nghĩa Trang Liệt Sỹ Điện Bàn - QL1A",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 44
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 99
+      }
+    ]
+  },
+  {
+    "id": "stop_0285",
+    "name": "Ngã 3 Lầu Sụp - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 45
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 100
+      }
+    ]
+  },
+  {
+    "id": "stop_0286",
+    "name": "UBND Xã Hoà Phước - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 47
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 102
+      }
+    ]
+  },
+  {
+    "id": "stop_0287",
+    "name": "Kho Đá Đông Ấn - QL1A",
+    "street": "Quốc Lộ 1A",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 48
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 103
+      }
+    ]
+  },
+  {
+    "id": "stop_0288",
+    "name": "Bến Xe Khách Phía Nam",
+    "street": "Nam Kỳ Khởi Nghĩa",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 49
+      },
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 104
+      }
+    ]
+  },
+  {
+    "id": "stop_0289",
+    "name": "467 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 50
+      }
+    ]
+  },
+  {
+    "id": "stop_0290",
+    "name": "333 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 51
+      }
+    ]
+  },
+  {
+    "id": "stop_0291",
+    "name": "171 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 52
+      }
+    ]
+  },
+  {
+    "id": "stop_0292",
+    "name": "Đ/d trạm xe buýt Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 53
+      }
+    ]
+  },
+  {
+    "id": "stop_0293",
+    "name": "121 Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 54
+      }
+    ]
+  },
+  {
+    "id": "stop_0294",
+    "name": "Cty Toyota Phạm Hùng",
+    "street": "Phạm Hùng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 55
+      }
+    ]
+  },
+  {
+    "id": "stop_0295",
+    "name": "297 Đường Ông Ích Đường",
+    "street": "Ông Ích Đường",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 56
+      }
+    ]
+  },
+  {
+    "id": "stop_0296",
+    "name": "175 Ông Ích Đường",
+    "street": "Ông Ích Đường",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 57
+      }
+    ]
+  },
+  {
+    "id": "stop_0297",
+    "name": "151 Cách mạng tháng 8",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 58
+      }
+    ]
+  },
+  {
+    "id": "stop_0298",
+    "name": "25 Cách mạng tháng 8",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 59
+      }
+    ]
+  },
+  {
+    "id": "stop_0299",
+    "name": "Metro Đà Nẵng",
+    "street": "CMT8",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 60
+      }
+    ]
+  },
+  {
+    "id": "stop_0300",
+    "name": "105 đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 61
+      }
+    ]
+  },
+  {
+    "id": "stop_0301",
+    "name": "Trung tâm giải trí Helio",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 62
+      }
+    ]
+  },
+  {
+    "id": "stop_0302",
+    "name": "Đ/d lilama 7 đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 63
+      }
+    ]
+  },
+  {
+    "id": "stop_0303",
+    "name": "Nhà hàng Phì Lũ đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 64
+      }
+    ]
+  },
+  {
+    "id": "stop_0304",
+    "name": "Đ/d 156 đường 2/9",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 65
+      }
+    ]
+  },
+  {
+    "id": "stop_0305",
+    "name": "Công viên apec",
+    "street": "đường 2/9",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 66
+      }
+    ]
+  },
+  {
+    "id": "stop_0306",
+    "name": "Đ/d 256 Bạc Đằng",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 67
+      }
+    ]
+  },
+  {
+    "id": "stop_0307",
+    "name": "Đ/d 122 Bạch Đằng",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 68
+      }
+    ]
+  },
+  {
+    "id": "stop_0308",
+    "name": "Đ/d 66 Bạch Đằng (đ/d bưu điện tp)",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 69
+      }
+    ]
+  },
+  {
+    "id": "stop_0309",
+    "name": "Đ/d sân Tenis Bạch Đằng",
+    "street": "Bạch Đằng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 70
+      }
+    ]
+  },
+  {
+    "id": "stop_0310",
+    "name": "23 Lý Tự Trọng",
+    "street": "Lý Tự Trọng",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 71
+      }
+    ]
+  },
+  {
+    "id": "stop_0311",
+    "name": "326 Đống Đa",
+    "street": "Đống đa",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 72
+      }
+    ]
+  },
+  {
+    "id": "stop_0312",
+    "name": "24 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 73
+      }
+    ]
+  },
+  {
+    "id": "stop_0313",
+    "name": "162 Trần Cao Vân (Trường THCS Hoàng Diệu)",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 74
+      }
+    ]
+  },
+  {
+    "id": "stop_0314",
+    "name": "312 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 75
+      }
+    ]
+  },
+  {
+    "id": "stop_0315",
+    "name": "396 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 76
+      }
+    ]
+  },
+  {
+    "id": "stop_0316",
+    "name": "574 Trần Cao Vân (Bảo hiểm xã hội Thanh Khê )",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 77
+      }
+    ]
+  },
+  {
+    "id": "stop_0317",
+    "name": "674 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 78
+      }
+    ]
+  },
+  {
+    "id": "stop_0318",
+    "name": "Đ/d Trạm điện Nguyễn Đức Trung",
+    "street": "Nguyễn Đức Trung",
+    "routes": [
+      {
+        "routeId": "21",
+        "routeNumber": "21",
+        "direction": "inbound",
+        "stopOrder": 79
+      }
+    ]
+  },
+  {
+    "id": "stop_0319",
+    "name": "Bến xe Tam Kỳ",
+    "street": "QL1A",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 18
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 22
+      }
+    ]
+  },
+  {
+    "id": "stop_0320",
+    "name": "Số 10 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0321",
+    "name": "Bờ hồ trước Bệnh Viện Minh Thiện",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0322",
+    "name": "Ngân hàng BIDV Quảng Nam",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0323",
+    "name": "VNPT Quảng Nam",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0324",
+    "name": "Chùa Đạo Nguyên",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0325",
+    "name": "Số 156 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0326",
+    "name": "Đối diện Nhà thuốc Long Châu",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0327",
+    "name": "Đối diện Trường Cao đẳng y tế Quảng Nam",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0328",
+    "name": "Cách cổng trường Đại học Quảng Nam 30 m",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0329",
+    "name": "258 Hùng Vương – Nhà khách Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 11
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0330",
+    "name": "Đối diện Cổng trường CĐ Quảng Nam",
+    "street": "Huỳnh Thúc Kháng",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0331",
+    "name": "36 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 14
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0332",
+    "name": "170 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 15
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0333",
+    "name": "324 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0334",
+    "name": "Bến xe Trà My",
+    "street": "QL40B",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0335",
+    "name": "Ngã 3 Trà Đốc",
+    "street": "QL40B",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 18
+      },
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0336",
+    "name": "67 Trần Cao Vân",
+    "street": "Trần Cao Vân",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 3
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0337",
+    "name": "56 Huỳnh Thúc Kháng",
+    "street": "Huỳnh Thúc Kháng",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0338",
+    "name": "Đối diện nhà khách 258 Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0339",
+    "name": "Cây xăng dầu Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 7
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0340",
+    "name": "141 Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 8
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0341",
+    "name": "Đối diện cổng KTX CĐ Y tế Quảng Nam",
+    "street": "Lê Lợi",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0342",
+    "name": "Cách cổng Trường CĐ Y tế Quảng Nam 10 m",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0343",
+    "name": "Trạm chờ Bờ hồ Nguyễn Du",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0344",
+    "name": "239 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0345",
+    "name": "201 Phan Bội Châu",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0346",
+    "name": "Bệnh viện Minh Thiện",
+    "street": "Phan Bội Châu",
+    "routes": [
+      {
+        "routeId": "TKY-TMY",
+        "routeNumber": "02 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0347",
+    "name": "Cách cổng chính Bộ đội biên phòng Quảng Nam 20m",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0348",
+    "name": "Nhà chờ đường Nguyễn Chí Thanh",
+    "street": "Nguyễn Chí Thanh",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0349",
+    "name": "Đối diện trường Cao đẳng Y tế Quảng Nam",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0350",
+    "name": "Cách cổng UBND phường Tam Kỳ 10m",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0351",
+    "name": "Cách cổng Trường Đại học Quảng Nam 30 m",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0352",
+    "name": "Nhà thờ Tin Lành- Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0353",
+    "name": "954 Phan Châu Trinh",
+    "street": "Phan Châu Trinh",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0354",
+    "name": "Tam Anh",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0355",
+    "name": "Tam Anh Nam",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0356",
+    "name": "Cầu vượt Trường Hải",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 17
+      },
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0357",
+    "name": "Cách Cổng Khu công nghiệp Băc Chu Lai 50m",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0358",
+    "name": "Khu công nghiệp Bắc Chu Lai",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0359",
+    "name": "Cảng Kỳ Hà",
+    "street": "ĐT 618",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 20
+      },
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0360",
+    "name": "Ngã 3 Kỳ Hà cũ",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0361",
+    "name": "Chùa An Tân",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0362",
+    "name": "Ngã 4 Tam Giang",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0363",
+    "name": "Thư viện Núi Thành",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 5
+      },
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0364",
+    "name": "Bệnh viện Hàn Quốc",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 6
+      },
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0365",
+    "name": "Cách khu phức hợp ô tô Trường Hải 100m",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0366",
+    "name": "Đối diện Nhà khách 258 Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0367",
+    "name": "101 Hùng Vương",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0368",
+    "name": "63 Nguyễn Du",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0369",
+    "name": "Cách Cổng trường CĐ y Tế Quảng Nam 10m",
+    "street": "Nguyễn Du",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0370",
+    "name": "Đường Nguyễn Chí Thanh – Bên hông Sở GTVT Quảng Nam",
+    "street": "Nguyễn Chí Thanh",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0371",
+    "name": "Trường Cao đẳng Phương Đông",
+    "street": "Hùng Vương",
+    "routes": [
+      {
+        "routeId": "TKY-NTH",
+        "routeNumber": "05 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0372",
+    "name": "90 Phan Bội Châu",
+    "street": "Phan Bội Châu - Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0373",
+    "name": "110 Phan Bội Châu (Ngân Hàng BIDV)",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0374",
+    "name": "02 Phan Bội Châu (VNPT)",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0375",
+    "name": "06 Phan Bội Châu (Ngân hàng Agibank)",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0376",
+    "name": "140 Phan Bội Châu (Chùa Đạo Nguyên)",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0377",
+    "name": "463 Phan Bội Châu (Kho bạc cũ)",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0378",
+    "name": "20A Phan Châu Trinh (KS Anh Huy)",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0379",
+    "name": "136 Phan Châu Trinh (Chùa Hòa An )",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0380",
+    "name": "320 Phan Châu Trinh (Chùa Hòa An )",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0381",
+    "name": "394 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0382",
+    "name": "484 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0383",
+    "name": "544 Phan Châu Trinh (Cầu Ngân hàng)",
+    "street": "Phan Châu Trinh – Hương Trà",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0384",
+    "name": "608 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Hương Trà",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0385",
+    "name": "636 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Hương Trà",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0386",
+    "name": "706 Phan Châu Trinh (Nhà thờ)",
+    "street": "Phan Châu Trinh – Hương Trà",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0387",
+    "name": "878 Phan Châu Trinh (Tin Lành)",
+    "street": "Phan Châu Trinh – Hương Trà",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0388",
+    "name": "Đối diện cây xăng Hòa Mỹ",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0389",
+    "name": "UBND xã Tam Xuân I cũ",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0390",
+    "name": "Cách cầu Bà Bầu 20m hướng về Núi Thành",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0391",
+    "name": "Ngã 3 Đức Bố",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 20
+      }
+    ]
+  },
+  {
+    "id": "stop_0392",
+    "name": "Cổng Khu Công nghiệp Bắc Chu Lai",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 21
+      }
+    ]
+  },
+  {
+    "id": "stop_0393",
+    "name": "Sảnh nhà ga sân bay Chu Lai",
+    "street": "Sân bay Chu Lai",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "outbound",
+        "stopOrder": 22
+      },
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0394",
+    "name": "Cầu Máng",
+    "street": "QL1",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0395",
+    "name": "781 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0396",
+    "name": "531 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "stop_0397",
+    "name": "467 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 9
+      }
+    ]
+  },
+  {
+    "id": "stop_0398",
+    "name": "341 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 10
+      }
+    ]
+  },
+  {
+    "id": "stop_0399",
+    "name": "275 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 11
+      }
+    ]
+  },
+  {
+    "id": "stop_0400",
+    "name": "73 Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 12
+      }
+    ]
+  },
+  {
+    "id": "stop_0401",
+    "name": "Siêu thị Coop Mart - Phan Châu Trinh",
+    "street": "Phan Châu Trinh – Tam Kỳ",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 13
+      }
+    ]
+  },
+  {
+    "id": "stop_0402",
+    "name": "379 Phan Bội Châu",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 14
+      }
+    ]
+  },
+  {
+    "id": "stop_0403",
+    "name": "283 Phan Bội Châu",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 15
+      }
+    ]
+  },
+  {
+    "id": "stop_0404",
+    "name": "281 Phan Bội Châu",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 16
+      }
+    ]
+  },
+  {
+    "id": "stop_0405",
+    "name": "239 Phan Bội Châu – Ngân hàng BIDV",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 17
+      }
+    ]
+  },
+  {
+    "id": "stop_0406",
+    "name": "201 Phan Bội Châu – Đối diện ngân hàng Đông Á",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 18
+      }
+    ]
+  },
+  {
+    "id": "stop_0407",
+    "name": "135 Phan Bội Châu",
+    "street": "Phan Bội Châu – Bàn Thạch",
+    "routes": [
+      {
+        "routeId": "TKY-CHU",
+        "routeNumber": "12 (Quảng Nam)",
+        "direction": "inbound",
+        "stopOrder": 19
+      }
+    ]
+  },
+  {
+    "id": "stop_0408",
+    "name": "Khu đô thị Nam Hội An City",
+    "street": "Trường Giang 1, Duy Nghĩa, TP Đà Nẵng",
+    "routes": [
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "inbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0409",
+    "name": "Bãi đỗ xe đường Hai Bà Trưng",
+    "street": "497 Đường Hai Bà Trưng, Hội An",
+    "routes": [
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "outbound",
+        "stopOrder": 2
+      },
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "inbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0410",
+    "name": "Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+    "street": "Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+    "routes": [
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "outbound",
+        "stopOrder": 3
+      },
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0411",
+    "name": "Bãi đỗ xe Khu du lịch Cổng trời Đông Giang",
+    "street": "Xã Bến Hiên, TP. Đà Nẵng",
+    "routes": [
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "outbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "01DL",
+        "routeNumber": "01DL",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0412",
+    "name": "Cảng hàng không Quốc tế Đà Nẵng",
+    "street": "",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "outbound",
+        "stopOrder": 1
+      },
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "stop_0413",
+    "name": "Cung hội nghị Quốc tế Đà Nẵng",
+    "street": "Võ Nguyên Giáp",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "outbound",
+        "stopOrder": 2
+      },
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 6
+      }
+    ]
+  },
+  {
+    "id": "stop_0414",
+    "name": "The Ocean Estates",
+    "street": "Trường Sa",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "outbound",
+        "stopOrder": 3
+      },
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 2
+      }
+    ]
+  },
+  {
+    "id": "stop_0415",
+    "name": "Bến tàu Cửa Đại",
+    "street": "",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "outbound",
+        "stopOrder": 4
+      },
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0416",
+    "name": "Aria – Đà Nẵng Hotel & Resort",
+    "street": "Trường Sa",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 3
+      }
+    ]
+  },
+  {
+    "id": "stop_0417",
+    "name": "Resort Hyatt Regency",
+    "street": "Trường Sa",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "stop_0418",
+    "name": "Crown international Club",
+    "street": "Võ Nguyên Giáp",
+    "routes": [
+      {
+        "routeId": "01SB",
+        "routeNumber": "01SB",
+        "direction": "inbound",
+        "stopOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "stop_0419",
+    "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 1
+      }
+    ]
+  },
+  {
+    "id": "stop_0420",
+    "name": "Trạm Xe Buýt Đại Học Việt Hàn - Trần Đại Nghĩa",
+    "street": "Trần Hưng Đạo",
+    "routes": [
+      {
+        "routeId": "LK02",
+        "routeNumber": "LK02",
+        "direction": "outbound",
+        "stopOrder": 64
+      }
+    ]
+  },
+  {
+    "id": "stop_0421",
+    "name": "Bến Xe Phía Nam",
+    "street": "Nam Kỳ Khởi Nghĩa",
+    "routes": [
+      {
+        "routeId": "LK21",
+        "routeNumber": "LK21",
+        "direction": "outbound",
+        "stopOrder": 1
+      }
+    ]
+  }
+]

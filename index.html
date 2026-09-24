@@ -112,7 +112,7 @@
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Điểm đón</p>
-            <p id="home-origin-display" class="text-[14px] font-medium text-slate-800 truncate">Vị trí của bạn (Bến xe Trung tâm)</p>
+            <p id="home-origin-display" class="text-[14px] font-medium text-slate-800 truncate">Chọn điểm đón</p>
           </div>
           <button type="button" class="text-[12px] font-semibold text-emerald-600 px-2 py-1 rounded-lg hover:bg-emerald-50 transition-colors">Đổi</button>
         </div>
@@ -401,7 +401,7 @@
           </div>
           <div class="min-w-0">
             <p id="map-active-stop-name" class="font-bold text-[13px] text-slate-900 truncate">Chạm vào trạm để xem thông tin</p>
-            <p id="map-active-stop-detail" class="text-[11px] text-slate-500 truncate">Vị trí xe & giờ đón khách ước tính</p>
+            <p id="map-active-stop-detail" class="text-[11px] text-slate-500 truncate">Lộ trình & trạm dừng GPS</p>
           </div>
         </div>
         <button id="btn-map-switch-dir" type="button" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[12px] font-semibold flex items-center gap-1.5 shrink-0">
@@ -540,8 +540,8 @@
           <span class="w-4 h-4 text-emerald-600 shrink-0">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
           </span>
-          <span class="flex-1 text-left truncate">Vị trí hiện tại của bạn (Đà Nẵng)</span>
-          <span class="text-emerald-600 font-bold">Chọn</span>
+          <span id="picker-current-location-label" class="flex-1 text-left truncate">Sử dụng vị trí hiện tại (GPS)</span>
+          <span id="picker-current-location-status" class="text-emerald-600 font-bold">Lấy vị trí</span>
         </button>
       </div>
 

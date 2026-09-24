@@ -1,0 +1,4 @@
+# Danabus Python Dependencies
+# Both test suites (test_map_and_gps.py, browser_smoke_test.py) are written using
+# 100% Python Standard Library (socket, urllib, unittest, subprocess, json, base64)
+# with zero external third-party dependencies required.

@@ -16,10 +16,10 @@ class BusService {
     if (this.isLoaded) return;
     try {
       const [routesRes, stopsRes, streetsRes, summaryRes] = await Promise.all([
-        fetch('data/danangbus_routes.json'),
-        fetch('data/danangbus_stops.json'),
-        fetch('data/danangbus_streets.json'),
-        fetch('data/danangbus_summary.json')
+        fetch('data/danangbus_routes.json', { cache: 'no-cache' }),
+        fetch('data/danangbus_stops.json', { cache: 'no-cache' }),
+        fetch('data/danangbus_streets.json', { cache: 'no-cache' }),
+        fetch('data/danangbus_summary.json', { cache: 'no-cache' })
       ]);
 
       this.routes = await routesRes.json();

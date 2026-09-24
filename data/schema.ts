@@ -11,12 +11,18 @@ export type RouteCategory =
 
 export type RouteStatus = 'active' | 'suspended';
 
+export type StopConfidence = 'high' | 'medium' | 'low' | 'unresolved';
+export type StopStatus = 'verified' | 'unresolved';
+
 export interface BusStop {
   order: number;
   name: string;
   street?: string;
-  lat?: number;
-  lng?: number;
+  lat?: number | null;
+  lng?: number | null;
+  source?: string | null;
+  confidence?: StopConfidence;
+  status?: StopStatus;
 }
 
 export interface DirectionStops {
@@ -76,6 +82,22 @@ export interface Timetable {
   inbound?: TimetableTrip[];
 }
 
+export interface RouteGeometryProvenance {
+  source: string;
+  pointsCount: number;
+  verified: boolean;
+  generatedAt?: string;
+}
+
+export interface RouteGeometry {
+  outbound?: [number, number][] | null;
+  inbound?: [number, number][] | null;
+  provenance?: {
+    outbound?: RouteGeometryProvenance;
+    inbound?: RouteGeometryProvenance;
+  };
+}
+
 /**
  * Full Bus Route Entity
  */
@@ -97,6 +119,7 @@ export interface BusRoute {
   fares: FareInfo;
   routePaths: RoutePaths;
   stops: DirectionStops;
+  geometry?: RouteGeometry;
   timetable?: Timetable;
   vehicleInfo?: string;
   pdfUrls: string[];
@@ -122,6 +145,10 @@ export interface BusRouteCompact {
     outbound: number;
     inbound: number;
   };
+  hasGeometry?: {
+    outbound: boolean;
+    inbound: boolean;
+  };
   streets: string[];
   pdfUrls: string[];
 }
@@ -133,8 +160,11 @@ export interface NormalizedBusStop {
   id: string;                    // "stop_0001"
   name: string;                  // "Bến xe Trung tâm"
   street?: string;               // "Cao Sơn Pháo"
-  lat?: number;
-  lng?: number;
+  lat?: number | null;
+  lng?: number | null;
+  source?: string | null;
+  confidence?: StopConfidence;
+  status?: StopStatus;
   routes: Array<{
     routeId: string;
     routeNumber: string;

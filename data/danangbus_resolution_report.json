@@ -1,0 +1,3744 @@
+{
+  "timestamp": "2026-09-24T15:13:58.268030Z",
+  "total_stops": 421,
+  "verified": [
+    {
+      "id": "stop_0001",
+      "name": "Khu chung cư Hoà Hiệp Nam",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 7814799866,
+      "lat": 16.1084388,
+      "lng": 108.1321979,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0002",
+      "name": "Số nhà 817 Nguyễn Lương Bằng",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11894149759,
+      "lat": 16.1049853,
+      "lng": 108.1328356,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0003",
+      "name": "Số nhà 24",
+      "street": "Nguyễn Bá Phát",
+      "osm_id": 13031658287,
+      "lat": 16.1032984,
+      "lng": 108.1316839,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0006",
+      "name": "Số nhà 495",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11894149761,
+      "lat": 16.0900459,
+      "lng": 108.1428227,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0007",
+      "name": "Đối diện số nhà 421",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093507,
+      "lat": 16.0864598,
+      "lng": 108.1442954,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0008",
+      "name": "Số nhà 339",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093508,
+      "lat": 16.0830776,
+      "lng": 108.1457202,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0009",
+      "name": "Số nhà 191",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093509,
+      "lat": 16.0795826,
+      "lng": 108.147096,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0010",
+      "name": "Số nhà 141",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093510,
+      "lat": 16.0763059,
+      "lng": 108.1484408,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0011",
+      "name": "Số nhà 27",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093512,
+      "lat": 16.0726662,
+      "lng": 108.1499258,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0012",
+      "name": "Số nhà 775",
+      "street": "Tôn Đức Thắng",
+      "osm_id": 11881093513,
+      "lat": 16.0714086,
+      "lng": 108.1504259,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0013",
+      "name": "Số nhà 46",
+      "street": "Ngô Thì Nhậm",
+      "osm_id": 11881093514,
+      "lat": 16.0703306,
+      "lng": 108.1538205,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0014",
+      "name": "Chung cư Hồ Tùng Mậu",
+      "street": "Hồ Tùng Mậu",
+      "osm_id": 13801877519,
+      "lat": 16.0723489,
+      "lng": 108.1565797,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0015",
+      "name": "Đối diện số nhà 246",
+      "street": "Hồ Tùng Mậu",
+      "osm_id": 11881093516,
+      "lat": 16.0746965,
+      "lng": 108.1582919,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0016",
+      "name": "Bệnh viện Ung Bứu",
+      "street": "Hoàng Thị Loan",
+      "osm_id": 344026362,
+      "lat": 16.0601955,
+      "lng": 108.1578491,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0017",
+      "name": "Số nhà 161",
+      "street": "Phùng Hưng",
+      "osm_id": 11881093518,
+      "lat": 16.0731692,
+      "lng": 108.1665809,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0018",
+      "name": "Chung cư Kinh Dương Vương",
+      "street": "Kinh Dương Vương",
+      "osm_id": 11881093519,
+      "lat": 16.0748446,
+      "lng": 108.1691673,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0019",
+      "name": "Số nhà 35",
+      "street": "Kinh Dương Vương",
+      "osm_id": 11881093520,
+      "lat": 16.0725203,
+      "lng": 108.1727261,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0020",
+      "name": "Số nhà 61",
+      "street": "Lý Thái Tông",
+      "osm_id": 11881093521,
+      "lat": 16.0744931,
+      "lng": 108.1753799,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0021",
+      "name": "Số nhà 91 (Bv Da liễu)",
+      "street": "Dũng Sĩ Thanh Khê",
+      "osm_id": 11881093522,
+      "lat": 16.0740899,
+      "lng": 108.1767512,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0022",
+      "name": "Trường Cao Đẳng Thương Mại",
+      "street": "Dũng Sĩ Thanh Khê",
+      "osm_id": 11881093523,
+      "lat": 16.0718558,
+      "lng": 108.1787575,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0024",
+      "name": "Số nhà 581",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093526,
+      "lat": 16.0713136,
+      "lng": 108.1880375,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0025",
+      "name": "Phường Xuân Hà",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093527,
+      "lat": 16.0711825,
+      "lng": 108.1923835,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0026",
+      "name": "Số nhà 301",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093528,
+      "lat": 16.0710554,
+      "lng": 108.1984144,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0027",
+      "name": "Số nhà 187",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093529,
+      "lat": 16.0711214,
+      "lng": 108.2020583,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0028",
+      "name": "Đối diện số nhà 160",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093530,
+      "lat": 16.0723678,
+      "lng": 108.208244,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0029",
+      "name": "Đối diện số nhà 210",
+      "street": "Quang Trung",
+      "osm_id": 11881093531,
+      "lat": 16.0733765,
+      "lng": 108.2132412,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0030",
+      "name": "Đối diện số nhà 122\n\n Nhà tang lễ",
+      "street": "Quang Trung",
+      "osm_id": 11881093532,
+      "lat": 16.0741076,
+      "lng": 108.2169258,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0033",
+      "name": "Số nhà 9",
+      "street": "Lê Duẩn",
+      "osm_id": 11881093534,
+      "lat": 16.0715839,
+      "lng": 108.2229683,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0034",
+      "name": "Bãi đậu xe đầu đường Phạm Văn Đồng (ngã rẽ An Nhơn 12)",
+      "street": "Phạm Văn Đồng",
+      "osm_id": 11881093535,
+      "lat": 16.0723728,
+      "lng": 108.2320646,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0035",
+      "name": "Số nhà 124",
+      "street": "Phạm Văn Đồng",
+      "osm_id": 11881093536,
+      "lat": 16.070927,
+      "lng": 108.235588,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0037",
+      "name": "Bãi tắm số 3 (Cv Biển đông",
+      "street": "Võ Nguyên giáp",
+      "osm_id": 149699484,
+      "lat": 16.0683513,
+      "lng": 108.2459339,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0039",
+      "name": "Số nhà 183",
+      "street": "Phạm Văn Đồng",
+      "osm_id": 11558491072,
+      "lat": 16.0711365,
+      "lng": 108.2359262,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0040",
+      "name": "Đối diện bãi xe đầu đường Phạm Văn Đồng",
+      "street": "Phạm Văn Đồng",
+      "osm_id": 11881093541,
+      "lat": 16.0728569,
+      "lng": 108.2318407,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0041",
+      "name": "Số nhà 10",
+      "street": "Lê Duẩn",
+      "osm_id": 11881093542,
+      "lat": 16.0716732,
+      "lng": 108.2222865,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0042",
+      "name": "Số nhà 121",
+      "street": "Nguyễn Chí Thanh",
+      "osm_id": 11597370771,
+      "lat": 16.0733049,
+      "lng": 108.2208807,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0044",
+      "name": "Số nhà 312",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093546,
+      "lat": 16.0712456,
+      "lng": 108.2022423,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0045",
+      "name": "Số nhà 400",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093547,
+      "lat": 16.0711673,
+      "lng": 108.1990103,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0046",
+      "name": "Số nhà 570",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093548,
+      "lat": 16.0712866,
+      "lng": 108.1932265,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0047",
+      "name": "Số nhà 674",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093549,
+      "lat": 16.0713518,
+      "lng": 108.1889231,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0048",
+      "name": "Số nhà 856",
+      "street": "Trần Cao Vân",
+      "osm_id": 13031658284,
+      "lat": 16.0683598,
+      "lng": 108.1830561,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0051",
+      "name": "Số nhà 58",
+      "street": "Lý Thái Tông",
+      "osm_id": 11881093552,
+      "lat": 16.0745699,
+      "lng": 108.1752781,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0052",
+      "name": "Số nhà 28",
+      "street": "Kinh Dương Vương",
+      "osm_id": 11881093553,
+      "lat": 16.0725231,
+      "lng": 108.1730328,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0053",
+      "name": "Số nhà 196",
+      "street": "Kinh Dương Vương",
+      "osm_id": 11881093554,
+      "lat": 16.075026,
+      "lng": 108.1691781,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0054",
+      "name": "Số nhà 74",
+      "street": "Phùng Hưng",
+      "osm_id": 11881093555,
+      "lat": 16.0736404,
+      "lng": 108.1667859,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0055",
+      "name": "Số nhà 554",
+      "street": "Hoàng Thị Loan",
+      "osm_id": 11881093556,
+      "lat": 16.0716629,
+      "lng": 108.1642362,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0056",
+      "name": "Số nhà 252",
+      "street": "Hồ tùng Mậu",
+      "osm_id": 11881093557,
+      "lat": 16.0739248,
+      "lng": 108.157585,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0057",
+      "name": "Số nhà 332",
+      "street": "Hồ Tùng Mậu",
+      "osm_id": 11881093558,
+      "lat": 16.0720575,
+      "lng": 108.1562147,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0058",
+      "name": "Số nhà 63",
+      "street": "Ngô Thì Nhậm",
+      "osm_id": 11881093559,
+      "lat": 16.0707934,
+      "lng": 108.154423,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0059",
+      "name": "Số nhà 896",
+      "street": "Tôn Đức Thắng",
+      "osm_id": 11881093560,
+      "lat": 16.0712067,
+      "lng": 108.1507993,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0060",
+      "name": "Số 34",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093561,
+      "lat": 16.0726985,
+      "lng": 108.1502009,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0061",
+      "name": "Số nhà 138",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093562,
+      "lat": 16.076882,
+      "lng": 108.1484689,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0062",
+      "name": "Số nhà 234",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093563,
+      "lat": 16.0807158,
+      "lng": 108.1469073,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0063",
+      "name": "Số nhà 290",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093564,
+      "lat": 16.0830648,
+      "lng": 108.1459428,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0064",
+      "name": "Số nhà 380",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11881093565,
+      "lat": 16.0864064,
+      "lng": 108.1445562,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0065",
+      "name": "Số nhà 436",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11894149745,
+      "lat": 16.0903003,
+      "lng": 108.1429411,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0066",
+      "name": "Số nhà 09",
+      "street": "Mê Linh",
+      "osm_id": 13031658290,
+      "lat": 16.0984726,
+      "lng": 108.1347954,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0067",
+      "name": "Số nhà 43",
+      "street": "Nguyễn Bá Phát",
+      "osm_id": 13031658292,
+      "lat": 16.1031864,
+      "lng": 108.1317167,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0068",
+      "name": "Số nhà 636",
+      "street": "Nguyễn Lương Bằng",
+      "osm_id": 11894149747,
+      "lat": 16.1053072,
+      "lng": 108.1329185,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0069",
+      "name": "Bến Xe TT Đà Nẵng - Cao Sơn Pháo",
+      "street": "Cao Sơn Pháo",
+      "osm_id": 256668716,
+      "lat": 16.05501,
+      "lng": 108.1733575,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0071",
+      "name": "Gần khúc giao Hà Khê Nguyễn Tất Thành (cách 50m)",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 13801877520,
+      "lat": 16.072542,
+      "lng": 108.1912489,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0076",
+      "name": "đ/d Công viên Apec",
+      "street": "đường 2/9",
+      "osm_id": 675604354,
+      "lat": 16.0587532,
+      "lng": 108.2235123,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0077",
+      "name": "214 - 216 đường 2/9",
+      "street": "đường 2/9",
+      "osm_id": 11900103125,
+      "lat": 16.0472604,
+      "lng": 108.2224447,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0078",
+      "name": "Quảng trường 2/9",
+      "street": "đường 2/9",
+      "osm_id": 11900103126,
+      "lat": 16.0427261,
+      "lng": 108.2230065,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0079",
+      "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio - 470 đường 2/9)",
+      "street": "đường 2/9",
+      "osm_id": 11900103127,
+      "lat": 16.0359899,
+      "lng": 108.2238211,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0080",
+      "name": "40 Lê Văn Hiến",
+      "street": "Lê Văn Hiến",
+      "osm_id": 11882946624,
+      "lat": 16.03666,
+      "lng": 108.2436625,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0081",
+      "name": "402 Lê Văn Hiến (Tường rào Bệnh viện phụ sản nhi 600 giường, đ/d 123)",
+      "street": "Lê Văn Hiến",
+      "osm_id": 344021057,
+      "lat": 16.0226568,
+      "lng": 108.2493882,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0082",
+      "name": "754 Lê Văn Hiến",
+      "street": "Lê Văn Hiến",
+      "osm_id": 5274491023,
+      "lat": 16.0027873,
+      "lng": 108.2594371,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0083",
+      "name": "Bến xe buýt đại học Việt Hàn",
+      "street": "Trần Đại Nghĩa",
+      "osm_id": 11894149763,
+      "lat": 15.9739462,
+      "lng": 108.2546077,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0084",
+      "name": "158 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149764,
+      "lat": 15.9681402,
+      "lng": 108.2545731,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0085",
+      "name": "292 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149765,
+      "lat": 15.9630159,
+      "lng": 108.2545313,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0086",
+      "name": "584 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149766,
+      "lat": 15.9580674,
+      "lng": 108.254489,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0087",
+      "name": "Đối Diện UBND Phường Điện Ngọc - 700 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149767,
+      "lat": 15.9490508,
+      "lng": 108.2544712,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0088",
+      "name": "828 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149768,
+      "lat": 15.9449048,
+      "lng": 108.2544734,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0089",
+      "name": "974 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894187969,
+      "lat": 15.9393402,
+      "lng": 108.2544564,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0090",
+      "name": "126 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187970,
+      "lat": 15.9304197,
+      "lng": 108.2556337,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0091",
+      "name": "304 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187971,
+      "lat": 15.926446,
+      "lng": 108.2586684,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0092",
+      "name": "488 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187972,
+      "lat": 15.9215159,
+      "lng": 108.262531,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0093",
+      "name": "588 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187973,
+      "lat": 15.9179236,
+      "lng": 108.2648146,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0095",
+      "name": "832 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187975,
+      "lat": 15.9103795,
+      "lng": 108.2707125,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0097",
+      "name": "1138 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187977,
+      "lat": 15.9045872,
+      "lng": 108.2813677,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0098",
+      "name": "1322 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187978,
+      "lat": 15.9010738,
+      "lng": 108.2888556,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0099",
+      "name": "601 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894187979,
+      "lat": 15.899549,
+      "lng": 108.2974847,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0101",
+      "name": "403 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 9921315924,
+      "lat": 15.8946297,
+      "lng": 108.3068489,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0102",
+      "name": "269 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894187981,
+      "lat": 15.8915281,
+      "lng": 108.3126931,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0103",
+      "name": "217 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 13801877521,
+      "lat": 15.8903195,
+      "lng": 108.3150842,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0106",
+      "name": "ÊMM Hotel - 187 Lý Thường Kiệt",
+      "street": "Lý Thường Kiệt",
+      "osm_id": 11894187984,
+      "lat": 15.8835621,
+      "lng": 108.3270912,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0110",
+      "name": "108 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 5385023021,
+      "lat": 15.8811191,
+      "lng": 108.3434996,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0114",
+      "name": "Khách Sạn Hội An Ocean Front - Âu Cơ",
+      "street": "Âu Cơ",
+      "osm_id": 11894187991,
+      "lat": 15.8906851,
+      "lng": 108.3764349,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0115",
+      "name": "Bãi Đỗ Xe Bến Thủy Nội Địa Cửa Đại - Âu Cơ",
+      "street": "Âu Cơ",
+      "osm_id": 11894187992,
+      "lat": 15.8764842,
+      "lng": 108.3892548,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0119",
+      "name": "129 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11894187997,
+      "lat": 15.8812447,
+      "lng": 108.3435621,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0121",
+      "name": "214 Lý Thường Kiệt",
+      "street": "Lý Thường Kiệt",
+      "osm_id": 11894188000,
+      "lat": 15.8823407,
+      "lng": 108.3315579,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0122",
+      "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
+      "street": "Lý Thường Kiệt",
+      "osm_id": 11894188000,
+      "lat": 15.8823407,
+      "lng": 108.3315579,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0124",
+      "name": "40 Nguyễn Tất Thành - Công Ty Cổ Phần Công Trình Công Cộng Hội An",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894188004,
+      "lat": 15.8904734,
+      "lng": 108.3150884,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0125",
+      "name": "120 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894188010,
+      "lat": 15.8928121,
+      "lng": 108.3106699,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0126",
+      "name": "172 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894188005,
+      "lat": 15.894171,
+      "lng": 108.3080622,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0127",
+      "name": "290 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894188006,
+      "lat": 15.8971063,
+      "lng": 108.3024691,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0128",
+      "name": "362 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "osm_id": 11894188008,
+      "lat": 15.8987774,
+      "lng": 108.2992979,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0129",
+      "name": "1563 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188007,
+      "lat": 15.9004048,
+      "lng": 108.2921861,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0130",
+      "name": "1455 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188011,
+      "lat": 15.9013845,
+      "lng": 108.2885639,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0131",
+      "name": "1271 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188012,
+      "lat": 15.9046511,
+      "lng": 108.2820598,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0133",
+      "name": "863 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188014,
+      "lat": 15.9111709,
+      "lng": 108.2706233,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0134",
+      "name": "831 Trần Thủ Độ - Đối Diện Bể Bơi Vùng Đông TX Điện Bàn",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894187974,
+      "lat": 15.9140766,
+      "lng": 108.2690511,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0135",
+      "name": "572 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188016,
+      "lat": 15.9193506,
+      "lng": 108.2641958,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0136",
+      "name": "285 Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188017,
+      "lat": 15.9273687,
+      "lng": 108.2580507,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0137",
+      "name": "171 Trần Thủ Độ - Nhà Văn Hoá Khối Phố Cẩm Sa",
+      "street": "Trần Thủ Độ",
+      "osm_id": 11894188018,
+      "lat": 15.9302415,
+      "lng": 108.2559686,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0140",
+      "name": "677 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894188021,
+      "lat": 15.9475175,
+      "lng": 108.2547165,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0141",
+      "name": "553 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894188022,
+      "lat": 15.9526481,
+      "lng": 108.2547495,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0142",
+      "name": "333 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894188023,
+      "lat": 15.9620869,
+      "lng": 108.2548458,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0143",
+      "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+      "street": "Trần Đại Nghĩa",
+      "osm_id": 11894149763,
+      "lat": 15.9739462,
+      "lng": 108.2546077,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0146",
+      "name": "125-127 Lê Văn Hiến",
+      "street": "Lê Văn Hiến",
+      "osm_id": 11882946628,
+      "lat": 16.0229164,
+      "lng": 108.2510106,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0147",
+      "name": "Đ/d 50 Lê Văn Hiến",
+      "street": "Lê Văn Hiến",
+      "osm_id": 11882946632,
+      "lat": 16.036352,
+      "lng": 108.2441869,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0148",
+      "name": "Rạp chiếu phim Metiz",
+      "street": "đường 2/9",
+      "osm_id": 11900103153,
+      "lat": 16.0359416,
+      "lng": 108.2240902,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0149",
+      "name": "đ/d Quảng trường 2/9",
+      "street": "đường 2/9",
+      "osm_id": 11900103126,
+      "lat": 16.0427261,
+      "lng": 108.2230065,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0150",
+      "name": "Nhà hàng Phì lũ",
+      "street": "đường 2/9",
+      "osm_id": 11900103157,
+      "lat": 16.0477319,
+      "lng": 108.2226771,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0151",
+      "name": "Công viên Apec",
+      "street": "đường 2/9",
+      "osm_id": 675604354,
+      "lat": 16.0587532,
+      "lng": 108.2235123,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0152",
+      "name": "Đài DRT (Đ/d 256 Bạch Đằng)",
+      "street": "Bạch Đằng",
+      "osm_id": 2987516133,
+      "lat": 16.0622041,
+      "lng": 108.2241829,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0156",
+      "name": "58 Lý Thái Tông",
+      "street": "Lý Thái Tông",
+      "osm_id": 11881093552,
+      "lat": 16.0745699,
+      "lng": 108.1752781,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0157",
+      "name": "Bến xe Trung tâm (97-99 Cao Sơn Pháo)",
+      "street": "Cao Sơn Pháo",
+      "osm_id": 256668716,
+      "lat": 16.05501,
+      "lng": 108.1733575,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0158",
+      "name": "171 Tôn Đức Thắng",
+      "street": "Tôn Đức Thắng",
+      "osm_id": 11886977650,
+      "lat": 16.0583474,
+      "lng": 108.173631,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0160",
+      "name": "57 Nguyễn Đức Trung",
+      "street": "Nguyễn Đức Trung",
+      "osm_id": 13801877528,
+      "lat": 16.0698706,
+      "lng": 108.1874696,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0161",
+      "name": "581 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093526,
+      "lat": 16.0713136,
+      "lng": 108.1880375,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0163",
+      "name": "301 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093528,
+      "lat": 16.0710554,
+      "lng": 108.1984144,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0167",
+      "name": "249 Đống đa",
+      "street": "Đống đa",
+      "osm_id": 13801877529,
+      "lat": 16.0750892,
+      "lng": 108.2150239,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0168",
+      "name": "12 Lý Tự Trọng",
+      "street": "Lý Tự Trọng",
+      "osm_id": 6270906593,
+      "lat": 16.0774313,
+      "lng": 108.2216586,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0170",
+      "name": "TTHC Quận Hải Châu (270 Trần Phú)",
+      "street": "Trần Phú",
+      "osm_id": 5340748522,
+      "lat": 16.0620343,
+      "lng": 108.2231874,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0173",
+      "name": "Đối diện Rạp chiếu phim Metiz (Đối diện khu vui chơi Helio 470-472 đường 2/9)",
+      "street": "đường 2/9",
+      "osm_id": 11900103127,
+      "lat": 16.0359899,
+      "lng": 108.2238211,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0174",
+      "name": "518 đường 2/9",
+      "street": "đường 2/9",
+      "osm_id": 11900103154,
+      "lat": 16.0340323,
+      "lng": 108.2240414,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0176",
+      "name": "Bệnh viện Tâm Trí",
+      "street": "CMT8",
+      "osm_id": 11881362060,
+      "lat": 16.022998,
+      "lng": 108.2147092,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0178",
+      "name": "58 Ông Ích Đường",
+      "street": "Ông Ích Đường",
+      "osm_id": 11882946588,
+      "lat": 16.0164188,
+      "lng": 108.204815,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0179",
+      "name": "164 -166 đường Ông Ích Đường",
+      "street": "Ông Ích Đường",
+      "osm_id": 11882946589,
+      "lat": 16.0122823,
+      "lng": 108.205476,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0180",
+      "name": "50 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11882946590,
+      "lat": 16.0028844,
+      "lng": 108.2069726,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0181",
+      "name": "182 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881362068,
+      "lat": 15.9993076,
+      "lng": 108.2070715,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0182",
+      "name": "Trạm xe buýt Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377369,
+      "lat": 15.9965204,
+      "lng": 108.2072228,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0185",
+      "name": "Đ/d 461 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377372,
+      "lat": 15.981615,
+      "lng": 108.2080214,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0188",
+      "name": "Bến Xe Phía Nam",
+      "street": "QL1A",
+      "osm_id": 11881377383,
+      "lat": 15.9672423,
+      "lng": 108.2108465,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0196",
+      "name": "8 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11898021849,
+      "lat": 15.8968096,
+      "lng": 108.2450036,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0197",
+      "name": "134 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11898021850,
+      "lat": 15.8917459,
+      "lng": 108.2476321,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0198",
+      "name": "278 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11898021851,
+      "lat": 15.888412,
+      "lng": 108.2492844,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0200",
+      "name": "58 Điện Biên Phủ",
+      "street": "Điện Biên Phủ",
+      "osm_id": 11898021853,
+      "lat": 15.8445521,
+      "lng": 108.281581,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0204",
+      "name": "Cầu Phú Phong",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021857,
+      "lat": 15.8135746,
+      "lng": 108.2989231,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0206",
+      "name": "Đối Diện Điện Máy Xanh Hương An",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021859,
+      "lat": 15.7813999,
+      "lng": 108.3286026,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0210",
+      "name": "Bệnh Viện Đa Khoa Thăng Hoa",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021863,
+      "lat": 15.7475167,
+      "lng": 108.3550529,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0211",
+      "name": "Cổng Làng Quán Hương",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021864,
+      "lat": 15.7335526,
+      "lng": 108.3660058,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0213",
+      "name": "Qua Cầu Gò Phật - QL1A",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021866,
+      "lat": 15.7163415,
+      "lng": 108.3794678,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0215",
+      "name": "Sân Vận Động Xã Bình Tú",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898021868,
+      "lat": 15.6916232,
+      "lng": 108.3984406,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0219",
+      "name": "An Thọ - Tam An - QL1A",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898042372,
+      "lat": 15.6220194,
+      "lng": 108.4405285,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0224",
+      "name": "10 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042377,
+      "lat": 15.5851209,
+      "lng": 108.4666765,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0225",
+      "name": "32 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042378,
+      "lat": 15.5843241,
+      "lng": 108.467663,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0227",
+      "name": "94 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042380,
+      "lat": 15.5814882,
+      "lng": 108.4715874,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0228",
+      "name": "112 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042381,
+      "lat": 15.5799393,
+      "lng": 108.4736167,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0233",
+      "name": "26 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042386,
+      "lat": 15.5727424,
+      "lng": 108.4833912,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0235",
+      "name": "324 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042388,
+      "lat": 15.5680243,
+      "lng": 108.4899764,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0236",
+      "name": "394 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042389,
+      "lat": 15.5669839,
+      "lng": 108.4916466,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0237",
+      "name": "494 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042390,
+      "lat": 15.5658465,
+      "lng": 108.4933629,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0238",
+      "name": "546 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042391,
+      "lat": 15.5648333,
+      "lng": 108.494892,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0239",
+      "name": "608 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042392,
+      "lat": 15.5637767,
+      "lng": 108.4964341,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0241",
+      "name": "816 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042394,
+      "lat": 15.559404,
+      "lng": 108.5025066,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0242",
+      "name": "Điểm Cuối Tam Kỳ - 954 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042395,
+      "lat": 15.555436,
+      "lng": 108.5059009,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0243",
+      "name": "Điểm Đầu Tam Kỳ - 954 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042395,
+      "lat": 15.555436,
+      "lng": 108.5059009,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0244",
+      "name": "781 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042398,
+      "lat": 15.5592196,
+      "lng": 108.502946,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0245",
+      "name": "531 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042399,
+      "lat": 15.5637282,
+      "lng": 108.4966827,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0246",
+      "name": "467 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042400,
+      "lat": 15.5650805,
+      "lng": 108.4947382,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0247",
+      "name": "341 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042401,
+      "lat": 15.56679,
+      "lng": 108.4922656,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0248",
+      "name": "275 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042402,
+      "lat": 15.5679281,
+      "lng": 108.4904039,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0249",
+      "name": "73 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042403,
+      "lat": 15.5712344,
+      "lng": 108.4857299,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0251",
+      "name": "379 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042405,
+      "lat": 15.5762508,
+      "lng": 108.478874,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0252",
+      "name": "283 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042406,
+      "lat": 15.5784468,
+      "lng": 108.4759294,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0253",
+      "name": "281 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042407,
+      "lat": 15.5790962,
+      "lng": 108.475083,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0254",
+      "name": "239 Phan Bội Châu - Ngân Hàng BIDV",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042408,
+      "lat": 15.5800323,
+      "lng": 108.4737475,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0256",
+      "name": "135 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042410,
+      "lat": 15.5816072,
+      "lng": 108.4716269,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0259",
+      "name": "1 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042413,
+      "lat": 15.5866148,
+      "lng": 108.4653709,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0262",
+      "name": "An Thọ - Tam An QL1A",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898042372,
+      "lat": 15.6220194,
+      "lng": 108.4405285,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0269",
+      "name": "Đối Diện Bệnh Viện Đa Khoa Thăng Hoa - QL1A",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898042425,
+      "lat": 15.7475401,
+      "lng": 108.3552446,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0274",
+      "name": "Qua Cầu Phú Phong - QL1A",
+      "street": "Quốc Lộ 1A",
+      "osm_id": 11898042430,
+      "lat": 15.8137766,
+      "lng": 108.299003,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0277",
+      "name": "53 Điện Biên Phủ",
+      "street": "Điện Biên Phủ",
+      "osm_id": 11898042433,
+      "lat": 15.8449553,
+      "lng": 108.2816318,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0279",
+      "name": "215 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11898042435,
+      "lat": 15.888093,
+      "lng": 108.2496079,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0281",
+      "name": "5 Trần Nhân Tông",
+      "street": "Trần Nhân Tông",
+      "osm_id": 11898042437,
+      "lat": 15.8968318,
+      "lng": 108.245289,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0289",
+      "name": "467 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377384,
+      "lat": 15.9815882,
+      "lng": 108.2081985,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0290",
+      "name": "333 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377385,
+      "lat": 15.9856037,
+      "lng": 108.2079968,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0292",
+      "name": "Đ/d trạm xe buýt Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377369,
+      "lat": 15.9965204,
+      "lng": 108.2072228,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0293",
+      "name": "121 Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11881377388,
+      "lat": 15.9985264,
+      "lng": 108.2072692,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0294",
+      "name": "Cty Toyota Phạm Hùng",
+      "street": "Phạm Hùng",
+      "osm_id": 11882946592,
+      "lat": 16.0035159,
+      "lng": 108.2073023,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0295",
+      "name": "297 Đường Ông Ích Đường",
+      "street": "Ông Ích Đường",
+      "osm_id": 11882946593,
+      "lat": 16.0123745,
+      "lng": 108.2056589,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0297",
+      "name": "151 Cách mạng tháng 8",
+      "street": "CMT8",
+      "osm_id": 11903086054,
+      "lat": 16.0193649,
+      "lng": 108.2098152,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0305",
+      "name": "Công viên apec",
+      "street": "đường 2/9",
+      "osm_id": 675604354,
+      "lat": 16.0587532,
+      "lng": 108.2235123,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0306",
+      "name": "Đ/d 256 Bạc Đằng",
+      "street": "Bạch Đằng",
+      "osm_id": 2987516133,
+      "lat": 16.0622041,
+      "lng": 108.2241829,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0310",
+      "name": "23 Lý Tự Trọng",
+      "street": "Lý Tự Trọng",
+      "osm_id": 13805656726,
+      "lat": 16.0774618,
+      "lng": 108.220869,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0311",
+      "name": "326 Đống Đa",
+      "street": "Đống đa",
+      "osm_id": 13805656727,
+      "lat": 16.0750826,
+      "lng": 108.2148275,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0312",
+      "name": "24 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 13805656749,
+      "lat": 15.5553199,
+      "lng": 108.4860011,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0314",
+      "name": "312 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093546,
+      "lat": 16.0712456,
+      "lng": 108.2022423,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0317",
+      "name": "674 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 11881093549,
+      "lat": 16.0713518,
+      "lng": 108.1889231,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0320",
+      "name": "Số 10 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042377,
+      "lat": 15.5851209,
+      "lng": 108.4666765,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0323",
+      "name": "VNPT Quảng Nam",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042382,
+      "lat": 15.5787507,
+      "lng": 108.4753287,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0324",
+      "name": "Chùa Đạo Nguyên",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042384,
+      "lat": 15.5762261,
+      "lng": 108.4786966,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0326",
+      "name": "Đối diện Nhà thuốc Long Châu",
+      "street": "Nguyễn Du",
+      "osm_id": 13805656742,
+      "lat": 15.5732631,
+      "lng": 108.4792273,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0327",
+      "name": "Đối diện Trường Cao đẳng y tế Quảng Nam",
+      "street": "Nguyễn Du",
+      "osm_id": 13805656743,
+      "lat": 15.5729371,
+      "lng": 108.4766512,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0328",
+      "name": "Cách cổng trường Đại học Quảng Nam 30 m",
+      "street": "Hùng Vương",
+      "osm_id": 13805656744,
+      "lat": 15.5693502,
+      "lng": 108.476546,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0329",
+      "name": "258 Hùng Vương – Nhà khách Hùng Vương",
+      "street": "Hùng Vương",
+      "osm_id": 13805656745,
+      "lat": 15.5614488,
+      "lng": 108.4848623,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0330",
+      "name": "Đối diện Cổng trường CĐ Quảng Nam",
+      "street": "Huỳnh Thúc Kháng",
+      "osm_id": 13805656746,
+      "lat": 15.5630744,
+      "lng": 108.4877705,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0331",
+      "name": "36 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 13805656747,
+      "lat": 15.5647015,
+      "lng": 108.4931866,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0332",
+      "name": "170 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 13805656748,
+      "lat": 15.5600199,
+      "lng": 108.4890357,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0333",
+      "name": "324 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 13805656749,
+      "lat": 15.5553199,
+      "lng": 108.4860011,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0336",
+      "name": "67 Trần Cao Vân",
+      "street": "Trần Cao Vân",
+      "osm_id": 13805656752,
+      "lat": 15.5647136,
+      "lng": 108.4933809,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0337",
+      "name": "56 Huỳnh Thúc Kháng",
+      "street": "Huỳnh Thúc Kháng",
+      "osm_id": 13805656753,
+      "lat": 15.5673332,
+      "lng": 108.4904846,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0339",
+      "name": "Cây xăng dầu Hùng Vương",
+      "street": "Hùng Vương",
+      "osm_id": 13805656755,
+      "lat": 15.565525,
+      "lng": 108.4805121,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0340",
+      "name": "141 Hùng Vương",
+      "street": "Hùng Vương",
+      "osm_id": 13805656756,
+      "lat": 15.5686006,
+      "lng": 108.4769515,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0341",
+      "name": "Đối diện cổng KTX CĐ Y tế Quảng Nam",
+      "street": "Lê Lợi",
+      "osm_id": 13805656757,
+      "lat": 15.5716524,
+      "lng": 108.4765069,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0342",
+      "name": "Cách cổng Trường CĐ Y tế Quảng Nam 10 m",
+      "street": "Nguyễn Du",
+      "osm_id": 13805656758,
+      "lat": 15.5728139,
+      "lng": 108.4770585,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0343",
+      "name": "Trạm chờ Bờ hồ Nguyễn Du",
+      "street": "Nguyễn Du",
+      "osm_id": 13805656759,
+      "lat": 15.5732166,
+      "lng": 108.4801085,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0344",
+      "name": "239 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042408,
+      "lat": 15.5800323,
+      "lng": 108.4737475,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0345",
+      "name": "201 Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042409,
+      "lat": 15.5807329,
+      "lng": 108.4728306,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0347",
+      "name": "Cách cổng chính Bộ đội biên phòng Quảng Nam 20m",
+      "street": "Hùng Vương",
+      "osm_id": 13806164329,
+      "lat": 15.5825447,
+      "lng": 108.4685387,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0348",
+      "name": "Nhà chờ đường Nguyễn Chí Thanh",
+      "street": "Nguyễn Chí Thanh",
+      "osm_id": 13806164331,
+      "lat": 15.5768093,
+      "lng": 108.4723529,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0349",
+      "name": "Đối diện trường Cao đẳng Y tế Quảng Nam",
+      "street": "Nguyễn Du",
+      "osm_id": 13805656743,
+      "lat": 15.5729371,
+      "lng": 108.4766512,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0350",
+      "name": "Cách cổng UBND phường Tam Kỳ 10m",
+      "street": "Hùng Vương",
+      "osm_id": 13806164332,
+      "lat": 15.5710002,
+      "lng": 108.4733016,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0351",
+      "name": "Cách cổng Trường Đại học Quảng Nam 30 m",
+      "street": "Hùng Vương",
+      "osm_id": 13805656744,
+      "lat": 15.5693502,
+      "lng": 108.476546,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0353",
+      "name": "954 Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042395,
+      "lat": 15.555436,
+      "lng": 108.5059009,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0367",
+      "name": "101 Hùng Vương",
+      "street": "Hùng Vương",
+      "osm_id": 13806164336,
+      "lat": 15.5708314,
+      "lng": 108.4741301,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0368",
+      "name": "63 Nguyễn Du",
+      "street": "Nguyễn Du",
+      "osm_id": 13806164337,
+      "lat": 15.5724917,
+      "lng": 108.4744794,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0370",
+      "name": "Đường Nguyễn Chí Thanh – Bên hông Sở GTVT Quảng Nam",
+      "street": "Nguyễn Chí Thanh",
+      "osm_id": 13806164338,
+      "lat": 15.5775156,
+      "lng": 108.471765,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0371",
+      "name": "Trường Cao đẳng Phương Đông",
+      "street": "Hùng Vương",
+      "osm_id": 13806164339,
+      "lat": 15.5817052,
+      "lng": 108.4689108,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0373",
+      "name": "110 Phan Bội Châu (Ngân Hàng BIDV)",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042377,
+      "lat": 15.5851209,
+      "lng": 108.4666765,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0377",
+      "name": "463 Phan Bội Châu (Kho bạc cũ)",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042412,
+      "lat": 15.5844062,
+      "lng": 108.4678811,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0381",
+      "name": "394 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042389,
+      "lat": 15.5669839,
+      "lng": 108.4916466,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0384",
+      "name": "608 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Hương Trà",
+      "osm_id": 11898042392,
+      "lat": 15.5637767,
+      "lng": 108.4964341,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0395",
+      "name": "781 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042398,
+      "lat": 15.5592196,
+      "lng": 108.502946,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0396",
+      "name": "531 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042399,
+      "lat": 15.5637282,
+      "lng": 108.4966827,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0397",
+      "name": "467 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042400,
+      "lat": 15.5650805,
+      "lng": 108.4947382,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0398",
+      "name": "341 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042401,
+      "lat": 15.56679,
+      "lng": 108.4922656,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0399",
+      "name": "275 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042402,
+      "lat": 15.5679281,
+      "lng": 108.4904039,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0400",
+      "name": "73 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ",
+      "osm_id": 11898042403,
+      "lat": 15.5712344,
+      "lng": 108.4857299,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0402",
+      "name": "379 Phan Bội Châu",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042405,
+      "lat": 15.5762508,
+      "lng": 108.478874,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0403",
+      "name": "283 Phan Bội Châu",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042406,
+      "lat": 15.5784468,
+      "lng": 108.4759294,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0404",
+      "name": "281 Phan Bội Châu",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042407,
+      "lat": 15.5790962,
+      "lng": 108.475083,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0407",
+      "name": "135 Phan Bội Châu",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "osm_id": 11898042410,
+      "lat": 15.5816072,
+      "lng": 108.4716269,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0408",
+      "name": "Khu đô thị Nam Hội An City",
+      "street": "Trường Giang 1, Duy Nghĩa, TP Đà Nẵng",
+      "osm_id": 13805656729,
+      "lat": 15.8574115,
+      "lng": 108.3730987,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0410",
+      "name": "Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+      "street": "Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn",
+      "osm_id": 13805656733,
+      "lat": 15.77439,
+      "lng": 108.1088427,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0412",
+      "name": "Cảng hàng không Quốc tế Đà Nẵng",
+      "street": "",
+      "osm_id": 344018314,
+      "lat": 16.0438902,
+      "lng": 108.1993952,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0414",
+      "name": "The Ocean Estates",
+      "street": "Trường Sa",
+      "osm_id": 13805656736,
+      "lat": 15.9786001,
+      "lng": 108.2769264,
+      "confidence": "medium"
+    },
+    {
+      "id": "stop_0415",
+      "name": "Bến tàu Cửa Đại",
+      "street": "",
+      "osm_id": 134031931,
+      "lat": 15.8761075,
+      "lng": 108.3889694,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0416",
+      "name": "Aria – Đà Nẵng Hotel & Resort",
+      "street": "Trường Sa",
+      "osm_id": 13805656738,
+      "lat": 15.9893776,
+      "lng": 108.2712461,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0417",
+      "name": "Resort Hyatt Regency",
+      "street": "Trường Sa",
+      "osm_id": 343997638,
+      "lat": 16.0127599,
+      "lng": 108.2673322,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0419",
+      "name": "Trạm Xe Buýt Đại Học Việt Hàn",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149763,
+      "lat": 15.9739462,
+      "lng": 108.2546077,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0420",
+      "name": "Trạm Xe Buýt Đại Học Việt Hàn - Trần Đại Nghĩa",
+      "street": "Trần Hưng Đạo",
+      "osm_id": 11894149763,
+      "lat": 15.9739462,
+      "lng": 108.2546077,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0421",
+      "name": "Bến Xe Phía Nam",
+      "street": "Nam Kỳ Khởi Nghĩa",
+      "osm_id": 11881377383,
+      "lat": 15.9672423,
+      "lng": 108.2108465,
+      "confidence": "medium"
+    }
+  ],
+  "needs_review": [
+    {
+      "id": "stop_0005",
+      "name": "Đối diện số nhà 9",
+      "street": "Mê Linh",
+      "candidate_count": 3,
+      "candidates": [
+        {
+          "id": 11903086023,
+          "name": "Đối diện 9 Trường Sơn",
+          "lat": 16.0123222,
+          "lng": 108.1878436,
+          "score": 0.95
+        },
+        {
+          "id": 13031658289,
+          "name": "Đối diện 9 Mê Linh",
+          "lat": 16.0982518,
+          "lng": 108.1347375,
+          "score": 1.0
+        },
+        {
+          "id": 13031658290,
+          "name": "9 Mê Linh",
+          "lat": 16.0984726,
+          "lng": 108.1347954,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0094",
+      "name": "Bể Bơi Vùng Đông TX Điện Bàn - Trần Thủ Độ",
+      "street": "Trần Thủ Độ",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11894187974,
+          "name": "Bể bơi Vùng Đông",
+          "lat": 15.9140766,
+          "lng": 108.2690511,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0100",
+      "name": "Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành",
+      "candidate_count": 21,
+      "candidates": [
+        {
+          "id": 6275733685,
+          "name": "613 Nguyễn Tất Thành",
+          "lat": 16.0733904,
+          "lng": 108.2019349,
+          "score": 0.9
+        },
+        {
+          "id": 7158188357,
+          "name": "219 Nguyễn Tất Thành",
+          "lat": 16.0808786,
+          "lng": 108.2112124,
+          "score": 0.9
+        },
+        {
+          "id": 7158198121,
+          "name": "61 Nguyễn Tất Thành",
+          "lat": 16.0856655,
+          "lng": 108.2140547,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0105",
+      "name": "Trường Phổ Thông Dân Tộc Nội Trú - 39 Nguyễn Tất Thành",
+      "street": "Lý Thường Kiệt",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11882946649,
+          "name": "39 Nguyễn Tất Thành",
+          "lat": 16.0856235,
+          "lng": 108.2143354,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0107",
+      "name": "115 Lý Thường Kiệt",
+      "street": "Lý Thường Kiệt",
+      "candidate_count": 2,
+      "candidates": [
+        {
+          "id": 11894187985,
+          "name": "115 Lý Thường Kiệt",
+          "lat": 15.881303,
+          "lng": 108.3376107,
+          "score": 1.0
+        },
+        {
+          "id": 12632606901,
+          "name": "115 Lý Thường Kiệt",
+          "lat": 15.8821039,
+          "lng": 108.3319765,
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "id": "stop_0139",
+      "name": "811 Trần Hưng Đạo - Đối Diện Trường Tiểu Học Lê Hồng Phong",
+      "street": "Trần Hưng Đạo",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11894188020,
+          "name": "Đối diện Trường Tiểu học Lê Hồng Phong",
+          "lat": 15.9429702,
+          "lng": 108.2547058,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0144",
+      "name": "Đ/d 722-724 Lê Văn Hiến (Chùa Non Nước)",
+      "street": "Lê Văn Hiến",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 5116306624,
+          "name": "Chùa Non Nước",
+          "lat": 16.0029312,
+          "lng": 108.2598085,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0153",
+      "name": "Đ/d chợ Hàn (Đối diện 122 Bạch Đằng)",
+      "street": "Bạch Đằng",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11881093532,
+          "name": "Đối diện 122 Quang Trung",
+          "lat": 16.0741076,
+          "lng": 108.2169258,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0175",
+      "name": "Đối diện siêu thị Mega",
+      "street": "CMT8",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11881362059,
+          "name": "Đối diện Siêu thị Mega Market Đà Nẵng",
+          "lat": 16.0258161,
+          "lng": 108.2199099,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0186",
+      "name": "Bưu Điện Miếu Bông - QL1A",
+      "street": "QL1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11881377373,
+          "name": "Bưu điện Miếu Bông",
+          "lat": 15.9768177,
+          "lng": 108.2082319,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0193",
+      "name": "Trường Trung Cấp Quảng Đông - QL1A",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898021846,
+          "name": "Trường Trung cấp Quảng Đông",
+          "lat": 15.942236,
+          "lng": 108.222713,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0194",
+      "name": "Đầu Cầu Thanh Quýt - QL1A",
+      "street": "Hùng Vương",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898021847,
+          "name": "Đầu cầu Thanh Quýt",
+          "lat": 15.9250353,
+          "lng": 108.231307,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0195",
+      "name": "Bến Xe Bắc Quảng Nam - QL1A",
+      "street": "Hùng Vương",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898021848,
+          "name": "Bến xe Bắc Quảng Nam",
+          "lat": 15.9092651,
+          "lng": 108.2389474,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0205",
+      "name": "Chợ Mộc Bài - Quế Sơn",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898021858,
+          "name": "Chợ Mộc Bài",
+          "lat": 15.7975804,
+          "lng": 108.3126264,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0217",
+      "name": "Ngã 3 Xóm Mới - Bình Trung",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042419,
+          "name": "Xóm Mới - Bình Trung",
+          "lat": 15.6626708,
+          "lng": 108.4163382,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0223",
+      "name": "Công Ty Bảo Việt Nhân Thọ",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042376,
+          "name": "Công ty Bảo Việt Nhân Thọ Tam Kỳ",
+          "lat": 15.5873515,
+          "lng": 108.4643374,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0229",
+      "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042382,
+          "name": "VNPT Quảng Nam",
+          "lat": 15.5787507,
+          "lng": 108.4753287,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0231",
+      "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
+      "street": "Phan Bội Châu",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042384,
+          "name": "Chùa Đạo Nguyên",
+          "lat": 15.5762261,
+          "lng": 108.4786966,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0240",
+      "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042393,
+          "name": "Nhà thờ Tam Kỳ",
+          "lat": 15.5616137,
+          "lng": 108.4994601,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0264",
+      "name": "Xóm Mới - Bình Trung - QL1A",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042419,
+          "name": "Xóm Mới - Bình Trung",
+          "lat": 15.6626708,
+          "lng": 108.4163382,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0266",
+      "name": "Nghĩa Trang Xã Bình Tú - QL1A",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042421,
+          "name": "Nghĩa trang Xã Bình Tú",
+          "lat": 15.6917178,
+          "lng": 108.3985989,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0268",
+      "name": "Cầu Gò Phật - QL1A",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042423,
+          "name": "Cầu Gò Phật",
+          "lat": 15.7164974,
+          "lng": 108.3795613,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0272",
+      "name": "Điện Máy Xanh Hương An - QL1A",
+      "street": "Quốc Lộ 1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042428,
+          "name": "Điện máy xanh Hương An",
+          "lat": 15.7814177,
+          "lng": 108.3288355,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0282",
+      "name": "Bệnh Viện Đa Khoa Vĩnh Đức - QL1A",
+      "street": "Hùng Vương",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042438,
+          "name": "Bệnh viện Đa khoa Vĩnh Đức",
+          "lat": 15.9094982,
+          "lng": 108.2391229,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0283",
+      "name": "Gần Trạm Thu Phí Điện Bàn - QL1A",
+      "street": "Hùng Vương",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042439,
+          "name": "Gần Trạm thu phí Điện Bàn",
+          "lat": 15.9269503,
+          "lng": 108.2305975,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0298",
+      "name": "25 Cách mạng tháng 8",
+      "street": "CMT8",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11881377396,
+          "name": "23-25 Cách Mạng Tháng 8 (Đối diện Bệnh viện Tâm Trí Đà Nẵng)",
+          "lat": 16.0227285,
+          "lng": 108.214682,
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "id": "stop_0303",
+      "name": "Nhà hàng Phì Lũ đường 2/9",
+      "street": "đường 2/9",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11900103157,
+          "name": "Nhà hàng Phì Lũ",
+          "lat": 16.0477319,
+          "lng": 108.2226771,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0319",
+      "name": "Bến xe Tam Kỳ",
+      "street": "QL1A",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042413,
+          "name": "Bến xe Tam Kỳ - 1 Phan Bội Châu",
+          "lat": 15.5866148,
+          "lng": 108.4653709,
+          "score": 0.95
+        }
+      ]
+    },
+    {
+      "id": "stop_0376",
+      "name": "140 Phan Bội Châu (Chùa Đạo Nguyên)",
+      "street": "Phan Bội Châu – Bàn Thạch",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11898042384,
+          "name": "Chùa Đạo Nguyên",
+          "lat": 15.5762261,
+          "lng": 108.4786966,
+          "score": 0.9
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "stop_0004",
+      "name": "Kế ngã tư Chung cư Bầu Tràm Lake side",
+      "street": "Đối diện đường Trung Lập 7"
+    },
+    {
+      "id": "stop_0023",
+      "name": "Số nhà 735, Trường THPT Thái Phiên",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0031",
+      "name": "Số nhà 120",
+      "street": "Lê Lợi"
+    },
+    {
+      "id": "stop_0032",
+      "name": "Trường THPT Phan Châu Trinh",
+      "street": "Lê Lợi"
+    },
+    {
+      "id": "stop_0036",
+      "name": "Khúc giao Chính Hữu + Phạm Văn Đồng",
+      "street": "Phạm Văn Đồng"
+    },
+    {
+      "id": "stop_0038",
+      "name": "Khúc giao Phạm Văn Đồng + Hoàng Bích Sơn",
+      "street": "Phạm Văn Đồng"
+    },
+    {
+      "id": "stop_0043",
+      "name": "Trường THCS Nguyễn Huệ",
+      "street": "Quang Trung"
+    },
+    {
+      "id": "stop_0049",
+      "name": "Trường Thể dục thể thao\n\n Đối diện số nhà 43",
+      "street": "Dũng Sĩ Thanh Khê"
+    },
+    {
+      "id": "stop_0050",
+      "name": "Số nhà 154",
+      "street": "Thanh Khê 6"
+    },
+    {
+      "id": "stop_0070",
+      "name": "59 Lý Thái Tông",
+      "street": "Lý Thái Tông"
+    },
+    {
+      "id": "stop_0072",
+      "name": "65 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành"
+    },
+    {
+      "id": "stop_0073",
+      "name": "Đối diện sân Tennis Trần Phú",
+      "street": "Trần Phú"
+    },
+    {
+      "id": "stop_0074",
+      "name": "Nhà thờ Con Gà (đối diện 151 Trần Phú)",
+      "street": "Trần Phú"
+    },
+    {
+      "id": "stop_0075",
+      "name": "TTHC Quận Hải Châu",
+      "street": "Trần Phú"
+    },
+    {
+      "id": "stop_0096",
+      "name": "900 Trần Thủ Độ",
+      "street": "Trần Thủ Độ"
+    },
+    {
+      "id": "stop_0104",
+      "name": "Đối Diện Công Ty Cổ Phần Dệt May Hoà Thọ - Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành"
+    },
+    {
+      "id": "stop_0108",
+      "name": "Ngã 3 Lý Thường Kiêt - Lê Văn Đức",
+      "street": "Lý Thường Kiệt"
+    },
+    {
+      "id": "stop_0109",
+      "name": "Ngã 3 Lý Thường Kiệt - Trần Nhân Tông",
+      "street": "Lý Thường Kiệt"
+    },
+    {
+      "id": "stop_0111",
+      "name": "265 Cửa Đại - Công An Phường Cẩm Châu",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0112",
+      "name": "113 Cửa Đại",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0113",
+      "name": "11 Cửa Đại - Bưu Điện Cửa Đại",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0116",
+      "name": "Đối Diện Bưu Điện Cửa Đại - 16 Cửa Đại Hội An",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0117",
+      "name": "Đối Diện 113 Cửa Đại",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0118",
+      "name": "356 Cửa Đai - Trạm Y Tế Phường Cẩm Châu",
+      "street": "Cửa Đại"
+    },
+    {
+      "id": "stop_0120",
+      "name": "Ngã 3 Lý Thường Kiệt - Lê Văn Đức",
+      "street": "Lý Thường Kiệt"
+    },
+    {
+      "id": "stop_0123",
+      "name": "26 Nguyễn Tất Thành - Công Ty Cổ Phần Dệt May Hoà Thọ",
+      "street": "Nguyễn Tất Thành"
+    },
+    {
+      "id": "stop_0132",
+      "name": "1097 Trần Thủ Độ - Đối Diện Cụm Công Nghiêp An Lưu",
+      "street": "Trần Thủ Độ"
+    },
+    {
+      "id": "stop_0138",
+      "name": "953 Trần Hưng Đạo",
+      "street": "Trần Hưng Đạo"
+    },
+    {
+      "id": "stop_0145",
+      "name": "Đ/d UBND quận Ngũ Hành Sơn",
+      "street": "Lê Văn Hiến"
+    },
+    {
+      "id": "stop_0154",
+      "name": "Đối diện sân tenis bạch Đằng",
+      "street": "Bạch Đằng"
+    },
+    {
+      "id": "stop_0155",
+      "name": "Đối Diện 65 Nguyễn Tất Thành",
+      "street": "Nguyễn Tất Thành"
+    },
+    {
+      "id": "stop_0159",
+      "name": "557 Điện Biên Phủ",
+      "street": "Điện Biên Phủ"
+    },
+    {
+      "id": "stop_0162",
+      "name": "Số 495 UBND Xuân Hà",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0164",
+      "name": "189 Trần Cao Vân",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0165",
+      "name": "73 Trần Cao Vân",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0166",
+      "name": "Đ/d 206 – 208 CV Quang Trung",
+      "street": "Quang Trung"
+    },
+    {
+      "id": "stop_0169",
+      "name": "Bãi Đậu Xe Trung Tâm hành Chính đường Trần Phú",
+      "street": "Trần Phú"
+    },
+    {
+      "id": "stop_0171",
+      "name": "152 - 154A đường 2/9",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0172",
+      "name": "332 Đường 2/9",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0177",
+      "name": "178 Cách Mạng Tháng 8",
+      "street": "CMT8"
+    },
+    {
+      "id": "stop_0183",
+      "name": "334 Phạm Hùng",
+      "street": "Phạm Hùng"
+    },
+    {
+      "id": "stop_0184",
+      "name": "542 Phạm Hùng",
+      "street": "Phạm Hùng"
+    },
+    {
+      "id": "stop_0187",
+      "name": "ISUZU-QL1A",
+      "street": "QL1A"
+    },
+    {
+      "id": "stop_0189",
+      "name": "Ô Tô Hồng Sơn - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0190",
+      "name": "Đối Diện UBND Xã Hoà Phước - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0191",
+      "name": "Trạm CSGT Cửa Ô Hoà Phước - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0192",
+      "name": "Ngã 3 Tứ Câu - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0199",
+      "name": "Ngã 3 Đường Tránh QL1A",
+      "street": "Trần Nhân Tông"
+    },
+    {
+      "id": "stop_0201",
+      "name": "216 Điện Biên Phủ",
+      "street": "Điện Biên Phủ"
+    },
+    {
+      "id": "stop_0202",
+      "name": "Bến Xe TT Nam Phước Quảng Nam",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0203",
+      "name": "Ngã 3 Đông Lành",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0207",
+      "name": "Ngã 3 Hương An Cũ",
+      "street": "Tỉnh Lộ 611"
+    },
+    {
+      "id": "stop_0208",
+      "name": "Ngã 3 Hương An Mới",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0209",
+      "name": "Ngã 3 Sát Hạch Bình Nguyên",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0212",
+      "name": "Ngã 3 Cây Cóc - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0214",
+      "name": "Ngã 3 Ngọc Phô",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0216",
+      "name": "Trường THCS Phan Bội Châu",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0218",
+      "name": "Ngã 4 Quán Gò",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0220",
+      "name": "Ngã 3 Tam Thành - Gần Cầu Bà Dụ - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0221",
+      "name": "Ngã 3 KCN Tam Thăng",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0222",
+      "name": "Ngã 4 Kỳ Lý",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0226",
+      "name": "Đối Diện Bệnh Viện Minh Thiên - Phan Bội Châu",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0230",
+      "name": "120 Phan Bội Châu - Ngân Hàng Agribank",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0232",
+      "name": "156 Phan Bội Châu - Toà Án Nhân Dân Tam Kỳ",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0234",
+      "name": "238 Phan Châu Trinh",
+      "street": "Phan Châu Trinh"
+    },
+    {
+      "id": "stop_0250",
+      "name": "Siêu Thị Coop Mart - Phan Châu Trinh",
+      "street": "Phan Châu Trinh"
+    },
+    {
+      "id": "stop_0255",
+      "name": "201 Phan Bội Châu - Đối Diện Ngân Hàng Đông Á",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0257",
+      "name": "Bệnh Viện Minh Thiện - Phan Bội Châu",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0258",
+      "name": "65 Phan Bội Châu",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0260",
+      "name": "Ngã 4 Kỳ Lý - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0261",
+      "name": "Ngã 3 Tam Thăng - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0263",
+      "name": "Ngã 4 Quán Gò - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0265",
+      "name": "Trường THCS Phan Bội Châu - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0267",
+      "name": "Ngã 3 Ngọc Phô - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0270",
+      "name": "Ngã 3 Sát Hạch Bình Nguyên - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0271",
+      "name": "Ngã 3 Hương An Mới - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0273",
+      "name": "Cây Xăng Dầu Mộc Bài - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0275",
+      "name": "Ngã 3 Đông Lành - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0276",
+      "name": "Đối Diện Bến Xe TT Nam Phước - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0278",
+      "name": "Sân Vận Động Phường Điện Minh",
+      "street": "Trần Nhân Tông"
+    },
+    {
+      "id": "stop_0280",
+      "name": "Công Viên Thanh Niên",
+      "street": "Trần Nhân Tông"
+    },
+    {
+      "id": "stop_0284",
+      "name": "Nghĩa Trang Liệt Sỹ Điện Bàn - QL1A",
+      "street": "Hùng Vương"
+    },
+    {
+      "id": "stop_0285",
+      "name": "Ngã 3 Lầu Sụp - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0286",
+      "name": "UBND Xã Hoà Phước - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0287",
+      "name": "Kho Đá Đông Ấn - QL1A",
+      "street": "Quốc Lộ 1A"
+    },
+    {
+      "id": "stop_0288",
+      "name": "Bến Xe Khách Phía Nam",
+      "street": "Nam Kỳ Khởi Nghĩa"
+    },
+    {
+      "id": "stop_0291",
+      "name": "171 Phạm Hùng",
+      "street": "Phạm Hùng"
+    },
+    {
+      "id": "stop_0296",
+      "name": "175 Ông Ích Đường",
+      "street": "Ông Ích Đường"
+    },
+    {
+      "id": "stop_0299",
+      "name": "Metro Đà Nẵng",
+      "street": "CMT8"
+    },
+    {
+      "id": "stop_0300",
+      "name": "105 đường 2/9",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0301",
+      "name": "Trung tâm giải trí Helio",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0302",
+      "name": "Đ/d lilama 7 đường 2/9",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0304",
+      "name": "Đ/d 156 đường 2/9",
+      "street": "đường 2/9"
+    },
+    {
+      "id": "stop_0307",
+      "name": "Đ/d 122 Bạch Đằng",
+      "street": "Bạch Đằng"
+    },
+    {
+      "id": "stop_0308",
+      "name": "Đ/d 66 Bạch Đằng (đ/d bưu điện tp)",
+      "street": "Bạch Đằng"
+    },
+    {
+      "id": "stop_0309",
+      "name": "Đ/d sân Tenis Bạch Đằng",
+      "street": "Bạch Đằng"
+    },
+    {
+      "id": "stop_0313",
+      "name": "162 Trần Cao Vân (Trường THCS Hoàng Diệu)",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0315",
+      "name": "396 Trần Cao Vân",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0316",
+      "name": "574 Trần Cao Vân (Bảo hiểm xã hội Thanh Khê )",
+      "street": "Trần Cao Vân"
+    },
+    {
+      "id": "stop_0318",
+      "name": "Đ/d Trạm điện Nguyễn Đức Trung",
+      "street": "Nguyễn Đức Trung"
+    },
+    {
+      "id": "stop_0321",
+      "name": "Bờ hồ trước Bệnh Viện Minh Thiện",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0322",
+      "name": "Ngân hàng BIDV Quảng Nam",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0325",
+      "name": "Số 156 Phan Bội Châu",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0334",
+      "name": "Bến xe Trà My",
+      "street": "QL40B"
+    },
+    {
+      "id": "stop_0335",
+      "name": "Ngã 3 Trà Đốc",
+      "street": "QL40B"
+    },
+    {
+      "id": "stop_0338",
+      "name": "Đối diện nhà khách 258 Hùng Vương",
+      "street": "Hùng Vương"
+    },
+    {
+      "id": "stop_0346",
+      "name": "Bệnh viện Minh Thiện",
+      "street": "Phan Bội Châu"
+    },
+    {
+      "id": "stop_0352",
+      "name": "Nhà thờ Tin Lành- Phan Châu Trinh",
+      "street": "Phan Châu Trinh"
+    },
+    {
+      "id": "stop_0354",
+      "name": "Tam Anh",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0355",
+      "name": "Tam Anh Nam",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0356",
+      "name": "Cầu vượt Trường Hải",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0357",
+      "name": "Cách Cổng Khu công nghiệp Băc Chu Lai 50m",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0358",
+      "name": "Khu công nghiệp Bắc Chu Lai",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0359",
+      "name": "Cảng Kỳ Hà",
+      "street": "ĐT 618"
+    },
+    {
+      "id": "stop_0360",
+      "name": "Ngã 3 Kỳ Hà cũ",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0361",
+      "name": "Chùa An Tân",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0362",
+      "name": "Ngã 4 Tam Giang",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0363",
+      "name": "Thư viện Núi Thành",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0364",
+      "name": "Bệnh viện Hàn Quốc",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0365",
+      "name": "Cách khu phức hợp ô tô Trường Hải 100m",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0366",
+      "name": "Đối diện Nhà khách 258 Hùng Vương",
+      "street": "Hùng Vương"
+    },
+    {
+      "id": "stop_0369",
+      "name": "Cách Cổng trường CĐ y Tế Quảng Nam 10m",
+      "street": "Nguyễn Du"
+    },
+    {
+      "id": "stop_0372",
+      "name": "90 Phan Bội Châu",
+      "street": "Phan Bội Châu - Bàn Thạch"
+    },
+    {
+      "id": "stop_0374",
+      "name": "02 Phan Bội Châu (VNPT)",
+      "street": "Phan Bội Châu – Bàn Thạch"
+    },
+    {
+      "id": "stop_0375",
+      "name": "06 Phan Bội Châu (Ngân hàng Agibank)",
+      "street": "Phan Bội Châu – Bàn Thạch"
+    },
+    {
+      "id": "stop_0378",
+      "name": "20A Phan Châu Trinh (KS Anh Huy)",
+      "street": "Phan Châu Trinh – Tam Kỳ"
+    },
+    {
+      "id": "stop_0379",
+      "name": "136 Phan Châu Trinh (Chùa Hòa An )",
+      "street": "Phan Châu Trinh – Tam Kỳ"
+    },
+    {
+      "id": "stop_0380",
+      "name": "320 Phan Châu Trinh (Chùa Hòa An )",
+      "street": "Phan Châu Trinh – Tam Kỳ"
+    },
+    {
+      "id": "stop_0382",
+      "name": "484 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ"
+    },
+    {
+      "id": "stop_0383",
+      "name": "544 Phan Châu Trinh (Cầu Ngân hàng)",
+      "street": "Phan Châu Trinh – Hương Trà"
+    },
+    {
+      "id": "stop_0385",
+      "name": "636 Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Hương Trà"
+    },
+    {
+      "id": "stop_0386",
+      "name": "706 Phan Châu Trinh (Nhà thờ)",
+      "street": "Phan Châu Trinh – Hương Trà"
+    },
+    {
+      "id": "stop_0387",
+      "name": "878 Phan Châu Trinh (Tin Lành)",
+      "street": "Phan Châu Trinh – Hương Trà"
+    },
+    {
+      "id": "stop_0388",
+      "name": "Đối diện cây xăng Hòa Mỹ",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0389",
+      "name": "UBND xã Tam Xuân I cũ",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0390",
+      "name": "Cách cầu Bà Bầu 20m hướng về Núi Thành",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0391",
+      "name": "Ngã 3 Đức Bố",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0392",
+      "name": "Cổng Khu Công nghiệp Bắc Chu Lai",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0393",
+      "name": "Sảnh nhà ga sân bay Chu Lai",
+      "street": "Sân bay Chu Lai"
+    },
+    {
+      "id": "stop_0394",
+      "name": "Cầu Máng",
+      "street": "QL1"
+    },
+    {
+      "id": "stop_0401",
+      "name": "Siêu thị Coop Mart - Phan Châu Trinh",
+      "street": "Phan Châu Trinh – Tam Kỳ"
+    },
+    {
+      "id": "stop_0405",
+      "name": "239 Phan Bội Châu – Ngân hàng BIDV",
+      "street": "Phan Bội Châu – Bàn Thạch"
+    },
+    {
+      "id": "stop_0406",
+      "name": "201 Phan Bội Châu – Đối diện ngân hàng Đông Á",
+      "street": "Phan Bội Châu – Bàn Thạch"
+    },
+    {
+      "id": "stop_0409",
+      "name": "Bãi đỗ xe đường Hai Bà Trưng",
+      "street": "497 Đường Hai Bà Trưng, Hội An"
+    },
+    {
+      "id": "stop_0411",
+      "name": "Bãi đỗ xe Khu du lịch Cổng trời Đông Giang",
+      "street": "Xã Bến Hiên, TP. Đà Nẵng"
+    },
+    {
+      "id": "stop_0413",
+      "name": "Cung hội nghị Quốc tế Đà Nẵng",
+      "street": "Võ Nguyên Giáp"
+    },
+    {
+      "id": "stop_0418",
+      "name": "Crown international Club",
+      "street": "Võ Nguyên Giáp"
+    }
+  ],
+  "routes_geometry_validation": {
+    "05": {
+      "outbound": {
+        "verified_anchors": 31,
+        "total_stops": 37,
+        "is_valid": true,
+        "reason": "Validation PASS (31 anchors, 685 points, 23.34km, max_stop_dist 56.8m)"
+      },
+      "inbound": {
+        "verified_anchors": 28,
+        "total_stops": 33,
+        "is_valid": true,
+        "reason": "Validation PASS (28 anchors, 583 points, 17.87km, max_stop_dist 56.8m)"
+      }
+    },
+    "07": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "08": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "11": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "12": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "02": {
+      "outbound": {
+        "verified_anchors": 31,
+        "total_stops": 47,
+        "is_valid": false,
+        "reason": "Total length 45.21km deviates from expected 10.0km"
+      },
+      "inbound": {
+        "verified_anchors": 32,
+        "total_stops": 46,
+        "is_valid": false,
+        "reason": "Total length 46.97km deviates from expected 10.0km"
+      }
+    },
+    "03": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "06": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "09": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "13": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "14": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "21": {
+      "outbound": {
+        "verified_anchors": 43,
+        "total_stops": 89,
+        "is_valid": false,
+        "reason": "Total length 80.33km deviates from expected 10.0km"
+      },
+      "inbound": {
+        "verified_anchors": 34,
+        "total_stops": 80,
+        "is_valid": false,
+        "reason": "Stop order non-monotonic along polyline path (prog 0.836 -> 0.220)"
+      }
+    },
+    "TKY-TMY": {
+      "outbound": {
+        "verified_anchors": 12,
+        "total_stops": 18,
+        "is_valid": true,
+        "reason": "Validation PASS (12 anchors, 104 points, 7.42km, max_stop_dist 13.0m)"
+      },
+      "inbound": {
+        "verified_anchors": 12,
+        "total_stops": 18,
+        "is_valid": true,
+        "reason": "Validation PASS (12 anchors, 125 points, 6.87km, max_stop_dist 14.0m)"
+      }
+    },
+    "TKY-NTH": {
+      "outbound": {
+        "verified_anchors": 12,
+        "total_stops": 20,
+        "is_valid": true,
+        "reason": "Validation PASS (12 anchors, 126 points, 7.58km, max_stop_dist 13.0m)"
+      },
+      "inbound": {
+        "verified_anchors": 11,
+        "total_stops": 22,
+        "is_valid": true,
+        "reason": "Validation PASS (11 anchors, 88 points, 6.16km, max_stop_dist 16.1m)"
+      }
+    },
+    "TKY-CHU": {
+      "outbound": {
+        "verified_anchors": 4,
+        "total_stops": 22,
+        "is_valid": false,
+        "reason": "Insufficient anchors (4 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 10,
+        "total_stops": 19,
+        "is_valid": true,
+        "reason": "Validation PASS (10 anchors, 79 points, 4.19km, max_stop_dist 7.1m)"
+      }
+    },
+    "LK01": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "01DL": {
+      "outbound": {
+        "verified_anchors": 2,
+        "total_stops": 4,
+        "is_valid": false,
+        "reason": "Insufficient anchors (2 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 2,
+        "total_stops": 4,
+        "is_valid": false,
+        "reason": "Insufficient anchors (2 < 5 minimum)"
+      }
+    },
+    "01SB": {
+      "outbound": {
+        "verified_anchors": 3,
+        "total_stops": 4,
+        "is_valid": false,
+        "reason": "Insufficient anchors (3 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 5,
+        "total_stops": 7,
+        "is_valid": false,
+        "reason": "Stop 'Cảng hàng không Quốc tế Đà Nẵng' is too far from polyline (380.2m > 350m)"
+      }
+    },
+    "LK02": {
+      "outbound": {
+        "verified_anchors": 44,
+        "total_stops": 64,
+        "is_valid": false,
+        "reason": "Stop order non-monotonic along polyline path (prog 1.000 -> 0.014)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "LK21": {
+      "outbound": {
+        "verified_anchors": 43,
+        "total_stops": 104,
+        "is_valid": false,
+        "reason": "Stop order non-monotonic along polyline path (prog 0.590 -> 0.500)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "04": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "10": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    },
+    "15": {
+      "outbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      },
+      "inbound": {
+        "verified_anchors": 0,
+        "total_stops": 0,
+        "is_valid": false,
+        "reason": "Insufficient anchors (0 < 5 minimum)"
+      }
+    }
+  }
+}

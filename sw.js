@@ -1,4 +1,4 @@
-const CACHE_NAME = 'danabus-cache-v2';
+const CACHE_NAME = 'danabus-cache-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -41,6 +41,22 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
+
+  // For data requests, use Network-First to guarantee fresh verified dataset
+  if (requestUrl.origin === location.origin && requestUrl.pathname.includes('/data/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
 
   // Handle local file and data requests with cache first, then network fallback
   if (requestUrl.origin === location.origin) {

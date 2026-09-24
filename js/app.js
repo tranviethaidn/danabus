@@ -13,6 +13,7 @@ class DanabusApp {
     this.pickerActiveTab = 'popular';  // 'popular' | 'stops'
     this.currentFilter = 'all';
     this.countdownInterval = null;
+    this.userLocation = null;
   }
 
   async init() {
@@ -92,10 +93,13 @@ class DanabusApp {
 
     // Special view triggers
     if (viewId === 'map' && this.selectedRoute) {
-      setTimeout(() => {
+      if (this.mapInitTimeout) {
+        clearTimeout(this.mapInitTimeout);
+      }
+      this.mapInitTimeout = setTimeout(() => {
         window.mapService.init('map-container');
         window.mapService.renderRoute(this.selectedRoute, this.currentDirection);
-      }, 100);
+      }, 50);
     }
   }
 
@@ -325,17 +329,16 @@ class DanabusApp {
         ${stops.map((s, idx) => {
           const isStart = idx === 0;
           const isEnd = idx === stops.length - 1;
-          const isLiveSim = idx === 2; // Simulated bus stop location
 
           return `
             <div class="relative flex items-start gap-3.5 pb-5">
-              <div class="z-10 w-7 h-7 rounded-full ${isStart || isEnd ? 'bg-emerald-600 text-white ring-4 ring-white shadow-sm' : (isLiveSim ? 'bg-emerald-600 text-white ring-4 ring-emerald-100 animate-bounce' : 'bg-white border-2 border-slate-300 text-slate-600')} flex items-center justify-center shrink-0">
-                ${isStart ? window.renderIcon('trip_origin', 'w-3.5 h-3.5 text-white') : (isEnd ? window.renderIcon('location_on', 'w-3.5 h-3.5 text-white') : (isLiveSim ? window.renderIcon('directions_bus', 'w-3.5 h-3.5 text-white') : `<span class="text-[11px] font-bold">${idx + 1}</span>`))}
+              <div class="z-10 w-7 h-7 rounded-full ${isStart || isEnd ? 'bg-emerald-600 text-white ring-4 ring-white shadow-sm' : 'bg-white border-2 border-slate-300 text-slate-600'} flex items-center justify-center shrink-0">
+                ${isStart ? window.renderIcon('trip_origin', 'w-3.5 h-3.5 text-white') : (isEnd ? window.renderIcon('location_on', 'w-3.5 h-3.5 text-white') : `<span class="text-[11px] font-bold">${idx + 1}</span>`)}
               </div>
               <div class="flex-1 min-w-0 pt-0.5">
                 <div class="flex items-center justify-between">
                   <span class="text-[13px] text-slate-900 font-bold truncate">${s.name}</span>
-                  ${isStart ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold">Điểm đầu</span>' : (isEnd ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold">Điểm cuối</span>' : (isLiveSim ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold animate-pulse">Xe đang tới</span>' : ''))}
+                  ${isStart ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold">Điểm đầu</span>' : (isEnd ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold">Điểm cuối</span>' : '')}
                 </div>
                 <p class="text-[11px] text-slate-400 truncate mt-0.5">${s.street ? `Đường ${s.street}` : 'Trạm dừng xe buýt'}</p>
               </div>
@@ -534,9 +537,13 @@ class DanabusApp {
     document.getElementById('btn-swap-locations')?.addEventListener('click', () => {
       const origEl = document.getElementById('home-origin-display');
       const destEl = document.getElementById('home-destination-input');
-      const tmp = origEl.textContent;
-      origEl.textContent = destEl.value || 'Vị trí của bạn (Bến xe Trung tâm)';
-      destEl.value = tmp.includes('Vị trí của bạn') ? '' : tmp;
+      const origVal = origEl.textContent.trim();
+      const destVal = destEl.value.trim();
+
+      if (origVal === 'Chọn điểm đón' && !destVal) return;
+
+      origEl.textContent = destVal || 'Chọn điểm đón';
+      destEl.value = (origVal === 'Chọn điểm đón' || origVal === 'Vị trí hiện tại') ? '' : origVal;
     });
 
     // Home Voice Search Simulation
@@ -552,8 +559,9 @@ class DanabusApp {
 
     // Home Search CTA
     document.getElementById('btn-home-search')?.addEventListener('click', () => {
-      const orig = document.getElementById('home-origin-display').textContent;
-      const dest = document.getElementById('home-destination-input').value || 'Phố cổ Hội An';
+      const origText = document.getElementById('home-origin-display').textContent.trim();
+      const orig = (origText === 'Chọn điểm đón' || origText === 'Vị trí hiện tại') ? 'Bến xe TT' : origText;
+      const dest = document.getElementById('home-destination-input').value.trim() || 'Phố cổ Hội An';
       this.showTripResults(orig, dest);
     });
 
@@ -611,8 +619,16 @@ class DanabusApp {
     });
 
     // Map screen events
-    document.getElementById('btn-map-locate')?.addEventListener('click', () => {
-      window.mapService.locateUser();
+    document.getElementById('btn-map-locate')?.addEventListener('click', async () => {
+      const btn = document.getElementById('btn-map-locate');
+      btn?.classList.add('animate-spin');
+      const res = await window.mapService.locateUser();
+      btn?.classList.remove('animate-spin');
+      if (!res.success) {
+        alert(res.error || 'Không thể lấy vị trí hiện tại.');
+      } else {
+        this.userLocation = res.coords;
+      }
     });
     document.getElementById('btn-map-switch-dir')?.addEventListener('click', () => {
       this.currentDirection = this.currentDirection === 'outbound' ? 'inbound' : 'outbound';
@@ -622,8 +638,20 @@ class DanabusApp {
 
     // Location Picker Modal Events
     document.getElementById('btn-close-picker')?.addEventListener('click', () => this.closeLocationPicker());
-    document.getElementById('btn-picker-current-location')?.addEventListener('click', () => {
-      this.selectLocation('Vị trí hiện tại (Đà Nẵng)');
+    document.getElementById('btn-picker-current-location')?.addEventListener('click', async () => {
+      const statusSpan = document.getElementById('picker-current-location-status');
+      const origText = statusSpan ? statusSpan.textContent : '';
+      if (statusSpan) statusSpan.textContent = 'Đang định vị...';
+
+      const res = await window.mapService.locateUser();
+      if (statusSpan) statusSpan.textContent = origText;
+
+      if (res.success) {
+        this.userLocation = res.coords;
+        this.selectLocation('Vị trí hiện tại');
+      } else {
+        alert(`Không thể xác định vị trí GPS: ${res.error}`);
+      }
     });
 
     const pickerSearchInput = document.getElementById('picker-search-input');

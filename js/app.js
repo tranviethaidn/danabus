@@ -619,6 +619,9 @@ class DanabusApp {
     });
 
     // Map screen events
+    document.getElementById('btn-map-fit-route')?.addEventListener('click', () => {
+      window.mapService.fitRoute();
+    });
     document.getElementById('btn-map-locate')?.addEventListener('click', async () => {
       const btn = document.getElementById('btn-map-locate');
       btn?.classList.add('animate-spin');

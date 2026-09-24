@@ -13,6 +13,8 @@ class MapService {
     this.accuracyCircle = null;
     this.infoOverlay = null;
     this.userLocation = null;
+    this.currentRoute = null;
+    this.currentDirection = 'outbound';
     this.defaultCenter = [16.0544, 108.2022]; // Da Nang Center
   }
 
@@ -46,8 +48,31 @@ class MapService {
     this.markersLayer = L.layerGroup().addTo(this.map);
   }
 
+  fitRoute() {
+    if (!this.map) return;
+    if (this.routeLine) {
+      this.map.fitBounds(this.routeLine.getBounds(), { padding: [30, 30] });
+    } else if (this.currentRoute) {
+      const stops = (this.currentRoute.stops?.[this.currentDirection] || []).filter(
+        s => s && typeof s.lat === 'number' && typeof s.lng === 'number' && !isNaN(s.lat) && !isNaN(s.lng)
+      );
+      if (stops.length > 1) {
+        const stopBounds = L.latLngBounds(stops.map(s => [s.lat, s.lng]));
+        this.map.fitBounds(stopBounds, { padding: [30, 30] });
+      } else if (stops.length === 1) {
+        this.map.setView([stops[0].lat, stops[0].lng], 13);
+      } else {
+        this.map.setView(this.defaultCenter, 12);
+      }
+    } else {
+      this.map.setView(this.defaultCenter, 12);
+    }
+  }
+
   renderRoute(route, direction = 'outbound') {
     if (!this.map || !route) return;
+    this.currentRoute = route;
+    this.currentDirection = direction;
     this.clear();
 
     const geometry = route.geometry?.[direction];
@@ -130,6 +155,56 @@ class MapService {
       `;
       marker.bindPopup(popupContent);
     });
+
+    // Re-render user marker if active
+    if (this.userLocation && typeof this.userLocation.lat === 'number' && typeof this.userLocation.lng === 'number') {
+      this.renderUserLocationMarker(this.userLocation.lat, this.userLocation.lng, this.userLocation.accuracy);
+    }
+  }
+
+  renderUserLocationMarker(latitude, longitude, accuracy) {
+    if (!this.map) return;
+    if (this.userMarker) {
+      this.map.removeLayer(this.userMarker);
+      this.userMarker = null;
+    }
+    if (this.accuracyCircle) {
+      this.map.removeLayer(this.accuracyCircle);
+      this.accuracyCircle = null;
+    }
+
+    if (accuracy && accuracy > 0) {
+      this.accuracyCircle = L.circle([latitude, longitude], {
+        radius: accuracy,
+        color: '#2563eb',
+        weight: 1.5,
+        fillColor: '#3b82f6',
+        fillOpacity: 0.15
+      }).addTo(this.map);
+    }
+
+    const userHtml = `
+      <div class="relative flex items-center justify-center">
+        <span class="absolute w-8 h-8 rounded-full bg-blue-500 opacity-30 animate-ping"></span>
+        <div class="w-6 h-6 rounded-full bg-blue-600 ring-4 ring-white shadow-lg flex items-center justify-center text-white">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-white"><circle cx="12" cy="12" r="6"/></svg>
+        </div>
+      </div>
+    `;
+    const icon = L.divIcon({ html: userHtml, className: 'user-loc-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
+    this.userMarker = L.marker([latitude, longitude], { icon, zIndexOffset: 1000 }).addTo(this.map);
+
+    const popupHtml = `
+      <div class="p-1.5 font-['Be_Vietnam_Pro'] text-[12px] max-w-[220px]">
+        <div class="flex items-center gap-1.5 text-blue-600 font-bold">
+          <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+          <span>Vị trí hiện tại của bạn</span>
+        </div>
+        <p class="text-slate-500 text-[11px] mt-1">Tọa độ GPS thiết bị (±${Math.round(accuracy || 0)}m)</p>
+        <p class="text-slate-400 text-[10px] mt-0.5 italic">Không phải trạm dừng xe buýt</p>
+      </div>
+    `;
+    this.userMarker.bindPopup(popupHtml);
   }
 
   showInfoOverlay(message) {
@@ -182,47 +257,36 @@ class MapService {
           this.userLocation = { lat: latitude, lng: longitude, accuracy, timestamp };
 
           if (this.map) {
-            // Remove previous user layer
-            if (this.userMarker) {
-              this.map.removeLayer(this.userMarker);
-              this.userMarker = null;
+            this.renderUserLocationMarker(latitude, longitude, accuracy);
+
+            // Context-aware Viewport: Keep route context while showing user location
+            if (this.routeLine) {
+              const routeBounds = this.routeLine.getBounds();
+              // Check if user location is within reasonable Da Nang / Quang Nam region
+              if (latitude >= 15.2 && latitude <= 16.5 && longitude >= 107.8 && longitude <= 108.8) {
+                const combinedBounds = L.latLngBounds(routeBounds).extend([latitude, longitude]);
+                this.map.fitBounds(combinedBounds, { padding: [40, 40], maxZoom: 15 });
+              } else {
+                this.map.fitBounds(routeBounds, { padding: [30, 30] });
+              }
+            } else if (this.currentRoute) {
+              const stops = (this.currentRoute.stops?.[this.currentDirection] || []).filter(
+                s => s && typeof s.lat === 'number' && typeof s.lng === 'number' && !isNaN(s.lat) && !isNaN(s.lng)
+              );
+              if (stops.length > 0) {
+                const stopBounds = L.latLngBounds(stops.map(s => [s.lat, s.lng]));
+                if (latitude >= 15.2 && latitude <= 16.5 && longitude >= 107.8 && longitude <= 108.8) {
+                  const combined = L.latLngBounds(stopBounds).extend([latitude, longitude]);
+                  this.map.fitBounds(combined, { padding: [40, 40], maxZoom: 15 });
+                } else {
+                  this.map.fitBounds(stopBounds, { padding: [30, 30] });
+                }
+              } else {
+                this.map.setView([latitude, longitude], Math.max(this.map.getZoom(), 14));
+              }
+            } else {
+              this.map.setView([latitude, longitude], Math.max(this.map.getZoom(), 14));
             }
-            if (this.accuracyCircle) {
-              this.map.removeLayer(this.accuracyCircle);
-              this.accuracyCircle = null;
-            }
-
-            // Draw accuracy circle
-            if (accuracy && accuracy > 0) {
-              this.accuracyCircle = L.circle([latitude, longitude], {
-                radius: accuracy,
-                color: '#3b82f6',
-                weight: 1,
-                fillColor: '#3b82f6',
-                fillOpacity: 0.15
-              }).addTo(this.map);
-            }
-
-            // Draw user marker
-            const userHtml = `
-              <div class="relative flex items-center justify-center">
-                <span class="absolute w-8 h-8 rounded-full bg-blue-500 opacity-30 animate-ping"></span>
-                <div class="w-6 h-6 rounded-full bg-blue-600 ring-4 ring-white shadow-lg flex items-center justify-center text-white">
-                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-white"><circle cx="12" cy="12" r="6"/></svg>
-                </div>
-              </div>
-            `;
-            const icon = L.divIcon({ html: userHtml, className: 'user-loc-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
-            this.userMarker = L.marker([latitude, longitude], { icon }).addTo(this.map);
-
-            this.userMarker.bindPopup(`
-              <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
-                <strong class="text-slate-900">Vị trí của bạn</strong>
-                <p class="text-slate-500 text-[10px] mt-0.5">Độ chính xác: ±${Math.round(accuracy || 0)}m</p>
-              </div>
-            `);
-
-            this.map.setView([latitude, longitude], Math.max(this.map.getZoom(), 14));
           }
 
           resolve({

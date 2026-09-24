@@ -160,7 +160,7 @@ OK
 
 ```text
 [Preflight OK] Using browser binary: /bin/google-chrome
-[Browser Smoke Test] Starting local HTTP server & headless Chrome...
+[Browser Smoke Test] Testing directly against target URL: https://danabus.638686.xyz/index.html...
 [Check 1] Verifying initial Application state...
  -> Boot state: {'title': 'Danabus - Tra Cứu Xe Buýt Đà Nẵng', 'currentView': 'home', 'allRoutesCount': 23, 'homeViewActive': True}
 [Check 2] Navigating to Routes Catalog...
@@ -180,15 +180,18 @@ OK
 [Check 4] Testing Direction Switch & Availability on Route 02, Route 05, and single-direction Route TKY-CHU...
  -> Direction switch state: {'r02': {'inMarkers': 32, 'inPolyline': False, 'outMarkers': 31, 'outPolyline': False}, 'r05': {'outPolyline': True, 'outOverlay': False, 'inPolyline': True, 'inOverlay': False}, 'tkyChu': {'outPolyline': False, 'outOverlayText': 'Chưa có dữ liệu bản đồ cho tuyến này', 'inPolyline': True, 'inOverlay': False, 'inMarkers': 10}, 'cleanNoStaleLayers': True}
 [Check 5] Testing Browser Geolocation with Mock & Error Handling...
- -> Geolocation test result: {'successResult': {'success': True, 'coords': {'latitude': 16.0544, 'longitude': 108.2022, 'accuracy': 25, 'timestamp': 1790262875204}}, 'hasUserMarker': True, 'hasAccuracyCircle': True, 'circleRadius': 25, 'deniedResult': {'success': False, 'error': 'Quyền truy cập vị trí đã bị từ chối.', 'code': 1}}
-[Check 6] Capturing deliverable screenshot...
- -> Screenshot saved to docs/reports/browser_smoke_evidence.png (193270 bytes)
+ -> Geolocation test result: {'successResult': {'success': True, 'coords': {'latitude': 16.0544, 'longitude': 108.2022, 'accuracy': 25, 'timestamp': 1790265890105}}, 'hasUserMarker': True, 'hasAccuracyCircle': True, 'circleRadius': 25, 'deniedResult': {'success': False, 'error': 'Quyền truy cập vị trí đã bị từ chối.', 'code': 1}}
+[Check 6] Testing Route 05 Map Context Retention during Geolocation & fitRoute...
+ -> Route 05 locateUser context state: {'initialPolyline': True, 'initialRouteTitle': 'Hòa Hiệp Nam – CV Biển Đông', 'initialStopsCount': 31, 'locateSuccess': True, 'afterLocatePolyline': True, 'hasUserMarker': True, 'hasAccuracyCircle': True, 'userIconClass': 'user-loc-icon', 'routeTitleAfterLocate': 'Hòa Hiệp Nam – CV Biển Đông', 'afterFitPolyline': True, 'inPolyline': True, 'inStopsCount': 28, 'userMarkerAfterSwitch': True}
+[Check 7] Capturing deliverable screenshot...
+ -> Screenshot saved to docs/reports/browser_smoke_evidence.png (66844 bytes)
 
->>> ALL BROWSER SMOKE CHECKS PASSED (6/6) <<<
+>>> ALL BROWSER SMOKE CHECKS PASSED (7/7) <<<
 ```
 
 - **Xác thực loại trừ lẫn nhau (Mutual Exclusion):** Tuyến/chiều có polyline (`05`, `TKY-TMY`, `TKY-CHU` Inbound) thì `overlayText` luôn là `None` (ẩn thông báo no-data). Ngược lại, tuyến/chiều chưa có geometry (`02`, `11`, `01DL`, `01SB`, `TKY-CHU` Outbound) thì luôn hiển thị thông báo `Chưa có dữ liệu bản đồ cho tuyến này`.
 - **Hỗ trợ tuyến 1 chiều verified:** Tuyến `TKY-CHU` chuyển từ Chiều đi (Outbound - không có geometry, hiện overlay no-data) sang Chiều về (Inbound - có verified polyline 79 điểm, ẩn overlay và vẽ polyline + 10 trạm) hoạt động mượt mà và tự động dọn layer cũ.
+- **Context Retention trên Tuyến 05 khi Định vị GPS:** Khi bấm định vị trên Tuyến 05 (Hòa Hiệp Nam ➔ CV Biển Đông), polyline và các trạm của Tuyến 05 được bảo toàn nguyên vẹn trên bản đồ. Viewport tự động tính toán vùng bao chứa cả lộ trình và vị trí người dùng (`combinedBounds`). Nút "Toàn tuyến" (`#btn-map-fit-route`) cho phép người dùng tức thì căn lại khung nhìn toàn bộ lộ trình tuyến xe.
 
 Ảnh chụp minh chứng thực tế trên trình duyệt đã được cập nhật tại:
 [`docs/reports/browser_smoke_evidence.png`](file:///home/opc/danabus/docs/reports/browser_smoke_evidence.png)
@@ -204,3 +207,24 @@ OK
    - Các tuyến chưa đạt validation (như Tuyến 02, 21, 01SB...) được giữ `geometry: null` an toàn.
 2. Mã nguồn kiểm thử, script xử lý dữ liệu và ứng dụng trình duyệt đạt 100% tiêu chuẩn chất lượng.
 3. Kính trình Tech Lead (TL) xem xét và nghiệm thu kỹ thuật.
+
+---
+
+## 7. Khắc phục Lỗi GPS Map Context Retention trên Route 05
+
+DEV đã xử lý triệt để vấn đề UX/runtime mà PO phát hiện khi trải nghiệm thực tế Tuyến 05:
+
+1. **Bản chất lỗi trước đây**:
+   - Khi xem Tuyến 05, người dùng bấm nút định vị `MapService.locateUser()`. Hàm này trước đây gọi cứng `map.setView([latitude, longitude], 14)`, làm dời camera bản đồ hoàn toàn về vị trí GPS của thiết bị (ví dụ người dùng đang ở Hội An hoặc Nam Đà Nẵng), khiến toàn bộ lộ trình Tuyến 05 (ở Liên Chiểu / Sơn Trà) bị trôi ra khỏi màn hình, gây hiểu nhầm bản đồ Tuyến 05 bị định vị sang chặng khác.
+
+2. **Các giải pháp kỹ thuật đã hoàn thiện**:
+   - **Context-Aware Viewport Strategy**: Khi có lộ trình đang hiển thị (`this.routeLine`), `locateUser()` tính toán `combinedBounds = L.latLngBounds(routeBounds).extend([latitude, longitude])` để mở rộng tầm nhìn chứa **cả vị trí người dùng và lộ trình tuyến 05**, không làm mất ngữ cảnh tuyến.
+   - **Phân biệt trực quan rõ ràng Vị trí thiết bị GPS vs Trạm xe buýt**:
+     * Marker người dùng: Vòng phát sóng màu xanh dương (`animate-ping`), icon GPS riêng biệt (`user-loc-icon`), popup ghi rõ: *\"Vị trí hiện tại của bạn - Tọa độ GPS thiết bị (±Xm) - Không phải trạm dừng xe buýt\"*.
+     * Trạm xe buýt: Đánh số thứ tự trạm, màu xanh lá/đỏ, gắn liền với số hiệu tuyến (`Tuyến 05`).
+   - **Kích hoạt tính năng "Toàn tuyến" (`#btn-map-fit-route`)**: Bổ sung hàm `MapService.fitRoute()` và liên kết sự kiện click, cho phép người dùng tức thì căn lại khung nhìn khớp chính xác với toàn bộ lộ trình Tuyến 05 bất cứ lúc nào.
+   - **Giữ trạng thái User Marker an toàn khi đổi chiều**: Khi bấm "Đổi chiều" (Outbound ⇄ Inbound), Tuyến 05 cập nhật hình học mới tương ứng mà không làm mất vị trí người dùng và không tạo stale layers.
+   - **Nâng cấp Service Worker Cache lên v5 (`danabus-cache-v5`)**: Đảm bảo toàn bộ trình duyệt người dùng và PWA tự động cập nhật mã nguồn mới nhất.
+
+3. **Kiểm thử Regression Tự động**:
+   - `scripts/browser_smoke_test.py` bổ sung Check 6 mô phỏng thực tế: mở Tuyến 05, gọi Geolocation với vị trí người dùng (Hội An/Đà Nẵng), xác nhận polyline Tuyến 05 còn nguyên vẹn, marker người dùng hiển thị chuẩn, bấm nút "Toàn tuyến" căn lại khung nhìn thành công và đổi chiều an toàn (7/7 checks PASS trực tiếp trên production).

@@ -421,8 +421,85 @@ def run_browser_smoke_test(target_url=None):
         assert geo_test_res['deniedResult']['success'] is False, "Denied GPS error must be handled cleanly"
         assert "bị từ chối" in geo_test_res['deniedResult']['error'], "Denied message mismatch"
 
-        # 6. Take Screenshot for Deliverable Evidence
-        print("[Check 6] Capturing deliverable screenshot...")
+        # 6. Test Route 05 Context Retention during locateUser & fitRoute (PO Regression Test)
+        print("[Check 6] Testing Route 05 Map Context Retention during Geolocation & fitRoute...")
+        r05_geo_res = eval_js("""
+            (async () => {
+                // Navigate to Route 05 Map View
+                const route05 = window.busService.getRouteById('05');
+                window.app.selectedRoute = route05;
+                window.app.currentDirection = 'outbound';
+                window.app.openMapView('05');
+                window.mapService.renderRoute(route05, 'outbound');
+
+                const initialPolyline = !!window.mapService.routeLine;
+                const initialRouteTitle = document.getElementById('map-route-title')?.textContent.trim();
+                const initialStopsCount = window.mapService.markersLayer.getLayers().length;
+
+                // Mock user location (e.g. user in Hoi An or Da Nang)
+                const originalGeo = navigator.geolocation;
+                const mockPos = {
+                    coords: {
+                        latitude: 15.8801,
+                        longitude: 108.3380,
+                        accuracy: 20.0
+                    },
+                    timestamp: Date.now()
+                };
+                navigator.geolocation.getCurrentPosition = (success, error, opts) => success(mockPos);
+
+                // Locate user
+                const locateRes = await window.mapService.locateUser();
+                const afterLocatePolyline = !!window.mapService.routeLine;
+                const hasUserMarker = !!window.mapService.userMarker;
+                const hasAccuracyCircle = !!window.mapService.accuracyCircle;
+                const routeTitleAfterLocate = document.getElementById('map-route-title')?.textContent.trim();
+                const userIconClass = window.mapService.userMarker?.options?.icon?.options?.className;
+
+                // Test Toàn tuyến (fitRoute) button
+                document.getElementById('btn-map-fit-route')?.click();
+                const afterFitPolyline = !!window.mapService.routeLine;
+                const mapBounds = window.mapService.map?.getBounds();
+                const routeBounds = window.mapService.routeLine?.getBounds();
+
+                // Test switching direction while user marker is active
+                document.getElementById('btn-map-switch-dir')?.click();
+                const inPolyline = !!window.mapService.routeLine;
+                const inStopsCount = window.mapService.markersLayer.getLayers().length;
+                const userMarkerAfterSwitch = !!window.mapService.userMarker;
+
+                navigator.geolocation = originalGeo;
+
+                return {
+                    initialPolyline,
+                    initialRouteTitle,
+                    initialStopsCount,
+                    locateSuccess: locateRes.success,
+                    afterLocatePolyline,
+                    hasUserMarker,
+                    hasAccuracyCircle,
+                    userIconClass,
+                    routeTitleAfterLocate,
+                    afterFitPolyline,
+                    inPolyline,
+                    inStopsCount,
+                    userMarkerAfterSwitch
+                };
+            })()
+        """)
+        print(f" -> Route 05 locateUser context state: {r05_geo_res}")
+        assert r05_geo_res['initialPolyline'] is True, "Route 05 must have polyline initially"
+        assert r05_geo_res['locateSuccess'] is True, "locateUser must succeed with mock"
+        assert r05_geo_res['afterLocatePolyline'] is True, "Route 05 polyline MUST NOT be removed or lost after locateUser"
+        assert r05_geo_res['hasUserMarker'] is True, "User marker must exist after locateUser"
+        assert r05_geo_res['userIconClass'] == 'user-loc-icon', "User marker must have distinct user-loc-icon class"
+        assert "05" in r05_geo_res['routeTitleAfterLocate'] or "Hòa Hiệp" in r05_geo_res['routeTitleAfterLocate'], "Route title context must remain Route 05"
+        assert r05_geo_res['afterFitPolyline'] is True, "fitRoute must keep polyline intact"
+        assert r05_geo_res['inPolyline'] is True, "Route 05 Inbound polyline must be intact after direction switch"
+        assert r05_geo_res['userMarkerAfterSwitch'] is True, "User marker must be maintained after direction switch"
+
+        # 7. Take Screenshot for Deliverable Evidence
+        print("[Check 7] Capturing deliverable screenshot...")
         shot_res = send_cdp('Page.captureScreenshot', {'format': 'png'})
         if shot_res.get('data'):
             img_bytes = base64.b64decode(shot_res['data'])
@@ -431,7 +508,7 @@ def run_browser_smoke_test(target_url=None):
             print(f" -> Screenshot saved to {SCREENSHOT_PATH} ({len(img_bytes)} bytes)")
 
         ws.close()
-        print("\n>>> ALL BROWSER SMOKE CHECKS PASSED (6/6) <<<")
+        print("\n>>> ALL BROWSER SMOKE CHECKS PASSED (7/7) <<<")
         return True
 
     finally:

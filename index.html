@@ -379,15 +379,21 @@
       <!-- Route info top strip -->
       <div class="px-4 py-2.5 bg-white border-b border-slate-100 flex items-center justify-between">
         <div class="flex items-center gap-2 min-w-0">
-          <span id="map-route-badge" class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-[14px] flex items-center justify-center shrink-0">02</span>
+          <span id="map-route-badge" class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold text-[14px] flex items-center justify-center shrink-0">--</span>
           <div class="min-w-0">
-            <h3 id="map-route-title" class="font-bold text-[14px] text-slate-900 truncate leading-tight">Đà Nẵng ⇄ Hội An</h3>
-            <p id="map-route-dir" class="text-[11px] text-slate-500 truncate">Chiều đi: Về Cửa Đại</p>
+            <h3 id="map-route-title" class="font-bold text-[14px] text-slate-900 truncate leading-tight">Đang tải tuyến xe...</h3>
+            <p id="map-route-dir" class="text-[11px] text-slate-500 truncate">Chiều đi</p>
           </div>
         </div>
-        <button id="btn-map-locate" type="button" class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center active:scale-90 shadow-xs p-2" title="Vị trí của tôi">
-          <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
-        </button>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="btn-map-fit-route" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-semibold flex items-center gap-1 active:scale-95 transition-all" title="Xem toàn bộ lộ trình tuyến">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M15 3l2.3 2.3-2.89 2.87 1.42 1.42L18.7 6.7 21 9V3h-6zM3 9l2.3-2.3 2.87 2.89 1.42-1.42L6.7 5.3 9 3H3v6zm6 12l-2.3-2.3 2.89-2.87-1.42-1.42L5.3 17.3 3 15v6h6zm12-6l-2.3 2.3-2.87-2.89-1.42 1.42 2.89 2.87L15 21h6v-6z"/></svg>
+            <span>Toàn tuyến</span>
+          </button>
+          <button id="btn-map-locate" type="button" class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center active:scale-90 shadow-xs p-2 transition-all" title="Vị trí của bạn">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Interactive Leaflet Map Viewport -->

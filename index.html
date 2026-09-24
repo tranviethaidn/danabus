@@ -49,8 +49,13 @@
     };
   </script>
 
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/app.css">
+  <!-- Cache Control Meta Tags -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <!-- Custom Styles with Cache-Busting Version -->
+  <link rel="stylesheet" href="css/app.css?v=20260924_v7">
 </head>
 <body class="bg-surface text-on-surface flex flex-col min-h-screen antialiased select-none font-sans">
 
@@ -597,19 +602,31 @@
   <!-- Leaflet Map Script -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <!-- App Logic & Services -->
-  <script src="js/icons.js"></script>
-  <script src="js/busService.js"></script>
-  <script src="js/mapService.js"></script>
-  <script src="js/app.js"></script>
+  <!-- App Logic & Services with Cache-Busting Version -->
+  <script src="js/icons.js?v=20260924_v7"></script>
+  <script src="js/busService.js?v=20260924_v7"></script>
+  <script src="js/mapService.js?v=20260924_v7"></script>
+  <script src="js/app.js?v=20260924_v7"></script>
 
-  <!-- Register PWA Service Worker -->
+  <!-- Register PWA Service Worker with Auto-Update & Immediate Activation -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+          .then(reg => {
+            console.log('[PWA] Service Worker registered:', reg.scope);
+            reg.update();
+          })
           .catch(err => console.warn('[PWA] Service Worker failed:', err));
+
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            console.log('[PWA] New service worker activated, reloading page for latest version');
+            window.location.reload();
+          }
+        });
       });
     }
   </script>

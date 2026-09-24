@@ -228,3 +228,95 @@ DEV đã xử lý triệt để vấn đề UX/runtime mà PO phát hiện khi t
 
 3. **Kiểm thử Regression Tự động**:
    - `scripts/browser_smoke_test.py` bổ sung Check 6 mô phỏng thực tế: mở Tuyến 05, gọi Geolocation với vị trí người dùng (Hội An/Đà Nẵng), xác nhận polyline Tuyến 05 còn nguyên vẹn, marker người dùng hiển thị chuẩn, bấm nút "Toàn tuyến" căn lại khung nhìn thành công và đổi chiều an toàn (7/7 checks PASS trực tiếp trên production).
+
+
+## TL xác minh độc lập bản vá GPS Map Context Retention — 2026-09-24
+
+- HEAD đã xác minh: `5de7e0c`. Trước lượt smoke test, worktree không có thay đổi.
+- `python3 scripts/test_map_and_gps.py`: **11/11 PASS**; dataset: **245/421 stop verified** từ 207 OSM locations, còn 176 `needs_review/unresolved`.
+- `python3 scripts/browser_smoke_test.py`: **7/7 PASS**.
+- Regression Route 05 PASS: route title vẫn là `Hòa Hiệp Nam – CV Biển Đông`, polyline vẫn tồn tại sau `locateUser()`, user marker và accuracy circle tách biệt, `fitRoute()` hoạt động, đổi Outbound/Inbound vẫn giữ đúng polyline và user marker.
+- Các route chưa đủ evidence vẫn fail-closed; TKY-CHU tiếp tục đúng semantics partial-direction.
+- Kết luận TL: **PASS cho bản vá GPS Map Context Retention**, đủ điều kiện chuyển PO nghiệm thu thực tế trên production.
+
+---
+
+## 8. Tái Cấu Trúc Cache Policy & Service Worker Auto-Update Migration (Vòng 3)
+
+DEV đã tiến hành tái thiết kế toàn diện chính sách bộ nhớ đệm và cơ chế kích hoạt Service Worker nhằm đảm bảo người dùng và PO luôn nhận được phiên bản mã nguồn mới nhất mà không gặp phải rào cản cache từ CDN hoặc trình duyệt:
+
+### 8.1. Phân tích Nguyên nhân Gốc rễ & Rủi ro Cache
+1. **Lỗi Cache Header CDN/Browser**: Cấu hình Nginx trước đây áp dụng `Cache-Control: public, max-age=604800, immutable` lên toàn bộ đuôi `.js` và `.css`. Do thẻ `<script src="js/mapService.js">` và `<script src="js/app.js">` không có version query string, Cloudflare và trình duyệt của người dùng đã lưu cache vĩnh viễn (7 ngày) bản JS cũ từ lúc 10:05 GMT (`cf-cache-status: HIT`). Khi người dùng mở trang, dù server đã deploy bản vá mới, trình duyệt vẫn tiếp tục chạy mã nguồn cũ.
+2. **Service Worker Pre-caching Stale HTTP**: Lệnh `cache.addAll(STATIC_ASSETS)` trong sự kiện `install` của Service Worker trước đây sử dụng HTTP fetch thông thường, có thể vô tình nạp lại chính tệp JS cũ đang lưu trong HTTP cache của trình duyệt.
+
+### 8.2. Giải pháp Kỹ thuật Triệt để Đã Áp dụng
+1. **Chiến lược Versioning / Cache-Busting Toàn diện**:
+   - Gắn tham số phiên bản `?v=20260924_v7` cho toàn bộ tài nguyên mutable trong [`index.html`](file:///home/opc/danabus/index.html):
+     * `<link rel="stylesheet" href="css/app.css?v=20260924_v7">`
+     * `<script src="js/icons.js?v=20260924_v7"></script>`
+     * `<script src="js/busService.js?v=20260924_v7"></script>`
+     * `<script src="js/mapService.js?v=20260924_v7"></script>`
+     * `<script src="js/app.js?v=20260924_v7"></script>`
+   - Các URL có versioning đảm bảo Cloudflare và trình duyệt bỏ qua toàn bộ bản cache cũ, thực hiện network fetch trực tiếp tệp mới nhất từ origin.
+
+2. **Tách biệt Cache Policy Nginx ([`scripts/danabus.conf`](file:///home/opc/danabus/scripts/danabus.conf) & [`scripts/deploy_danabus_production.sh`](file:///home/opc/danabus/scripts/deploy_danabus_production.sh))**:
+   - `sw.js`: `Cache-Control: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"` (Cloudflare `BYPASS`).
+   - `index.html` & `/`: `Cache-Control: "no-cache, no-store, must-revalidate, max-age=0"` (Cloudflare `DYNAMIC`).
+   - `/data/*.json`: `Cache-Control: "no-cache, must-revalidate, max-age=0"` (Network-First).
+   - Mutable `.js` / `.css`: `Cache-Control: "no-cache, must-revalidate, max-age=0"`.
+   - Static binary media / icons / fonts (`.png`, `.svg`, `.woff2`): `Cache-Control: "public, max-age=604800"`.
+
+3. **Nâng cấp Service Worker v7 ([`sw.js`](file:///home/opc/danabus/sw.js))**:
+   - Nâng cấp `CACHE_NAME = 'danabus-cache-v7'`.
+   - Cập nhật danh sách `STATIC_ASSETS` với URL có query version.
+   - Trong sự kiện `install`: Sử dụng `fetch(new Request(url, { cache: 'reload' }))` để ép buộc tải tài nguyên sạch trực tiếp từ server, không dùng HTTP cache. Gọi ngay `self.skipWaiting()`.
+   - Trong sự kiện `activate`: Tự động quét và xóa sạch toàn bộ cache cũ (`danabus-cache-v4`, `v5`, `v6`), sau đó gọi `self.clients.claim()`.
+   - Trong sự kiện `fetch`: Duy trì chiến lược **Network-First** với `{ cache: 'no-cache' }` cho toàn bộ tài nguyên same-origin; chỉ dùng Stale-While-Revalidate cho CDN bên ngoài (Leaflet, Tailwind, Fonts).
+
+4. **Tự động Cập nhật Không cần Xóa Cache Thủ công ([`index.html`](file:///home/opc/danabus/index.html))**:
+   - Gọi `reg.update()` ngay khi load trang để ép kiểm tra Service Worker mới.
+   - Lắng nghe sự kiện `controllerchange` để tự động refresh khi Service Worker phiên bản mới tiếp quản quyền điều khiển.
+
+### 8.3. Bằng chứng Response Headers Trước & Sau trên Production
+
+| Endpoint / Asset | Header Trước (Gây kẹt Cache) | Header Sau (Đã khắc phục) | Cloudflare Status | Ghi chú |
+|---|---|---|---|---|
+| `https://danabus.638686.xyz/` | `last-modified: 16:10 GMT` | `last-modified: 16:12 GMT` | `DYNAMIC` | Không bị cache tĩnh, luôn trả HTML mới |
+| `.../js/mapService.js` (unversioned cũ) | `max-age=604800, immutable` (Age: 20848s) | — | `HIT` (bản cũ) | Bị cô lập, không còn được gọi từ HTML |
+| `.../js/mapService.js?v=20260924_v7` | — | `last-modified: 16:04 GMT` | `MISS` $\rightarrow$ Fresh Origin | Trình duyệt nạp trực tiếp bản sửa lỗi mới nhất |
+| `.../js/app.js?v=20260924_v7` | — | `last-modified: 16:04 GMT` | `MISS` $\rightarrow$ Fresh Origin | Trình duyệt nạp trực tiếp bản sửa lỗi mới nhất |
+| `.../sw.js` | `no-store, no-cache, max-age=0` | `no-store, no-cache, max-age=0` | `BYPASS` | Luôn kiểm tra tức thì khi mở trang |
+| `.../data/danangbus_stops.json` | `data/` dataset 245 verified | `data/` dataset 245 verified | Network-First | Giữ nguyên vẹn 100% provenance |
+
+### 8.4. Kết quả Kiểm thử Trực tiếp trên Production Web (`https://danabus.638686.xyz/index.html`)
+
+1. **Automated Unit & Provenance Suite (`python3 scripts/test_map_and_gps.py`)**:
+   ```text
+   ..........
+   [Test Info] Stops breakdown: 245 verified stops across 207 unique OSM locations, 176 unresolved/needs_review stops.
+   .
+   ----------------------------------------------------------------------
+   Ran 11 tests in 0.014s
+
+   OK
+   ```
+
+2. **Browser Smoke Suite Toàn diện (`python3 scripts/browser_smoke_test.py https://danabus.638686.xyz/index.html`)**:
+   ```text
+   [Preflight OK] Using browser binary: /bin/google-chrome
+   [Browser Smoke Test] Testing directly against target URL: https://danabus.638686.xyz/index.html...
+   [Check 1] Verifying initial Application state... -> PASS (23 routes loaded, Home view active)
+   [Check 2] Navigating to Routes Catalog... -> PASS (23 route cards rendered)
+   [Check 3] Testing Map rendering for Route 02, 05, 11, TKY-TMY, 01DL, 01SB... -> PASS (05 & TKY-TMY render polylines; unverified routes show correct overlay)
+   [Check 4] Testing Direction Switch & Availability (Route 02, 11, 05, TKY-TMY, TKY-CHU)... -> PASS (Clean, TKY-CHU Outbound shows overlay, Inbound renders polyline + 10 stops; 05 & TKY-TMY verified 2 directions; 02 & 11 fail-closed)
+   [Check 5] Testing Browser Geolocation with Mock & Error Handling... -> PASS (User marker & accuracy circle radius 25m created; error code 1 handled)
+   [Check 6] Testing Route 05 Map Context Retention during Geolocation & fitRoute... -> PASS (Route 05 polyline intact, user marker distinct, fitRoute re-fits correctly, direction switch clean)
+   [Check 7] Testing Service Worker Lifecycle & Cache Policy Migration... -> PASS (swActive: True, danabus-cache-v7 active, stale caches purged, mapService.js & app.js have v=20260924_v7, fitRoute available)
+   [Check 8] Capturing deliverable screenshot... -> PASS (Saved to docs/reports/browser_smoke_evidence.png)
+
+   >>> ALL BROWSER SMOKE CHECKS PASSED (8/8) <<<
+   ```
+
+Ảnh chụp minh chứng kiểm thử trình duyệt thực tế trên production URL:
+[`docs/reports/browser_smoke_evidence.png`](file:///home/opc/danabus/docs/reports/browser_smoke_evidence.png)
+

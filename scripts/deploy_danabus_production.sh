@@ -80,10 +80,16 @@ server {
         add_header Cache-Control "no-cache, must-revalidate, max-age=0";
     }
 
-    # Static Assets & Images Cache
-    location ~* \.(?:css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2)$ {
+    # Mutable Application Code & Styles (Revalidate with server ETag)
+    location ~* \.(?:css|js)$ {
+        expires -1;
+        add_header Cache-Control "no-cache, must-revalidate, max-age=0";
+    }
+
+    # Static Binary Assets & Fonts Cache
+    location ~* \.(?:png|jpg|jpeg|gif|svg|ico|woff|woff2)$ {
         expires 7d;
-        add_header Cache-Control "public, max-age=604800, immutable";
+        add_header Cache-Control "public, max-age=604800";
     }
 
     # SPA Routing Fallback

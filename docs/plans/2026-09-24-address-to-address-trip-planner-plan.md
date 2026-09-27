@@ -1,7 +1,7 @@
 # Plan Address-to-Address Trip Planner cho Danabus
 
 Ngày: 2026-09-24  
-Trạng thái: Planning only — chưa tạo/giao Task implementation.
+Trạng thái: **APPROVED bởi PO để triển khai**. Dùng Task 4 hiện có; bắt đầu sau khi các dependency remediation về search, schedule/fare và data quality đạt acceptance.
 
 ## 1. Mục tiêu
 
@@ -21,9 +21,9 @@ Không cần thay Leaflet hiện tại bằng Google Maps chỉ để làm tính
 
 1. **Basemap/rendering:** giữ Leaflet. Tile provider cấu hình riêng; OSM standard tile chỉ phù hợp theo policy/traffic, production nên dùng tile provider có SLA hoặc self-host phù hợp.
 2. **Address/POI search + geocoding:** ưu tiên Google Places API (New) + Place Details/Geocoding nếu PO chấp nhận billing/API key. Google có dữ liệu địa chỉ/POI và autocomplete tốt, phù hợp UX nhập địa chỉ.
-3. **Transit planner:** dùng dataset Danabus của project, không giao toàn bộ logic cho Google. Lý do: project cần kiểm soát route/stop/direction đã chuẩn hóa ở Task 2 và sau này ghép Task 3 realtime.
+3. **Transit planner:** dùng dataset Danabus của project, không giao toàn bộ logic cho Google. Lý do: project cần kiểm soát route/stop/direction đã chuẩn hóa ở Task 2; realtime nếu có sau này là capability độc lập, không phải dependency của planner.
 4. **Walking route:** abstraction WalkingRouter; có thể dùng Google Routes hoặc provider khác sau khi kiểm tra chi phí/license.
-5. **Realtime bus:** Task 3/provider riêng, không phụ thuộc basemap.
+5. **Realtime bus:** ngoài MVP hiện tại. Task 3 đã CLOSED; nếu sau này cần realtime, mở scope/Task riêng với provider hợp lệ.
 
 Không dùng public Nominatim của OSM làm production autocomplete: policy của public service cấm client-side autocomplete và giới hạn tải.
 
@@ -80,12 +80,12 @@ Không để API key unrestricted trong frontend. Với web provider phải áp 
 - trả geometry, distance, duration
 
 ### RealtimeProvider
-Task 3 sở hữu:
+Không thuộc MVP Task 4 hiện tại. Task 3 đã CLOSED; nếu sau này mở realtime bằng Task/scope mới thì capability đó sở hữu:
 - vehicle positions
 - ETA/trip updates
 - freshness
 
-TransitPlanner chỉ consume normalized contract.
+TransitPlanner chỉ consume normalized contract và không phụ thuộc realtime để hoạt động.
 
 ## 5. Search flow
 
@@ -176,7 +176,7 @@ Các thành phần:
 - detour penalty;
 - data confidence.
 
-Khi Task 3 có realtime:
+Khi sau này có realtime provider hợp lệ qua một Task/scope riêng:
 - wait ETA;
 - transfer wait ETA;
 - vehicle freshness.
@@ -276,7 +276,7 @@ Endpoints nội bộ gợi ý:
 
 Không log địa chỉ/GPS người dùng không cần thiết. Không cache dữ liệu cá nhân theo user nếu không có mục đích rõ.
 
-## 14. Dependency với Task 2 và Task 3
+## 14. Dependency với Task 2 và realtime tương lai
 
 Task 2 phải cung cấp:
 - stop lat/lng đáng tin cậy;
@@ -286,12 +286,12 @@ Task 2 phải cung cấp:
 
 Task 4 planner có thể bắt đầu sau khi contract Task 2 ổn định.
 
-Task 3 sau này bổ sung:
+Realtime trong tương lai có thể bổ sung qua một Task/scope riêng:
 - realtime vehicle;
 - ETA;
 - freshness.
 
-Planner không được phụ thuộc Task 3 để hoạt động ở chế độ static.
+Planner không được phụ thuộc realtime để hoạt động ở chế độ static; Task 3 hiện đã CLOSED.
 
 ## 15. Milestone triển khai
 
@@ -303,7 +303,7 @@ Planner không được phụ thuộc Task 3 để hoạt động ở chế đ�
 6. One-transfer planner.
 7. Ranking + result UX.
 8. Automated tests + browser smoke.
-9. Sau này: Task 3 realtime/ETA integration.
+9. Sau này, nếu PO mở scope mới: realtime/ETA integration với provider hợp lệ.
 
 ## 16. Test/acceptance
 
@@ -327,7 +327,7 @@ Planner không được phụ thuộc Task 3 để hoạt động ở chế đ�
 ## 17. Không làm trong MVP
 
 - Multi-transfer > 1.
-- Realtime ETA trước Task 3.
+- Realtime ETA trong MVP Task 4 hiện tại; Task 3 đã CLOSED.
 - Machine-learning ranking.
 - Tự thu thập/lưu lịch sử vị trí user.
 - Reverse-engineer private mapping/transit APIs.

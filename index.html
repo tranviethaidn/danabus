@@ -143,6 +143,14 @@
           </button>
         </div>
 
+        <!-- Validation Error Message Area -->
+        <div id="home-search-error" class="hidden text-[12px] text-rose-600 bg-rose-50 border border-rose-200/80 rounded-xl px-3 py-2 font-medium flex items-center gap-2">
+          <span class="w-4 h-4 shrink-0 text-rose-500">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          </span>
+          <span id="home-search-error-text">Vui lòng chọn điểm đón và điểm đến hợp lệ.</span>
+        </div>
+
         <!-- Search CTA Button -->
         <button type="button" id="btn-home-search" class="w-full h-12 mt-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25 transition-all">
           <span>Tìm xe</span>
@@ -430,15 +438,19 @@
       <div class="bg-white border-b border-slate-100 px-4 py-3 shadow-xs flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2 min-w-0">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0"></span>
+            <span id="trip-header-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0"></span>
             <span id="trip-header-title" class="text-[17px] font-bold text-slate-900 truncate">Bến xe TT ➔ Hội An</span>
           </div>
-          <span id="trip-bus-tag" class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold flex items-center gap-1">
-            <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.9 17.55 11 21 11 21z"/></svg></span>
-            Xe điện FUTA
-          </span>
+          <div class="flex items-center gap-1.5">
+            <button type="button" id="btn-trip-swap" title="Đổi chiều di chuyển" class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-slate-100 active:scale-95 transition-all">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
+            </button>
+            <span id="trip-bus-tag" class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold flex items-center gap-1">
+              Xe điện FUTA
+            </span>
+          </div>
         </div>
-        <div class="flex items-center gap-3 text-slate-500 text-[12px] pl-4.5">
+        <div id="trip-stats-strip" class="flex items-center gap-3 text-slate-500 text-[12px] pl-4.5">
           <span id="trip-stat-km" class="font-medium">46,7 km</span>
           <span class="opacity-40">•</span>
           <span id="trip-stat-time" class="font-medium">~75-90 phút</span>
@@ -448,66 +460,90 @@
       </div>
 
       <div class="p-4 flex flex-col gap-4">
-        <!-- Next Departure Highlight Card -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-3.5 relative overflow-hidden">
-          <div class="flex items-start justify-between">
-            <div class="flex flex-col gap-0.5">
-              <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến sắp khởi hành</span>
-              <div class="flex items-baseline gap-2 mt-1">
-                <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">08:30</span>
-                <span id="trip-countdown-timer" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold animate-pulse">Còn 6 phút</span>
+        <!-- SUCCESS CONTAINER -->
+        <div id="trip-content-success" class="flex flex-col gap-4">
+          <!-- Next Departure Highlight Card -->
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-3.5 relative overflow-hidden">
+            <div class="flex items-start justify-between">
+              <div class="flex flex-col gap-0.5">
+                <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến sắp khởi hành</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">08:30</span>
+                  <span id="trip-countdown-timer" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold animate-pulse">Còn 6 phút</span>
+                </div>
+                <span class="text-[12px] text-slate-500 mt-1 font-medium flex items-center gap-1.5">
+                  <span class="w-4 h-4 text-emerald-600 shrink-0"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
+                  Đi thẳng suốt tuyến không đổi xe
+                </span>
               </div>
-              <span class="text-[12px] text-slate-500 mt-1 font-medium flex items-center gap-1.5">
-                <span class="w-4 h-4 text-emerald-600 shrink-0"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
-                Đi thẳng suốt tuyến không đổi xe
-              </span>
+              <span id="trip-route-badge" class="inline-flex items-center justify-center px-3 py-1 bg-emerald-600 text-white rounded-full text-[12px] font-bold shadow-xs">TUYẾN 02</span>
             </div>
-            <span id="trip-route-badge" class="inline-flex items-center justify-center px-3 py-1 bg-emerald-600 text-white rounded-full text-[12px] font-bold shadow-xs">TUYẾN 02</span>
+
+            <!-- Trip Stats Grid -->
+            <div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
+              <div class="flex flex-col items-center justify-center p-1">
+                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg></span>
+                <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">30.000đ</span>
+                <span class="text-[10px] text-slate-400">Suốt tuyến</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-1 border-x border-slate-200/60">
+                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
+                <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">15-30p</span>
+                <span class="text-[10px] text-slate-400">/chuyến</span>
+              </div>
+              <div class="flex flex-col items-center justify-center p-1">
+                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M18.92 2.01C18.72 1.42 18.16 1 17.5 1h-11c-.66 0-1.21.42-1.42 1.01L3 8v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V8l-2.08-5.99zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 7l1.5-4.5h11L19 7H5z"/></svg></span>
+                <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">Xe Kim Long</span>
+                <span class="text-[10px] text-slate-400">Máy lạnh 100%</span>
+              </div>
+            </div>
+
+            <button id="btn-trip-view-route" type="button" class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
+              <span>Xem lộ trình trạm & Đón xe</span>
+              <span class="w-4 h-4"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+            </button>
           </div>
 
-          <!-- Trip Stats Grid -->
-          <div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
-            <div class="flex flex-col items-center justify-center p-1">
-              <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg></span>
-              <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">30.000đ</span>
-              <span class="text-[10px] text-slate-400">Suốt tuyến</span>
+          <!-- Following Bus Row -->
+          <div class="bg-white rounded-xl p-3.5 border border-slate-100 shadow-xs flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600 p-2">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-emerald-600"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              </div>
+              <div class="flex flex-col">
+                <div class="flex items-center gap-2">
+                  <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: 08:50</span>
+                  <span id="trip-later-diff" class="text-[11px] text-slate-500">(sau 26 phút)</span>
+                </div>
+                <span class="text-[11px] text-slate-400">Xuất bến định kỳ • Đầy đủ ghế ngồi</span>
+              </div>
             </div>
-            <div class="flex flex-col items-center justify-center p-1 border-x border-slate-200/60">
-              <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
-              <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">15-30p</span>
-              <span class="text-[10px] text-slate-400">/chuyến</span>
-            </div>
-            <div class="flex flex-col items-center justify-center p-1">
-              <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M18.92 2.01C18.72 1.42 18.16 1 17.5 1h-11c-.66 0-1.21.42-1.42 1.01L3 8v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V8l-2.08-5.99zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 7l1.5-4.5h11L19 7H5z"/></svg></span>
-              <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">Xe Kim Long</span>
-              <span class="text-[10px] text-slate-400">Máy lạnh 100%</span>
-            </div>
+            <button id="btn-remind-trip" type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-100 text-[11px] font-semibold active:scale-95 transition-transform">
+              <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
+              <span>Nhắc tôi</span>
+            </button>
           </div>
-
-          <button id="btn-trip-view-route" type="button" class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
-            <span>Xem lộ trình trạm & Đón xe</span>
-            <span class="w-4 h-4"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-          </button>
         </div>
 
-        <!-- Following Bus Row -->
-        <div class="bg-white rounded-xl p-3.5 border border-slate-100 shadow-xs flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600 p-2">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-emerald-600"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+        <!-- EMPTY / NO-RESULT CONTAINER (FAIL-CLOSED) -->
+        <div id="trip-content-empty" class="hidden flex flex-col gap-4">
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col items-center text-center">
+            <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3.5 border border-amber-100/80">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
             </div>
-            <div class="flex flex-col">
-              <div class="flex items-center gap-2">
-                <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: 08:50</span>
-                <span id="trip-later-diff" class="text-[11px] text-slate-500">(sau 26 phút)</span>
-              </div>
-              <span class="text-[11px] text-slate-400">Xuất bến định kỳ • Đầy đủ ghế ngồi</span>
+            <h3 class="text-[17px] font-bold text-slate-900 mb-1.5">Không tìm thấy tuyến buýt đi thẳng</h3>
+            <p class="text-[13px] text-slate-500 leading-relaxed max-w-sm mb-5">
+              Hiện tại chưa có tuyến buýt đi thẳng kết nối 2 điểm này theo đúng chiều di chuyển đã chọn. Vui lòng kiểm tra lại điểm đón/đến hoặc tra cứu toàn bộ danh mục tuyến xe.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2.5 w-full">
+              <button id="btn-empty-routes" type="button" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-all">
+                <span>Tra cứu danh mục tuyến</span>
+              </button>
+              <button id="btn-empty-back-home" type="button" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-[13px] font-semibold flex items-center justify-center gap-1.5 active:scale-98 transition-all">
+                <span>Chọn lại điểm đón / đến</span>
+              </button>
             </div>
           </div>
-          <button id="btn-remind-trip" type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-100 text-[11px] font-semibold active:scale-95 transition-transform">
-            <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
-            <span>Nhắc tôi</span>
-          </button>
         </div>
 
         <!-- Hotline Card -->

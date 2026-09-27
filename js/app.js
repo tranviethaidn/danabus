@@ -9,11 +9,31 @@ class DanabusApp {
     this.viewHistory = ['home'];
     this.selectedRoute = null;
     this.currentDirection = 'outbound'; // 'outbound' | 'inbound'
+    this.matchedDirection = null;       // matched direction from search
+    this.lastSearchQuery = null;        // { originText, destinationText }
     this.pickerTarget = 'destination'; // 'origin' | 'destination'
     this.pickerActiveTab = 'popular';  // 'popular' | 'stops'
     this.currentFilter = 'all';
     this.countdownInterval = null;
     this.userLocation = null;
+  }
+
+  showSearchValidationError(message, errorType = null) {
+    const errorEl = document.getElementById('home-search-error');
+    const textEl = document.getElementById('home-search-error-text');
+    if (errorEl && textEl) {
+      textEl.textContent = message || 'Vui lòng kiểm tra lại điểm đón và điểm đến.';
+      errorEl.classList.remove('hidden');
+    } else {
+      alert(message);
+    }
+  }
+
+  clearSearchValidationError() {
+    const errorEl = document.getElementById('home-search-error');
+    if (errorEl) {
+      errorEl.classList.add('hidden');
+    }
   }
 
   async init() {
@@ -133,6 +153,7 @@ class DanabusApp {
       btn.addEventListener('click', () => {
         const destName = btn.getAttribute('data-name');
         document.getElementById('home-destination-input').value = destName;
+        this.clearSearchValidationError();
       });
     });
   }
@@ -224,12 +245,12 @@ class DanabusApp {
   // =========================================================================
   // VIEW 3: ROUTE DETAIL
   // =========================================================================
-  openRouteDetail(routeId) {
+  openRouteDetail(routeId, direction = 'outbound') {
     const route = window.busService.getRouteById(routeId);
     if (!route) return;
 
     this.selectedRoute = route;
-    this.currentDirection = 'outbound';
+    this.currentDirection = direction || 'outbound';
 
     // Header info
     document.getElementById('detail-route-title').textContent = `${route.routeNumber}: ${route.shortName}`;
@@ -395,20 +416,68 @@ class DanabusApp {
   // VIEW 5: TRIP RESULTS
   // =========================================================================
   showTripResults(originText, destinationText) {
+    this.lastSearchQuery = { originText, destinationText };
+
     // Find matching routes
-    let matchedRoutes = window.busService.findRoutesBetween(originText, destinationText);
-    if (matchedRoutes.length === 0) {
-      // Fallback to route 02 if it's Hoi An / Cua Dai or route 05 for general
-      matchedRoutes = [window.busService.getRouteById('02') || window.busService.routes[0]];
+    const matchedRoutes = window.busService.findRoutesBetween(originText, destinationText);
+
+    const titleEl = document.getElementById('trip-header-title');
+    if (titleEl) {
+      titleEl.textContent = `${originText} ➔ ${destinationText}`;
     }
 
-    const route = matchedRoutes[0];
-    this.selectedRoute = route;
+    const contentSuccess = document.getElementById('trip-content-success');
+    const contentEmpty = document.getElementById('trip-content-empty');
+    const statsStrip = document.getElementById('trip-stats-strip');
+    const busTag = document.getElementById('trip-bus-tag');
+    const headerIndicator = document.getElementById('trip-header-indicator');
 
-    document.getElementById('trip-header-title').textContent = `${originText || 'Bến xe TT'} ➔ ${destinationText || 'Hội An'}`;
+    if (matchedRoutes.length === 0) {
+      // FAIL-CLOSED: No fake fallback!
+      this.selectedRoute = null;
+      this.matchedDirection = null;
+
+      if (contentSuccess) contentSuccess.classList.add('hidden');
+      if (contentEmpty) contentEmpty.classList.remove('hidden');
+      if (statsStrip) statsStrip.classList.add('hidden');
+      if (busTag) {
+        busTag.className = 'px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[11px] font-bold flex items-center gap-1';
+        busTag.textContent = 'Chưa có tuyến thẳng';
+      }
+      if (headerIndicator) {
+        headerIndicator.className = 'w-2.5 h-2.5 rounded-full bg-slate-400 shrink-0';
+      }
+
+      this.navigateTo('trip-results');
+      return;
+    }
+
+    // Success State
+    if (contentSuccess) contentSuccess.classList.remove('hidden');
+    if (contentEmpty) contentEmpty.classList.add('hidden');
+    if (statsStrip) statsStrip.classList.remove('hidden');
+    if (headerIndicator) {
+      headerIndicator.className = 'w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0';
+    }
+
+    const match = matchedRoutes[0];
+    const route = match.route || match;
+    this.selectedRoute = route;
+    this.matchedDirection = match.matchedDirection || 'outbound';
+    this.currentDirection = this.matchedDirection;
+
+    if (busTag) {
+      busTag.className = 'px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold flex items-center gap-1';
+      busTag.innerHTML = `
+        <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.9 17.55 11 21 11 21z"/></svg></span>
+        ${route.category === 'electric' ? 'Xe điện FUTA' : 'Danabus'}
+      `;
+    }
+
     document.getElementById('trip-route-badge').textContent = `TUYẾN ${route.routeNumber}`;
     document.getElementById('trip-stat-km').textContent = route.distanceKm?.average ? `${route.distanceKm.average} km` : '35 km';
-    document.getElementById('trip-stat-stops').textContent = `${route.stops?.outbound?.length || 29} trạm dừng`;
+    const totalStops = match.stopCount || (route.stops?.[this.matchedDirection]?.length || 29);
+    document.getElementById('trip-stat-stops').textContent = `${totalStops} trạm (${this.matchedDirection === 'outbound' ? 'Chiều đi' : 'Chiều về'})`;
 
     const dep = window.busService.calculateNextDeparture(route);
     document.getElementById('trip-countdown-time').textContent = dep.timeStr;
@@ -515,6 +584,7 @@ class DanabusApp {
     } else {
       document.getElementById('home-destination-input').value = name;
     }
+    this.clearSearchValidationError();
     this.closeLocationPicker();
   }
 
@@ -540,10 +610,25 @@ class DanabusApp {
       const origVal = origEl.textContent.trim();
       const destVal = destEl.value.trim();
 
-      if (origVal === 'Chọn điểm đón' && !destVal) return;
+      if ((origVal === 'Chọn điểm đón' || !origVal) && !destVal) return;
 
-      origEl.textContent = destVal || 'Chọn điểm đón';
-      destEl.value = (origVal === 'Chọn điểm đón' || origVal === 'Vị trí hiện tại') ? '' : origVal;
+      const newOrig = destVal || 'Chọn điểm đón';
+      const newDest = (origVal === 'Chọn điểm đón' || origVal === 'Vị trí hiện tại') ? '' : origVal;
+
+      origEl.textContent = newOrig;
+      destEl.value = newDest;
+
+      this.clearSearchValidationError();
+
+      // If user is currently on trip-results screen, immediately re-run search with swapped values to prevent stale display
+      if (this.currentView === 'trip-results') {
+        const val = window.busService.validateSearchQuery(newOrig, newDest);
+        if (val.valid) {
+          this.showTripResults(newOrig, newDest);
+        } else {
+          this.showTripResults(newOrig, newDest); // Fail-closed empty state
+        }
+      }
     });
 
     // Home Voice Search Simulation
@@ -552,17 +637,25 @@ class DanabusApp {
       const origPlaceholder = input.placeholder;
       input.placeholder = "Đang lắng nghe...";
       setTimeout(() => {
-        input.value = "Chùa Cầu, Phố cổ Hội An";
+        input.value = "Phố cổ Hội An";
         input.placeholder = origPlaceholder;
+        this.clearSearchValidationError();
       }, 1200);
     });
 
     // Home Search CTA
     document.getElementById('btn-home-search')?.addEventListener('click', () => {
-      const origText = document.getElementById('home-origin-display').textContent.trim();
-      const orig = (origText === 'Chọn điểm đón' || origText === 'Vị trí hiện tại') ? 'Bến xe TT' : origText;
-      const dest = document.getElementById('home-destination-input').value.trim() || 'Phố cổ Hội An';
-      this.showTripResults(orig, dest);
+      const origText = document.getElementById('home-origin-display')?.textContent.trim() || '';
+      const destText = document.getElementById('home-destination-input')?.value.trim() || '';
+
+      const validation = window.busService.validateSearchQuery(origText, destText);
+      if (!validation.valid) {
+        this.showSearchValidationError(validation.message, validation.error);
+        return;
+      }
+
+      this.clearSearchValidationError();
+      this.showTripResults(origText, destText);
     });
 
     // Home Spotlight Card Click
@@ -679,8 +772,28 @@ class DanabusApp {
     // Trip Results CTA
     document.getElementById('btn-trip-view-route')?.addEventListener('click', () => {
       if (this.selectedRoute) {
-        this.openRouteDetail(this.selectedRoute.id);
+        this.openRouteDetail(this.selectedRoute.id, this.matchedDirection || 'outbound');
       }
+    });
+
+    // Trip Swap Button (Direct swap from results screen)
+    document.getElementById('btn-trip-swap')?.addEventListener('click', () => {
+      if (!this.lastSearchQuery) return;
+      const { originText, destinationText } = this.lastSearchQuery;
+      const origEl = document.getElementById('home-origin-display');
+      const destEl = document.getElementById('home-destination-input');
+      if (origEl) origEl.textContent = destinationText;
+      if (destEl) destEl.value = originText;
+      this.showTripResults(destinationText, originText);
+    });
+
+    // Empty state CTA buttons
+    document.getElementById('btn-empty-routes')?.addEventListener('click', () => {
+      this.navigateTo('routes');
+    });
+
+    document.getElementById('btn-empty-back-home')?.addEventListener('click', () => {
+      this.navigateTo('home');
     });
 
     document.getElementById('btn-remind-trip')?.addEventListener('click', () => {

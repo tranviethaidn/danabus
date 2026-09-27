@@ -194,24 +194,145 @@ class BusService {
     ];
   }
 
+  validateSearchQuery(originText = '', destinationText = '') {
+    const oRaw = (originText || '').trim();
+    const dRaw = (destinationText || '').trim();
+
+    if (!oRaw || oRaw === 'Chọn điểm đón' || oRaw === 'Vị trí hiện tại') {
+      return { valid: false, error: 'EMPTY_ORIGIN', message: 'Vui lòng chọn hoặc nhập điểm đón.' };
+    }
+    if (!dRaw) {
+      return { valid: false, error: 'EMPTY_DESTINATION', message: 'Vui lòng chọn hoặc nhập điểm đến.' };
+    }
+    if (this.normalize(oRaw) === this.normalize(dRaw)) {
+      return { valid: false, error: 'SAME_ORIGIN_DESTINATION', message: 'Điểm đón và điểm đến không được trùng nhau.' };
+    }
+    return { valid: true, error: null, message: '' };
+  }
+
+  resolveSearchTokens(queryNorm = '') {
+    const q = this.normalize(queryNorm);
+    if (!q) return [];
+
+    const tokens = [q];
+    if (q.includes('pho co hoi an') || q === 'hoi an') {
+      tokens.push('pho co hoi an', 'hoi an');
+    } else if (q.includes('ben xe tt') || q.includes('ben xe trung tam')) {
+      tokens.push('ben xe tt', 'ben xe trung tam');
+    } else if (q.includes('cau rong')) {
+      tokens.push('cau rong');
+    } else if (q.includes('cua dai')) {
+      tokens.push('cua dai');
+    } else if (q.includes('san bay')) {
+      tokens.push('san bay');
+    } else if (q.includes('ba na')) {
+      tokens.push('ba na');
+    } else if (q.includes('ngu hanh son')) {
+      tokens.push('ngu hanh son');
+    } else if (q.includes('phu san nhi')) {
+      tokens.push('phu san nhi');
+    }
+    return Array.from(new Set(tokens.filter(t => t && t.length >= 2)));
+  }
+
+  stopMatchesQuery(stop, queryNorm, tokens, isFirst, isLast, terminals, dir) {
+    if (!stop) return false;
+    const nameNorm = this.normalize(stop.name || '');
+    const streetNorm = this.normalize(stop.street || '');
+    const displayNorm = this.normalize(stop.display_name || '');
+    const fullText = `${nameNorm} ${streetNorm} ${displayNorm}`;
+
+    for (const t of tokens) {
+      if (t.length >= 2 && fullText.includes(t)) {
+        return true;
+      }
+      if (nameNorm.length >= 3 && t.includes(nameNorm)) {
+        return true;
+      }
+    }
+
+    // Terminal matching at endpoints
+    const termOrigin = this.normalize(terminals?.origin || '');
+    const termDest = this.normalize(terminals?.destination || '');
+
+    if (dir === 'outbound') {
+      if (isFirst && tokens.some(t => termOrigin.includes(t))) return true;
+      if (isLast && tokens.some(t => termDest.includes(t))) return true;
+    } else if (dir === 'inbound') {
+      if (isFirst && tokens.some(t => termDest.includes(t))) return true;
+      if (isLast && tokens.some(t => termOrigin.includes(t))) return true;
+    }
+
+    return false;
+  }
+
   findRoutesBetween(originText = '', destinationText = '') {
     const o = this.normalize(originText);
     const d = this.normalize(destinationText);
 
-    if (!o && !d) return [];
+    if (!o || !d || o === d) return [];
 
-    return this.routes.filter(r => {
-      const allText = this.normalize(
-        `${r.name} ${r.shortName} ${r.terminals?.origin} ${r.terminals?.destination} ` +
-        (r.routePaths?.outbound?.text || '') + ' ' +
-        (r.routePaths?.inbound?.text || '')
-      );
+    const oTokens = this.resolveSearchTokens(o);
+    const dTokens = this.resolveSearchTokens(d);
 
-      const hasOrigin = !o || allText.includes(o) || (r.stops?.outbound || []).some(s => this.normalize(s.name).includes(o) || this.normalize(s.street).includes(o));
-      const hasDest = !d || allText.includes(d) || (r.stops?.outbound || []).some(s => this.normalize(s.name).includes(d) || this.normalize(s.street).includes(d));
+    const matches = [];
 
-      return hasOrigin && hasDest;
-    });
+    for (const r of this.routes) {
+      if (r.status === 'suspended' || r.isActive === false) {
+        continue;
+      }
+
+      for (const dir of ['outbound', 'inbound']) {
+        const stops = r.stops?.[dir] || [];
+        if (stops.length < 2) {
+          continue;
+        }
+
+        const terminals = r.terminals || {};
+        const nStops = stops.length;
+
+        const origIndices = [];
+        const destIndices = [];
+
+        for (let i = 0; i < nStops; i++) {
+          const s = stops[i];
+          if (this.stopMatchesQuery(s, o, oTokens, i === 0, i === nStops - 1, terminals, dir)) {
+            origIndices.push(i);
+          }
+          if (this.stopMatchesQuery(s, d, dTokens, i === 0, i === nStops - 1, terminals, dir)) {
+            destIndices.push(i);
+          }
+        }
+
+        // Monotonic check: originIndex < destinationIndex
+        let validPair = null;
+        for (const oi of origIndices) {
+          for (const di of destIndices) {
+            if (oi < di) {
+              validPair = [oi, di];
+              break;
+            }
+          }
+          if (validPair) break;
+        }
+
+        if (validPair) {
+          const [oi, di] = validPair;
+          matches.push({
+            ...r,
+            route: r,
+            matchedDirection: dir,
+            originIndex: oi,
+            destinationIndex: di,
+            originStop: stops[oi],
+            destinationStop: stops[di],
+            stopCount: di - oi + 1
+          });
+        }
+      }
+    }
+
+    return matches;
   }
 
   calculateNextDeparture(route) {
@@ -270,4 +391,10 @@ class BusService {
 }
 
 // Global singleton instance
-window.busService = new BusService();
+if (typeof window !== 'undefined') {
+  window.busService = new BusService();
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { BusService };
+}

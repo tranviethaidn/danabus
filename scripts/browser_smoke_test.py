@@ -565,6 +565,7 @@ def run_browser_smoke_test(target_url=None):
                 await caches.open('danabus-cache-v5');
                 await caches.open('danabus-cache-v6');
                 await caches.open('danabus-cache-v7');
+                await caches.open('danabus-cache-v9');
                 return await caches.keys();
             })()
         """)
@@ -573,6 +574,7 @@ def run_browser_smoke_test(target_url=None):
         assert 'danabus-cache-v5' in pre_cache_keys, "danabus-cache-v5 must be present in pre-migration caches"
         assert 'danabus-cache-v6' in pre_cache_keys, "danabus-cache-v6 must be present in pre-migration caches"
         assert 'danabus-cache-v7' in pre_cache_keys, "danabus-cache-v7 must be present in pre-migration caches"
+        assert 'danabus-cache-v9' in pre_cache_keys, "danabus-cache-v9 must be present in pre-migration caches"
 
         # Step 7b: Trigger Service Worker installation & activation lifecycle
         eval_js("""
@@ -610,7 +612,8 @@ def run_browser_smoke_test(target_url=None):
                 state and
                 state.get('swActive') and
                 state.get('hasFitRoute') and
-                'danabus-cache-v9' in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v10' in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v9' not in state.get('postMigrationCacheKeys', []) and
                 'danabus-cache-v4' not in state.get('postMigrationCacheKeys', []) and
                 'danabus-cache-v7' not in state.get('postMigrationCacheKeys', [])
             ):
@@ -623,14 +626,15 @@ def run_browser_smoke_test(target_url=None):
         print(f" -> Post-migration SW & Cache state: {post_sw_state}")
         assert post_sw_state is not None, "Post-migration check must return valid state"
         assert post_sw_state['swActive'] is True, "Service Worker must be registered and active"
-        assert 'danabus-cache-v9' in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v9 must be present after SW activation"
+        assert 'danabus-cache-v10' in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v10 must be present after SW activation"
+        assert 'danabus-cache-v9' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v9 must be strictly purged"
         assert 'danabus-cache-v4' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v4 must be strictly purged"
         assert 'danabus-cache-v5' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v5 must be strictly purged"
         assert 'danabus-cache-v6' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v6 must be strictly purged"
         assert 'danabus-cache-v7' not in post_sw_state['postMigrationCacheKeys'], "danabus-cache-v7 must be strictly purged"
         assert post_sw_state['hasFitRoute'] is True, "window.mapService.fitRoute must be present in active client"
-        assert "v=20260928_v9" in (post_sw_state['mapScriptSrc'] or ""), f"mapService.js must have cache-busting v=20260928_v9, got {post_sw_state['mapScriptSrc']}"
-        assert "v=20260928_v9" in (post_sw_state['appScriptSrc'] or ""), f"app.js must have cache-busting v=20260928_v9, got {post_sw_state['appScriptSrc']}"
+        assert "v=20260929_v10" in (post_sw_state['mapScriptSrc'] or ""), f"mapService.js must have cache-busting v=20260929_v10, got {post_sw_state['mapScriptSrc']}"
+        assert "v=20260929_v10" in (post_sw_state['appScriptSrc'] or ""), f"app.js must have cache-busting v=20260929_v10, got {post_sw_state['appScriptSrc']}"
 
         # 8. Take Screenshot for Deliverable Evidence
         print("[Check 8] Capturing deliverable screenshot...")

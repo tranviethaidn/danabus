@@ -515,14 +515,16 @@ def test_static_integrity():
     assert "outline" in css_content, "[FAIL] css/app.css :focus-visible must define high-contrast outline"
     print(" [PASS] Accessible :focus-visible baseline defined in CSS")
 
-    # 6. Service Worker cache version must be danabus-cache-v9
+    # 6. Service Worker cache version must be danabus-cache-v10
     sw_path = WORKSPACE / "sw.js"
     sw_content = sw_path.read_text(encoding="utf-8")
-    assert "danabus-cache-v9" in sw_content, "[FAIL] sw.js must have CACHE_NAME = 'danabus-cache-v9'"
+    assert "danabus-cache-v10" in sw_content, "[FAIL] sw.js must have CACHE_NAME = 'danabus-cache-v10'"
+    assert "danabus-cache-v9" not in sw_content, "[FAIL] sw.js must not retain old danabus-cache-v9"
     assert "danabus-cache-v7" not in sw_content, "[FAIL] sw.js must not retain old danabus-cache-v7"
-    assert "v=20260928_v9" in index_content, "[FAIL] index.html must have asset query v=20260928_v9"
+    assert "v=20260929_v10" in index_content, "[FAIL] index.html must have asset query v=20260929_v10"
+    assert "v=20260928_v9" not in index_content, "[FAIL] index.html must not retain old asset query v=20260928_v9"
     assert "v=20260924_v7" not in index_content, "[FAIL] index.html must not retain old asset query v=20260924_v7"
-    print(" [PASS] Service Worker cache version bumped to v9 with clean cache busting")
+    print(" [PASS] Service Worker cache version bumped to v10 with clean cache busting")
 
     # 7. Loading and Error/Offline state containers in index.html
     assert 'id="app-loading-state"' in index_content, "[FAIL] index.html missing #app-loading-state"

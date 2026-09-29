@@ -1,14 +1,14 @@
-// Danabus Service Worker - Task 9 UI Integrity & Realtime Semantics (Build 20260928_task9)
-const CACHE_NAME = 'danabus-cache-v9';
+// Danabus Service Worker - Task 4 Productionization & PWA Release Upgrade (Build 20260929_v10)
+const CACHE_NAME = 'danabus-cache-v10';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './css/app.css?v=20260928_v9',
-  './js/icons.js?v=20260928_v9',
-  './js/app.js?v=20260928_v9',
-  './js/busService.js?v=20260928_v9',
-  './js/mapService.js?v=20260928_v9',
+  './css/app.css?v=20260929_v10',
+  './js/icons.js?v=20260929_v10',
+  './js/app.js?v=20260929_v10',
+  './js/busService.js?v=20260929_v10',
+  './js/mapService.js?v=20260929_v10',
   './assets/logo.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',

@@ -177,18 +177,29 @@ def run_cmd(cmd_list, description):
     res = subprocess.run(cmd_list, cwd=WORKSPACE, text=True, capture_output=True)
     dur = time.time() - start_t
     
+    if res.returncode != 0:
+        print(f"\n[-] FAIL: {description} (exit code: {res.returncode}, duration: {dur:.2f}s)")
+        print("\n" + "=" * 70)
+        print("--- FULL CHILD STDOUT ON FAILURE ---")
+        if res.stdout:
+            print(res.stdout.strip())
+        else:
+            print("(no stdout output)")
+        print("--- FULL CHILD STDERR ON FAILURE ---")
+        if res.stderr:
+            print(res.stderr.strip())
+        else:
+            print("(no stderr output)")
+        print("=" * 70 + "\n")
+        sys.exit(1)
+        
     if res.stdout:
-        # Print indent
+        # Print indent for last lines on success
         for line in res.stdout.strip().splitlines()[-15:]:
             print(f"   | {line}")
             
-    if res.returncode != 0:
-        print(f"\n[-] FAIL: {description} (exit code: {res.returncode}, duration: {dur:.2f}s)")
-        if res.stderr:
-            print(f"   STDERR:\n{res.stderr.strip()}")
-        sys.exit(1)
-        
     print(f"   [PASS] {description} ({dur:.2f}s)")
+    time.sleep(0.1)
     return True
 
 

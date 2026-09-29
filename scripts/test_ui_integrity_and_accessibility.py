@@ -39,8 +39,10 @@ import socket
 import struct
 import subprocess
 import sys
+import tempfile
 import threading
 import time
+import urllib.request
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parent.parent
@@ -50,7 +52,7 @@ SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task9_ui_accessibility_evide
 
 
 class SimpleWebSocket:
-    """Minimal WebSocket client for Chrome DevTools Protocol."""
+    """Minimal RFC 6455 WebSocket client for Chrome DevTools Protocol."""
     def __init__(self, ws_url):
         rest = ws_url[5:]
         host_port, path = rest.split('/', 1)
@@ -91,23 +93,41 @@ class SimpleWebSocket:
             masked_data[i] = data[i] ^ mask[i % 4]
         self.sock.sendall(header + masked_data)
 
-    def recv_text(self):
-        head = self.sock.recv(2)
-        if len(head) < 2:
-            return ""
-        b1, b2 = head[0], head[1]
-        length = b2 & 0x7F
-        if length == 126:
-            length = struct.unpack('>H', self.sock.recv(2))[0]
-        elif length == 127:
-            length = struct.unpack('>Q', self.sock.recv(8))[0]
-        data = b''
-        while len(data) < length:
-            chunk = self.sock.recv(length - len(data))
+    def _recv_exact(self, n):
+        buf = bytearray()
+        while len(buf) < n:
+            chunk = self.sock.recv(n - len(buf))
             if not chunk:
-                break
-            data += chunk
-        return data.decode('utf-8', errors='ignore')
+                raise ConnectionError("Socket closed prematurely while reading frame")
+            buf.extend(chunk)
+        return bytes(buf)
+
+    def recv_text(self):
+        while True:
+            head = self._recv_exact(2)
+            b1, b2 = struct.unpack('BB', head)
+            opcode = b1 & 0x0F
+            is_masked = bool(b2 & 0x80)
+            payload_len = b2 & 0x7F
+            if payload_len == 126:
+                payload_len = struct.unpack('>H', self._recv_exact(2))[0]
+            elif payload_len == 127:
+                payload_len = struct.unpack('>Q', self._recv_exact(8))[0]
+
+            mask = self._recv_exact(4) if is_masked else None
+            payload = bytearray(self._recv_exact(payload_len))
+            if is_masked:
+                for i in range(payload_len):
+                    payload[i] ^= mask[i % 4]
+
+            if opcode == 1:  # Text frame
+                return payload.decode('utf-8', errors='replace')
+            elif opcode == 8:  # Close frame
+                self.close()
+                raise ConnectionError("Server closed WebSocket connection")
+            elif opcode == 9:  # Ping frame -> send Pong
+                pong = bytes([0x8A, 0x80]) + os.urandom(4)
+                self.sock.sendall(pong)
 
     def close(self):
         try:
@@ -126,14 +146,22 @@ class BrowserRunner:
         self.chrome_proc = None
         self.ws = None
         self.msg_id = 0
+        self.temp_dir = tempfile.TemporaryDirectory(prefix="danabus_ui_test_")
+        self.user_data_dir = self.temp_dir.name
+        self.console_logs = []
+        self.runtime_exceptions = []
+        self.failed_requests = []
 
     def start_http(self):
         class QuietHandler(http.server.SimpleHTTPRequestHandler):
             def log_message(self, format, *args):
                 pass
 
+        class ReusableHTTPServer(http.server.HTTPServer):
+            allow_reuse_address = True
+
         os.chdir(self.workspace)
-        self.httpd = http.server.HTTPServer(("127.0.0.1", self.port), QuietHandler)
+        self.httpd = ReusableHTTPServer(("127.0.0.1", self.port), QuietHandler)
         self.http_thread = threading.Thread(target=self.httpd.serve_forever, daemon=True)
         self.http_thread.start()
 
@@ -147,51 +175,81 @@ class BrowserRunner:
             "--no-sandbox",
             "--disable-gpu",
             "--disable-dev-shm-usage",
+            "--disable-background-networking",
+            "--disable-component-update",
+            "--disable-sync",
+            "--disable-default-apps",
+            "--no-first-run",
+            "--no-default-browser-check",
+            f"--user-data-dir={self.user_data_dir}",
+            "--remote-allow-origins=*",
             f"--remote-debugging-port={self.cdp_port}",
-            f"http://127.0.0.1:{self.port}/index.html"
+            "about:blank"
         ]
         self.chrome_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        time.sleep(2.0)
 
-    def connect_cdp(self):
-        import urllib.request
-        with urllib.request.urlopen(f"http://127.0.0.1:{self.cdp_port}/json") as r:
-            tabs = json.loads(r.read().decode())
-        ws_url = None
-        for t in tabs:
-            if t.get('type') == 'page' and 'webSocketDebuggerUrl' in t:
-                ws_url = t['webSocketDebuggerUrl']
-                break
-        if not ws_url:
-            raise RuntimeError("No page debugger WebSocket URL found")
-        self.ws = SimpleWebSocket(ws_url)
-
-    def evaluate(self, expr):
-        self.msg_id += 1
-        msg = {
-            "id": self.msg_id,
-            "method": "Runtime.evaluate",
-            "params": {"expression": expr, "returnByValue": True, "awaitPromise": True}
-        }
-        self.ws.send_text(json.dumps(msg))
-        while True:
-            raw = self.ws.recv_text()
-            if not raw:
-                return None
+    def connect_cdp(self, timeout=10.0):
+        start = time.time()
+        last_err = None
+        while time.time() - start < timeout:
+            if self.chrome_proc and self.chrome_proc.poll() is not None:
+                raise RuntimeError(f"Chrome exited prematurely with code {self.chrome_proc.returncode}")
             try:
-                data = json.loads(raw)
-            except Exception:
-                continue
-            if data.get("id") == self.msg_id:
-                res = data.get("result", {}).get("result", {})
-                if res.get("type") == "undefined":
-                    return None
-                return res.get("value")
+                with urllib.request.urlopen(f"http://127.0.0.1:{self.cdp_port}/json", timeout=1.0) as r:
+                    tabs = json.loads(r.read().decode())
+                ws_url = None
+                for t in tabs:
+                    if t.get('type') == 'page' and 'webSocketDebuggerUrl' in t:
+                        ws_url = t['webSocketDebuggerUrl']
+                        break
+                if ws_url:
+                    self.ws = SimpleWebSocket(ws_url)
+                    self.send_cdp("Page.enable")
+                    self.send_cdp("Runtime.enable")
+                    self.send_cdp("Log.enable")
+                    self.send_cdp("Page.addScriptToEvaluateOnNewDocument", {
+                        "source": """
+                            if (window.navigator && window.navigator.serviceWorker) {
+                                const origAdd = window.navigator.serviceWorker.addEventListener.bind(window.navigator.serviceWorker);
+                                window.navigator.serviceWorker.addEventListener = function(type, listener, ...args) {
+                                    if (type === 'controllerchange') {
+                                        console.log('[TestRunner] Suppressed spontaneous controllerchange reload');
+                                        return;
+                                    }
+                                    return origAdd(type, listener, ...args);
+                                };
+                            }
+                        """
+                    })
+                    return
+            except Exception as e:
+                last_err = e
+                time.sleep(0.1)
+        raise RuntimeError(f"Failed to connect to Chrome CDP within {timeout}s: {last_err}")
+
+    def navigate(self, url):
+        self.send_cdp("Page.navigate", {"url": url})
+
+    def _record_event(self, method, params):
+        if method == "Runtime.consoleAPICalled":
+            msg_type = params.get("type", "log")
+            args = [a.get("value", a.get("description", "")) for a in params.get("args", [])]
+            self.console_logs.append(f"[{msg_type.upper()}] {' '.join(str(x) for x in args)}")
+        elif method == "Runtime.exceptionThrown":
+            desc = params.get("exceptionDetails", {}).get("text", "")
+            exp = params.get("exceptionDetails", {}).get("exception", {}).get("description", "")
+            self.runtime_exceptions.append(f"{desc}: {exp}")
+        elif method == "Log.entryAdded":
+            entry = params.get("entry", {})
+            self.console_logs.append(f"[BROWSER-{entry.get('level', 'info').upper()}] {entry.get('text', '')}")
+        elif method == "Network.loadingFailed":
+            self.failed_requests.append(f"Failed request: {params.get('errorText')} ({params.get('type')})")
 
     def send_cdp(self, method, params=None):
         self.msg_id += 1
+        curr_id = self.msg_id
         msg = {
-            "id": self.msg_id,
+            "id": curr_id,
             "method": method,
             "params": params or {}
         }
@@ -199,43 +257,163 @@ class BrowserRunner:
         while True:
             raw = self.ws.recv_text()
             if not raw:
-                return None
+                raise ConnectionError("Empty CDP response received")
             try:
                 data = json.loads(raw)
             except Exception:
                 continue
-            if data.get("id") == self.msg_id:
+            if "method" in data:
+                self._record_event(data["method"], data.get("params", {}))
+            if data.get("id") == curr_id:
+                if "error" in data:
+                    raise RuntimeError(f"CDP command {method} failed: {data['error']}")
                 return data.get("result", {})
 
-    def capture_screenshot(self, out_path):
+    def evaluate(self, expr):
         self.msg_id += 1
-        msg = {"id": self.msg_id, "method": "Page.captureScreenshot", "params": {"format": "png"}}
+        curr_id = self.msg_id
+        msg = {
+            "id": curr_id,
+            "method": "Runtime.evaluate",
+            "params": {"expression": expr, "returnByValue": True, "awaitPromise": True}
+        }
         self.ws.send_text(json.dumps(msg))
         while True:
             raw = self.ws.recv_text()
             if not raw:
-                break
+                raise ConnectionError("Empty CDP response received during evaluate")
             try:
                 data = json.loads(raw)
             except Exception:
                 continue
-            if data.get("id") == self.msg_id:
-                b64 = data.get("result", {}).get("data", "")
-                with open(out_path, "wb") as f:
-                    f.write(base64.b64decode(b64))
-                break
+            if "method" in data:
+                self._record_event(data["method"], data.get("params", {}))
+            if data.get("id") == curr_id:
+                if "error" in data:
+                    raise RuntimeError(f"CDP evaluate failed: {data['error']}")
+                res_obj = data.get("result", {})
+                if "exceptionDetails" in res_obj:
+                    exc = res_obj["exceptionDetails"]
+                    desc = exc.get("exception", {}).get("description") or exc.get("text", "Unknown JS error")
+                    raise RuntimeError(f"JavaScript evaluation threw exception: {desc} (expr: {expr[:200]})")
+                res = res_obj.get("result", {})
+                if res.get("subtype") == "error":
+                    raise RuntimeError(f"JavaScript error: {res.get('description', 'Unknown error')} (expr: {expr[:200]})")
+                if res.get("type") == "undefined":
+                    return None
+                return res.get("value")
+
+    def wait_for_condition(self, expr, timeout=10.0, step=0.1, description=""):
+        start = time.time()
+        desc = description or expr[:80]
+        while time.time() - start < timeout:
+            val = self.evaluate(expr)
+            if val:
+                return val
+            time.sleep(step)
+        raise TimeoutError(f"Condition timed out after {timeout:.1f}s: {desc}")
+
+    def capture_screenshot(self, out_path):
+        out_path = Path(out_path)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        res = self.send_cdp("Page.captureScreenshot", {"format": "png"})
+        b64 = res.get("data", "")
+        if b64:
+            with open(out_path, "wb") as f:
+                f.write(base64.b64decode(b64))
+
+    def capture_diagnostics(self, diag_screenshot_path=None):
+        print("\n" + "=" * 70)
+        print("!!! BROWSER RUNNER DIAGNOSTIC DUMP (TASK 9) !!!")
+        print("=" * 70)
+        try:
+            state = self.evaluate("""
+                (() => {
+                    try {
+                        return {
+                            url: window.location.href,
+                            readyState: document.readyState,
+                            appLoadState: window.app?.loadState,
+                            currentView: window.app?.currentView,
+                            selectedRouteId: window.app?.selectedRoute?.id,
+                            busServiceLoaded: window.busService?.isLoaded,
+                            busServiceLoading: window.busService?.isLoading,
+                            routesCount: window.busService?.routes?.length,
+                            stopsCount: window.busService?.stops?.length,
+                            activeViewElement: document.querySelector('.view.active')?.id,
+                            tripKm: document.getElementById('trip-stat-km')?.textContent?.trim(),
+                            tripStops: document.getElementById('trip-stat-stops')?.textContent?.trim(),
+                            tripTimer: document.getElementById('trip-countdown-timer')?.textContent?.trim(),
+                            appErrorVisible: !document.getElementById('app-error-state')?.classList.contains('hidden'),
+                            appLoadingVisible: !document.getElementById('app-loading-state')?.classList.contains('hidden')
+                        };
+                    } catch (e) {
+                        return { error: e.toString() };
+                    }
+                })()
+            """)
+            print(f"Browser State Snapshot:\n{json.dumps(state, indent=2, ensure_ascii=False)}")
+        except Exception as e:
+            print(f"Could not retrieve state snapshot: {e}")
+
+        if self.console_logs:
+            print(f"\nCaptured Console Logs ({len(self.console_logs)} entries):")
+            for log in self.console_logs[-20:]:
+                print(f"  {log}")
+        else:
+            print("\nCaptured Console Logs: (none)")
+
+        if self.runtime_exceptions:
+            print(f"\nCaptured JS Exceptions ({len(self.runtime_exceptions)} entries):")
+            for exc in self.runtime_exceptions:
+                print(f"  {exc}")
+
+        if self.failed_requests:
+            print(f"\nCaptured Failed Requests ({len(self.failed_requests)} entries):")
+            for req in self.failed_requests:
+                print(f"  {req}")
+
+        if diag_screenshot_path:
+            try:
+                self.capture_screenshot(diag_screenshot_path)
+                print(f"\nDiagnostic screenshot written to: {diag_screenshot_path}")
+            except Exception as e:
+                print(f"Failed to capture diagnostic screenshot: {e}")
+        print("=" * 70 + "\n")
 
     def stop(self):
         if self.ws:
-            self.ws.close()
-        if self.chrome_proc:
-            self.chrome_proc.terminate()
             try:
-                self.chrome_proc.wait(timeout=3)
+                self.ws.close()
             except Exception:
+                pass
+            self.ws = None
+        if self.chrome_proc:
+            try:
+                self.chrome_proc.terminate()
+                self.chrome_proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
                 self.chrome_proc.kill()
+                self.chrome_proc.wait(timeout=2)
+            except Exception:
+                pass
+            self.chrome_proc = None
         if self.httpd:
-            self.httpd.shutdown()
+            try:
+                self.httpd.shutdown()
+                self.httpd.server_close()
+            except Exception:
+                pass
+            self.httpd = None
+        if self.http_thread and self.http_thread.is_alive():
+            self.http_thread.join(timeout=2)
+            self.http_thread = None
+        if hasattr(self, 'temp_dir') and self.temp_dir:
+            try:
+                self.temp_dir.cleanup()
+            except Exception:
+                pass
+            self.temp_dir = None
 
 
 def test_static_integrity():
@@ -349,30 +527,53 @@ def test_nodejs_contract():
     print(" [PASS] formatRouteVehicleInfo and electric category provenance strictly verified")
 
 
-def test_browser_acceptance():
+def test_browser_acceptance(test_diagnostic=False):
     """Run Headless Chrome CDP browser interaction & accessibility suite."""
     print("\n--- 3. HEADLESS CHROME BROWSER INTERACTION & ACCESSIBILITY TESTS ---")
+    diag_screenshot = WORKSPACE / "docs" / "reports" / "task9_failure_diagnostic.png"
     runner = BrowserRunner(WORKSPACE)
     try:
         runner.start_http()
         runner.start_chrome()
         runner.connect_cdp()
 
-        # Wait until page and data load completely
-        ready = False
-        for _ in range(50):
-            ready = runner.evaluate("Boolean(window.app && window.busService && window.busService.isLoaded && window.busService.routes && window.busService.routes.length > 0)")
-            if ready:
-                break
-            time.sleep(0.2)
-        assert ready, "Page and busService failed to load within 10 seconds!"
+        test_url = f"http://127.0.0.1:{runner.port}/index.html"
+        runner.navigate(test_url)
+
+        # Wait until page and data load completely with explicit predicate
+        runner.wait_for_condition(
+            """Boolean(
+                window.app &&
+                window.app.loadState === 'ready' &&
+                window.busService &&
+                window.busService.isLoaded &&
+                window.busService.routes &&
+                window.busService.routes.length > 0 &&
+                window.busService.stops &&
+                window.busService.stops.length > 0
+            )""",
+            timeout=10.0,
+            description="Initial app and busService load"
+        )
+
+        if test_diagnostic:
+            print("[TEST-DIAGNOSTIC] Intentionally triggering synthetic failure to verify diagnostic capture...")
+            runner.evaluate("console.error('Synthetic diagnostic test error: simulated failure condition')")
+            try:
+                runner.wait_for_condition("document.getElementById('non_existent_element_for_diagnostic_test') !== null", timeout=0.6, description="Synthetic element wait")
+            except Exception as syn_err:
+                print(f"[TEST-DIAGNOSTIC] Caught expected synthetic error: {syn_err}")
+                runner.capture_diagnostics(diag_screenshot)
+                assert diag_screenshot.exists() and diag_screenshot.stat().st_size > 0, "Diagnostic screenshot must be written and non-empty!"
+                print(f"[TEST-DIAGNOSTIC] PASS: Diagnostic snapshot and screenshot verified ({diag_screenshot.stat().st_size} bytes)")
+                return
 
         # Check 1: Viewport & Pinch-to-zoom
         viewport_meta = runner.evaluate("document.querySelector('meta[name=\"viewport\"]')?.getAttribute('content')")
         print(f" -> Live viewport meta: '{viewport_meta}'")
-        assert "width=device-width" in viewport_meta
-        assert "user-scalable=no" not in viewport_meta
-        assert "maximum-scale" not in viewport_meta
+        assert "width=device-width" in (viewport_meta or "")
+        assert "user-scalable=no" not in (viewport_meta or "")
+        assert "maximum-scale" not in (viewport_meta or "")
         print(" [PASS] Live browser viewport allows pinch-to-zoom")
 
         # Check 2: Accessible names on icon-only buttons
@@ -479,39 +680,55 @@ def test_browser_acceptance():
         print(" [PASS] Voice & Reminder disabled/hidden without fake alerts or transcript simulation")
 
         # Check 5: Keyboard Enter/Space navigation for role="button"
-        keyboard_check = runner.evaluate("""
+        runner.evaluate("""
             (() => {
                 window.app.navigateTo('home');
                 const spotlight = document.getElementById('home-spotlight-card');
                 const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
                 spotlight.dispatchEvent(event);
-                const viewAfterEnter = window.app.currentView;
-                const selectedRouteId = window.app.selectedRoute?.id;
-                return { viewAfterEnter, selectedRouteId };
             })()
         """)
+        keyboard_check = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView === 'route-detail' && window.app.selectedRoute?.id === '02') {
+                    return { viewAfterEnter: window.app.currentView, selectedRouteId: window.app.selectedRoute?.id };
+                }
+                return null;
+            })()""",
+            timeout=5.0,
+            description="Spotlight card Enter key navigates to Route 02 detail"
+        )
         assert keyboard_check['viewAfterEnter'] == 'route-detail'
         assert keyboard_check['selectedRouteId'] == '02'
         print(" [PASS] Keyboard Enter on spotlight card opens Route 02 detail")
 
         # Check 6: Truthful Trip Results rendering (Route 02)
         runner.evaluate("window.app.showTripResults('Bến xe Trung tâm', 'Phố cổ Hội An')")
-        time.sleep(0.4)
-        trip_checks = runner.evaluate("""
-            (() => {
+        trip_checks = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'trip-results') return null;
+                const kmEl = document.getElementById('trip-stat-km');
+                const stopsEl = document.getElementById('trip-stat-stops');
+                const timerEl = document.getElementById('trip-countdown-timer');
+                if (!kmEl || !stopsEl || !timerEl) return null;
+                const km = kmEl.textContent.trim();
+                const timer = timerEl.textContent.trim();
+                if (km === '-- km' || timer === 'Đang cập nhật') return null;
                 return {
-                    km: document.getElementById('trip-stat-km')?.textContent.trim(),
-                    stops: document.getElementById('trip-stat-stops')?.textContent.trim(),
+                    km: km,
+                    stops: stopsEl.textContent.trim(),
                     timeText: document.getElementById('trip-stat-time')?.textContent.trim(),
                     timeHidden: document.getElementById('trip-stat-time')?.classList.contains('hidden'),
-                    timer: document.getElementById('trip-countdown-timer')?.textContent.trim(),
+                    timer: timer,
                     fleet: document.getElementById('trip-fleet-value')?.textContent.trim(),
                     fleetDesc: document.getElementById('trip-fleet-desc')?.textContent.trim(),
                     laterNote: document.getElementById('trip-later-note')?.textContent.trim(),
                     ctaText: document.getElementById('btn-floating-map')?.textContent.trim()
                 };
-            })()
-        """)
+            })()""",
+            timeout=8.0,
+            description="Route 02 trip results rendered with non-fallback data"
+        )
         print(f" -> Trip Results State: {trip_checks}")
         # Real distance for route 02 is 26.2 km (average), NOT 35 km!
         assert trip_checks['km'] != "35 km", "Trip km must not be hardcoded 35 km!"
@@ -533,16 +750,20 @@ def test_browser_acceptance():
 
         # Check 6b: Route with missing fleet brand fails-closed (Route 21)
         runner.evaluate("window.app.showTripResults('Bến xe Trung tâm', 'Cầu Tam Kỳ')")
-        time.sleep(0.3)
-        r21_trip_checks = runner.evaluate("""
-            (() => {
+        r21_trip_checks = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'trip-results' || window.app.selectedRoute?.id !== '21') return null;
+                const fleet = document.getElementById('trip-fleet-value')?.textContent.trim();
+                if (!fleet) return null;
                 return {
                     routeId: window.app.selectedRoute?.id,
-                    fleet: document.getElementById('trip-fleet-value')?.textContent.trim(),
+                    fleet: fleet,
                     fleetDesc: document.getElementById('trip-fleet-desc')?.textContent.trim()
                 };
-            })()
-        """)
+            })()""",
+            timeout=8.0,
+            description="Route 21 trip results rendered"
+        )
         print(f" -> Route 21 Trip State: {r21_trip_checks}")
         assert r21_trip_checks['routeId'] == '21'
         assert r21_trip_checks['fleet'] == "Chưa có dữ liệu", f"Route 21 missing fleet brand must be 'Chưa có dữ liệu', got: {r21_trip_checks['fleet']}"
@@ -564,12 +785,12 @@ def test_browser_acceptance():
                 await window.app.retryLoad();
             })()
         """)
-        time.sleep(1.0)
 
-        # Step 7c: Assert fail-closed error state
-        error_state = runner.evaluate("""
-            (() => {
+        # Step 7c: Assert fail-closed error state with explicit predicate wait
+        error_state = runner.wait_for_condition(
+            """(() => {
                 const errorEl = document.getElementById('app-error-state');
+                if (!errorEl || errorEl.classList.contains('hidden')) return null;
                 const loadingEl = document.getElementById('app-loading-state');
                 const descEl = document.getElementById('app-error-desc');
                 const countEl = document.getElementById('route-count-label');
@@ -580,7 +801,7 @@ def test_browser_acceptance():
                     appLoadState: window.app?.loadState,
                     busServiceLoaded: window.busService?.isLoaded,
                     busServiceRoutesCount: window.busService?.routes?.length,
-                    errorVisible: errorEl && !errorEl.classList.contains('hidden'),
+                    errorVisible: true,
                     errorRole: errorEl?.getAttribute('role'),
                     errorLive: errorEl?.getAttribute('aria-live'),
                     errorDesc: descEl?.textContent?.trim(),
@@ -591,8 +812,10 @@ def test_browser_acceptance():
                     hasHeader: !!document.getElementById('global-header'),
                     hasRetryBtn: !!document.getElementById('btn-retry-load')
                 };
-            })()
-        """)
+            })()""",
+            timeout=8.0,
+            description="App enters error state on network block"
+        )
         print(f" -> Live Error State: {error_state}")
         assert error_state['appLoadState'] == 'error', f"Expected appLoadState='error', got {error_state['appLoadState']}"
         assert error_state['busServiceLoaded'] is False, "busService.isLoaded must be false"
@@ -613,14 +836,12 @@ def test_browser_acceptance():
         runner.send_cdp('Network.setBlockedURLs', {'urls': []})
         runner.evaluate("document.getElementById('btn-retry-load')?.click()")
 
-        recovered = False
-        for _ in range(30):
-            time.sleep(0.3)
-            rec = runner.evaluate("""
-                (() => {
-                    const errorEl = document.getElementById('app-error-state');
-                    const currentViewId = window.app?.currentView || 'home';
-                    const activeView = document.getElementById(`view-${currentViewId}`);
+        rec = runner.wait_for_condition(
+            """(() => {
+                const errorEl = document.getElementById('app-error-state');
+                const currentViewId = window.app?.currentView || 'home';
+                const activeView = document.getElementById(`view-${currentViewId}`);
+                if (window.app?.loadState === 'ready' && window.busService?.isLoaded === true) {
                     return {
                         appLoadState: window.app?.loadState,
                         busServiceLoaded: window.busService?.isLoaded,
@@ -628,15 +849,14 @@ def test_browser_acceptance():
                         errorHidden: errorEl?.classList.contains('hidden'),
                         activeViewRestored: activeView?.classList.contains('active')
                     };
-                })()
-            """)
-            if rec and rec['busServiceLoaded'] is True and rec['appLoadState'] == 'ready':
-                recovered = True
-                assert rec['activeViewRestored'] is True, "Active view screen must be restored on recovery"
-                print(f" -> Recovery successful: {rec}")
-                break
-
-        assert recovered is True, "App must recover successfully after unblocking network and clicking retry"
+                }
+                return null;
+            })()""",
+            timeout=10.0,
+            description="App recovers to ready state after unblocking network"
+        )
+        assert rec['activeViewRestored'] is True, "Active view screen must be restored on recovery"
+        print(f" -> Recovery successful: {rec}")
         print(" [PASS] Error state recovery successfully verified")
 
         # Check 8: Deliverable evidence screenshot
@@ -647,14 +867,18 @@ def test_browser_acceptance():
         print("\n======================================================================")
         print("ALL TASK 9 ACCEPTANCE CRITERIA STRICTLY VERIFIED (100% PASS)")
         print("======================================================================")
+    except Exception as e:
+        runner.capture_diagnostics(diag_screenshot)
+        raise
     finally:
         runner.stop()
 
 
 def main():
+    test_diagnostic = "--test-diagnostic" in sys.argv
     test_static_integrity()
     test_nodejs_contract()
-    test_browser_acceptance()
+    test_browser_acceptance(test_diagnostic=test_diagnostic)
 
 
 if __name__ == "__main__":

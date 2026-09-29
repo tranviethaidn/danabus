@@ -249,18 +249,35 @@ def run_browser_smoke_test(target_url=None):
         # 2. Test Routes Catalog Navigation
         print("[Check 2] Navigating to Routes Catalog...")
         eval_js("window.app.navigateTo('routes'); window.app.renderRoutesList();")
-        time.sleep(0.5)
-        routes_view_state = eval_js("""
-            (() => {
-                const list = document.getElementById('routes-list-container');
-                const cards = list ? list.querySelectorAll('.route-card') : [];
-                return {
-                    currentView: window.app.currentView,
-                    routesViewActive: document.getElementById('view-routes')?.classList.contains('active'),
-                    renderedCardsCount: cards.length
-                };
-            })()
-        """)
+        routes_view_state = None
+        for _ in range(30):
+            routes_view_state = eval_js("""
+                (() => {
+                    const list = document.getElementById('routes-list-container');
+                    const cards = list ? list.querySelectorAll('.route-card') : [];
+                    if (window.app?.currentView !== 'routes' || cards.length < 20) return null;
+                    return {
+                        currentView: window.app.currentView,
+                        routesViewActive: document.getElementById('view-routes')?.classList.contains('active'),
+                        renderedCardsCount: cards.length
+                    };
+                })()
+            """)
+            if routes_view_state:
+                break
+            time.sleep(0.1)
+        if not routes_view_state:
+            routes_view_state = eval_js("""
+                (() => {
+                    const list = document.getElementById('routes-list-container');
+                    const cards = list ? list.querySelectorAll('.route-card') : [];
+                    return {
+                        currentView: window.app?.currentView,
+                        routesViewActive: document.getElementById('view-routes')?.classList.contains('active'),
+                        renderedCardsCount: cards.length
+                    };
+                })()
+            """)
         print(f" -> Routes view state: {routes_view_state}")
         assert routes_view_state['currentView'] == 'routes', "Must be in routes view"
         assert routes_view_state['renderedCardsCount'] == 23, f"Expected 23 route cards rendered, got {routes_view_state['renderedCardsCount']}"
@@ -565,31 +582,44 @@ def run_browser_smoke_test(target_url=None):
             })()
         """)
 
-        # Step 7c: Wait for SW activate handler to purge caches and controllerchange auto-reload to settle
-        time.sleep(3.0)
+        # Step 7c & 7d: Wait for SW activate handler to purge caches and controllerchange reload to settle with bounded predicate
+        post_sw_state = None
+        for _ in range(50):
+            state = eval_js("""
+                (async () => {
+                    const activeReg = await navigator.serviceWorker.getRegistration();
+                    const cacheKeys = await caches.keys();
+                    const swActive = !!(activeReg && (activeReg.active || activeReg.installing || activeReg.waiting));
+                    const swScope = activeReg ? activeReg.scope : null;
+                    const hasFitRoute = typeof window.mapService?.fitRoute === 'function';
+                    const scriptSrcs = Array.from(document.querySelectorAll('script[src]')).map(s => s.getAttribute('src'));
+                    const mapScriptSrc = scriptSrcs.find(s => s.includes('mapService.js'));
+                    const appScriptSrc = scriptSrcs.find(s => s.includes('app.js'));
 
-        # Step 7d: Verify post-migration state (stale caches purged, active SW, fresh scripts)
-        post_sw_state = eval_js("""
-            (async () => {
-                const activeReg = await navigator.serviceWorker.getRegistration();
-                const cacheKeys = await caches.keys();
-                const swActive = !!(activeReg && (activeReg.active || activeReg.installing || activeReg.waiting));
-                const swScope = activeReg ? activeReg.scope : null;
-                const hasFitRoute = typeof window.mapService?.fitRoute === 'function';
-                const scriptSrcs = Array.from(document.querySelectorAll('script[src]')).map(s => s.getAttribute('src'));
-                const mapScriptSrc = scriptSrcs.find(s => s.includes('mapService.js'));
-                const appScriptSrc = scriptSrcs.find(s => s.includes('app.js'));
+                    return {
+                        swActive,
+                        swScope,
+                        postMigrationCacheKeys: cacheKeys,
+                        hasFitRoute,
+                        mapScriptSrc,
+                        appScriptSrc
+                    };
+                })()
+            """)
+            if (
+                state and
+                state.get('swActive') and
+                state.get('hasFitRoute') and
+                'danabus-cache-v9' in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v4' not in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v7' not in state.get('postMigrationCacheKeys', [])
+            ):
+                post_sw_state = state
+                break
+            time.sleep(0.2)
+        if not post_sw_state:
+            post_sw_state = state
 
-                return {
-                    swActive,
-                    swScope,
-                    postMigrationCacheKeys: cacheKeys,
-                    hasFitRoute,
-                    mapScriptSrc,
-                    appScriptSrc
-                };
-            })()
-        """)
         print(f" -> Post-migration SW & Cache state: {post_sw_state}")
         assert post_sw_state is not None, "Post-migration check must return valid state"
         assert post_sw_state['swActive'] is True, "Service Worker must be registered and active"
@@ -616,16 +646,31 @@ def run_browser_smoke_test(target_url=None):
         return True
 
     finally:
-        try:
-            chrome_proc.terminate()
-        except:
-            pass
+        if 'ws' in locals() and ws:
+            try:
+                ws.close()
+            except:
+                pass
+        if 'chrome_proc' in locals() and chrome_proc:
+            try:
+                chrome_proc.terminate()
+                chrome_proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                chrome_proc.kill()
+                chrome_proc.wait(timeout=2)
+            except:
+                pass
         if http_proc:
             try:
                 http_proc.terminate()
+                http_proc.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                http_proc.kill()
+                http_proc.wait(timeout=2)
             except:
                 pass
-        shutil.rmtree(temp_profile_dir, ignore_errors=True)
+        if 'temp_profile_dir' in locals() and temp_profile_dir:
+            shutil.rmtree(temp_profile_dir, ignore_errors=True)
 
 if __name__ == '__main__':
     target = sys.argv[1] if len(sys.argv) > 1 else None

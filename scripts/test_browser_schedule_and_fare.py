@@ -18,6 +18,7 @@ import socket
 import struct
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.request
 from pathlib import Path
@@ -69,39 +70,41 @@ class SimpleWebSocket:
             masked_data[i] = data[i] ^ mask[i % 4]
         self.sock.sendall(header + masked_data)
 
-    def recv_text(self):
-        def recv_exact(n):
-            buf = bytearray()
-            while len(buf) < n:
-                chunk = self.sock.recv(n - len(buf))
-                if not chunk:
-                    raise ConnectionError("Socket closed prematurely")
-                buf.extend(chunk)
-            return bytes(buf)
+    def _recv_exact(self, n):
+        buf = bytearray()
+        while len(buf) < n:
+            chunk = self.sock.recv(n - len(buf))
+            if not chunk:
+                raise ConnectionError("Socket closed prematurely while reading frame")
+            buf.extend(chunk)
+        return bytes(buf)
 
+    def recv_text(self):
         while True:
-            b1, b2 = struct.unpack('BB', recv_exact(2))
+            head = self._recv_exact(2)
+            b1, b2 = struct.unpack('BB', head)
+            opcode = b1 & 0x0F
             is_masked = bool(b2 & 0x80)
             payload_len = b2 & 0x7F
             if payload_len == 126:
-                payload_len = struct.unpack('>H', recv_exact(2))[0]
+                payload_len = struct.unpack('>H', self._recv_exact(2))[0]
             elif payload_len == 127:
-                payload_len = struct.unpack('>Q', recv_exact(8))[0]
+                payload_len = struct.unpack('>Q', self._recv_exact(8))[0]
 
-            mask = recv_exact(4) if is_masked else None
-            payload = bytearray(recv_exact(payload_len))
+            mask = self._recv_exact(4) if is_masked else None
+            payload = bytearray(self._recv_exact(payload_len))
             if is_masked:
                 for i in range(payload_len):
                     payload[i] ^= mask[i % 4]
 
-            opcode = b1 & 0x0F
             if opcode == 1:
                 return payload.decode('utf-8', errors='replace')
             elif opcode == 8:
-                self.sock.close()
+                self.close()
                 raise ConnectionError("Server closed connection")
             elif opcode == 9:
-                self.sock.sendall(bytes([0x8A, 0x00]))
+                pong = bytes([0x8A, 0x80]) + os.urandom(4)
+                self.sock.sendall(pong)
 
     def close(self):
         try:
@@ -116,11 +119,13 @@ class ChromeRunner:
         self.chrome_proc = None
         self.ws = None
         self.msg_id = 0
+        self.temp_dir = tempfile.TemporaryDirectory(prefix="danabus_fare_test_")
+        self.profile_dir = self.temp_dir.name
+        self.console_logs = []
+        self.runtime_exceptions = []
+        self.failed_requests = []
 
     def start(self):
-        import tempfile
-        self.profile_dir = tempfile.mkdtemp(prefix="danabus_test_profile_")
-
         # 1. Start Python HTTP Server
         self.http_proc = subprocess.Popen(
             [sys.executable, "-m", "http.server", str(PORT)],
@@ -128,33 +133,38 @@ class ChromeRunner:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL
         )
-        time.sleep(0.5)
 
-        # 2. Start Headless Chrome
+        # 2. Start Headless Chrome at about:blank (single controlled navigation via CDP)
         chrome_bin = "/bin/google-chrome"
-        test_url = f"http://127.0.0.1:{PORT}/index.html"
-        self.chrome_proc = subprocess.Popen(
-            [
-                chrome_bin,
-                "--headless=new",
-                "--no-sandbox",
-                "--disable-gpu",
-                "--disable-dev-shm-usage",
-                "--ignore-certificate-errors",
-                f"--user-data-dir={self.profile_dir}",
-                "--remote-allow-origins=*",
-                f"--remote-debugging-port={CDP_PORT}",
-                test_url
-            ],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
-        time.sleep(1.5)
+        if not os.path.exists(chrome_bin):
+            chrome_bin = "/usr/bin/google-chrome"
+        cmd = [
+            chrome_bin,
+            "--headless=new",
+            "--no-sandbox",
+            "--disable-gpu",
+            "--disable-dev-shm-usage",
+            "--disable-background-networking",
+            "--disable-component-update",
+            "--disable-sync",
+            "--disable-default-apps",
+            "--no-first-run",
+            "--no-default-browser-check",
+            "--ignore-certificate-errors",
+            f"--user-data-dir={self.profile_dir}",
+            "--remote-allow-origins=*",
+            f"--remote-debugging-port={CDP_PORT}",
+            "about:blank"
+        ]
+        self.chrome_proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-        # 3. Connect CDP
+        # 3. Connect CDP with bounded retry loop
         cdp_url = f"http://127.0.0.1:{CDP_PORT}/json"
         ws_url = None
-        for _ in range(30):
+        start = time.time()
+        while time.time() - start < 10.0:
+            if self.chrome_proc.poll() is not None:
+                raise RuntimeError(f"Chrome exited prematurely with code {self.chrome_proc.returncode}")
             try:
                 with urllib.request.urlopen(cdp_url, timeout=1) as resp:
                     tabs = json.loads(resp.read().decode())
@@ -163,24 +173,62 @@ class ChromeRunner:
                         ws_url = page_tabs[0]["webSocketDebuggerUrl"]
                         break
             except Exception:
-                time.sleep(0.2)
+                time.sleep(0.1)
         if not ws_url:
-            raise RuntimeError("Failed to connect to Chrome CDP")
+            raise RuntimeError("Failed to connect to Chrome CDP within 10.0s")
 
         self.ws = SimpleWebSocket(ws_url)
-        self.call("Network.enable")
-        self.call("Network.setCacheDisabled", {"cacheDisabled": True})
         self.call("Page.enable")
         self.call("Runtime.enable")
+        self.call("Log.enable")
+        self.call("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+                if (window.navigator && window.navigator.serviceWorker) {
+                    const origAdd = window.navigator.serviceWorker.addEventListener.bind(window.navigator.serviceWorker);
+                    window.navigator.serviceWorker.addEventListener = function(type, listener, ...args) {
+                        if (type === 'controllerchange') {
+                            console.log('[TestRunner] Suppressed spontaneous controllerchange reload');
+                            return;
+                        }
+                        return origAdd(type, listener, ...args);
+                    };
+                }
+            """
+        })
+
+        # Single controlled navigation
+        test_url = f"http://127.0.0.1:{PORT}/index.html"
         self.call("Page.navigate", {"url": test_url})
 
-        # Wait until page and data load completely
-        for _ in range(30):
-            ready = self.evaluate("document.readyState === 'complete' && !!document.title && (window.busService?.routes?.length > 0)")
-            if ready:
-                break
-            time.sleep(0.3)
-        time.sleep(0.5)
+        # Wait until page and data load completely with state predicate
+        self.wait_for_condition(
+            """Boolean(
+                document.readyState === 'complete' &&
+                window.app &&
+                window.app.loadState === 'ready' &&
+                window.busService &&
+                window.busService.isLoaded &&
+                window.busService.routes &&
+                window.busService.routes.length > 0
+            )""",
+            timeout=10.0,
+            description="Initial app and busService load"
+        )
+
+    def _record_event(self, method, params):
+        if method == "Runtime.consoleAPICalled":
+            msg_type = params.get("type", "log")
+            args = [a.get("value", a.get("description", "")) for a in params.get("args", [])]
+            self.console_logs.append(f"[{msg_type.upper()}] {' '.join(str(x) for x in args)}")
+        elif method == "Runtime.exceptionThrown":
+            desc = params.get("exceptionDetails", {}).get("text", "")
+            exp = params.get("exceptionDetails", {}).get("exception", {}).get("description", "")
+            self.runtime_exceptions.append(f"{desc}: {exp}")
+        elif method == "Log.entryAdded":
+            entry = params.get("entry", {})
+            self.console_logs.append(f"[BROWSER-{entry.get('level', 'info').upper()}] {entry.get('text', '')}")
+        elif method == "Network.loadingFailed":
+            self.failed_requests.append(f"Failed request: {params.get('errorText')} ({params.get('type')})")
 
     def call(self, method, params=None):
         self.msg_id += 1
@@ -189,7 +237,12 @@ class ChromeRunner:
         self.ws.send_text(json.dumps(req))
         while True:
             raw = self.ws.recv_text()
-            res = json.loads(raw)
+            try:
+                res = json.loads(raw)
+            except Exception:
+                continue
+            if "method" in res:
+                self._record_event(res["method"], res.get("params", {}))
             if res.get("id") == curr_id:
                 if "error" in res:
                     raise RuntimeError(f"CDP error: {res['error']}")
@@ -201,62 +254,186 @@ class ChromeRunner:
             "returnByValue": True,
             "awaitPromise": True
         })
-        return res.get("result", {}).get("value")
+        if "exceptionDetails" in res:
+            exc = res["exceptionDetails"]
+            desc = exc.get("exception", {}).get("description") or exc.get("text", "Unknown JS error")
+            raise RuntimeError(f"JavaScript evaluation threw exception: {desc} (expr: {expr[:200]})")
+        result_inner = res.get("result", {})
+        if result_inner.get("subtype") == "error":
+            raise RuntimeError(f"JavaScript error: {result_inner.get('description', 'Unknown error')} (expr: {expr[:200]})")
+        if result_inner.get("type") == "undefined":
+            return None
+        return result_inner.get("value")
+
+    def wait_for_condition(self, expr, timeout=10.0, step=0.1, description=""):
+        start = time.time()
+        desc = description or expr[:80]
+        while time.time() - start < timeout:
+            val = self.evaluate(expr)
+            if val:
+                return val
+            time.sleep(step)
+        raise TimeoutError(f"Condition timed out after {timeout:.1f}s: {desc}")
 
     def capture_screenshot(self, output_path):
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         res = self.call("Page.captureScreenshot", {"format": "png"})
         b64 = res.get("data", "")
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_path, "wb") as f:
-            f.write(base64.b64decode(b64))
+        if b64:
+            with open(output_path, "wb") as f:
+                f.write(base64.b64decode(b64))
+
+    def capture_diagnostics(self, diag_screenshot_path=None):
+        print("\n" + "=" * 70)
+        print("!!! BROWSER RUNNER DIAGNOSTIC DUMP (TASK 7) !!!")
+        print("=" * 70)
+        try:
+            state = self.evaluate("""
+                (() => {
+                    try {
+                        return {
+                            url: window.location.href,
+                            readyState: document.readyState,
+                            appLoadState: window.app?.loadState,
+                            currentView: window.app?.currentView,
+                            selectedRouteId: window.app?.selectedRoute?.id,
+                            busServiceLoaded: window.busService?.isLoaded,
+                            routesCount: window.busService?.routes?.length,
+                            spotlightFare: document.getElementById('spotlight-fare')?.textContent?.trim(),
+                            spotlightSchedule: document.getElementById('spotlight-schedule')?.textContent?.trim(),
+                            spotlightCountdown: document.getElementById('spotlight-countdown')?.textContent?.trim()
+                        };
+                    } catch (e) {
+                        return { error: e.toString() };
+                    }
+                })()
+            """)
+            print(f"Browser State Snapshot:\n{json.dumps(state, indent=2, ensure_ascii=False)}")
+        except Exception as e:
+            print(f"Could not retrieve state snapshot: {e}")
+
+        if self.console_logs:
+            print(f"\nCaptured Console Logs ({len(self.console_logs)} entries):")
+            for log in self.console_logs[-20:]:
+                print(f"  {log}")
+
+        if self.runtime_exceptions:
+            print(f"\nCaptured JS Exceptions ({len(self.runtime_exceptions)} entries):")
+            for exc in self.runtime_exceptions:
+                print(f"  {exc}")
+
+        if self.failed_requests:
+            print(f"\nCaptured Failed Requests ({len(self.failed_requests)} entries):")
+            for req in self.failed_requests:
+                print(f"  {req}")
+
+        if diag_screenshot_path:
+            try:
+                self.capture_screenshot(diag_screenshot_path)
+                print(f"\nDiagnostic screenshot written to: {diag_screenshot_path}")
+            except Exception as e:
+                print(f"Failed to capture diagnostic screenshot: {e}")
+        print("=" * 70 + "\n")
 
     def stop(self):
         if self.ws:
-            self.ws.close()
+            try:
+                self.ws.close()
+            except Exception:
+                pass
+            self.ws = None
         if self.chrome_proc:
-            self.chrome_proc.terminate()
-            self.chrome_proc.wait()
+            try:
+                self.chrome_proc.terminate()
+                self.chrome_proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.chrome_proc.kill()
+                self.chrome_proc.wait(timeout=2)
+            except Exception:
+                pass
+            self.chrome_proc = None
         if self.http_proc:
-            self.http_proc.terminate()
-            self.http_proc.wait()
+            try:
+                self.http_proc.terminate()
+                self.http_proc.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                self.http_proc.kill()
+                self.http_proc.wait(timeout=2)
+            except Exception:
+                pass
+            self.http_proc = None
+        if hasattr(self, 'temp_dir') and self.temp_dir:
+            try:
+                self.temp_dir.cleanup()
+            except Exception:
+                pass
+            self.temp_dir = None
 
 
-def run_checks():
+def run_checks(test_diagnostic=False):
     runner = ChromeRunner()
     print("[Browser Test] Launching Headless Chrome & connecting CDP...")
+    diag_screenshot = WORKSPACE / "docs" / "reports" / "task7_failure_diagnostic.png"
     runner.start()
     try:
+        if test_diagnostic:
+            print("[TEST-DIAGNOSTIC] Intentionally triggering synthetic failure to verify diagnostic capture...")
+            runner.evaluate("console.error('Synthetic diagnostic test error: simulated failure condition in suite B.2')")
+            try:
+                runner.wait_for_condition("document.getElementById('non_existent_element_in_suite_b2') !== null", timeout=0.6, description="Synthetic element wait")
+            except Exception as syn_err:
+                print(f"[TEST-DIAGNOSTIC] Caught expected synthetic error: {syn_err}")
+                runner.capture_diagnostics(diag_screenshot)
+                assert diag_screenshot.exists() and diag_screenshot.stat().st_size > 0, "Diagnostic screenshot must be written and non-empty!"
+                print(f"[TEST-DIAGNOSTIC] PASS: Diagnostic snapshot and screenshot verified ({diag_screenshot.stat().st_size} bytes)")
+                return
+
         # Check 1: Spotlight card fare, schedule subtitle & countdown
-        spotlight_fare = runner.evaluate("document.getElementById('spotlight-fare')?.textContent")
-        spotlight_schedule = runner.evaluate("document.getElementById('spotlight-schedule')?.textContent")
-        spotlight_countdown = runner.evaluate("document.getElementById('spotlight-countdown')?.textContent")
+        spotlight = runner.wait_for_condition(
+            """(() => {
+                const fare = document.getElementById('spotlight-fare')?.textContent?.trim();
+                const schedule = document.getElementById('spotlight-schedule')?.textContent?.trim();
+                const countdown = document.getElementById('spotlight-countdown')?.textContent?.trim();
+                if (!fare || !schedule || !countdown) return null;
+                return { fare, schedule, countdown };
+            })()""",
+            timeout=8.0,
+            description="Spotlight card elements rendered"
+        )
+        spotlight_fare = spotlight['fare']
+        spotlight_schedule = spotlight['schedule']
+        spotlight_countdown = spotlight['countdown']
         print(f"[Check 1] Spotlight Fare: {spotlight_fare}, Schedule: {spotlight_schedule}, Countdown: {spotlight_countdown}")
         assert spotlight_fare == "8.000đ - 30.000đ", f"Unexpected spotlight fare: {spotlight_fare}"
-        assert spotlight_schedule and "15-30 phút" in spotlight_schedule and "05:15 - 18:30" in spotlight_schedule, f"Spotlight schedule error: {spotlight_schedule}"
+        assert "15-30 phút" in spotlight_schedule and "05:15 - 18:30" in spotlight_schedule, f"Spotlight schedule error: {spotlight_schedule}"
         assert "Tần suất 15 phút •" not in spotlight_schedule, f"Hardcoded 15 phút detected in spotlight schedule: {spotlight_schedule}"
-        assert spotlight_countdown and "6 phút" not in spotlight_countdown, f"Fake placeholder detected: {spotlight_countdown}"
+        assert "6 phút" not in spotlight_countdown, f"Fake placeholder detected: {spotlight_countdown}"
 
         # Check 2: Routes Catalog Fares & Frequency
         runner.evaluate("window.app.navigateTo('routes')")
-        time.sleep(0.5)
-        routes_data = runner.evaluate("""
-        (() => {
-            const cards = document.querySelectorAll('.route-card');
-            const map = {};
-            cards.forEach(c => {
-                const id = c.getAttribute('data-route-id');
-                const fareSpan = c.querySelector('.text-emerald-700');
-                const textNodes = Array.from(c.querySelectorAll('.text-slate-500 span')).map(s => s.textContent.trim());
-                if (id && fareSpan) {
-                    map[id] = {
-                        fare: fareSpan.textContent.trim(),
-                        freq: textNodes.find(t => t.includes('/chuyến') || t.includes('Lịch bay') || t.includes('Đang cập nhật')) || ''
-                    };
-                }
-            });
-            return map;
-        })()
-        """)
+        routes_data = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'routes') return null;
+                const cards = document.querySelectorAll('.route-card');
+                if (cards.length < 20) return null;
+                const map = {};
+                cards.forEach(c => {
+                    const id = c.getAttribute('data-route-id');
+                    const fareSpan = c.querySelector('.text-emerald-700');
+                    const textNodes = Array.from(c.querySelectorAll('.text-slate-500 span')).map(s => s.textContent.trim());
+                    if (id && fareSpan) {
+                        map[id] = {
+                            fare: fareSpan.textContent.trim(),
+                            freq: textNodes.find(t => t.includes('/chuyến') || t.includes('Lịch bay') || t.includes('Đang cập nhật')) || ''
+                        };
+                    }
+                });
+                return map;
+            })()""",
+            timeout=8.0,
+            description="Routes catalog rendered with at least 20 routes"
+        )
         print("[Check 2] Catalog routes sampled data:")
         print(f"  Route 02: {routes_data.get('02')}")
         print(f"  Route 06: {routes_data.get('06')}")
@@ -277,10 +454,21 @@ def run_checks():
 
         # Check 3: Route 02 Detail View
         runner.evaluate("window.app.openRouteDetail('02')")
-        time.sleep(0.3)
-        r02_detail_fare = runner.evaluate("document.getElementById('detail-fare-single')?.textContent")
-        r02_detail_tag = runner.evaluate("document.getElementById('detail-fare-tag')?.textContent")
-        r02_detail_freq = runner.evaluate("document.getElementById('detail-stat-freq')?.textContent")
+        r02_detail = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'route-detail' || window.app.selectedRoute?.id !== '02') return null;
+                const fare = document.getElementById('detail-fare-single')?.textContent?.trim();
+                const tag = document.getElementById('detail-fare-tag')?.textContent?.trim();
+                const freq = document.getElementById('detail-stat-freq')?.textContent?.trim();
+                if (!fare) return null;
+                return { fare, tag, freq };
+            })()""",
+            timeout=8.0,
+            description="Route 02 detail view rendered"
+        )
+        r02_detail_fare = r02_detail['fare']
+        r02_detail_tag = r02_detail['tag']
+        r02_detail_freq = r02_detail['freq']
         print(f"[Check 3] Route 02 Detail: Fare={r02_detail_fare}, Tag={r02_detail_tag}, Freq={r02_detail_freq}")
         assert "8.000đ - 30.000đ" in r02_detail_fare
         assert r02_detail_tag == "Theo chặng"
@@ -288,29 +476,61 @@ def run_checks():
 
         # Check 4: Route 05 Detail View
         runner.evaluate("window.app.openRouteDetail('05')")
-        time.sleep(0.3)
-        r05_detail_fare = runner.evaluate("document.getElementById('detail-fare-single')?.textContent")
-        r05_detail_tag = runner.evaluate("document.getElementById('detail-fare-tag')?.textContent")
+        r05_detail = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'route-detail' || window.app.selectedRoute?.id !== '05') return null;
+                const fare = document.getElementById('detail-fare-single')?.textContent?.trim();
+                const tag = document.getElementById('detail-fare-tag')?.textContent?.trim();
+                if (!fare) return null;
+                return { fare, tag };
+            })()""",
+            timeout=8.0,
+            description="Route 05 detail view rendered"
+        )
+        r05_detail_fare = r05_detail['fare']
+        r05_detail_tag = r05_detail['tag']
         print(f"[Check 4] Route 05 Detail: {r05_detail_fare} (Tag: {r05_detail_tag})")
         assert "8.000đ" in r05_detail_fare
         assert r05_detail_tag == "Trợ giá"
 
         # Check 5: Route 09 Detail View
         runner.evaluate("window.app.openRouteDetail('09')")
-        time.sleep(0.3)
-        r09_detail_fare = runner.evaluate("document.getElementById('detail-fare-single')?.textContent")
-        r09_detail_tag = runner.evaluate("document.getElementById('detail-fare-tag')?.textContent")
+        r09_detail = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'route-detail' || window.app.selectedRoute?.id !== '09') return null;
+                const fare = document.getElementById('detail-fare-single')?.textContent?.trim();
+                const tag = document.getElementById('detail-fare-tag')?.textContent?.trim();
+                if (!fare) return null;
+                return { fare, tag };
+            })()""",
+            timeout=8.0,
+            description="Route 09 detail view rendered"
+        )
+        r09_detail_fare = r09_detail['fare']
+        r09_detail_tag = r09_detail['tag']
         print(f"[Check 5] Route 09 Detail: {r09_detail_fare} (Tag: {r09_detail_tag})")
         assert "Đang cập nhật" in r09_detail_fare
         assert r09_detail_tag == "Đang cập nhật"
 
         # Check 6: Trip Results rendering
         runner.evaluate("window.app.showTripResults('Bến xe Trung tâm', 'Phố cổ Hội An')")
-        time.sleep(0.5)
-        trip_fare = runner.evaluate("document.getElementById('trip-fare-value')?.textContent")
-        trip_time = runner.evaluate("document.getElementById('trip-countdown-time')?.textContent")
-        trip_timer = runner.evaluate("document.getElementById('trip-countdown-timer')?.textContent")
-        trip_freq = runner.evaluate("document.getElementById('trip-freq-value')?.textContent")
+        trip_res = runner.wait_for_condition(
+            """(() => {
+                if (window.app.currentView !== 'trip-results') return null;
+                const fare = document.getElementById('trip-fare-value')?.textContent?.trim();
+                const time = document.getElementById('trip-countdown-time')?.textContent?.trim();
+                const timer = document.getElementById('trip-countdown-timer')?.textContent?.trim();
+                const freq = document.getElementById('trip-freq-value')?.textContent?.trim();
+                if (!fare || fare === '--') return null;
+                return { fare, time, timer, freq };
+            })()""",
+            timeout=8.0,
+            description="Trip results rendered"
+        )
+        trip_fare = trip_res['fare']
+        trip_time = trip_res['time']
+        trip_timer = trip_res['timer']
+        trip_freq = trip_res['freq']
         print(f"[Check 6] Trip Results: Fare={trip_fare}, Time={trip_time}, Timer={trip_timer}, Freq={trip_freq}")
         assert trip_fare == "8.000đ - 30.000đ", f"Trip fare error: {trip_fare}"
         assert trip_fare != "30.000đ", "Trip fare must not fallback to flat 30.000đ!"
@@ -323,7 +543,14 @@ def run_checks():
             document.getElementById('trip-freq-value').textContent = window.busService.formatRouteFrequency(fakeRoute, true);
         })()
         """)
-        trip_freq_missing = runner.evaluate("document.getElementById('trip-freq-value')?.textContent")
+        trip_freq_missing = runner.wait_for_condition(
+            """(() => {
+                const val = document.getElementById('trip-freq-value')?.textContent?.trim();
+                return val === 'Đang cập nhật' ? val : null;
+            })()""",
+            timeout=4.0,
+            description="Missing frequency updated to 'Đang cập nhật'"
+        )
         assert trip_freq_missing == "Đang cập nhật", f"Expected 'Đang cập nhật' when frequency missing, got: {trip_freq_missing}"
 
         # Check 7: Screenshot Capture
@@ -331,9 +558,13 @@ def run_checks():
         print(f"[Check 7] Deliverable screenshot saved to {SCREENSHOT_PATH} ({os.path.getsize(SCREENSHOT_PATH)} bytes)")
 
         print("\n>>> ALL TASK 7 BROWSER ACCEPTANCE CHECKS PASSED (7/7) <<<")
+    except Exception as e:
+        runner.capture_diagnostics(diag_screenshot)
+        raise
     finally:
         runner.stop()
 
 
 if __name__ == "__main__":
-    run_checks()
+    test_diag = "--test-diagnostic" in sys.argv
+    run_checks(test_diagnostic=test_diag)

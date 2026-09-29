@@ -2,7 +2,7 @@
 
 **Updated:** 2026-09-29  
 **Authoritative workspace:** `/home/opc/danabus`  
-**Current VibeLab project phase:** PLANNING  
+**Current VibeLab project phase:** ROADMAP V2 EXECUTION  
 **Current consolidated plan:** `docs/plans/2026-09-29-danabus-consolidated-roadmap-v2-plan.md`  
 **Latest full re-audit:** `docs/reports/2026-09-29-danabus-full-project-reaudit-report.md`
 
@@ -41,6 +41,14 @@ Danabus là PWA tra cứu tuyến xe buýt Đà Nẵng/Hội An, gồm catalog t
 - Task 7-10/Task 4 source, tests và reports còn nhiều modified/untracked files.
 - Repository hiện chưa phải source of truth hoàn chỉnh cho accepted workspace state.
 
+## Current Git Baseline After Reconciliation
+
+- Accepted Task 4 và historical Task 7-10 source/data/tests/docs/evidence đã được commit đầy đủ vào local `main`.
+- Reconciliation commits: `ddc48d2`, `30eca08`, `82f371a`.
+- Local technical verification PASS; working tree sạch tại thời điểm review.
+- Remote publication là PO-controlled. `origin/main` có thể còn chậm local `main` khi `git_push_authorized=OFF`; đây không phải technical blocker.
+- `.agent-rule/` được giữ local và ignore khỏi product repository.
+
 ## Production Drift
 
 Production root `/var/www/danabus/public` không byte-identical với workspace cho:
@@ -76,7 +84,7 @@ Fail-closed là invariant bắt buộc: không tự tạo tọa độ, geometry,
 
 ## Current Risks To Resolve
 
-1. Accepted source chưa được commit/push đầy đủ.
+1. Remote publication của local accepted baseline còn phụ thuộc PO `/push` hoặc run có `git_push_authorized=ON`; local source đã commit đầy đủ.
 2. Browser acceptance/release gate flaky.
 3. Task 4 chưa productionized.
 4. PWA release identity vẫn `danabus-cache-v9` / `v=20260928_v9` dù local Task 4 thay đổi mutable assets.

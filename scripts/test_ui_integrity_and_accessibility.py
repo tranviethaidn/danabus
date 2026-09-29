@@ -785,9 +785,9 @@ def test_browser_acceptance(test_diagnostic=False):
             description="Route 02 trip results rendered with non-fallback data"
         )
         print(f" -> Trip Results State: {trip_checks}")
-        # Real distance for route 02 is 26.2 km (average), NOT 35 km!
+        # Distance for route 02: if null, must fail closed to 'Chưa có dữ liệu', NOT 35 km!
         assert trip_checks['km'] != "35 km", "Trip km must not be hardcoded 35 km!"
-        assert "26.2" in trip_checks['km'] or "km" in trip_checks['km']
+        assert "26.2" in trip_checks['km'] or "km" in trip_checks['km'] or trip_checks['km'] == "Chưa có dữ liệu"
         # Stop count must not be hardcoded 29!
         assert trip_checks['stops'] != "29 trạm", "Trip stops must not be hardcoded 29 stops!"
         # Duration is not in source dataset, must fail closed to hidden/Chưa có dữ liệu

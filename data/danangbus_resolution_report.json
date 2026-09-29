@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-24T15:13:58.268030Z",
+  "timestamp": "2026-09-29T15:36:17.158358Z",
   "total_stops": 421,
   "verified": [
     {
@@ -822,15 +822,6 @@
       "confidence": "high"
     },
     {
-      "id": "stop_0122",
-      "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
-      "street": "Lý Thường Kiệt",
-      "osm_id": 11894188000,
-      "lat": 15.8823407,
-      "lng": 108.3315579,
-      "confidence": "medium"
-    },
-    {
       "id": "stop_0124",
       "name": "40 Nguyễn Tất Thành - Công Ty Cổ Phần Công Trình Công Cộng Hội An",
       "street": "Nguyễn Tất Thành",
@@ -1200,15 +1191,6 @@
       "confidence": "medium"
     },
     {
-      "id": "stop_0185",
-      "name": "Đ/d 461 Phạm Hùng",
-      "street": "Phạm Hùng",
-      "osm_id": 11881377372,
-      "lat": 15.981615,
-      "lng": 108.2080214,
-      "confidence": "medium"
-    },
-    {
       "id": "stop_0188",
       "name": "Bến Xe Phía Nam",
       "street": "QL1A",
@@ -1353,6 +1335,24 @@
       "confidence": "high"
     },
     {
+      "id": "stop_0229",
+      "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042382,
+      "lat": 15.5787507,
+      "lng": 108.4753287,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0231",
+      "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
+      "street": "Phan Bội Châu",
+      "osm_id": 11898042384,
+      "lat": 15.5762261,
+      "lng": 108.4786966,
+      "confidence": "high"
+    },
+    {
       "id": "stop_0233",
       "name": "26 Phan Châu Trinh",
       "street": "Phan Châu Trinh",
@@ -1404,6 +1404,15 @@
       "osm_id": 11898042392,
       "lat": 15.5637767,
       "lng": 108.4964341,
+      "confidence": "high"
+    },
+    {
+      "id": "stop_0240",
+      "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042393,
+      "lat": 15.5616137,
+      "lng": 108.4994601,
       "confidence": "high"
     },
     {
@@ -1695,15 +1704,6 @@
       "confidence": "high"
     },
     {
-      "id": "stop_0312",
-      "name": "24 Trần Cao Vân",
-      "street": "Trần Cao Vân",
-      "osm_id": 13805656749,
-      "lat": 15.5553199,
-      "lng": 108.4860011,
-      "confidence": "medium"
-    },
-    {
       "id": "stop_0314",
       "name": "312 Trần Cao Vân",
       "street": "Trần Cao Vân",
@@ -1947,6 +1947,15 @@
       "confidence": "medium"
     },
     {
+      "id": "stop_0352",
+      "name": "Nhà thờ Tin Lành- Phan Châu Trinh",
+      "street": "Phan Châu Trinh",
+      "osm_id": 11898042393,
+      "lat": 15.5616137,
+      "lng": 108.4994601,
+      "confidence": "high"
+    },
+    {
       "id": "stop_0353",
       "name": "954 Phan Châu Trinh",
       "street": "Phan Châu Trinh",
@@ -1992,22 +2001,22 @@
       "confidence": "high"
     },
     {
-      "id": "stop_0373",
-      "name": "110 Phan Bội Châu (Ngân Hàng BIDV)",
+      "id": "stop_0374",
+      "name": "02 Phan Bội Châu (VNPT)",
       "street": "Phan Bội Châu – Bàn Thạch",
-      "osm_id": 11898042377,
-      "lat": 15.5851209,
-      "lng": 108.4666765,
-      "confidence": "medium"
+      "osm_id": 11898042382,
+      "lat": 15.5787507,
+      "lng": 108.4753287,
+      "confidence": "high"
     },
     {
-      "id": "stop_0377",
-      "name": "463 Phan Bội Châu (Kho bạc cũ)",
+      "id": "stop_0376",
+      "name": "140 Phan Bội Châu (Chùa Đạo Nguyên)",
       "street": "Phan Bội Châu – Bàn Thạch",
-      "osm_id": 11898042412,
-      "lat": 15.5844062,
-      "lng": 108.4678811,
-      "confidence": "medium"
+      "osm_id": 11898042384,
+      "lat": 15.5762261,
+      "lng": 108.4786966,
+      "confidence": "high"
     },
     {
       "id": "stop_0381",
@@ -2026,6 +2035,15 @@
       "lat": 15.5637767,
       "lng": 108.4964341,
       "confidence": "medium"
+    },
+    {
+      "id": "stop_0386",
+      "name": "706 Phan Châu Trinh (Nhà thờ)",
+      "street": "Phan Châu Trinh – Hương Trà",
+      "osm_id": 11898042393,
+      "lat": 15.5616137,
+      "lng": 108.4994601,
+      "confidence": "high"
     },
     {
       "id": "stop_0395",
@@ -2320,6 +2338,21 @@
       ]
     },
     {
+      "id": "stop_0122",
+      "name": "4 Lý Thường Kiệt - Trường Cao Đẳng Điện Lực Miền Trung",
+      "street": "Lý Thường Kiệt",
+      "candidate_count": 1,
+      "candidates": [
+        {
+          "id": 11894188002,
+          "name": "Trường Cao đẳng Điện lực Miền Trung",
+          "lat": 15.8852378,
+          "lng": 108.3238002,
+          "score": 0.9
+        }
+      ]
+    },
+    {
       "id": "stop_0139",
       "name": "811 Trần Hưng Đạo - Đối Diện Trường Tiểu Học Lê Hồng Phong",
       "street": "Trần Hưng Đạo",
@@ -2485,51 +2518,6 @@
       ]
     },
     {
-      "id": "stop_0229",
-      "name": "VNPT Quảng Nam - 2A Phan Bội Châu",
-      "street": "Phan Bội Châu",
-      "candidate_count": 1,
-      "candidates": [
-        {
-          "id": 11898042382,
-          "name": "VNPT Quảng Nam",
-          "lat": 15.5787507,
-          "lng": 108.4753287,
-          "score": 0.95
-        }
-      ]
-    },
-    {
-      "id": "stop_0231",
-      "name": "140 Phan Bội Châu - Chùa Đạo Nguyên",
-      "street": "Phan Bội Châu",
-      "candidate_count": 1,
-      "candidates": [
-        {
-          "id": 11898042384,
-          "name": "Chùa Đạo Nguyên",
-          "lat": 15.5762261,
-          "lng": 108.4786966,
-          "score": 0.9
-        }
-      ]
-    },
-    {
-      "id": "stop_0240",
-      "name": "Nhà Thờ Tam Kỳ - Phan Châu Trinh",
-      "street": "Phan Châu Trinh",
-      "candidate_count": 1,
-      "candidates": [
-        {
-          "id": 11898042393,
-          "name": "Nhà thờ Tam Kỳ",
-          "lat": 15.5616137,
-          "lng": 108.4994601,
-          "score": 0.95
-        }
-      ]
-    },
-    {
       "id": "stop_0264",
       "name": "Xóm Mới - Bình Trung - QL1A",
       "street": "Quốc Lộ 1A",
@@ -2620,21 +2608,6 @@
       ]
     },
     {
-      "id": "stop_0298",
-      "name": "25 Cách mạng tháng 8",
-      "street": "CMT8",
-      "candidate_count": 1,
-      "candidates": [
-        {
-          "id": 11881377396,
-          "name": "23-25 Cách Mạng Tháng 8 (Đối diện Bệnh viện Tâm Trí Đà Nẵng)",
-          "lat": 16.0227285,
-          "lng": 108.214682,
-          "score": 0.9
-        }
-      ]
-    },
-    {
       "id": "stop_0303",
       "name": "Nhà hàng Phì Lũ đường 2/9",
       "street": "đường 2/9",
@@ -2661,21 +2634,6 @@
           "lat": 15.5866148,
           "lng": 108.4653709,
           "score": 0.95
-        }
-      ]
-    },
-    {
-      "id": "stop_0376",
-      "name": "140 Phan Bội Châu (Chùa Đạo Nguyên)",
-      "street": "Phan Bội Châu – Bàn Thạch",
-      "candidate_count": 1,
-      "candidates": [
-        {
-          "id": 11898042384,
-          "name": "Chùa Đạo Nguyên",
-          "lat": 15.5762261,
-          "lng": 108.4786966,
-          "score": 0.9
         }
       ]
     }
@@ -2889,6 +2847,11 @@
     {
       "id": "stop_0184",
       "name": "542 Phạm Hùng",
+      "street": "Phạm Hùng"
+    },
+    {
+      "id": "stop_0185",
+      "name": "Đ/d 461 Phạm Hùng",
       "street": "Phạm Hùng"
     },
     {
@@ -3122,6 +3085,11 @@
       "street": "Ông Ích Đường"
     },
     {
+      "id": "stop_0298",
+      "name": "25 Cách mạng tháng 8",
+      "street": "CMT8"
+    },
+    {
       "id": "stop_0299",
       "name": "Metro Đà Nẵng",
       "street": "CMT8"
@@ -3160,6 +3128,11 @@
       "id": "stop_0309",
       "name": "Đ/d sân Tenis Bạch Đằng",
       "street": "Bạch Đằng"
+    },
+    {
+      "id": "stop_0312",
+      "name": "24 Trần Cao Vân",
+      "street": "Trần Cao Vân"
     },
     {
       "id": "stop_0313",
@@ -3215,11 +3188,6 @@
       "id": "stop_0346",
       "name": "Bệnh viện Minh Thiện",
       "street": "Phan Bội Châu"
-    },
-    {
-      "id": "stop_0352",
-      "name": "Nhà thờ Tin Lành- Phan Châu Trinh",
-      "street": "Phan Châu Trinh"
     },
     {
       "id": "stop_0354",
@@ -3297,13 +3265,18 @@
       "street": "Phan Bội Châu - Bàn Thạch"
     },
     {
-      "id": "stop_0374",
-      "name": "02 Phan Bội Châu (VNPT)",
+      "id": "stop_0373",
+      "name": "110 Phan Bội Châu (Ngân Hàng BIDV)",
       "street": "Phan Bội Châu – Bàn Thạch"
     },
     {
       "id": "stop_0375",
       "name": "06 Phan Bội Châu (Ngân hàng Agibank)",
+      "street": "Phan Bội Châu – Bàn Thạch"
+    },
+    {
+      "id": "stop_0377",
+      "name": "463 Phan Bội Châu (Kho bạc cũ)",
       "street": "Phan Bội Châu – Bàn Thạch"
     },
     {
@@ -3334,11 +3307,6 @@
     {
       "id": "stop_0385",
       "name": "636 Phan Châu Trinh",
-      "street": "Phan Châu Trinh – Hương Trà"
-    },
-    {
-      "id": "stop_0386",
-      "name": "706 Phan Châu Trinh (Nhà thờ)",
       "street": "Phan Châu Trinh – Hương Trà"
     },
     {
@@ -3492,14 +3460,14 @@
       "outbound": {
         "verified_anchors": 31,
         "total_stops": 47,
-        "is_valid": false,
-        "reason": "Total length 45.21km deviates from expected 10.0km"
+        "is_valid": true,
+        "reason": "Validation PASS (31 anchors, 1028 points, 45.21km, max_stop_dist 136.7m)"
       },
       "inbound": {
-        "verified_anchors": 32,
+        "verified_anchors": 31,
         "total_stops": 46,
-        "is_valid": false,
-        "reason": "Total length 46.97km deviates from expected 10.0km"
+        "is_valid": true,
+        "reason": "Validation PASS (31 anchors, 1047 points, 46.97km, max_stop_dist 34.8m)"
       }
     },
     "03": {
@@ -3574,16 +3542,16 @@
     },
     "21": {
       "outbound": {
-        "verified_anchors": 43,
+        "verified_anchors": 45,
         "total_stops": 89,
         "is_valid": false,
         "reason": "Total length 80.33km deviates from expected 10.0km"
       },
       "inbound": {
-        "verified_anchors": 34,
+        "verified_anchors": 33,
         "total_stops": 80,
         "is_valid": false,
-        "reason": "Stop order non-monotonic along polyline path (prog 0.836 -> 0.220)"
+        "reason": "Total length 78.71km deviates from expected 10.0km"
       }
     },
     "TKY-TMY": {
@@ -3602,10 +3570,10 @@
     },
     "TKY-NTH": {
       "outbound": {
-        "verified_anchors": 12,
+        "verified_anchors": 13,
         "total_stops": 20,
         "is_valid": true,
-        "reason": "Validation PASS (12 anchors, 126 points, 7.58km, max_stop_dist 13.0m)"
+        "reason": "Validation PASS (13 anchors, 126 points, 7.58km, max_stop_dist 13.0m)"
       },
       "inbound": {
         "verified_anchors": 11,
@@ -3616,10 +3584,10 @@
     },
     "TKY-CHU": {
       "outbound": {
-        "verified_anchors": 4,
+        "verified_anchors": 5,
         "total_stops": 22,
-        "is_valid": false,
-        "reason": "Insufficient anchors (4 < 5 minimum)"
+        "is_valid": true,
+        "reason": "Validation PASS (5 anchors, 63 points, 3.23km, max_stop_dist 12.4m)"
       },
       "inbound": {
         "verified_anchors": 10,
@@ -3672,7 +3640,7 @@
     },
     "LK02": {
       "outbound": {
-        "verified_anchors": 44,
+        "verified_anchors": 43,
         "total_stops": 64,
         "is_valid": false,
         "reason": "Stop order non-monotonic along polyline path (prog 1.000 -> 0.014)"
@@ -3686,7 +3654,7 @@
     },
     "LK21": {
       "outbound": {
-        "verified_anchors": 43,
+        "verified_anchors": 46,
         "total_stops": 104,
         "is_valid": false,
         "reason": "Stop order non-monotonic along polyline path (prog 0.590 -> 0.500)"

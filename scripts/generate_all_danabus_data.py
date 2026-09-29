@@ -7,14 +7,21 @@ from lxml import html
 sys.stdout.reconfigure(encoding='utf-8')
 os.makedirs('data', exist_ok=True)
 
-with open(r'C:\Users\Hai Tran\.gemini\antigravity-ide\brain\30dd6919-cd3a-449e-aec1-26e917e02d72\.system_generated\steps\5\content.md', 'r', encoding='utf-8') as f:
-    full_md = f.read()
+full_md_path = r'C:\Users\Hai Tran\.gemini\antigravity-ide\brain\30dd6919-cd3a-449e-aec1-26e917e02d72\.system_generated\steps\5\content.md'
+if os.path.exists(full_md_path):
+    with open(full_md_path, 'r', encoding='utf-8') as f:
+        full_md = f.read()
+else:
+    full_md = ""
 
-with open('danangbus_raw.html', 'r', encoding='utf-8') as f:
-    raw_html = f.read()
-
-tree = html.fromstring(raw_html)
-tables = tree.xpath('//table')
+if os.path.exists('danangbus_raw.html'):
+    with open('danangbus_raw.html', 'r', encoding='utf-8') as f:
+        raw_html = f.read()
+    tree = html.fromstring(raw_html)
+    tables = tree.xpath('//table')
+else:
+    raw_html = ""
+    tables = []
 
 def clean(text):
     if not text:
@@ -231,21 +238,27 @@ for rdef in route_definitions:
     dist_avg = None
     dist_go = None
     dist_back = None
-    dist_m = re.search(r'Cự ly[^:]*:\s*([^\n\r]+)', chunk_text, re.IGNORECASE)
     dist_raw = ""
-    if dist_m:
-        dist_raw = clean(dist_m.group(1))
-        nums = [float(x.replace(',', '.')) for x in re.findall(r'(\d+(?:[.,]\d+)?)\s*km', dist_raw)]
-        if len(nums) == 1:
-            dist_avg = nums[0]
-        elif len(nums) >= 3:
-            dist_avg = nums[0]
-            dist_go = nums[1]
-            dist_back = nums[2]
-        elif len(nums) == 2:
-            dist_go = nums[0]
-            dist_back = nums[1]
-            dist_avg = round((nums[0] + nums[1]) / 2, 2)
+    dist_pattern = r'(?:^|\n)\s*(?:(?:\d+\.|\b[a-z]\))\s*)?Cự ly(?!\s+di\s+chuyển)(?:\s+tuyến|\s+toàn\s+tuyến|\s*\(.*?\))?\s*:\s*([^\n\r]+)'
+    for dm in re.finditer(dist_pattern, chunk_text, re.IGNORECASE):
+        candidate_raw = clean(dm.group(1))
+        # Strictly ignore lines with fare-tier or ticket keywords
+        if any(kw in candidate_raw.lower() for kw in ['đồng', 'hành khách', 'giá vé', 'vé lượt', 'trở xuống', 'trở lên']):
+            continue
+        nums = [float(x.replace(',', '.')) for x in re.findall(r'(\d+(?:[.,]\d+)?)\s*km', candidate_raw, re.IGNORECASE)]
+        if nums:
+            dist_raw = candidate_raw
+            if len(nums) == 1:
+                dist_avg = nums[0]
+            elif len(nums) >= 3:
+                dist_avg = nums[0]
+                dist_go = nums[1]
+                dist_back = nums[2]
+            elif len(nums) == 2:
+                dist_go = nums[0]
+                dist_back = nums[1]
+                dist_avg = round((nums[0] + nums[1]) / 2, 2)
+            break
 
     # 5. Paths (Chiều đi, Chiều về)
     path_go = ""

@@ -1328,7 +1328,7 @@
     "status": "verified",
     "osm_id": 11881093561,
     "display_name": "34 Nguyễn Lương Bằng, Nguyễn Lương Bằng, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -1372,7 +1372,7 @@
     "status": "verified",
     "osm_id": 11881093563,
     "display_name": "234 Nguyễn Lương Bằng, Nguyễn Lương Bằng, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -2311,7 +2311,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894187979,
-    "display_name": "601 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "601 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2367,7 +2367,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 9921315924,
-    "display_name": "403 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "403 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2395,7 +2395,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894187981,
-    "display_name": "269 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "269 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2423,7 +2423,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13801877521,
-    "display_name": "217 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "217 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2507,7 +2507,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894187984,
-    "display_name": "187 Lý Thường Kiệt, Lý Thường Kiệt, Đà Nẵng, Việt Nam",
+    "display_name": "187 Lý Thường Kiệt, Lý Thường Kiệt, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2631,8 +2631,8 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 5385023021,
-    "display_name": "108 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "display_name": "108 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -2755,7 +2755,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11894187991,
-    "display_name": "Khách sạn Hội An Ocean Front, Âu Cơ, Đà Nẵng, Việt Nam",
+    "display_name": "Khách sạn Hội An Ocean Front, Âu Cơ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -2795,7 +2795,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11894187992,
-    "display_name": "Bãi đỗ xe Bến thủy nội địa Cửa Đại, Âu Cơ, Đà Nẵng, Việt Nam",
+    "display_name": "Bãi đỗ xe Bến thủy nội địa Cửa Đại, Âu Cơ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -2907,7 +2907,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894187997,
-    "display_name": "129 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
+    "display_name": "129 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2963,7 +2963,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188000,
-    "display_name": "214 Lý Thường Kiệt, Lý Thường Kiệt, Đà Nẵng, Việt Nam",
+    "display_name": "214 Lý Thường Kiệt, Lý Thường Kiệt, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -2985,15 +2985,15 @@
         "stopOrder": 43
       }
     ],
-    "lat": 15.8823407,
-    "lng": 108.3315579,
-    "source": "osm_overpass_transit",
-    "confidence": "medium",
-    "status": "verified",
-    "osm_id": 11894188000,
-    "display_name": "214 Lý Thường Kiệt, Lý Thường Kiệt, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_exact_street_disambiguated",
-    "osm_type": "node"
+    "lat": null,
+    "lng": null,
+    "source": null,
+    "confidence": "unresolved",
+    "status": "unresolved",
+    "osm_id": null,
+    "display_name": null,
+    "method": "needs_review_ambiguous",
+    "osm_type": null
   },
   {
     "id": "stop_0123",
@@ -3047,7 +3047,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188004,
-    "display_name": "40 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "40 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -3075,7 +3075,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188010,
-    "display_name": "120 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "120 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -3103,7 +3103,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188005,
-    "display_name": "172 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "172 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -3131,7 +3131,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188006,
-    "display_name": "290 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "290 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -3159,7 +3159,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11894188008,
-    "display_name": "362 Nguyễn Tất Thành, Nguyễn Tất Thành, Đà Nẵng, Việt Nam",
+    "display_name": "362 Nguyễn Tất Thành, Nguyễn Tất Thành, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -4497,15 +4497,15 @@
         "stopOrder": 32
       }
     ],
-    "lat": 15.981615,
-    "lng": 108.2080214,
-    "source": "osm_overpass_transit",
-    "confidence": "medium",
-    "status": "verified",
-    "osm_id": 11881377372,
-    "display_name": "A3-7 Khu đô thị Nam Cẩm Lệ (Đối diện 461 Phạm Hùng), Phạm Hùng, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_substring",
-    "osm_type": "node"
+    "lat": null,
+    "lng": null,
+    "source": null,
+    "confidence": "unresolved",
+    "status": "unresolved",
+    "osm_id": null,
+    "display_name": null,
+    "method": "unresolved_no_match",
+    "osm_type": null
   },
   {
     "id": "stop_0186",
@@ -4805,8 +4805,8 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021849,
-    "display_name": "8 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "display_name": "8 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -4833,7 +4833,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021850,
-    "display_name": "134 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
+    "display_name": "134 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -4861,8 +4861,8 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021851,
-    "display_name": "278 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "display_name": "278 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -4917,7 +4917,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021853,
-    "display_name": "58 Điện Biên Phủ, Điện Biên Phủ, Đà Nẵng, Việt Nam",
+    "display_name": "58 Điện Biên Phủ, Điện Biên Phủ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5029,7 +5029,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898021857,
-    "display_name": "Cầu Phú Phong, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Cầu Phú Phong, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -5085,7 +5085,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898021859,
-    "display_name": "Đối diện Điện máy xanh Hương An, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Điện máy xanh Hương An, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -5197,7 +5197,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898021863,
-    "display_name": "Bệnh viện Đa khoa Thăng Hoa, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Bệnh viện Đa khoa Thăng Hoa, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -5225,7 +5225,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021864,
-    "display_name": "Cổng làng Quán Hương, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Cổng làng Quán Hương, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5293,7 +5293,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898021866,
-    "display_name": "Qua cầu Gò Phật, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Qua cầu Gò Phật, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -5349,7 +5349,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898021868,
-    "display_name": "Sân vận động Xã Bình Tú, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Sân vận động Xã Bình Tú, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5461,7 +5461,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042372,
-    "display_name": "An Thọ - Tam An, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "An Thọ - Tam An, Quốc Lộ 1A, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -5619,7 +5619,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042377,
-    "display_name": "10 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "10 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5647,7 +5647,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042378,
-    "display_name": "32 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "32 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5703,7 +5703,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042380,
-    "display_name": "94 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "94 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5731,7 +5731,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042381,
-    "display_name": "112 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "112 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5753,15 +5753,15 @@
         "stopOrder": 42
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "needs_review_ambiguous",
-    "osm_type": null
+    "lat": 15.5787507,
+    "lng": 108.4753287,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042382,
+    "display_name": "VNPT Quảng Nam, 02 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0230",
@@ -5809,15 +5809,15 @@
         "stopOrder": 44
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "needs_review_ambiguous",
-    "osm_type": null
+    "lat": 15.5762261,
+    "lng": 108.4786966,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042384,
+    "display_name": "Chùa Đạo Nguyên, 140 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0232",
@@ -5871,7 +5871,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042386,
-    "display_name": "26 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "26 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5927,7 +5927,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042388,
-    "display_name": "324 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "324 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5961,7 +5961,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042389,
-    "display_name": "394 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "394 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -5989,7 +5989,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042390,
-    "display_name": "494 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "494 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6023,7 +6023,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042391,
-    "display_name": "546 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "546 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6057,7 +6057,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042392,
-    "display_name": "608 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "608 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6079,15 +6079,15 @@
         "stopOrder": 53
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "needs_review_ambiguous",
-    "osm_type": null
+    "lat": 15.5616137,
+    "lng": 108.4994601,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042393,
+    "display_name": "Nhà thờ Tam Kỳ, 706 Phan Châu Trinh, Phường Hòa Hương, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0241",
@@ -6119,7 +6119,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042394,
-    "display_name": "816 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "816 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6147,7 +6147,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042395,
-    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6175,7 +6175,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042395,
-    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6209,7 +6209,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042398,
-    "display_name": "781 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "781 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6243,7 +6243,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042399,
-    "display_name": "531 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "531 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6277,7 +6277,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042400,
-    "display_name": "467 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "467 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6311,7 +6311,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042401,
-    "display_name": "341 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "341 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6339,7 +6339,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042402,
-    "display_name": "275 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "275 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6367,7 +6367,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042403,
-    "display_name": "73 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "73 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6429,7 +6429,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042405,
-    "display_name": "379 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "379 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6457,7 +6457,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042406,
-    "display_name": "283 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "283 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6491,7 +6491,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042407,
-    "display_name": "281 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "281 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6519,7 +6519,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042408,
-    "display_name": "Ngân hàng BIDV - 239 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "Ngân hàng BIDV - 239 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_substring",
     "osm_type": "node"
   },
@@ -6575,7 +6575,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042410,
-    "display_name": "135 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "135 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -6671,8 +6671,8 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042413,
-    "display_name": "Bến xe Tam Kỳ - 1 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_substring",
+    "display_name": "Bến xe Tam Kỳ - 1 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "osm_transit_substring",
     "osm_type": "node"
   },
   {
@@ -6755,7 +6755,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042372,
-    "display_name": "An Thọ - Tam An, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "An Thọ - Tam An, Quốc Lộ 1A, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -6951,7 +6951,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042425,
-    "display_name": "Đối diện Bệnh viện Đa khoa Thăng Hoa, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Bệnh viện Đa khoa Thăng Hoa, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -7091,7 +7091,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042430,
-    "display_name": "Qua Cầu Phú Phong, Quốc Lộ 1A, Đà Nẵng, Việt Nam",
+    "display_name": "Qua Cầu Phú Phong, Quốc Lộ 1A, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -7175,7 +7175,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042433,
-    "display_name": "53 Điện Biên Phủ, Điện Biên Phủ, Đà Nẵng, Việt Nam",
+    "display_name": "53 Điện Biên Phủ, Điện Biên Phủ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -7231,8 +7231,8 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042435,
-    "display_name": "215 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "display_name": "215 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -7287,8 +7287,8 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042437,
-    "display_name": "5 Trần Nhân Tông, Trần Nhân Tông, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_number_exact_exact",
+    "display_name": "5 Trần Nhân Tông, Trần Nhân Tông, Quảng Nam, Việt Nam",
+    "method": "osm_transit_exact",
     "osm_type": "node"
   },
   {
@@ -7704,7 +7704,7 @@
     "status": "unresolved",
     "osm_id": null,
     "display_name": null,
-    "method": "needs_review_ambiguous",
+    "method": "unresolved_no_match",
     "osm_type": null
   },
   {
@@ -8005,15 +8005,15 @@
         "stopOrder": 73
       }
     ],
-    "lat": 15.5553199,
-    "lng": 108.4860011,
-    "source": "osm_overpass_transit",
-    "confidence": "medium",
-    "status": "verified",
-    "osm_id": 13805656749,
-    "display_name": "324 Trần Cao Vân, Trần Cao Vân, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_substring",
-    "osm_type": "node"
+    "lat": null,
+    "lng": null,
+    "source": null,
+    "confidence": "unresolved",
+    "status": "unresolved",
+    "osm_id": null,
+    "display_name": null,
+    "method": "unresolved_no_match",
+    "osm_type": null
   },
   {
     "id": "stop_0313",
@@ -8205,7 +8205,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042377,
-    "display_name": "10 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "10 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8267,12 +8267,12 @@
     ],
     "lat": 15.5787507,
     "lng": 108.4753287,
-    "source": "osm_overpass_transit",
+    "source": "osm_nominatim",
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042382,
-    "display_name": "VNPT Quảng Nam, Phan Bội Châu, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_exact",
+    "display_name": "VNPT Quảng Nam, 02 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
     "osm_type": "node"
   },
   {
@@ -8289,12 +8289,12 @@
     ],
     "lat": 15.5762261,
     "lng": 108.4786966,
-    "source": "osm_overpass_transit",
+    "source": "osm_nominatim",
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042384,
-    "display_name": "Chùa Đạo Nguyên, Phan Bội Châu, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_exact",
+    "display_name": "Chùa Đạo Nguyên, 140 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
     "osm_type": "node"
   },
   {
@@ -8337,7 +8337,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656742,
-    "display_name": "Đối diện Nhà thuốc Long Châu, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Nhà thuốc Long Châu, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8359,7 +8359,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656743,
-    "display_name": "Đối diện Trường Cao đẳng y tế Quảng Nam, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Trường Cao đẳng y tế Quảng Nam, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8381,7 +8381,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 13805656744,
-    "display_name": "Cách cổng trường Đại học Quảng Nam 30 m, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Cách cổng trường Đại học Quảng Nam 30 m, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -8409,7 +8409,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 13805656745,
-    "display_name": "258 Hùng Vương – Nhà khách Hùng Vương, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "258 Hùng Vương – Nhà khách Hùng Vương, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -8431,7 +8431,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656746,
-    "display_name": "Đối diện Cổng trường CĐ Quảng Nam, Huỳnh Thúc Kháng, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Cổng trường CĐ Quảng Nam, Huỳnh Thúc Kháng, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8459,7 +8459,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656747,
-    "display_name": "36 Trần Cao Vân, Trần Cao Vân, Đà Nẵng, Việt Nam",
+    "display_name": "36 Trần Cao Vân, Trần Cao Vân, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8487,7 +8487,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656748,
-    "display_name": "170 Trần Cao Vân, Trần Cao Vân, Đà Nẵng, Việt Nam",
+    "display_name": "170 Trần Cao Vân, Trần Cao Vân, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8509,7 +8509,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656749,
-    "display_name": "324 Trần Cao Vân, Trần Cao Vân, Đà Nẵng, Việt Nam",
+    "display_name": "324 Trần Cao Vân, Trần Cao Vân, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8593,7 +8593,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656752,
-    "display_name": "67 Trần Cao Vân, Trần Cao Vân, Đà Nẵng, Việt Nam",
+    "display_name": "67 Trần Cao Vân, Trần Cao Vân, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8615,7 +8615,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656753,
-    "display_name": "56 Huỳnh Thúc Kháng, Huỳnh Thúc Kháng, Đà Nẵng, Việt Nam",
+    "display_name": "56 Huỳnh Thúc Kháng, Huỳnh Thúc Kháng, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8665,7 +8665,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656755,
-    "display_name": "Cây xăng dầu Hùng Vương, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Cây xăng dầu Hùng Vương, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8693,7 +8693,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656756,
-    "display_name": "141 Hùng Vương, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "141 Hùng Vương, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8715,7 +8715,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656757,
-    "display_name": "Đối diện cổng KTX CĐ Y tế Quảng Nam, Lê Lợi, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện cổng KTX CĐ Y tế Quảng Nam, Lê Lợi, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8737,7 +8737,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656758,
-    "display_name": "Cách cổng Trường CĐ Y tế Quảng Nam 10 m, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "Cách cổng Trường CĐ Y tế Quảng Nam 10 m, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8759,7 +8759,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656759,
-    "display_name": "Trạm chờ Bờ hồ Nguyễn Du, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "Trạm chờ Bờ hồ Nguyễn Du, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8781,7 +8781,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042408,
-    "display_name": "Ngân hàng BIDV - 239 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "Ngân hàng BIDV - 239 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_substring",
     "osm_type": "node"
   },
@@ -8803,7 +8803,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042409,
-    "display_name": "Đối diện Ngân hàng Đông Á - 201 Phan Bội Châu, Phan Bội Châu, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Ngân hàng Đông Á - 201 Phan Bội Châu, Phan Bội Châu, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_substring",
     "osm_type": "node"
   },
@@ -8847,7 +8847,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164329,
-    "display_name": "Cách cổng chính Bộ đội biên phòng Quảng Nam 20m, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Cách cổng chính Bộ đội biên phòng Quảng Nam 20m, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8869,7 +8869,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164331,
-    "display_name": "Nhà chờ đường Nguyễn Chí Thanh, Nguyễn Chí Thanh, Đà Nẵng, Việt Nam",
+    "display_name": "Nhà chờ đường Nguyễn Chí Thanh, Nguyễn Chí Thanh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8891,7 +8891,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656743,
-    "display_name": "Đối diện Trường Cao đẳng y tế Quảng Nam, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "Đối diện Trường Cao đẳng y tế Quảng Nam, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8913,7 +8913,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164332,
-    "display_name": "Cách cổng UBND phường Tam Kỳ 10m, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Cách cổng UBND phường Tam Kỳ 10m, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -8935,7 +8935,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 13805656744,
-    "display_name": "Cách cổng trường Đại học Quảng Nam 30 m, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Cách cổng trường Đại học Quảng Nam 30 m, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_twin_corridor",
     "osm_type": "node"
   },
@@ -8951,15 +8951,15 @@
         "stopOrder": 12
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "unresolved_no_match",
-    "osm_type": null
+    "lat": 15.5616137,
+    "lng": 108.4994601,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042393,
+    "display_name": "Nhà thờ Tam Kỳ, 706 Phan Châu Trinh, Phường Hòa Hương, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0353",
@@ -8979,7 +8979,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 11898042395,
-    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Đà Nẵng, Việt Nam",
+    "display_name": "954 Phan Châu Trinh, Phan Châu Trinh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -9317,7 +9317,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164336,
-    "display_name": "101 Hùng Vương, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "101 Hùng Vương, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -9339,7 +9339,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164337,
-    "display_name": "63 Nguyễn Du, Nguyễn Du, Đà Nẵng, Việt Nam",
+    "display_name": "63 Nguyễn Du, Nguyễn Du, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -9383,7 +9383,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164338,
-    "display_name": "Đường Nguyễn Chí Thanh – Bên hông Sở GTVT Quảng Nam, Nguyễn Chí Thanh, Đà Nẵng, Việt Nam",
+    "display_name": "Đường Nguyễn Chí Thanh – Bên hông Sở GTVT Quảng Nam, Nguyễn Chí Thanh, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -9405,7 +9405,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13806164339,
-    "display_name": "Trường Cao đẳng Phương Đông, Hùng Vương, Đà Nẵng, Việt Nam",
+    "display_name": "Trường Cao đẳng Phương Đông, Hùng Vương, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -9443,15 +9443,15 @@
         "stopOrder": 2
       }
     ],
-    "lat": 15.5851209,
-    "lng": 108.4666765,
-    "source": "osm_overpass_transit",
-    "confidence": "medium",
-    "status": "verified",
-    "osm_id": 11898042377,
-    "display_name": "10 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_substring",
-    "osm_type": "node"
+    "lat": null,
+    "lng": null,
+    "source": null,
+    "confidence": "unresolved",
+    "status": "unresolved",
+    "osm_id": null,
+    "display_name": null,
+    "method": "unresolved_no_match",
+    "osm_type": null
   },
   {
     "id": "stop_0374",
@@ -9465,15 +9465,15 @@
         "stopOrder": 3
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "unresolved_no_match",
-    "osm_type": null
+    "lat": 15.5787507,
+    "lng": 108.4753287,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042382,
+    "display_name": "VNPT Quảng Nam, 02 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0375",
@@ -9509,15 +9509,15 @@
         "stopOrder": 5
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "needs_review_ambiguous",
-    "osm_type": null
+    "lat": 15.5762261,
+    "lng": 108.4786966,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042384,
+    "display_name": "Chùa Đạo Nguyên, 140 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0377",
@@ -9531,15 +9531,15 @@
         "stopOrder": 6
       }
     ],
-    "lat": 15.5844062,
-    "lng": 108.4678811,
-    "source": "osm_overpass_transit",
-    "confidence": "medium",
-    "status": "verified",
-    "osm_id": 11898042412,
-    "display_name": "63 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
-    "method": "osm_transit_substring",
-    "osm_type": "node"
+    "lat": null,
+    "lng": null,
+    "source": null,
+    "confidence": "unresolved",
+    "status": "unresolved",
+    "osm_id": null,
+    "display_name": null,
+    "method": "unresolved_no_match",
+    "osm_type": null
   },
   {
     "id": "stop_0378",
@@ -9625,7 +9625,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042389,
-    "display_name": "394 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "394 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -9691,7 +9691,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042392,
-    "display_name": "608 Phan Châu Trinh, Phan Châu Trinh – Hương Trà, Đà Nẵng, Việt Nam",
+    "display_name": "608 Phan Châu Trinh, Phan Châu Trinh – Hương Trà, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -9729,15 +9729,15 @@
         "stopOrder": 15
       }
     ],
-    "lat": null,
-    "lng": null,
-    "source": null,
-    "confidence": "unresolved",
-    "status": "unresolved",
-    "osm_id": null,
-    "display_name": null,
-    "method": "unresolved_no_match",
-    "osm_type": null
+    "lat": 15.5616137,
+    "lng": 108.4994601,
+    "source": "osm_nominatim",
+    "confidence": "high",
+    "status": "verified",
+    "osm_id": 11898042393,
+    "display_name": "Nhà thờ Tam Kỳ, 706 Phan Châu Trinh, Phường Hòa Hương, Tam Kỳ, Quảng Nam, Việt Nam",
+    "method": "strict_landmark_osm_verified",
+    "osm_type": "node"
   },
   {
     "id": "stop_0387",
@@ -9939,7 +9939,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042398,
-    "display_name": "781 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "781 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -9961,7 +9961,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042399,
-    "display_name": "531 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "531 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -9983,7 +9983,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042400,
-    "display_name": "467 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "467 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10005,7 +10005,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042401,
-    "display_name": "341 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "341 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10027,7 +10027,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042402,
-    "display_name": "275 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "275 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10049,7 +10049,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042403,
-    "display_name": "73 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Đà Nẵng, Việt Nam",
+    "display_name": "73 Phan Châu Trinh, Phan Châu Trinh – Tam Kỳ, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10093,7 +10093,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042405,
-    "display_name": "379 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
+    "display_name": "379 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10115,7 +10115,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042406,
-    "display_name": "283 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
+    "display_name": "283 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10137,7 +10137,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042407,
-    "display_name": "281 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
+    "display_name": "281 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10203,7 +10203,7 @@
     "confidence": "medium",
     "status": "verified",
     "osm_id": 11898042410,
-    "display_name": "135 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Đà Nẵng, Việt Nam",
+    "display_name": "135 Phan Bội Châu, Phan Bội Châu – Bàn Thạch, Tam Kỳ, Quảng Nam, Việt Nam",
     "method": "osm_transit_prefix",
     "osm_type": "node"
   },
@@ -10231,7 +10231,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656729,
-    "display_name": "Khu Đô Thị Nam Hội An City, Trường Giang 1, Duy Nghĩa, TP Đà Nẵng, Đà Nẵng, Việt Nam",
+    "display_name": "Khu Đô Thị Nam Hội An City, Trường Giang 1, Duy Nghĩa, TP Đà Nẵng, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },
@@ -10287,7 +10287,7 @@
     "confidence": "high",
     "status": "verified",
     "osm_id": 13805656733,
-    "display_name": "Bãi Đỗ Xe Khu Di Tích Thánh Địa Mỹ Sơn, Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn, Đà Nẵng, Việt Nam",
+    "display_name": "Bãi Đỗ Xe Khu Di Tích Thánh Địa Mỹ Sơn, Đường tỉnh 610, Bãi đỗ xe khu di tích Thánh địa Mỹ Sơn, Quảng Nam, Việt Nam",
     "method": "osm_transit_exact",
     "osm_type": "node"
   },

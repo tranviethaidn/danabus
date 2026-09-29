@@ -18,6 +18,7 @@ import os
 import sys
 import subprocess
 import copy
+import re
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -100,13 +101,13 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
     def test_drift_detection_fail_closed(self):
         """Validator must detect any metadata drift or unauthorized tampering."""
         tampered_routes = copy.deepcopy(self.routes)
-        # Illegally set route 02 to tripPlanningReady=True
-        r02 = next(r for r in tampered_routes if r["id"] == "02")
-        r02["dataQuality"]["tripPlanningReady"] = True
+        # Illegally set route 21 to tripPlanningReady=True
+        r21 = next(r for r in tampered_routes if r["id"] == "21")
+        r21["dataQuality"]["tripPlanningReady"] = True
         
         drift_count, errors = run_validation(tampered_routes, strict_check=True)
         self.assertGreater(drift_count, 0, "Validator must detect tampered tripPlanningReady")
-        self.assertTrue(any("Tuyến 02" in e for e in errors))
+        self.assertTrue(any("Tuyến 21" in e for e in errors))
 
     # -------------------------------------------------------------------------
     # 2. Strict Negative Cases (Fail-Closed Gates)
@@ -587,28 +588,84 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertTrue(is_valid_coordinate(16.05, 108.20))
 
     # -------------------------------------------------------------------------
-    # 3. Direction-Level Readiness Isolation
+    # 3. Direction-Level Readiness & Two-Direction Expansion (02 & TKY-CHU)
     # -------------------------------------------------------------------------
-    def test_direction_level_eligibility_isolation_tky_chu(self):
-        """Route TKY-CHU has verified inbound geometry but unverified outbound geometry."""
-        r = next(x for x in self.routes if x["id"] == "TKY-CHU")
-        dq = r["dataQuality"]
-        
-        # Outbound is NOT eligible (lacks verified polyline)
-        self.assertFalse(dq["hasOutboundGeometry"])
-        self.assertFalse(dq["directions"]["outbound"]["geometryReady"])
-        self.assertFalse(dq["directions"]["outbound"]["eligibleForPlanning"])
-        self.assertIn("Thiếu dữ liệu lộ trình polyline", dq["directions"]["outbound"]["reason"])
-        
-        # Inbound IS eligible (verified stops + verified geometry + distance_tiered fare)
-        self.assertTrue(dq["hasInboundGeometry"])
-        self.assertTrue(dq["directions"]["inbound"]["geometryReady"])
-        self.assertTrue(dq["directions"]["inbound"]["stopsReady"])
-        self.assertTrue(dq["directions"]["inbound"]["eligibleForPlanning"])
-        self.assertIsNone(dq["directions"]["inbound"]["reason"])
-        
-        # Route-level tripPlanningReady must remain FALSE fail-closed
-        self.assertFalse(dq["tripPlanningReady"])
+    def test_direction_level_eligibility_and_expanded_coverage_02_and_tky_chu(self):
+        """Route 02 and TKY-CHU now have verified geometry in both directions and are tripPlanningReady."""
+        # Route 02
+        r02 = next(x for x in self.routes if x["id"] == "02")
+        dq02 = r02["dataQuality"]
+        self.assertTrue(dq02["hasOutboundGeometry"])
+        self.assertTrue(dq02["hasInboundGeometry"])
+        self.assertTrue(dq02["directions"]["outbound"]["eligibleForPlanning"])
+        self.assertTrue(dq02["directions"]["inbound"]["eligibleForPlanning"])
+        self.assertTrue(dq02["tripPlanningReady"])
+
+        # Route TKY-CHU
+        rtky = next(x for x in self.routes if x["id"] == "TKY-CHU")
+        dqtky = rtky["dataQuality"]
+        self.assertTrue(dqtky["hasOutboundGeometry"])
+        self.assertTrue(dqtky["hasInboundGeometry"])
+        self.assertTrue(dqtky["directions"]["outbound"]["eligibleForPlanning"])
+        self.assertTrue(dqtky["directions"]["inbound"]["eligibleForPlanning"])
+        self.assertTrue(dqtky["tripPlanningReady"])
+
+    def test_direction_level_isolation_partial_route_lk02_and_21(self):
+        """Routes with verified stops but unverified geometry must fail geometryReady and eligibleForPlanning."""
+        r21 = next(x for x in self.routes if x["id"] == "21")
+        dq21 = r21["dataQuality"]
+        self.assertTrue(dq21["directions"]["outbound"]["stopsReady"])
+        self.assertFalse(dq21["directions"]["outbound"]["geometryReady"])
+        self.assertFalse(dq21["directions"]["outbound"]["eligibleForPlanning"])
+        self.assertFalse(dq21["tripPlanningReady"])
+
+    def test_fare_threshold_as_distance_parser_bug_regression(self):
+        """Fare-tier threshold strings must never be parsed as route distance metadata."""
+        def clean(text):
+            return re.sub(r'\s+', ' ', text.replace('\xa0', ' ')).strip()
+
+        dist_pattern = r'(?:^|\n)\s*(?:(?:\d+\.|\b[a-z]\))\s*)?Cự ly(?!\s+di\s+chuyển)(?:\s+tuyến|\s+toàn\s+tuyến|\s*\(.*?\))?\s*:\s*([^\n\r]+)'
+
+        fare_chunk = """
+        - Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:
+        + Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.
+        + Trên 10km - 25km: 20.000 đồng/hành khách/lượt.
+        """
+        # Ensure pattern does NOT match "cự ly di chuyển"
+        matches = list(re.finditer(dist_pattern, fare_chunk, re.IGNORECASE))
+        self.assertEqual(len(matches), 0, "Fare-tier 'cự ly di chuyển' must not match route distance pattern")
+
+        # Test line with fare keyword is rejected
+        line_with_fare = "Cự ly: 10 km trở xuống: 8.000 đồng"
+        dm = re.search(dist_pattern, line_with_fare, re.IGNORECASE)
+        if dm:
+            candidate = clean(dm.group(1))
+            is_fare = any(kw in candidate.lower() for kw in ['đồng', 'hành khách', 'giá vé', 'vé lượt', 'trở xuống', 'trở lên'])
+            self.assertTrue(is_fare, "Line containing 'đồng' or 'trở xuống' must be recognized as fare text and ignored")
+
+        # Ensure Route 02 distanceKm remains null/unknown without independent evidence
+        r02 = next(x for x in self.routes if x["id"] == "02")
+        self.assertIsNone(r02["distanceKm"]["average"])
+        self.assertIsNone(r02["distanceKm"]["outbound"])
+        self.assertIsNone(r02["distanceKm"]["inbound"])
+
+    def test_resolver_chua_dao_nguyen_and_locality_provenance(self):
+        """Chùa Đạo Nguyên must resolve to node 11898042384 with Quang Nam locality, and 463 PBC must be isolated."""
+        from scripts.build_gps_dataset import StopResolver
+
+        resolver = StopResolver()
+        stop_cdn = {"name": "140 Phan Bội Châu (Chùa Đạo Nguyên)", "street": "Phan Bội Châu – Bàn Thạch"}
+        res, status, _ = resolver.resolve(stop_cdn)
+        self.assertEqual(status, "verified")
+        self.assertEqual(res["osm_id"], 11898042384)
+        self.assertIn("Quảng Nam", res["display_name"])
+        self.assertNotIn("Đà Nẵng", res["display_name"], "Tam Kỳ stop must not have hardcoded Đà Nẵng locality")
+
+        # Isolation of 463 Phan Bội Châu from 63 Phan Bội Châu
+        stop_463 = {"name": "463 Phan Bội Châu (Kho bạc cũ)", "street": "Phan Bội Châu – Bàn Thạch"}
+        res_463, status_463, _ = resolver.resolve(stop_463)
+        self.assertEqual(status_463, "unresolved", "463 Phan Bội Châu must not match 63 Phan Bội Châu")
+        self.assertIsNone(res_463)
 
     # -------------------------------------------------------------------------
     # 4. Coverage Report Verification
@@ -623,13 +680,13 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertEqual(summary["totalRoutes"], 23)
         self.assertEqual(summary["activeRoutes"], 20)
         self.assertEqual(summary["suspendedRoutes"], 3)
-        self.assertEqual(summary["tripPlanningReadyCount"], 3)
-        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "TKY-TMY", "TKY-NTH"])
-        self.assertEqual(summary["inboundOnlyReadyRoutes"], ["TKY-CHU"])
-        self.assertEqual(summary["neitherReadyCount"], 19)
+        self.assertEqual(summary["tripPlanningReadyCount"], 5)
+        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "02", "TKY-TMY", "TKY-NTH", "TKY-CHU"])
+        self.assertEqual(summary["inboundOnlyReadyRoutes"], [])
+        self.assertEqual(summary["neitherReadyCount"], 18)
         self.assertGreater(summary["stops"]["total"], 0)
         self.assertGreater(summary["stops"]["verified"], 0)
-        self.assertGreater(summary["stops"]["verifiedPercentage"], 50.0)
+        self.assertGreater(summary["stops"]["verifiedPercentage"], 56.5)
 
     # -------------------------------------------------------------------------
     # 5. Spatial Primitives & BusService Integration (Node.js Execution)
@@ -703,15 +760,18 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         // Planning readiness methods
         const r05 = bs.getRouteById('05');
         const r02 = bs.getRouteById('02');
+        const r21 = bs.getRouteById('21');
         assert.strictEqual(bs.isRoutePlanningReady(r05), true);
-        assert.strictEqual(bs.isRoutePlanningReady(r02), false);
+        assert.strictEqual(bs.isRoutePlanningReady(r02), true);
+        assert.strictEqual(bs.isRoutePlanningReady(r21), false);
 
         const rTkyChu = bs.getRouteById('TKY-CHU');
-        assert.strictEqual(bs.isDirectionPlanningReady(rTkyChu, 'outbound'), false);
+        assert.strictEqual(bs.isDirectionPlanningReady(rTkyChu, 'outbound'), true);
         assert.strictEqual(bs.isDirectionPlanningReady(rTkyChu, 'inbound'), true);
+        assert.strictEqual(bs.isRoutePlanningReady(rTkyChu), true);
 
         const readyRoutes = bs.getPlanningReadyRoutes();
-        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', 'TKY-TMY', 'TKY-NTH']);
+        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', '02', 'TKY-TMY', 'TKY-NTH', 'TKY-CHU']);
         results.busServiceReadinessMethods = true;
 
         // bs.findNearbyStops on real dataset

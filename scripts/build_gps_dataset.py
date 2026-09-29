@@ -153,8 +153,54 @@ STRICT_OSM_LANDMARKS = {
         "osm_id": 344026362,
         "display_name": "Bệnh viện Ung bướu Đà Nẵng, Hoàng Thị Loan, Hòa Minh, Liên Chiểu, Đà Nẵng",
         "confidence": "high"
+    },
+    "chua_dao_nguyen": {
+        "matcher": lambda name, street: (
+            "chùa đạo nguyên" in name.lower() or "đạo nguyên" in name.lower()
+        ),
+        "lat": 15.5762261,
+        "lng": 108.4786966,
+        "osm_type": "node",
+        "osm_id": 11898042384,
+        "display_name": "Chùa Đạo Nguyên, 140 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+        "confidence": "high"
+    },
+    "vnpt_tam_ky": {
+        "matcher": lambda name, street: (
+            ("vnpt" in name.lower() and "quảng nam" in name.lower()) or
+            ("vnpt" in name.lower() and "phan bội châu" in name.lower()) or
+            ("vnpt" in name.lower() and "phan bội châu" in street.lower())
+        ),
+        "lat": 15.5787507,
+        "lng": 108.4753287,
+        "osm_type": "node",
+        "osm_id": 11898042382,
+        "display_name": "VNPT Quảng Nam, 02 Phan Bội Châu, Phường Tân Thạnh, Tam Kỳ, Quảng Nam, Việt Nam",
+        "confidence": "high"
+    },
+    "nha_tho_tam_ky": {
+        "matcher": lambda name, street: (
+            "nhà thờ tam kỳ" in name.lower() or
+            ("nhà thờ" in name.lower() and "phan châu trinh" in street.lower() and "con gà" not in name.lower())
+        ),
+        "lat": 15.5616137,
+        "lng": 108.4994601,
+        "osm_type": "node",
+        "osm_id": 11898042393,
+        "display_name": "Nhà thờ Tam Kỳ, 706 Phan Châu Trinh, Phường Hòa Hương, Tam Kỳ, Quảng Nam, Việt Nam",
+        "confidence": "high"
     }
 }
+
+def format_locality(lat, lng, street=''):
+    if lat is not None and lat < 15.90:
+        s_low = (street or '').lower()
+        if 'hội an' in s_low or 'cửa đại' in s_low:
+            return 'Hội An, Quảng Nam, Việt Nam'
+        elif 'tam kỳ' in s_low or 'núi thành' in s_low or lat <= 15.65:
+            return 'Tam Kỳ, Quảng Nam, Việt Nam'
+        return 'Quảng Nam, Việt Nam'
+    return 'Đà Nẵng, Việt Nam'
 
 def normalize_text(text):
     if not text:
@@ -260,6 +306,8 @@ class StopResolver:
             return None, 'unresolved', [{'reason': 'Nam Phước terminal must not match Da Nang central station or fake IDs'}]
         if 'cửa đại' in norm_street and norm_name not in ['cửa đại', 'bến tàu cửa đại', 'bến thuyền cửa đại']:
             return None, 'unresolved', [{'reason': 'Ordinary addresses on Cửa Đại isolated from Cửa Đại beach landmark'}]
+        if '463 phan bội châu' in norm_name:
+            return None, 'unresolved', [{'reason': '463 Phan Bội Châu isolated from 63 Phan Bội Châu'}]
 
         # 3. Extract House Number & Patterns
         m_num = re.search(r'(?:số nhà|đối diện số nhà|đ\/d số nhà|đ\/d|đối diện)?\s*(\d+[a-z]?(?:\s*[\-\/]\s*\d+[a-z]?)?)', norm_name)
@@ -292,6 +340,17 @@ class StopResolver:
                     candidates.append((node, 0.95, 'prefix'))
                     break
                 elif len(tq) > 8 and len(n_name) > 8 and (tq in n_name or n_name in tq):
+                    tq_nums = re.findall(r'\b\d+[a-z]?\b', tq)
+                    node_nums = re.findall(r'\b\d+[a-z]?\b', n_name)
+                    if tq_nums and node_nums:
+                        try:
+                            n1 = int(re.sub(r'[a-z]', '', tq_nums[0]))
+                            n2 = int(re.sub(r'[a-z]', '', node_nums[0]))
+                            if n1 != n2:
+                                continue
+                        except ValueError:
+                            if tq_nums[0] != node_nums[0]:
+                                continue
                     candidates.append((node, 0.90, 'substring'))
                     break
 
@@ -315,7 +374,7 @@ class StopResolver:
                     'source': 'osm_overpass_transit',
                     'osm_type': c['type'],
                     'osm_id': c['id'],
-                    'display_name': f"{c['name']}, {street}, Đà Nẵng, Việt Nam",
+                    'display_name': f"{c['name']}, {street}, {format_locality(c['lat'], c['lng'], street)}",
                     'confidence': 'high' if score == 1.0 else 'medium',
                     'status': 'verified',
                     'method': f'osm_transit_{mtype}'
@@ -338,7 +397,7 @@ class StopResolver:
                         'source': 'osm_overpass_transit',
                         'osm_type': c['type'],
                         'osm_id': c['id'],
-                        'display_name': f"{c['name']}, {street}, Đà Nẵng, Việt Nam",
+                        'display_name': f"{c['name']}, {street}, {format_locality(c['lat'], c['lng'], street)}",
                         'confidence': 'high' if sc == 1.0 else 'medium',
                         'status': 'verified',
                         'method': f'osm_transit_number_exact_{mt}'
@@ -355,7 +414,7 @@ class StopResolver:
                     'source': 'osm_overpass_transit',
                     'osm_type': c['type'],
                     'osm_id': c['id'],
-                    'display_name': f"{c['name']}, {street}, Đà Nẵng, Việt Nam",
+                    'display_name': f"{c['name']}, {street}, {format_locality(c['lat'], c['lng'], street)}",
                     'confidence': 'medium',
                     'status': 'verified',
                     'method': 'osm_transit_twin_corridor'
@@ -375,7 +434,7 @@ class StopResolver:
                         'source': 'osm_overpass_transit',
                         'osm_type': c['type'],
                         'osm_id': c['id'],
-                        'display_name': f"{c['name']}, {street}, Đà Nẵng, Việt Nam",
+                        'display_name': f"{c['name']}, {street}, {format_locality(c['lat'], c['lng'], street)}",
                         'confidence': 'high' if exact_street_cands[0][1] == 1.0 else 'medium',
                         'status': 'verified',
                         'method': 'osm_transit_exact_street_disambiguated'
@@ -552,6 +611,7 @@ def main():
                     s['method'] = 'unresolved'
 
     # 3. Generate and Validate Route Geometries
+    existing_geometries = {r['id']: json.loads(json.dumps(r.get('geometry') or {})) for r in routes}
     for r in routes:
         rid = r['id']
         r['geometry'] = {
@@ -569,10 +629,22 @@ def main():
             v_anchors = [s for s in d_stops if s.get('status') == 'verified' and s.get('lat') is not None]
             
             if len(v_anchors) >= 5:
-                coords = [[a['lng'], a['lat']] for a in v_anchors]
-                poly = query_osrm_driving(coords)
-                time.sleep(0.2)
-                is_valid, reason = validate_route_geometry(rid, d, poly, v_anchors, r.get('routePaths', {}), r.get('distanceKm', {}))
+                existing_geom = existing_geometries.get(rid, {}).get(d)
+                existing_prov = (existing_geometries.get(rid, {}).get('provenance') or {}).get(d, {})
+                if existing_geom and existing_prov.get('verified') is True:
+                    is_valid, reason = validate_route_geometry(rid, d, existing_geom, v_anchors, r.get('routePaths', {}), r.get('distanceKm', {}))
+                    if is_valid:
+                        poly = existing_geom
+                    else:
+                        coords = [[a['lng'], a['lat']] for a in v_anchors]
+                        poly = query_osrm_driving(coords)
+                        time.sleep(0.2)
+                        is_valid, reason = validate_route_geometry(rid, d, poly, v_anchors, r.get('routePaths', {}), r.get('distanceKm', {}))
+                else:
+                    coords = [[a['lng'], a['lat']] for a in v_anchors]
+                    poly = query_osrm_driving(coords)
+                    time.sleep(0.2)
+                    is_valid, reason = validate_route_geometry(rid, d, poly, v_anchors, r.get('routePaths', {}), r.get('distanceKm', {}))
                 resolution_report['routes_geometry_validation'][rid][d] = {
                     'verified_anchors': len(v_anchors),
                     'total_stops': len(d_stops),

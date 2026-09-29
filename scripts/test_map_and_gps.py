@@ -69,8 +69,8 @@ class TestDanabusMapGPS(unittest.TestCase):
 
         print(f"\n[Test Info] Stops breakdown: {verified_count} verified stops across {len(verified_osm_ids)} unique OSM locations, {unresolved_count} unresolved/needs_review stops.")
         self.assertEqual(len(self.stops), 421, "Total stops must be 421")
-        self.assertEqual(verified_count, 245, "Verified stops must be exactly 245")
-        self.assertEqual(unresolved_count, 176, "Unresolved stops must be exactly 176")
+        self.assertEqual(verified_count, 247, "Verified stops must be exactly 247")
+        self.assertEqual(unresolved_count, 174, "Unresolved stops must be exactly 174")
 
     # 2. Strict Negative Case Validations (No false-positive contamination)
     def test_negative_cases_no_false_positive_matching(self):
@@ -106,12 +106,12 @@ class TestDanabusMapGPS(unittest.TestCase):
     # 4. Resolution Report Audit
     def test_resolution_report_structure(self):
         self.assertEqual(self.resolution_report.get('total_stops'), 421)
-        self.assertEqual(len(self.resolution_report.get('verified', [])), 245)
-        self.assertEqual(len(self.resolution_report.get('needs_review', [])), 29)
-        self.assertEqual(len(self.resolution_report.get('unresolved', [])), 147)
-        self.assertEqual(245 + 29 + 147, 421)
+        self.assertEqual(len(self.resolution_report.get('verified', [])), 247)
+        self.assertEqual(len(self.resolution_report.get('needs_review', [])), 25)
+        self.assertEqual(len(self.resolution_report.get('unresolved', [])), 149)
+        self.assertEqual(247 + 25 + 149, 421)
 
-    # 5. Route 05 Verified Geometry vs Fail-Closed Unverified Routes
+    # 5. Route 05 & Route 02 Verified Geometry vs Fail-Closed Unverified Routes
     def test_route_geometry_verification_and_fail_closed(self):
         r05 = self.get_route('05')
         self.assertIsNotNone(r05['geometry']['outbound'])
@@ -121,8 +121,17 @@ class TestDanabusMapGPS(unittest.TestCase):
         self.assertTrue(len(r05['geometry']['outbound']) > 100)
         self.assertTrue(len(r05['geometry']['inbound']) > 100)
 
-        # Fail-closed unverified routes (e.g. Route 02, 21, 11, 07, 08, 12, LK01...)
-        unverified_route_ids = ['02', '21', '07', '08', '11', '12', '03', '06', '09', '13', '14', 'LK01', 'LK02', 'LK21', '04', '10', '15']
+        # Route 02 is now also verified in both directions
+        r02 = self.get_route('02')
+        self.assertIsNotNone(r02['geometry']['outbound'])
+        self.assertIsNotNone(r02['geometry']['inbound'])
+        self.assertTrue(r02['geometry']['provenance']['outbound']['verified'])
+        self.assertTrue(r02['geometry']['provenance']['inbound']['verified'])
+        self.assertTrue(len(r02['geometry']['outbound']) > 500)
+        self.assertTrue(len(r02['geometry']['inbound']) > 500)
+
+        # Fail-closed unverified routes (e.g. Route 21, 11, 07, 08, 12, LK01...)
+        unverified_route_ids = ['21', '07', '08', '11', '12', '03', '06', '09', '13', '14', 'LK01', 'LK02', 'LK21', '04', '10', '15']
         for rid in unverified_route_ids:
             r = self.get_route(rid)
             self.assertIsNotNone(r, f"Route {rid} must exist")

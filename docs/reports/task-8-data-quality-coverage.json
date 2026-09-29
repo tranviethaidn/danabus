@@ -1,28 +1,27 @@
 {
-  "generatedAt": "2026-09-28T09:28:31.735725",
+  "generatedAt": "2026-09-29T22:39:16.019310",
   "summary": {
     "totalRoutes": 23,
     "activeRoutes": 20,
     "suspendedRoutes": 3,
-    "tripPlanningReadyCount": 3,
+    "tripPlanningReadyCount": 5,
     "tripPlanningReadyRoutes": [
       "05",
+      "02",
       "TKY-TMY",
-      "TKY-NTH"
+      "TKY-NTH",
+      "TKY-CHU"
     ],
     "outboundOnlyReadyCount": 0,
     "outboundOnlyReadyRoutes": [],
-    "inboundOnlyReadyCount": 1,
-    "inboundOnlyReadyRoutes": [
-      "TKY-CHU"
-    ],
-    "neitherReadyCount": 19,
+    "inboundOnlyReadyCount": 0,
+    "inboundOnlyReadyRoutes": [],
+    "neitherReadyCount": 18,
     "neitherReadyRoutes": [
       "07",
       "08",
       "11",
       "12",
-      "02",
       "03",
       "06",
       "09",
@@ -40,9 +39,9 @@
     ],
     "stops": {
       "total": 638,
-      "verified": 359,
-      "unresolved": 279,
-      "verifiedPercentage": 56.27
+      "verified": 363,
+      "unresolved": 275,
+      "verifiedPercentage": 56.9
     }
   },
   "routes": [
@@ -233,19 +232,19 @@
       "routeNumber": "02",
       "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng - Cửa Đại",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
           "stopsReady": true,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
           "stopsReady": true,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         }
       },
       "stopMetrics": {
@@ -256,14 +255,11 @@
         },
         "inbound": {
           "total": 46,
-          "verified": 32,
-          "unresolved": 14
+          "verified": 31,
+          "unresolved": 15
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "03",
@@ -475,13 +471,13 @@
       "stopMetrics": {
         "outbound": {
           "total": 89,
-          "verified": 43,
-          "unresolved": 46
+          "verified": 45,
+          "unresolved": 44
         },
         "inbound": {
           "total": 80,
-          "verified": 34,
-          "unresolved": 46
+          "verified": 33,
+          "unresolved": 47
         }
       },
       "ineligibilityReasons": [
@@ -546,8 +542,8 @@
       "stopMetrics": {
         "outbound": {
           "total": 20,
-          "verified": 12,
-          "unresolved": 8
+          "verified": 13,
+          "unresolved": 7
         },
         "inbound": {
           "total": 22,
@@ -562,13 +558,13 @@
       "routeNumber": "12 (Quảng Nam)",
       "name": "Tam Kỳ – Sân bay Chu Lai",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
           "stopsReady": true,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
           "stopsReady": true,
@@ -580,8 +576,8 @@
       "stopMetrics": {
         "outbound": {
           "total": 22,
-          "verified": 4,
-          "unresolved": 18
+          "verified": 5,
+          "unresolved": 17
         },
         "inbound": {
           "total": 19,
@@ -589,9 +585,7 @@
           "unresolved": 9
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "LK01",
@@ -727,8 +721,8 @@
       "stopMetrics": {
         "outbound": {
           "total": 64,
-          "verified": 44,
-          "unresolved": 20
+          "verified": 43,
+          "unresolved": 21
         },
         "inbound": {
           "total": 0,
@@ -764,8 +758,8 @@
       "stopMetrics": {
         "outbound": {
           "total": 104,
-          "verified": 43,
-          "unresolved": 61
+          "verified": 46,
+          "unresolved": 58
         },
         "inbound": {
           "total": 0,

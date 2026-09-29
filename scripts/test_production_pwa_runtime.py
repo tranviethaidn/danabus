@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Production Runtime Verification for Task 4: Address-to-Address Trip Planner & PWA v10
+Production Runtime Verification for Task 005: Address-to-Address Trip Planner & PWA v11
 Target: https://danabus.638686.xyz/
 Verifies:
 0. Staged deploy order invariant: payload -> manifest -> index.html (atomic) -> sw.js (atomic, last)
 1. First-install Service Worker takeover, controllerchange, and reload settled lifecycle
 2. Feature markers of TransitPlanner and multi-leg UI
 3. Live planner E2E execution and Leaflet multi-leg map rendering (bounded predicates)
-4. Fresh install precache in isolated profile (danabus-cache-v10)
-5. Warm-cache migration from v9 (and v4-v7) to v10 with clean purge
+4. Fresh install precache in isolated profile (danabus-cache-v11)
+5. Warm-cache migration from v10 (and v4-v9) to v11 with clean purge
 6. Offline fallback resilience for app shell, scripts, styles, and datasets
 7. Deliverable screenshot capture
 """
@@ -28,7 +28,7 @@ from pathlib import Path
 
 TARGET_URL = "https://danabus.638686.xyz/"
 WORKSPACE = Path(__file__).resolve().parent.parent
-SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task4_production_pwa_v10_evidence.png"
+SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task5_production_pwa_v11_evidence.png"
 
 
 def verify_deploy_order_invariant():
@@ -38,7 +38,7 @@ def verify_deploy_order_invariant():
     2. manifest.json
     3. atomic index.html swap
     4. atomic sw.js swap (LAST)
-    Ensuring sw.js v10 can never precache an outdated v9 index.html.
+    Ensuring sw.js v11 can never precache an outdated index.html.
     """
     deploy_script = (WORKSPACE / "scripts" / "deploy_danabus_production.sh").read_text(encoding="utf-8")
 
@@ -52,7 +52,7 @@ def verify_deploy_order_invariant():
     assert pos_payload_sync < pos_manifest_copy, "Payload assets must be synced before manifest"
     assert pos_manifest_copy < pos_index_swap, "Manifest must be copied before atomic index.html swap"
     assert pos_index_swap < pos_sw_swap, \
-        "Atomic index.html swap MUST precede atomic sw.js swap to prevent v10-worker precaching v9-index"
+        "Atomic index.html swap MUST precede atomic sw.js swap to prevent worker precaching old index"
 
 
 class SimpleWebSocket:
@@ -342,7 +342,7 @@ def test_production_single(port=9455, iteration_label=""):
         assert markers['hasOriginDisplay'] is True, "#home-origin-display must exist"
         assert markers['hasDestinationInput'] is True, "#home-destination-input must exist"
         assert markers['routesCount'] == 23, f"Must have 23 catalog routes, got {markers['routesCount']}"
-        assert "v=20260929_v10" in markers['appVersionScript'], f"Script query must be v10, got {markers['appVersionScript']}"
+        assert "v=20260929_v11" in markers['appVersionScript'], f"Script query must be v11, got {markers['appVersionScript']}"
         print(f"{prefix} [PASS] Check 2: Feature markers and Task 4 DOM containers verified on production.\n")
 
         # Check 3: Live Address-to-Address Trip Planner E2E & Leaflet Map Rendering
@@ -403,12 +403,12 @@ def test_production_single(port=9455, iteration_label=""):
         print(f"{prefix} [PASS] Check 3: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.\n")
 
         # Check 4: Fresh Install Precache
-        print(f"{prefix}[Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v10)...")
+        print(f"{prefix}[Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v11)...")
         sw_ready = session.wait_for_condition("""
             (async () => {
                 const reg = await navigator.serviceWorker.getRegistration();
                 const keys = await caches.keys();
-                if (reg && keys.includes('danabus-cache-v10')) {
+                if (reg && keys.includes('danabus-cache-v11')) {
                     return {
                         hasReg: true,
                         active: !!(reg.active || reg.installing || reg.waiting),
@@ -417,15 +417,15 @@ def test_production_single(port=9455, iteration_label=""):
                 }
                 return null;
             })()
-        """, timeout=12.0, description="Wait for danabus-cache-v10 cache registration")
+        """, timeout=12.0, description="Wait for danabus-cache-v11 cache registration")
 
         print(f"{prefix} -> Fresh SW State: {sw_ready}")
         assert sw_ready['hasReg'] is True, "Service Worker registration must exist"
-        assert 'danabus-cache-v10' in sw_ready['keys'], f"danabus-cache-v10 must exist in fresh install, got {sw_ready['keys']}"
+        assert 'danabus-cache-v11' in sw_ready['keys'], f"danabus-cache-v11 must exist in fresh install, got {sw_ready['keys']}"
 
         cached_urls = session.wait_for_condition("""
             (async () => {
-                const cache = await caches.open('danabus-cache-v10');
+                const cache = await caches.open('danabus-cache-v11');
                 const reqs = await cache.keys();
                 if (reqs && reqs.length >= 25) {
                     return reqs.map(r => r.url);
@@ -434,15 +434,15 @@ def test_production_single(port=9455, iteration_label=""):
             })()
         """, timeout=10.0, description="Wait for cached asset keys")
         print(f"{prefix} -> Cached assets count: {len(cached_urls)}")
-        assert any("index.html" in u for u in cached_urls), "index.html must be in danabus-cache-v10"
-        assert any("app.css?v=20260929_v10" in u for u in cached_urls), "app.css v10 must be in cache"
-        assert any("busService.js?v=20260929_v10" in u for u in cached_urls), "busService.js v10 must be in cache"
-        assert any("mapService.js?v=20260929_v10" in u for u in cached_urls), "mapService.js v10 must be in cache"
-        assert any("app.js?v=20260929_v10" in u for u in cached_urls), "app.js v10 must be in cache"
+        assert any("index.html" in u for u in cached_urls), "index.html must be in danabus-cache-v11"
+        assert any("app.css?v=20260929_v11" in u for u in cached_urls), "app.css v11 must be in cache"
+        assert any("busService.js?v=20260929_v11" in u for u in cached_urls), "busService.js v11 must be in cache"
+        assert any("mapService.js?v=20260929_v11" in u for u in cached_urls), "mapService.js v11 must be in cache"
+        assert any("app.js?v=20260929_v11" in u for u in cached_urls), "app.js v11 must be in cache"
         print(f"{prefix} [PASS] Check 4: Fresh PWA install & static asset precache verified.\n")
 
         # Check 5: Warm Cache Migration & Legacy Store Purge
-        print(f"{prefix}[Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v9 -> v10)...")
+        print(f"{prefix}[Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v10 -> v11)...")
         session.evaluate("""
             (async () => {
                 await caches.open('danabus-cache-v4');
@@ -450,10 +450,12 @@ def test_production_single(port=9455, iteration_label=""):
                 await caches.open('danabus-cache-v6');
                 await caches.open('danabus-cache-v7');
                 await caches.open('danabus-cache-v9');
+                await caches.open('danabus-cache-v10');
             })()
         """)
         pre_keys = session.evaluate("(async () => await caches.keys())()")
         print(f"{prefix} -> Injected legacy caches: {pre_keys}")
+        assert 'danabus-cache-v10' in pre_keys
         assert 'danabus-cache-v9' in pre_keys
 
         session.evaluate("""
@@ -466,7 +468,7 @@ def test_production_single(port=9455, iteration_label=""):
         post_migration_keys = session.wait_for_condition("""
             (async () => {
                 const k = await caches.keys();
-                if (k.includes('danabus-cache-v10') && !k.includes('danabus-cache-v9') && !k.includes('danabus-cache-v7') && !k.includes('danabus-cache-v4')) {
+                if (k.includes('danabus-cache-v11') && !k.includes('danabus-cache-v10') && !k.includes('danabus-cache-v9') && !k.includes('danabus-cache-v7') && !k.includes('danabus-cache-v4')) {
                     return k;
                 }
                 return null;
@@ -474,11 +476,12 @@ def test_production_single(port=9455, iteration_label=""):
         """, timeout=12.0, description="Wait for legacy caches purged")
 
         print(f"{prefix} -> Post-migration cache keys: {post_migration_keys}")
-        assert 'danabus-cache-v10' in post_migration_keys
+        assert 'danabus-cache-v11' in post_migration_keys
+        assert 'danabus-cache-v10' not in post_migration_keys
         assert 'danabus-cache-v9' not in post_migration_keys
         assert 'danabus-cache-v7' not in post_migration_keys
         assert 'danabus-cache-v4' not in post_migration_keys
-        print(f"{prefix} [PASS] Check 5: Warm-cache migration cleanly purged v9 and earlier legacy stores.\n")
+        print(f"{prefix} [PASS] Check 5: Warm-cache migration cleanly purged v10 and earlier legacy stores.\n")
 
         # Check 6: Offline Fallback Resilience
         print(f"{prefix}[Check 6] Testing Offline Fallback Resilience via CDP Network Emulation...")
@@ -491,9 +494,9 @@ def test_production_single(port=9455, iteration_label=""):
 
         offline_eval = session.evaluate("""
             (async () => {
-                const resApp = await fetch('js/app.js?v=20260929_v10');
-                const resBus = await fetch('js/busService.js?v=20260929_v10');
-                const resCss = await fetch('css/app.css?v=20260929_v10');
+                const resApp = await fetch('js/app.js?v=20260929_v11');
+                const resBus = await fetch('js/busService.js?v=20260929_v11');
+                const resCss = await fetch('css/app.css?v=20260929_v11');
                 const resRoutes = await fetch('data/danangbus_routes.json');
                 return {
                     appStatus: resApp.status,

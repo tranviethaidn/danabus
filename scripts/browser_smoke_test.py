@@ -322,7 +322,7 @@ def run_browser_smoke_test(target_url=None):
                 f"while no-data overlay is also displayed ('{map_state['overlayText']}')"
             )
 
-            if rid in ['05', 'TKY-TMY', 'TKY-NTH']:
+            if rid in ['02', '05', 'TKY-TMY', 'TKY-NTH']:
                 assert map_state['polylineExists'] is True, f"Route {rid} geometry is verified so Leaflet polyline must exist"
                 assert map_state['overlayText'] is None, f"Route {rid} overlay must be None when polyline exists"
                 assert map_state['markersCount'] >= 5, f"Route {rid} must render verified stop markers, got {map_state['markersCount']}"
@@ -334,7 +334,7 @@ def run_browser_smoke_test(target_url=None):
         print("[Check 4] Testing Direction Switch & Availability on Route 02, 11, 05, TKY-TMY, TKY-NTH, and single-direction Route TKY-CHU...")
         dir_switch_state = eval_js("""
             (() => {
-                // 4a. Test Route 02 (Both directions unverified geometry)
+                // 4a. Test Route 02 (Both directions verified geometry)
                 const route02 = window.busService.getRouteById('02');
                 window.app.selectedRoute = route02;
                 window.mapService.renderRoute(route02, 'inbound');
@@ -387,12 +387,12 @@ def run_browser_smoke_test(target_url=None):
                 const tkyNth_inPolyline = !!window.mapService.routeLine;
                 const tkyNth_inOverlay = !!document.getElementById('map-info-overlay');
 
-                // 4f. Test Route TKY-CHU (Outbound unverified -> Inbound verified)
+                // 4f. Test Route TKY-CHU (Both directions verified geometry)
                 const routeTkyChu = window.busService.getRouteById('TKY-CHU');
                 window.app.selectedRoute = routeTkyChu;
                 window.mapService.renderRoute(routeTkyChu, 'outbound');
                 const tkyChu_outPolyline = !!window.mapService.routeLine;
-                const tkyChu_outOverlayText = document.getElementById('map-info-overlay')?.textContent.trim() || null;
+                const tkyChu_outOverlay = !!document.getElementById('map-info-overlay');
                 
                 window.mapService.renderRoute(routeTkyChu, 'inbound');
                 const tkyChu_inPolyline = !!window.mapService.routeLine;
@@ -407,7 +407,7 @@ def run_browser_smoke_test(target_url=None):
                     tkyNth: { outPolyline: tkyNth_outPolyline, outOverlay: tkyNth_outOverlay, inPolyline: tkyNth_inPolyline, inOverlay: tkyNth_inOverlay },
                     tkyChu: {
                         outPolyline: tkyChu_outPolyline,
-                        outOverlayText: tkyChu_outOverlayText,
+                        outOverlay: tkyChu_outOverlay,
                         inPolyline: tkyChu_inPolyline,
                         inOverlay: tkyChu_inOverlay,
                         inMarkers: tkyChu_inMarkers
@@ -417,8 +417,8 @@ def run_browser_smoke_test(target_url=None):
             })()
         """)
         print(f" -> Direction switch state: {dir_switch_state}")
-        assert dir_switch_state['r02']['outPolyline'] is False and dir_switch_state['r02']['outOverlay'] is True, "Route 02 Outbound must show overlay"
-        assert dir_switch_state['r02']['inPolyline'] is False and dir_switch_state['r02']['inOverlay'] is True, "Route 02 Inbound must show overlay"
+        assert dir_switch_state['r02']['outPolyline'] is True and dir_switch_state['r02']['outOverlay'] is False, "Route 02 Outbound must render polyline and hide overlay"
+        assert dir_switch_state['r02']['inPolyline'] is True and dir_switch_state['r02']['inOverlay'] is False, "Route 02 Inbound must render polyline and hide overlay"
         assert dir_switch_state['r11']['outPolyline'] is False and dir_switch_state['r11']['outOverlay'] is True, "Route 11 Outbound must show overlay"
         assert dir_switch_state['r11']['inPolyline'] is False and dir_switch_state['r11']['inOverlay'] is True, "Route 11 Inbound must show overlay"
         assert dir_switch_state['r05']['outPolyline'] is True and dir_switch_state['r05']['outOverlay'] is False, "Route 05 Outbound must have polyline and no overlay"
@@ -427,7 +427,7 @@ def run_browser_smoke_test(target_url=None):
         assert dir_switch_state['tkyTmy']['inPolyline'] is True and dir_switch_state['tkyTmy']['inOverlay'] is False, "TKY-TMY Inbound must have polyline and no overlay"
         assert dir_switch_state['tkyNth']['outPolyline'] is True and dir_switch_state['tkyNth']['outOverlay'] is False, "TKY-NTH Outbound must have polyline and no overlay"
         assert dir_switch_state['tkyNth']['inPolyline'] is True and dir_switch_state['tkyNth']['inOverlay'] is False, "TKY-NTH Inbound must have polyline and no overlay"
-        assert dir_switch_state['tkyChu']['outPolyline'] is False and "Chưa có dữ liệu" in (dir_switch_state['tkyChu']['outOverlayText'] or ""), "TKY-CHU Outbound must show no-data overlay"
+        assert dir_switch_state['tkyChu']['outPolyline'] is True and dir_switch_state['tkyChu']['outOverlay'] is False, "TKY-CHU Outbound must render polyline and hide overlay"
         assert dir_switch_state['tkyChu']['inPolyline'] is True and dir_switch_state['tkyChu']['inOverlay'] is False, "TKY-CHU Inbound must render polyline and hide overlay"
         assert dir_switch_state['tkyChu']['inMarkers'] >= 10, "TKY-CHU Inbound must render stop markers"
         assert dir_switch_state['cleanNoStaleLayers'] is True
@@ -566,6 +566,7 @@ def run_browser_smoke_test(target_url=None):
                 await caches.open('danabus-cache-v6');
                 await caches.open('danabus-cache-v7');
                 await caches.open('danabus-cache-v9');
+                await caches.open('danabus-cache-v10');
                 return await caches.keys();
             })()
         """)
@@ -575,6 +576,7 @@ def run_browser_smoke_test(target_url=None):
         assert 'danabus-cache-v6' in pre_cache_keys, "danabus-cache-v6 must be present in pre-migration caches"
         assert 'danabus-cache-v7' in pre_cache_keys, "danabus-cache-v7 must be present in pre-migration caches"
         assert 'danabus-cache-v9' in pre_cache_keys, "danabus-cache-v9 must be present in pre-migration caches"
+        assert 'danabus-cache-v10' in pre_cache_keys, "danabus-cache-v10 must be present in pre-migration caches"
 
         # Step 7b: Trigger Service Worker installation & activation lifecycle
         eval_js("""
@@ -614,7 +616,8 @@ def run_browser_smoke_test(target_url=None):
                 state.get('hasFitRoute') and
                 state.get('mapScriptSrc') and
                 state.get('appScriptSrc') and
-                'danabus-cache-v10' in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v11' in state.get('postMigrationCacheKeys', []) and
+                'danabus-cache-v10' not in state.get('postMigrationCacheKeys', []) and
                 'danabus-cache-v9' not in state.get('postMigrationCacheKeys', []) and
                 'danabus-cache-v4' not in state.get('postMigrationCacheKeys', []) and
                 'danabus-cache-v7' not in state.get('postMigrationCacheKeys', [])
@@ -628,15 +631,16 @@ def run_browser_smoke_test(target_url=None):
         print(f" -> Post-migration SW & Cache state: {post_sw_state}")
         assert post_sw_state is not None, "Post-migration check must return valid state"
         assert post_sw_state.get('swActive') is True, "Service Worker must be registered and active"
-        assert 'danabus-cache-v10' in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v10 must be present after SW activation"
+        assert 'danabus-cache-v11' in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v11 must be present after SW activation"
+        assert 'danabus-cache-v10' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v10 must be strictly purged"
         assert 'danabus-cache-v9' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v9 must be strictly purged"
         assert 'danabus-cache-v4' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v4 must be strictly purged"
         assert 'danabus-cache-v5' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v5 must be strictly purged"
         assert 'danabus-cache-v6' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v6 must be strictly purged"
         assert 'danabus-cache-v7' not in post_sw_state.get('postMigrationCacheKeys', []), "danabus-cache-v7 must be strictly purged"
         assert post_sw_state.get('hasFitRoute') is True, "window.mapService.fitRoute must be present in active client"
-        assert "v=20260929_v10" in (post_sw_state.get('mapScriptSrc') or ""), f"mapService.js must have cache-busting v=20260929_v10, got {post_sw_state.get('mapScriptSrc')}"
-        assert "v=20260929_v10" in (post_sw_state.get('appScriptSrc') or ""), f"app.js must have cache-busting v=20260929_v10, got {post_sw_state.get('appScriptSrc')}"
+        assert "v=20260929_v11" in (post_sw_state.get('mapScriptSrc') or ""), f"mapService.js must have cache-busting v=20260929_v11, got {post_sw_state.get('mapScriptSrc')}"
+        assert "v=20260929_v11" in (post_sw_state.get('appScriptSrc') or ""), f"app.js must have cache-busting v=20260929_v11, got {post_sw_state.get('appScriptSrc')}"
 
         # 8. Take Screenshot for Deliverable Evidence
         print("[Check 8] Capturing deliverable screenshot...")

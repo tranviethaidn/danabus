@@ -20,7 +20,7 @@ echo "=== 2. Đồng bộ Whitelist Deliverables sang Public Root (Staged Deploy
 # Tuyệt đối không copy .git, docs, scripts, README, requirements.txt hay prototype
 
 # Stage 2.1: Đồng bộ payload tài nguyên phụ thuộc trước (css, js, assets, data)
-# Đảm bảo mọi script và style v10 đã hiện diện trên disk trước khi client nhận HTML/SW mới
+# Đảm bảo mọi script và style của release mới đã hiện diện trên disk trước khi client nhận HTML/SW mới
 mkdir -p "$PUBLIC_DIR"/css "$PUBLIC_DIR"/js "$PUBLIC_DIR"/assets "$PUBLIC_DIR"/data
 rsync -a --delete "$WORKSPACE"/css/ "$PUBLIC_DIR"/css/
 rsync -a --delete "$WORKSPACE"/js/ "$PUBLIC_DIR"/js/
@@ -38,8 +38,8 @@ cp -f "$WORKSPACE"/index.html "$PUBLIC_DIR/index.html.tmp"
 mv -f "$PUBLIC_DIR/index.html.tmp" "$PUBLIC_DIR/index.html"
 
 # Stage 2.4: Xuất bản Service Worker sw.js CUỐI CÙNG bằng cơ chế atomic swap (temp file + rename)
-# sw.js v10 precache cả './' và './index.html'. Bằng việc xuất bản sw.js sau khi index.html v10
-# đã hiện diện an toàn trên disk, ta triệt tiêu hoàn toàn race condition v10-worker precache v9-index.
+# sw.js precache cả './' và './index.html'. Bằng việc xuất bản sw.js sau khi index.html
+# đã hiện diện an toàn trên disk, ta triệt tiêu hoàn toàn race condition worker precache index cũ.
 cp -f "$WORKSPACE"/sw.js "$PUBLIC_DIR/sw.js.tmp"
 mv -f "$PUBLIC_DIR/sw.js.tmp" "$PUBLIC_DIR/sw.js"
 

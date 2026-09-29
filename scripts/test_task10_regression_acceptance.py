@@ -150,7 +150,7 @@ ACCEPTANCE_ITEMS = [
         "title": "Browser/public smoke: production runtime semantics PASS",
         "layer": "Layer B",
         "script": "scripts/browser_smoke_test.py",
-        "check": "8/8 checks: DOM state, 23 routes catalog, map views, switch dir, geolocation, SW cache v10 migration"
+        "check": "8/8 checks: DOM state, 23 routes catalog, map views, switch dir, geolocation, SW cache v11 migration"
     },
     {
         "id": 19,

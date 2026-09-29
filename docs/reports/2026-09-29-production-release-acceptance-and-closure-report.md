@@ -1,6 +1,8 @@
 # Danabus Production Release Acceptance & Project Closure Report
 
-**Task ID:** `tsk_cf038225-0b52-4ef0-88d9-2592c965baed`  
+Task-ID: tsk_cf038225-0b52-4ef0-88d9-2592c965baed
+
+**Task ID:** `tsk_cf038225-0b52-4ef0-88d9-2592c965baed`
 **Title:** Production Release Acceptance & Project Closure Gate (Roadmap V2 Task 15)  
 **Date:** 2026-09-29  
 **Role:** DEV Implementation & Verification  
@@ -168,3 +170,30 @@ Nhằm duy trì tính minh bạch kỹ thuật và bảo vệ an toàn sản ph�
 - **Khuyến nghị cho PO (Product Owner)**: 
   - Toàn bộ các mục tiêu của Roadmap V2 đã hoàn thành trọn vẹn và được kiểm chứng độc lập.
   - Kính đề xuất PO nghiệm thu kỹ thuật và ra quyết định **Đóng dự án (Project Closure)** hoặc phê duyệt mở rộng phạm vi lộ trình mới nếu có nhu cầu khảo sát thực địa bổ sung.
+
+---
+
+## 8. TL Independent Review - Current REVIEW Run
+
+TL đã kiểm tra implementation thực tế, không chỉ dựa vào DEV handoff, với kết quả:
+
+- `python3 scripts/validate_data_quality.py --check`: PASS, zero drift.
+- `python3 scripts/validate_data_quality.py --coverage`: PASS, 5/23 `tripPlanningReady`, 10/46 directions eligible, 363/638 verified stops.
+- `python3 -m unittest discover -s scripts -p "test_*.py"`: 44/44 PASS.
+- `python3 scripts/test_task10_regression_acceptance.py`: 20/20 PASS trên full local + production matrix.
+- `python3 scripts/test_production_pwa_runtime.py --repeat 3`: 3/3 runs PASS, mỗi run 8/8 checks; xác nhận v11 markers, fresh install, purge v10 và cache cũ, controllerchange settled và offline fallback.
+- Live planner CDP verification trên release `v11`:
+  - Route `02` outbound và inbound đều trả direct trip hợp lệ với walking -> transit -> walking; walking legs `isEstimated=true`, `geometry=null`.
+  - Route `TKY-CHU` outbound và inbound đều trả direct trip hợp lệ với cùng safety contract.
+  - Transfer case Tam Kỳ trả connecting trip `TKY-CHU -> TKY-NTH`, đúng 1 transfer và 5 legs.
+  - Endpoint ngoài vùng phục vụ trả 0 trips với `NO_NEARBY_STOPS`, giữ fail-closed.
+- SHA-256 independent verification: 17/17 public deliverables khớp tuyệt đối giữa workspace, `/var/www/danabus/public` và live HTTPS response.
+- Git state tại lúc bắt đầu review: local `main` ahead `origin/main` 22 commits; `git_push_authorized=OFF`, do đó không push và trạng thái ahead không phải blocker.
+
+### TL Review Result
+
+**PASS - TL VERIFIED TECHNICAL ACCEPTANCE.** Không phát hiện critical defect hoặc regression trong scope Task 005. Release `v11` đáp ứng final Production Release Acceptance & Project Closure Gate về data quality, planner, PWA migration/offline, security, deterministic browser acceptance và production traceability.
+
+### TL Known Limitations
+
+Giữ nguyên các limitation không chặn đã nêu ở Phần 6: coverage còn fail-closed cho dữ liệu chưa verified, walking chỉ là Haversine estimate, chưa có external geocoding/walking provider và chưa có authorized realtime vehicle/ETA provider. Remote Git publication không nằm trong technical acceptance gate của run này.

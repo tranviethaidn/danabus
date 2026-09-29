@@ -1,0 +1,896 @@
+{
+  "generatedAt": "2026-09-28T09:28:31.735725",
+  "summary": {
+    "totalRoutes": 23,
+    "activeRoutes": 20,
+    "suspendedRoutes": 3,
+    "tripPlanningReadyCount": 3,
+    "tripPlanningReadyRoutes": [
+      "05",
+      "TKY-TMY",
+      "TKY-NTH"
+    ],
+    "outboundOnlyReadyCount": 0,
+    "outboundOnlyReadyRoutes": [],
+    "inboundOnlyReadyCount": 1,
+    "inboundOnlyReadyRoutes": [
+      "TKY-CHU"
+    ],
+    "neitherReadyCount": 19,
+    "neitherReadyRoutes": [
+      "07",
+      "08",
+      "11",
+      "12",
+      "02",
+      "03",
+      "06",
+      "09",
+      "13",
+      "14",
+      "21",
+      "LK01",
+      "01DL",
+      "01SB",
+      "LK02",
+      "LK21",
+      "04",
+      "10",
+      "15"
+    ],
+    "stops": {
+      "total": 638,
+      "verified": 359,
+      "unresolved": 279,
+      "verifiedPercentage": 56.27
+    }
+  },
+  "routes": [
+    {
+      "id": "05",
+      "routeNumber": "05",
+      "name": "Khu Chung cư Hòa Hiệp Nam – Công viên Biển Đông",
+      "status": "active",
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 37,
+          "verified": 31,
+          "unresolved": 6
+        },
+        "inbound": {
+          "total": 33,
+          "verified": 28,
+          "unresolved": 5
+        }
+      },
+      "ineligibilityReasons": []
+    },
+    {
+      "id": "07",
+      "routeNumber": "07",
+      "name": "Xuân Diệu – Hoà Phước",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "08",
+      "routeNumber": "08",
+      "name": "Vũng Thùng – Bến xe buýt Phạm Hùng",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "11",
+      "routeNumber": "11",
+      "name": "Xuân Diệu – Bệnh viện Phụ sản Nhi",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "12",
+      "routeNumber": "12",
+      "name": "Xuân Diệu – Bến xe buýt Phạm Hùng",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "02",
+      "routeNumber": "02",
+      "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng - Cửa Đại",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 47,
+          "verified": 31,
+          "unresolved": 16
+        },
+        "inbound": {
+          "total": 46,
+          "verified": 32,
+          "unresolved": 14
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "03",
+      "routeNumber": "03",
+      "name": "Sân bay Đà Nẵng – Khu du lịch Bà Nà Hills",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "06",
+      "routeNumber": "06",
+      "name": "Sân bay Đà Nẵng – Đại học Việt Hàn",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "09",
+      "routeNumber": "09",
+      "name": "Cảng Sông Hàn – Hòa Khương",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+      ]
+    },
+    {
+      "id": "13",
+      "routeNumber": "13",
+      "name": "Kim Liên – Đại học Việt Hàn",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+      ]
+    },
+    {
+      "id": "14",
+      "routeNumber": "14",
+      "name": "Cảng sông Hàn – Khu công nghệ cao",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "21",
+      "routeNumber": "21",
+      "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng – Cầu Tam Kỳ",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 89,
+          "verified": 43,
+          "unresolved": 46
+        },
+        "inbound": {
+          "total": 80,
+          "verified": 34,
+          "unresolved": 46
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "TKY-TMY",
+      "routeNumber": "02 (Quảng Nam)",
+      "name": "Tam Kỳ – Trà My",
+      "status": "active",
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 18,
+          "verified": 12,
+          "unresolved": 6
+        },
+        "inbound": {
+          "total": 18,
+          "verified": 12,
+          "unresolved": 6
+        }
+      },
+      "ineligibilityReasons": []
+    },
+    {
+      "id": "TKY-NTH",
+      "routeNumber": "05 (Quảng Nam)",
+      "name": "Tam Kỳ – Núi Thành (Cảng Kỳ Hà)",
+      "status": "active",
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 20,
+          "verified": 12,
+          "unresolved": 8
+        },
+        "inbound": {
+          "total": 22,
+          "verified": 11,
+          "unresolved": 11
+        }
+      },
+      "ineligibilityReasons": []
+    },
+    {
+      "id": "TKY-CHU",
+      "routeNumber": "12 (Quảng Nam)",
+      "name": "Tam Kỳ – Sân bay Chu Lai",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 22,
+          "verified": 4,
+          "unresolved": 18
+        },
+        "inbound": {
+          "total": 19,
+          "verified": 10,
+          "unresolved": 9
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "LK01",
+      "routeNumber": "LK01",
+      "name": "Đà Nẵng – Huế",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "01DL",
+      "routeNumber": "01DL",
+      "name": "Tuyến buýt du lịch: Hội An – Mỹ Sơn – Cổng trời Đông Giang",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 4,
+          "verified": 2,
+          "unresolved": 2
+        },
+        "inbound": {
+          "total": 4,
+          "verified": 2,
+          "unresolved": 2
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "01SB",
+      "routeNumber": "01SB",
+      "name": "Tuyến xe buýt Sân bay Đà Nẵng – Hội An",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 4,
+          "verified": 3,
+          "unresolved": 1
+        },
+        "inbound": {
+          "total": 7,
+          "verified": 5,
+          "unresolved": 2
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "LK02",
+      "routeNumber": "LK02",
+      "name": "Đà Nẵng (Đại học Việt Hàn) – Hội An (Cửa Đại)",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 64,
+          "verified": 44,
+          "unresolved": 20
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "LK21",
+      "routeNumber": "LK21",
+      "name": "Đà Nẵng (Bến xe phía Nam) – Tam Kỳ",
+      "status": "active",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 104,
+          "verified": 43,
+          "unresolved": 61
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "04",
+      "routeNumber": "04",
+      "name": "Cầu Trần Thị Lý – Hoà Tiến",
+      "status": "suspended",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 04 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "10",
+      "routeNumber": "10",
+      "name": "Sân bay Đà Nẵng – Thọ Quang",
+      "status": "suspended",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 10 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    },
+    {
+      "id": "15",
+      "routeNumber": "R15",
+      "name": "Bến xe Trung tâm – Bến xe Phía Nam",
+      "status": "suspended",
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 15 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
+    }
+  ]
+}

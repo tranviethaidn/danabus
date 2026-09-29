@@ -124,6 +124,7 @@ class ChromeRunner:
         self.console_logs = []
         self.runtime_exceptions = []
         self.failed_requests = []
+        self.requests = {}
 
     def start(self):
         # 1. Start Python HTTP Server
@@ -180,40 +181,15 @@ class ChromeRunner:
         self.ws = SimpleWebSocket(ws_url)
         self.call("Page.enable")
         self.call("Runtime.enable")
+        self.call("Network.enable")
         self.call("Log.enable")
-        self.call("Page.addScriptToEvaluateOnNewDocument", {
-            "source": """
-                if (window.navigator && window.navigator.serviceWorker) {
-                    const origAdd = window.navigator.serviceWorker.addEventListener.bind(window.navigator.serviceWorker);
-                    window.navigator.serviceWorker.addEventListener = function(type, listener, ...args) {
-                        if (type === 'controllerchange') {
-                            console.log('[TestRunner] Suppressed spontaneous controllerchange reload');
-                            return;
-                        }
-                        return origAdd(type, listener, ...args);
-                    };
-                }
-            """
-        })
 
         # Single controlled navigation
         test_url = f"http://127.0.0.1:{PORT}/index.html"
         self.call("Page.navigate", {"url": test_url})
 
-        # Wait until page and data load completely with state predicate
-        self.wait_for_condition(
-            """Boolean(
-                document.readyState === 'complete' &&
-                window.app &&
-                window.app.loadState === 'ready' &&
-                window.busService &&
-                window.busService.isLoaded &&
-                window.busService.routes &&
-                window.busService.routes.length > 0
-            )""",
-            timeout=10.0,
-            description="Initial app and busService load"
-        )
+        # Wait until page and SW settle after real first-run takeover and reload
+        self.wait_for_settled(timeout=12.0)
 
     def _record_event(self, method, params):
         if method == "Runtime.consoleAPICalled":
@@ -227,8 +203,22 @@ class ChromeRunner:
         elif method == "Log.entryAdded":
             entry = params.get("entry", {})
             self.console_logs.append(f"[BROWSER-{entry.get('level', 'info').upper()}] {entry.get('text', '')}")
+        elif method == "Network.requestWillBeSent":
+            req_id = params.get("requestId")
+            req = params.get("request", {})
+            if req_id and "url" in req:
+                self.requests[req_id] = req["url"]
         elif method == "Network.loadingFailed":
-            self.failed_requests.append(f"Failed request: {params.get('errorText')} ({params.get('type')})")
+            req_id = params.get("requestId")
+            url = self.requests.get(req_id, params.get("type", "unknown"))
+            err = params.get("errorText", "unknown error")
+            req_type = params.get("type", "other")
+            self.failed_requests.append(f"Failed request: {url} - {err} ({req_type})")
+        elif method == "Network.responseReceived":
+            resp = params.get("response", {})
+            status = resp.get("status", 200)
+            if status >= 400:
+                self.failed_requests.append(f"HTTP {status}: {resp.get('url')}")
 
     def call(self, method, params=None):
         self.msg_id += 1
@@ -269,11 +259,53 @@ class ChromeRunner:
         start = time.time()
         desc = description or expr[:80]
         while time.time() - start < timeout:
-            val = self.evaluate(expr)
-            if val:
-                return val
+            try:
+                val = self.evaluate(expr)
+                if val:
+                    return val
+            except Exception:
+                pass
             time.sleep(step)
         raise TimeoutError(f"Condition timed out after {timeout:.1f}s: {desc}")
+
+    def wait_for_settled(self, timeout=12.0):
+        start = time.time()
+        predicate = """
+            (() => {
+                if (document.readyState !== 'complete') return null;
+                const sw = window.navigator?.serviceWorker;
+                if (!sw) return null;
+                const nav = performance.getEntriesByType('navigation')[0];
+                const navType = nav ? nav.type : null;
+                const controller = sw.controller;
+
+                const swSettled = (controller !== null && navType === 'reload');
+                if (!swSettled) return null;
+
+                const appReady = window.app && window.app.loadState === 'ready';
+                const busReady = window.busService && window.busService.isLoaded &&
+                                 window.busService.routes && window.busService.routes.length > 0;
+
+                if (appReady && busReady) {
+                    return {
+                        navType,
+                        controllerActive: true,
+                        appState: window.app.loadState,
+                        routesCount: window.busService.routes.length
+                    };
+                }
+                return null;
+            })()
+        """
+        while time.time() - start < timeout:
+            try:
+                val = self.evaluate(predicate)
+                if val:
+                    return val
+            except Exception:
+                pass
+            time.sleep(0.1)
+        raise TimeoutError(f"Page did not settle with SW controller & reload within {timeout}s")
 
     def capture_screenshot(self, output_path):
         output_path = Path(output_path)
@@ -380,13 +412,20 @@ def run_checks(test_diagnostic=False):
         if test_diagnostic:
             print("[TEST-DIAGNOSTIC] Intentionally triggering synthetic failure to verify diagnostic capture...")
             runner.evaluate("console.error('Synthetic diagnostic test error: simulated failure condition in suite B.2')")
+            # Trigger synthetic network failure to prove network diagnostics domain
+            runner.evaluate("(async () => { try { await fetch('/synthetic_diagnostic_404_test_fare'); } catch (e) {} })()")
+            # Trigger synthetic JS runtime exception via setTimeout to ensure Runtime.exceptionThrown event fires
+            runner.evaluate("setTimeout(() => { throw new Error('Synthetic diagnostic runtime error in suite B.2'); }, 0)")
             try:
                 runner.wait_for_condition("document.getElementById('non_existent_element_in_suite_b2') !== null", timeout=0.6, description="Synthetic element wait")
             except Exception as syn_err:
                 print(f"[TEST-DIAGNOSTIC] Caught expected synthetic error: {syn_err}")
                 runner.capture_diagnostics(diag_screenshot)
                 assert diag_screenshot.exists() and diag_screenshot.stat().st_size > 0, "Diagnostic screenshot must be written and non-empty!"
-                print(f"[TEST-DIAGNOSTIC] PASS: Diagnostic snapshot and screenshot verified ({diag_screenshot.stat().st_size} bytes)")
+                assert len(runner.console_logs) > 0, "Console logs must be captured!"
+                assert len(runner.runtime_exceptions) > 0, "Runtime exceptions must be captured!"
+                assert len(runner.failed_requests) > 0, "Failed network requests must be captured!"
+                print(f"[TEST-DIAGNOSTIC] PASS: Diagnostic snapshot, console, runtime, network, and screenshot verified ({diag_screenshot.stat().st_size} bytes)")
                 return
 
         # Check 1: Spotlight card fare, schedule subtitle & countdown

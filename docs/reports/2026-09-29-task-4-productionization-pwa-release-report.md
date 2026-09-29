@@ -1,9 +1,11 @@
 # Task 4 Productionization & PWA Release Upgrade — Implementation & Acceptance Report
 
+Task-ID: tsk_1a303d5c-8f66-4691-95cd-05c729d1644b
+
 **Core Task ID:** `tsk_1a303d5c-8f66-4691-95cd-05c729d1644b`  
 **Date:** 2026-09-29  
-**Role:** DEV  
-**State:** REVIEW SUBMISSION  
+**Role:** DEV implementation + TL verification  
+**State:** TL VERIFIED TECHNICAL ACCEPTANCE
 **Target Domain:** `https://danabus.638686.xyz/`  
 **Production Root:** `/var/www/danabus/public`  
 
@@ -172,3 +174,31 @@ Kịch bản [`scripts/deploy_danabus_production.sh`](file:///home/opc/danabus/s
 - Trạng thái cấp phép VIBELAB_RUNTIME: `git_push_authorized=OFF`.
 - Toàn bộ thay đổi mã nguồn, kịch bản triển khai, test suites và báo cáo nghiệm thu đã được lưu trữ và commit nội bộ trên branch `main`.
 - Tuân thủ tuyệt đối quy định không push remote khi chưa có ủy quyền `git_push_authorized=ON`.
+
+---
+
+## 7. TL Technical Acceptance - Current Review Run
+
+### Scope
+
+TL xác minh đúng phạm vi Task hiện tại: đưa Address-to-Address Trip Planner đã local technical PASS lên production, bump PWA/cache release identity sang `v10`, kiểm thử fresh/warm/offline upgrade, loại mixed-state deploy race, và chứng minh production artifact khớp release source. Không bật Google API, external walking provider hoặc realtime vehicle provider.
+
+### Independent Verification Evidence
+
+- `python3 scripts/test_production_pwa_runtime.py --repeat 3`: **3/3 fresh-profile runs PASS**, mỗi run **8/8 checks PASS**; xác minh real Service Worker takeover/controllerchange reload, planner E2E, multi-leg map, fresh install, `v9 -> v10` migration và offline fallback.
+- `python3 scripts/test_task10_regression_acceptance.py`: **20/20 PASS**; security, search, schedule/fare, data-quality, map/GPS, accessibility/UI và production browser smoke đều không regression.
+- SHA-256 workspace vs `/var/www/danabus/public`: **17/17 public whitelist deliverables equivalent**, 0 mismatch.
+- Live HTTP markers: production trả `danabus-cache-v10`, `v=20260929_v10` và `class TransitPlanner`.
+- Deploy-order invariant được xác minh: payload -> manifest -> atomic `index.html` -> atomic `sw.js` cuối cùng.
+
+### Review Result
+
+**PASS - TL VERIFIED TECHNICAL ACCEPTANCE.** Hai release-gate defects phát hiện ở review trước đã được sửa và tái kiểm chứng ổn định. Task đạt acceptance kỹ thuật để chuyển PO boundary.
+
+### Known Limitations
+
+- Location resolution vẫn dùng local curated POI/address/stop provider; chưa bật Google Places hoặc external geocoding provider theo scope.
+- Walking legs vẫn là Haversine estimate, không phải road-routing geometry thực.
+- Planner MVP giới hạn tối đa 1 transfer; coverage phụ thuộc các route/direction đạt `eligibleForPlanning` và data-quality contract.
+- Realtime vehicle/ETA không thuộc mandatory scope hiện tại.
+- `git_push_authorized=OFF`; local commits chưa push không phải acceptance blocker theo policy hiện hành.

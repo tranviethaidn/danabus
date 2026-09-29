@@ -1,7 +1,7 @@
 {
   "name": "Danabus - Tra Cứu Tuyến Xe Buýt Đà Nẵng",
   "short_name": "Danabus",
-  "description": "Ứng dụng tra cứu tuyến xe buýt, lộ trình, điểm dừng và thời gian thực tại Đà Nẵng & Hội An",
+  "description": "Ứng dụng tra cứu tuyến xe buýt, lộ trình, điểm dừng và lịch trình xuất bến tại Đà Nẵng & Hội An",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",

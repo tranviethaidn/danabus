@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#059669">
-  <meta name="description" content="Ứng dụng PWA tra cứu tuyến xe buýt Đà Nẵng, lộ trình, điểm dừng và thời gian thực">
+  <meta name="description" content="Ứng dụng PWA tra cứu tuyến xe buýt Đà Nẵng, lộ trình, điểm dừng và lịch trình xuất bến">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Danabus - Tra Cứu Xe Buýt Đà Nẵng</title>
@@ -55,7 +55,7 @@
   <meta http-equiv="Expires" content="0">
 
   <!-- Custom Styles with Cache-Busting Version -->
-  <link rel="stylesheet" href="css/app.css?v=20260924_v7">
+  <link rel="stylesheet" href="css/app.css?v=20260928_v9">
 </head>
 <body class="bg-surface text-on-surface flex flex-col min-h-screen antialiased select-none font-sans">
 
@@ -74,7 +74,7 @@
       </div>
 
       <div id="header-sub" class="hidden items-center gap-2 flex-1 px-1">
-        <button id="btn-header-back" type="button" class="w-9 h-9 flex items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 active:scale-90 transition-transform p-1.5">
+        <button id="btn-header-back" type="button" aria-label="Quay lại" title="Quay lại" class="w-9 h-9 flex items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 active:scale-90 transition-transform p-1.5">
           <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
         </button>
         <div class="flex flex-col flex-1 min-w-0">
@@ -98,6 +98,26 @@
   <!-- Main View Router Container -->
   <main class="flex-1 flex flex-col relative w-full pt-14 pb-20 bg-surface">
 
+    <!-- App Loading State -->
+    <div id="app-loading-state" class="hidden flex-col items-center justify-center py-16 px-4 text-center" aria-live="polite">
+      <div class="w-10 h-10 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mb-3"></div>
+      <p class="font-bold text-[15px] text-slate-800">Đang tải dữ liệu xe buýt...</p>
+      <p class="text-[12px] text-slate-500 mt-1">Vui lòng chờ trong giây lát</p>
+    </div>
+
+    <!-- App Error / Offline State -->
+    <div id="app-error-state" role="alert" aria-live="assertive" class="hidden flex-col items-center justify-center py-16 px-4 text-center">
+      <div class="w-14 h-14 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mb-3">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      </div>
+      <h2 id="app-error-title" class="font-bold text-[16px] text-slate-900">Không thể tải dữ liệu xe buýt</h2>
+      <p id="app-error-desc" class="text-[13px] text-slate-500 mt-1.5 max-w-xs">Không thể kết nối tới máy chủ hoặc thiết bị đang ngoại tuyến. Vui lòng kiểm tra kết nối và thử lại.</p>
+      <button type="button" id="btn-retry-load" class="mt-4 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold text-[14px] hover:bg-emerald-700 active:scale-95 transition-all shadow-sm flex items-center gap-1.5">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        <span>Thử lại</span>
+      </button>
+    </div>
+
     <!-- ============================================================= -->
     <!-- VIEW 1: TRANG CHỦ TÌM CHUYẾN ĐI (#view-home)                  -->
     <!-- ============================================================= -->
@@ -105,13 +125,13 @@
       <!-- Hero Title -->
       <section class="pt-2 pb-1 text-center">
         <h1 class="text-[26px] font-extrabold text-slate-900 tracking-tight leading-tight">Bạn muốn đi đâu?</h1>
-        <p class="text-[13px] text-slate-500 mt-0.5 font-medium">Tra cứu lộ trình & xe buýt trực tiếp tại Đà Nẵng</p>
+        <p class="text-[13px] text-slate-500 mt-0.5 font-medium">Tra cứu lộ trình & lịch trình xe buýt tại Đà Nẵng</p>
       </section>
 
       <!-- Search Card (Stitch Design) -->
       <section class="bg-white rounded-2xl shadow-lg shadow-emerald-950/5 border border-emerald-100/60 p-4 flex flex-col gap-3">
         <!-- Pickup Row -->
-        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 cursor-pointer" onclick="app.openLocationPicker('origin')">
+        <button type="button" id="btn-home-origin" aria-label="Chọn điểm đón" class="w-full text-left flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-emerald-200 transition-colors cursor-pointer" onclick="app.openLocationPicker('origin')">
           <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 p-1.5">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
           </div>
@@ -119,12 +139,12 @@
             <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Điểm đón</p>
             <p id="home-origin-display" class="text-[14px] font-medium text-slate-800 truncate">Chọn điểm đón</p>
           </div>
-          <button type="button" class="text-[12px] font-semibold text-emerald-600 px-2 py-1 rounded-lg hover:bg-emerald-50 transition-colors">Đổi</button>
-        </div>
+          <span class="text-[12px] font-semibold text-emerald-600 px-2 py-1 rounded-lg hover:bg-emerald-50 transition-colors">Đổi</span>
+        </button>
 
         <!-- Connector Line & Swap Button -->
         <div class="relative flex items-center justify-center -my-2 z-10">
-          <button type="button" id="btn-swap-locations" class="w-7 h-7 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-500 active:scale-90 hover:text-emerald-600 transition-all p-1">
+          <button type="button" id="btn-swap-locations" aria-label="Đổi vị trí điểm đón và điểm đến" title="Đổi vị trí đón - đến" class="w-7 h-7 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-500 active:scale-90 hover:text-emerald-600 transition-all p-1">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
           </button>
         </div>
@@ -136,15 +156,15 @@
           </div>
           <div class="flex-1 min-w-0" onclick="app.openLocationPicker('destination')">
             <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Điểm đến</p>
-            <input id="home-destination-input" type="text" readonly placeholder="Hội An, Cửa Đại, Cầu Rồng..." class="w-full bg-transparent text-[14px] font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none cursor-pointer">
+            <input id="home-destination-input" type="text" readonly placeholder="Hội An, Cửa Đại, Cầu Rồng..." aria-label="Điểm đến: Hội An, Cửa Đại, Cầu Rồng..." class="w-full bg-transparent text-[14px] font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none cursor-pointer">
           </div>
-          <button id="home-voice-btn" type="button" title="Tìm bằng giọng nói" class="w-8 h-8 rounded-lg text-slate-400 hover:text-emerald-600 flex items-center justify-center active:scale-90 transition-colors p-1.5">
+          <button id="home-voice-btn" type="button" class="hidden" style="display: none;" disabled aria-hidden="true" title="Tìm bằng giọng nói">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
           </button>
         </div>
 
         <!-- Validation Error Message Area -->
-        <div id="home-search-error" class="hidden text-[12px] text-rose-600 bg-rose-50 border border-rose-200/80 rounded-xl px-3 py-2 font-medium flex items-center gap-2">
+        <div id="home-search-error" role="alert" aria-live="assertive" class="hidden text-[12px] text-rose-600 bg-rose-50 border border-rose-200/80 rounded-xl px-3 py-2 font-medium flex items-center gap-2">
           <span class="w-4 h-4 shrink-0 text-rose-500">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
           </span>
@@ -172,23 +192,23 @@
       </section>
 
       <!-- Featured Route Spotlight Card -->
-      <section id="home-spotlight-card" class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex flex-col gap-3 cursor-pointer active:scale-[0.99] transition-transform">
+      <section id="home-spotlight-card" role="button" tabindex="0" aria-label="Chi tiết lộ trình Tuyến 02: Đà Nẵng - Hội An" class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex flex-col gap-3 cursor-pointer active:scale-[0.99] transition-transform">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2.5">
             <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold text-[16px] flex items-center justify-center shrink-0 shadow-sm">02</span>
             <div>
               <h3 class="text-[15px] font-bold text-slate-900 leading-tight">Tuyến 02: Đà Nẵng ⇄ Hội An</h3>
-              <p class="text-[12px] text-slate-500 mt-0.5">Tần suất 15 phút • 05:15 - 18:30</p>
+              <p id="spotlight-schedule" class="text-[12px] text-slate-500 mt-0.5">Tần suất 15-30 phút • 05:15 - 18:30</p>
             </div>
           </div>
-          <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[13px]">30.000đ</span>
+          <span id="spotlight-fare" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[13px]">8.000đ - 30.000đ</span>
         </div>
         <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[13px]">
           <div class="flex items-center gap-1.5 text-emerald-700 font-semibold">
-            <span class="w-4 h-4 text-emerald-600 animate-pulse">
+            <span class="w-4 h-4 text-emerald-600">
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
             </span>
-            <span id="spotlight-countdown">Chuyến tới: 6 phút</span>
+            <span id="spotlight-countdown">Đang cập nhật...</span>
           </div>
           <span class="text-emerald-700 font-semibold flex items-center hover:underline gap-0.5">
             Chi tiết lộ trình
@@ -217,7 +237,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
           </div>
           <input type="text" id="route-search-input" placeholder="Tìm số tuyến (02, 05, LK01) hoặc tên đường..." class="w-full h-12 pl-10 pr-10 rounded-2xl bg-transparent text-slate-800 text-[14px] placeholder:text-slate-400 focus:outline-none">
-          <button id="btn-clear-route-search" class="hidden absolute right-3 w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 flex items-center justify-center p-1">
+          <button id="btn-clear-route-search" type="button" aria-label="Xóa từ khóa tìm kiếm" title="Xóa" class="hidden absolute right-3 w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 flex items-center justify-center p-1">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
           </button>
         </div>
@@ -235,7 +255,7 @@
       <!-- Count Header -->
       <div class="px-4 mt-2 flex items-center justify-between">
         <span class="text-[13px] font-semibold text-slate-600 uppercase tracking-wide">Danh sách tuyến xe</span>
-        <span class="text-[12px] text-slate-400 font-medium" id="route-count-label">20 tuyến đang chạy</span>
+        <span class="text-[12px] text-slate-400 font-medium" id="route-count-label" aria-live="polite">20 tuyến đang chạy</span>
       </div>
 
       <!-- Route Cards List -->
@@ -274,8 +294,8 @@
           <div class="flex items-center gap-2">
             <span id="detail-badge-category" class="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white font-bold text-[11px]">Trợ giá</span>
             <span id="detail-badge-status" class="px-2.5 py-0.5 rounded-full bg-emerald-400 text-emerald-950 font-bold text-[11px] flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-950 animate-pulse"></span>
-              Đang hoạt động
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-950"></span>
+              Đang hoạt động (theo lịch)
             </span>
           </div>
           <h2 id="detail-route-title" class="text-[20px] font-extrabold tracking-tight leading-tight">Tuyến 02: Bến xe TT - Cửa Đại</h2>
@@ -311,7 +331,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M16.24 7.76A5.974 5.974 0 0 0 12 6v6l-4.24 4.24c2.34 2.34 6.14 2.34 8.49 0a5.99 5.99 0 0 0-.01-8.48zM12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.48 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
             </span>
             <span class="text-[11px] font-semibold text-slate-400">Giãn cách</span>
-            <span id="detail-stat-freq" class="text-[13px] font-bold text-slate-800">15-30 phút</span>
+            <span id="detail-stat-freq" class="text-[13px] font-bold text-slate-800">Đang cập nhật</span>
           </div>
           <div class="flex flex-col items-center">
             <span class="w-5 h-5 text-emerald-600 mb-0.5">
@@ -329,11 +349,11 @@
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-9 7.5h-2v-2h2v2zm0-4.5h-2v-2h2v2zm0-4.5h-2v-2h2v2z"/></svg>
             </span>
             <div class="text-[13px] text-emerald-900">
-              <span class="font-bold" id="detail-fare-single">Vé lượt: 8.000đ</span>
-              <span class="text-[11px] text-emerald-700 block" id="detail-fare-note">Áp dụng thẻ vé tháng và ưu tiên học sinh sinh viên</span>
+              <span class="font-bold" id="detail-fare-single">Vé lượt: Đang cập nhật</span>
+              <span class="text-[11px] text-emerald-700 block" id="detail-fare-note">Thông tin biểu giá chính thức</span>
             </div>
           </div>
-          <span id="detail-fare-tag" class="text-[11px] font-bold px-2 py-0.5 rounded bg-white text-emerald-700 shadow-xs shrink-0">Trợ giá</span>
+          <span id="detail-fare-tag" class="text-[11px] font-bold px-2 py-0.5 rounded bg-white text-emerald-700 shadow-xs shrink-0">Thông tin vé</span>
         </div>
 
         <!-- View Mode Switch: Sơ đồ trạm dừng / Bản đồ số GPS -->
@@ -374,13 +394,13 @@
         </div>
       </div>
 
-      <!-- Floating Live Tracking Bottom CTA -->
+      <!-- Floating Route Map Bottom CTA -->
       <div class="fixed bottom-16 left-0 right-0 p-3 bg-white/90 backdrop-blur-md border-t border-slate-100 z-30 flex justify-center">
         <button id="btn-floating-map" type="button" class="w-full max-w-md h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 font-bold text-[14px] active:scale-[0.98] transition-all">
-          <span class="w-5 h-5 animate-pulse">
+          <span class="w-5 h-5">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><circle cx="12" cy="12" r="2"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
           </span>
-          <span>Xem bản đồ số & Theo dõi trực tiếp</span>
+          <span>Xem bản đồ số & Lộ trình trạm</span>
         </button>
       </div>
     </div>
@@ -403,7 +423,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M15 3l2.3 2.3-2.89 2.87 1.42 1.42L18.7 6.7 21 9V3h-6zM3 9l2.3-2.3 2.87 2.89 1.42-1.42L6.7 5.3 9 3H3v6zm6 12l-2.3-2.3 2.89-2.87-1.42-1.42L5.3 17.3 3 15v6h6zm12-6l-2.3 2.3-2.87-2.89-1.42 1.42 2.89 2.87L15 21h6v-6z"/></svg>
             <span>Toàn tuyến</span>
           </button>
-          <button id="btn-map-locate" type="button" class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center active:scale-90 shadow-xs p-2 transition-all" title="Vị trí của bạn">
+          <button id="btn-map-locate" type="button" aria-label="Định vị vị trí của bạn" class="w-9 h-9 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center justify-center active:scale-90 shadow-xs p-2 transition-all" title="Vị trí của bạn">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
           </button>
         </div>
@@ -442,20 +462,20 @@
             <span id="trip-header-title" class="text-[17px] font-bold text-slate-900 truncate">Bến xe TT ➔ Hội An</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <button type="button" id="btn-trip-swap" title="Đổi chiều di chuyển" class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-slate-100 active:scale-95 transition-all">
+            <button type="button" id="btn-trip-swap" title="Đổi chiều di chuyển" aria-label="Đổi chiều di chuyển" class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-700 hover:bg-slate-100 active:scale-95 transition-all">
               <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg>
             </button>
             <span id="trip-bus-tag" class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold flex items-center gap-1">
-              Xe điện FUTA
+              Tuyến buýt Danabus
             </span>
           </div>
         </div>
         <div id="trip-stats-strip" class="flex items-center gap-3 text-slate-500 text-[12px] pl-4.5">
-          <span id="trip-stat-km" class="font-medium">46,7 km</span>
+          <span id="trip-stat-km" class="font-medium">-- km</span>
+          <span id="trip-stat-time-dot" class="opacity-40 hidden">•</span>
+          <span id="trip-stat-time" class="font-medium hidden">Chưa có dữ liệu</span>
           <span class="opacity-40">•</span>
-          <span id="trip-stat-time" class="font-medium">~75-90 phút</span>
-          <span class="opacity-40">•</span>
-          <span id="trip-stat-stops" class="text-emerald-700 font-semibold">47 trạm</span>
+          <span id="trip-stat-stops" class="text-emerald-700 font-semibold">-- trạm</span>
         </div>
       </div>
 
@@ -466,10 +486,10 @@
           <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-3.5 relative overflow-hidden">
             <div class="flex items-start justify-between">
               <div class="flex flex-col gap-0.5">
-                <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến sắp khởi hành</span>
+                <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến dự kiến theo lịch</span>
                 <div class="flex items-baseline gap-2 mt-1">
-                  <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">08:30</span>
-                  <span id="trip-countdown-timer" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold animate-pulse">Còn 6 phút</span>
+                  <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">--:--</span>
+                  <span id="trip-countdown-timer" aria-live="polite" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold">Đang cập nhật</span>
                 </div>
                 <span class="text-[12px] text-slate-500 mt-1 font-medium flex items-center gap-1.5">
                   <span class="w-4 h-4 text-emerald-600 shrink-0"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
@@ -483,18 +503,18 @@
             <div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
               <div class="flex flex-col items-center justify-center p-1">
                 <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg></span>
-                <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">30.000đ</span>
+                <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">--</span>
                 <span class="text-[10px] text-slate-400">Suốt tuyến</span>
               </div>
               <div class="flex flex-col items-center justify-center p-1 border-x border-slate-200/60">
                 <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
-                <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">15-30p</span>
+                <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">--</span>
                 <span class="text-[10px] text-slate-400">/chuyến</span>
               </div>
               <div class="flex flex-col items-center justify-center p-1">
                 <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M18.92 2.01C18.72 1.42 18.16 1 17.5 1h-11c-.66 0-1.21.42-1.42 1.01L3 8v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V8l-2.08-5.99zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 7l1.5-4.5h11L19 7H5z"/></svg></span>
-                <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">Xe Kim Long</span>
-                <span class="text-[10px] text-slate-400">Máy lạnh 100%</span>
+                <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">--</span>
+                <span id="trip-fleet-desc" class="text-[10px] text-slate-400">Phương tiện</span>
               </div>
             </div>
 
@@ -512,17 +532,20 @@
               </div>
               <div class="flex flex-col">
                 <div class="flex items-center gap-2">
-                  <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: 08:50</span>
-                  <span id="trip-later-diff" class="text-[11px] text-slate-500">(sau 26 phút)</span>
+                  <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: --:--</span>
+                  <span id="trip-later-diff" class="text-[11px] text-slate-500"></span>
                 </div>
-                <span class="text-[11px] text-slate-400">Xuất bến định kỳ • Đầy đủ ghế ngồi</span>
+                <span id="trip-later-note" class="text-[11px] text-slate-400">Xuất bến theo lịch trình công bố</span>
               </div>
             </div>
-            <button id="btn-remind-trip" type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-100 text-[11px] font-semibold active:scale-95 transition-transform">
+            <button id="btn-remind-trip" type="button" class="hidden" style="display: none;" disabled aria-hidden="true">
               <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
               <span>Nhắc tôi</span>
             </button>
           </div>
+
+          <!-- Trip Planner Multi-Leg Options (Task 4) -->
+          <div id="trip-planner-options" class="flex flex-col gap-3"></div>
         </div>
 
         <!-- EMPTY / NO-RESULT CONTAINER (FAIL-CLOSED) -->
@@ -565,7 +588,7 @@
       <!-- Modal Header -->
       <div class="px-4 pt-4 pb-2 bg-white border-b border-slate-100 flex items-center justify-between">
         <h3 id="modal-picker-title" class="font-bold text-[16px] text-slate-900">Chọn Vị Trí</h3>
-        <button id="btn-close-picker" type="button" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center active:scale-90 p-1.5">
+        <button id="btn-close-picker" type="button" aria-label="Đóng cửa sổ chọn vị trí" title="Đóng" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center active:scale-90 p-1.5">
           <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </div>
@@ -576,8 +599,8 @@
           <span class="w-5 h-5 text-emerald-600 ml-3 shrink-0">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
           </span>
-          <input id="picker-search-input" type="text" placeholder="Tìm trạm buýt, địa danh (Chợ Cồn, Cầu Rồng...)" class="w-full h-11 px-2.5 bg-transparent text-[13px] text-slate-800 placeholder:text-slate-400 focus:outline-none">
-          <button id="picker-voice-btn" type="button" title="Tìm giọng nói" class="w-8 h-8 mr-1 text-slate-400 hover:text-emerald-600 flex items-center justify-center p-1.5">
+          <input id="picker-search-input" type="text" placeholder="Tìm trạm buýt, địa danh (Chợ Cồn, Cầu Rồng...)" aria-label="Tìm kiếm trạm buýt hoặc địa danh" class="w-full h-11 px-2.5 bg-transparent text-[13px] text-slate-800 placeholder:text-slate-400 focus:outline-none">
+          <button id="picker-voice-btn" type="button" class="hidden" style="display: none;" disabled aria-hidden="true" title="Tìm giọng nói">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
           </button>
         </div>
@@ -588,7 +611,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
           </span>
           <span id="picker-current-location-label" class="flex-1 text-left truncate">Sử dụng vị trí hiện tại (GPS)</span>
-          <span id="picker-current-location-status" class="text-emerald-600 font-bold">Lấy vị trí</span>
+          <span id="picker-current-location-status" class="text-emerald-600 font-bold" aria-live="polite">Lấy vị trí</span>
         </button>
       </div>
 
@@ -639,10 +662,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- App Logic & Services with Cache-Busting Version -->
-  <script src="js/icons.js?v=20260924_v7"></script>
-  <script src="js/busService.js?v=20260924_v7"></script>
-  <script src="js/mapService.js?v=20260924_v7"></script>
-  <script src="js/app.js?v=20260924_v7"></script>
+  <script src="js/icons.js?v=20260928_v9"></script>
+  <script src="js/busService.js?v=20260928_v9"></script>
+  <script src="js/mapService.js?v=20260928_v9"></script>
+  <script src="js/app.js?v=20260928_v9"></script>
 
   <!-- Register PWA Service Worker with Auto-Update & Immediate Activation -->
   <script>

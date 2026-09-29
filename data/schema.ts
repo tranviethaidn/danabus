@@ -46,9 +46,15 @@ export interface OperatingHours {
   raw: string;         // "từ 05h30 đến 19h00..."
 }
 
+export type FrequencyType = 'fixed' | 'range' | 'peak_offpeak' | 'irregular';
+
 export interface Frequency {
+  type?: FrequencyType;
   peakMinutes?: number | null;
   offPeakMinutes?: number | null;
+  minMinutes?: number | null;
+  maxMinutes?: number | null;
+  exactHeadway?: boolean;
   raw: string;
 }
 
@@ -64,11 +70,52 @@ export interface Terminals {
   destination: string;
 }
 
+export type FareType = 'flat' | 'distance_tiered' | 'unknown';
+
+export interface FareTier {
+  name: string;
+  distanceMaxKm?: number | null;
+  price: number;
+  targetGroup?: 'all' | 'standard' | 'student';
+}
+
+export interface FareProvenance {
+  source: 'subsidized_policy' | 'official_fare_table' | 'operator_notice' | 'unknown';
+  verifiedAt?: string;
+  note?: string;
+}
+
 export interface FareInfo {
+  type?: FareType;
+  flatPrice?: number | null;
   singleTicket?: number | null;
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  studentPrice?: number | null;
+  tiers?: FareTier[];
   monthlyRegular?: number | null;
   monthlyPriority?: number | null;
+  provenance?: FareProvenance;
   rawSummary?: string;
+}
+
+export type ScheduleStatus =
+  | 'before_service'
+  | 'in_service'
+  | 'after_service'
+  | 'next_day'
+  | 'unknown';
+
+export interface ScheduleDepartureResult {
+  status: ScheduleStatus;
+  timeStr: string | null;
+  minutesUntilDeparture: number | null;
+  minutesLeft: number | null;
+  isOperating: boolean;
+  isNextDay: boolean;
+  source: 'timetable' | 'frequency' | 'unknown';
+  message: string;
+  trip?: TimetableTrip | null;
 }
 
 export interface TimetableTrip {
@@ -99,6 +146,51 @@ export interface RouteGeometry {
 }
 
 /**
+ * Task 8: Data Quality Contract & Planner Readiness Interfaces
+ */
+export interface DirectionStopMetrics {
+  total: number;
+  verified: number;
+  unresolved: number;
+}
+
+export interface DirectionDataQuality {
+  stopsReady: boolean;
+  geometryReady: boolean;
+  eligibleForPlanning: boolean;
+  reason?: string | null;
+}
+
+export interface DataQuality {
+  hasOutboundStops: boolean;
+  hasInboundStops: boolean;
+  hasOutboundGeometry: boolean;
+  hasInboundGeometry: boolean;
+  hasFareModel: boolean;
+  tripPlanningReady: boolean;
+  directions: {
+    outbound: DirectionDataQuality;
+    inbound: DirectionDataQuality;
+  };
+  stopMetrics: {
+    outbound: DirectionStopMetrics;
+    inbound: DirectionStopMetrics;
+  };
+  ineligibilityReasons?: string[];
+  evaluatedAt?: string;
+}
+
+export interface NearbyStopCandidate extends BusStop {
+  id?: string;
+  distanceMeters: number;
+}
+
+export interface NearbyStopsOptions {
+  maxDistanceMeters?: number;
+  limit?: number;
+}
+
+/**
  * Full Bus Route Entity
  */
 export interface BusRoute {
@@ -123,6 +215,7 @@ export interface BusRoute {
   timetable?: Timetable;
   vehicleInfo?: string;
   pdfUrls: string[];
+  dataQuality?: DataQuality;
 }
 
 /**

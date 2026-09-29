@@ -16,6 +16,7 @@ class MapService {
     this.currentRoute = null;
     this.currentDirection = 'outbound';
     this.defaultCenter = [16.0544, 108.2022]; // Da Nang Center
+    this.tripPolylines = [];
   }
 
   init(containerId = 'map-container') {
@@ -52,6 +53,9 @@ class MapService {
     if (!this.map) return;
     if (this.routeLine) {
       this.map.fitBounds(this.routeLine.getBounds(), { padding: [30, 30] });
+    } else if (this.tripPolylines && this.tripPolylines.length > 0) {
+      const group = L.featureGroup(this.tripPolylines);
+      this.map.fitBounds(group.getBounds(), { padding: [30, 30] });
     } else if (this.currentRoute) {
       const stops = (this.currentRoute.stops?.[this.currentDirection] || []).filter(
         s => s && typeof s.lat === 'number' && typeof s.lng === 'number' && !isNaN(s.lat) && !isNaN(s.lng)
@@ -323,7 +327,166 @@ class MapService {
       this.map.removeLayer(this.routeLine);
       this.routeLine = null;
     }
+    this.clearTripLayers();
     this.removeInfoOverlay();
+  }
+
+  clearTripLayers() {
+    if (this.tripPolylines && Array.isArray(this.tripPolylines)) {
+      this.tripPolylines.forEach(layer => {
+        if (this.map && layer) this.map.removeLayer(layer);
+      });
+    }
+    this.tripPolylines = [];
+  }
+
+  renderTrip(trip) {
+    if (!this.map || !trip || !Array.isArray(trip.legs)) return;
+    this.clear();
+    this.clearTripLayers();
+
+    const allPoints = [];
+
+    // Render each leg
+    trip.legs.forEach((leg, legIdx) => {
+      if (leg.type === 'walking') {
+        if (Array.isArray(leg.fromCoords) && Array.isArray(leg.toCoords)) {
+          allPoints.push(leg.fromCoords);
+          allPoints.push(leg.toCoords);
+
+          // Dashed gray line indicating estimated walking (straight line reference, not road geometry)
+          const walkLine = L.polyline([leg.fromCoords, leg.toCoords], {
+            color: '#64748b',
+            weight: 3,
+            dashArray: '6, 8',
+            opacity: 0.8
+          }).addTo(this.map);
+          walkLine.bindPopup(`
+            <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+              <span class="font-bold text-slate-700">Đoạn đi bộ ước tính</span>
+              <p class="text-slate-500 text-[11px] mt-0.5">${leg.summary || 'Khoảng cách ước tính'}</p>
+              <p class="text-slate-400 text-[10px] mt-0.5 italic">Đường thẳng tham khảo, không phải lộ trình đường bộ thực tế</p>
+            </div>
+          `);
+          this.tripPolylines.push(walkLine);
+        }
+      } else if (leg.type === 'transit') {
+        const routeColor = legIdx === 1 ? '#059669' : '#2563eb';
+        if (Array.isArray(leg.geometry) && leg.geometry.length > 1) {
+          leg.geometry.forEach(p => allPoints.push(p));
+          const busLine = L.polyline(leg.geometry, {
+            color: routeColor,
+            weight: 5,
+            opacity: 0.9,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(this.map);
+          busLine.bindPopup(`
+            <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+              <span class="font-bold text-slate-900">Tuyến ${leg.routeNumber || ''}</span>
+              <p class="text-slate-600 text-[11px] mt-0.5">${leg.routeName || ''}</p>
+              <p class="text-slate-400 text-[10px] mt-0.5">${leg.stopsCount || 0} trạm dừng (~${leg.durationMinutes || 0} phút)</p>
+            </div>
+          `);
+          this.tripPolylines.push(busLine);
+        } else {
+          // If geometry missing for transit leg
+          if (leg.boardingStop?.lat && leg.alightingStop?.lat) {
+            allPoints.push([leg.boardingStop.lat, leg.boardingStop.lng]);
+            allPoints.push([leg.alightingStop.lat, leg.alightingStop.lng]);
+          }
+        }
+      }
+    });
+
+    // Render distinct Origin (A) and Destination (B) markers
+    const originLeg = trip.legs[0];
+    const destLeg = trip.legs[trip.legs.length - 1];
+
+    if (originLeg && Array.isArray(originLeg.fromCoords)) {
+      const origHtml = `
+        <div class="relative flex items-center justify-center cursor-pointer">
+          <div class="w-8 h-8 rounded-full bg-[#059669] text-white shadow-lg ring-4 ring-emerald-200 flex items-center justify-center font-extrabold text-[13px]">
+            A
+          </div>
+        </div>
+      `;
+      const origIcon = L.divIcon({ html: origHtml, className: 'trip-origin-marker', iconSize: [32, 32], iconAnchor: [16, 16] });
+      const origMarker = L.marker(originLeg.fromCoords, { icon: origIcon, zIndexOffset: 2000 }).addTo(this.markersLayer);
+      origMarker.bindPopup(`
+        <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+          <span class="font-bold text-emerald-700">Điểm đón (A)</span>
+          <p class="text-slate-800 font-medium text-[12px] mt-0.5">${originLeg.fromLabel || 'Điểm đón'}</p>
+        </div>
+      `);
+    }
+
+    if (destLeg && Array.isArray(destLeg.toCoords)) {
+      const destHtml = `
+        <div class="relative flex items-center justify-center cursor-pointer">
+          <div class="w-8 h-8 rounded-full bg-[#dc2626] text-white shadow-lg ring-4 ring-red-200 flex items-center justify-center font-extrabold text-[13px]">
+            B
+          </div>
+        </div>
+      `;
+      const destIcon = L.divIcon({ html: destHtml, className: 'trip-dest-marker', iconSize: [32, 32], iconAnchor: [16, 16] });
+      const destMarker = L.marker(destLeg.toCoords, { icon: destIcon, zIndexOffset: 2000 }).addTo(this.markersLayer);
+      destMarker.bindPopup(`
+        <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+          <span class="font-bold text-red-600">Điểm đến (B)</span>
+          <p class="text-slate-800 font-medium text-[12px] mt-0.5">${destLeg.toLabel || 'Điểm đến'}</p>
+        </div>
+      `);
+    }
+
+    // Render transit boarding, transfer, alighting stops
+    trip.legs.forEach((leg, idx) => {
+      if (leg.type === 'transit') {
+        const bStop = leg.boardingStop;
+        const aStop = leg.alightingStop;
+
+        if (bStop && typeof bStop.lat === 'number') {
+          const bIcon = L.divIcon({
+            html: `<div class="w-6 h-6 rounded-full bg-white text-emerald-700 border-2 border-emerald-600 shadow-md flex items-center justify-center font-bold text-[11px]">🚏</div>`,
+            className: 'trip-stop-board',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+          const bMarker = L.marker([bStop.lat, bStop.lng], { icon: bIcon, zIndexOffset: 1500 }).addTo(this.markersLayer);
+          bMarker.bindPopup(`
+            <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+              <span class="font-bold text-emerald-700">Lên xe: Tuyến ${leg.routeNumber || ''}</span>
+              <p class="text-slate-800 font-medium text-[12px] mt-0.5">${bStop.name || 'Trạm đón'}</p>
+            </div>
+          `);
+        }
+
+        if (aStop && typeof aStop.lat === 'number') {
+          const isTransfer = idx < trip.legs.length - 2;
+          const aIcon = L.divIcon({
+            html: `<div class="w-6 h-6 rounded-full ${isTransfer ? 'bg-amber-500 text-white' : 'bg-white text-red-600 border-2 border-red-500'} shadow-md flex items-center justify-center font-bold text-[11px]">${isTransfer ? '🔄' : '🚏'}</div>`,
+            className: isTransfer ? 'trip-stop-transfer' : 'trip-stop-alight',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+          const aMarker = L.marker([aStop.lat, aStop.lng], { icon: aIcon, zIndexOffset: 1500 }).addTo(this.markersLayer);
+          aMarker.bindPopup(`
+            <div class="p-1 font-['Be_Vietnam_Pro'] text-[12px]">
+              <span class="font-bold ${isTransfer ? 'text-amber-600' : 'text-red-600'}">${isTransfer ? 'Trạm chuyển tuyến' : 'Xuống xe'}</span>
+              <p class="text-slate-800 font-medium text-[12px] mt-0.5">${aStop.name || 'Trạm xuống'}</p>
+            </div>
+          `);
+        }
+      }
+    });
+
+    // Fit map bounds to trip points
+    if (allPoints.length > 1) {
+      const bounds = L.latLngBounds(allPoints);
+      this.map.fitBounds(bounds, { padding: [40, 40] });
+    } else if (allPoints.length === 1) {
+      this.map.setView(allPoints[0], 14);
+    }
   }
 }
 

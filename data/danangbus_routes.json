@@ -20,8 +20,12 @@
       "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -34,7 +38,15 @@
       "singleTicket": 8000,
       "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
       "monthlyPriority": 80000,
-      "monthlyRegular": 160000
+      "monthlyRegular": 160000,
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé xe buýt nội thành Đà Nẵng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -6179,6 +6191,41 @@
           "validation": "Validation PASS (28 anchors, 583 points, 17.87km, max_stop_dist 56.8m)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": true,
+      "hasInboundGeometry": true,
+      "hasFareModel": true,
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 37,
+          "verified": 31,
+          "unresolved": 6
+        },
+        "inbound": {
+          "total": 33,
+          "verified": 28,
+          "unresolved": 5
+        }
+      },
+      "ineligibilityReasons": []
     }
   },
   {
@@ -6202,8 +6249,12 @@
       "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -6216,7 +6267,15 @@
       "singleTicket": 8000,
       "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
       "monthlyPriority": 80000,
-      "monthlyRegular": 160000
+      "monthlyRegular": 160000,
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé xe buýt nội thành Đà Nẵng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -6299,6 +6358,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -6322,8 +6419,12 @@
       "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -6336,7 +6437,15 @@
       "singleTicket": 8000,
       "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
       "monthlyPriority": 80000,
-      "monthlyRegular": 160000
+      "monthlyRegular": 160000,
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé xe buýt nội thành Đà Nẵng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -6403,6 +6512,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -6426,8 +6573,12 @@
       "raw": "từ 05h30 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -6440,7 +6591,15 @@
       "singleTicket": 8000,
       "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
       "monthlyPriority": 80000,
-      "monthlyRegular": 160000
+      "monthlyRegular": 160000,
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé xe buýt nội thành Đà Nẵng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -6517,6 +6676,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -6540,8 +6737,12 @@
       "raw": "từ 05h30 đến 19h00 (10 phút/chuyến trong giờ cao điểm, 30 phút/chuyến trong giờ thấp điểm)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 10,
       "offPeakMinutes": 30,
+      "minMinutes": 10,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "10 phút/chuyến trong giờ cao điểm, 30 phút/chuyến trong giờ thấp điểm"
     },
     "distanceKm": {
@@ -6554,7 +6755,15 @@
       "singleTicket": 8000,
       "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên đơn tuyến: 80.000 đồng/tháng.\n+ Vé tháng ưu tiên liên tuyến: 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên đơn tuyến: 160.000 đồng/tháng.\n+ Vé tháng không ưu tiên liên tuyến: 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbu",
       "monthlyPriority": 80000,
-      "monthlyRegular": 160000
+      "monthlyRegular": 160000,
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé xe buýt nội thành Đà Nẵng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -6637,6 +6846,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -6655,13 +6902,17 @@
       "destination": "Bãi đỗ xe Bến thủy nội địa Cửa Đại (Phường Hội An Đông)"
     },
     "operatingHours": {
-      "start": "5:15",
+      "start": "05:15",
       "end": "18:30",
       "raw": "từ 5h15 đến 18h30."
     },
     "frequency": {
-      "peakMinutes": 30,
+      "type": "range",
+      "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15-30 phút/lượt."
     },
     "distanceKm": {
@@ -6671,8 +6922,43 @@
       "raw": "+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt."
     },
     "fares": {
-      "singleTicket": 8000,
-      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - Suốt tuyến: 30.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khách/lượt.\n- Giá vé lượt áp d"
+      "singleTicket": null,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - Suốt tuyến: 30.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khách/lượt.\n- Giá vé lượt áp d",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 8000,
+      "maxPrice": 30000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Từ 10km trở xuống",
+          "distanceMaxKm": 10,
+          "price": 8000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 10km đến 25km",
+          "distanceMaxKm": 25,
+          "price": 20000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 25km đến suốt tuyến",
+          "distanceMaxKm": null,
+          "price": 30000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Học sinh, sinh viên",
+          "distanceMaxKm": null,
+          "price": 8000,
+          "targetGroup": "student"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé theo cự ly tuyến 02 Đà Nẵng - Hội An"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8049,6 +8335,44 @@
           "reason": "Validation failed: Total length 46.97km deviates from expected 10.0km"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 47,
+          "verified": 31,
+          "unresolved": 16
+        },
+        "inbound": {
+          "total": 46,
+          "verified": 32,
+          "unresolved": 14
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -8072,8 +8396,12 @@
       "raw": "32 lượt xe/ngày, hành trình 60 phút/chuyến"
     },
     "frequency": {
+      "type": "range",
       "peakMinutes": 30,
       "offPeakMinutes": 45,
+      "minMinutes": 30,
+      "maxMinutes": 45,
+      "exactHeadway": false,
       "raw": "32 lượt/ngày (khoảng 30-45 phút/chuyến)"
     },
     "distanceKm": {
@@ -8084,7 +8412,36 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n30.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 750.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho"
+      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n30.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 750.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 15000,
+      "maxPrice": 30000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Nhỏ hơn 1/2 cự ly tuyến",
+          "distanceMaxKm": null,
+          "price": 15000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Từ 1/2 tuyến đến toàn tuyến",
+          "distanceMaxKm": null,
+          "price": 30000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Học sinh, sinh viên",
+          "distanceMaxKm": null,
+          "price": 8000,
+          "targetGroup": "student"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến 03"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8145,6 +8502,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -8168,8 +8563,12 @@
       "raw": "Mở bến: 05h30 (ĐH Việt Hàn) / 05h45 (Sân bay) - Đóng bến: 19h00 (ĐH Việt Hàn) / 19h25 (Sân bay)"
     },
     "frequency": {
+      "type": "range",
       "peakMinutes": 30,
       "offPeakMinutes": 60,
+      "minMinutes": 30,
+      "maxMinutes": 60,
+      "exactHeadway": false,
       "raw": "30-60 phút/chuyến (48 lượt xe/ngày)"
     },
     "distanceKm": {
@@ -8179,8 +8578,37 @@
       "raw": "21,3 km"
     },
     "fares": {
-      "singleTicket": 8000,
-      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 10,65km trở xuống): 15.000 đồng/hành khách/lượt.\n+ Trên ½ cự ly tuyến đến toàn cự ly tuyến (Trên 10,65km đến hết tuyến): 22.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/h"
+      "singleTicket": null,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 10,65km trở xuống): 15.000 đồng/hành khách/lượt.\n+ Trên ½ cự ly tuyến đến toàn cự ly tuyến (Trên 10,65km đến hết tuyến): 22.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/h",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 15000,
+      "maxPrice": 22000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Nhỏ hơn hoặc bằng 1/2 cự ly tuyến (≤ 10,65km)",
+          "distanceMaxKm": 10.65,
+          "price": 15000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 1/2 cự ly tuyến đến toàn cự ly tuyến (> 10,65km)",
+          "distanceMaxKm": null,
+          "price": 22000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Học sinh, sinh viên",
+          "distanceMaxKm": null,
+          "price": 8000,
+          "targetGroup": "student"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến 06"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8251,6 +8679,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -8277,8 +8743,12 @@
       "raw": "từ 05h45 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -8289,7 +8759,17 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Số lượng phương tiện: 06 xe (trong đó: 05 xe vận doanh, 01 xe dự phòng);\n- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;\n- Nước sản x"
+      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Số lượng phương tiện: 06 xe (trong đó: 05 xe vận doanh, 01 xe dự phòng);\n- Nhãn hiệu: Kim Long;\n- Năm sản xuất: 2026;\n- Nước sản x",
+      "type": "unknown",
+      "flatPrice": null,
+      "minPrice": null,
+      "maxPrice": null,
+      "studentPrice": null,
+      "tiers": [],
+      "provenance": {
+        "source": "unknown",
+        "note": "Chưa có thông tin biểu giá vé trong tài liệu gốc"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8364,6 +8844,45 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": false,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+      ]
     }
   },
   {
@@ -8390,8 +8909,12 @@
       "raw": "từ 05h30 đến 18h15."
     },
     "frequency": {
-      "peakMinutes": 60,
+      "type": "range",
+      "peakMinutes": 15,
       "offPeakMinutes": 60,
+      "minMinutes": 15,
+      "maxMinutes": 60,
+      "exactHeadway": false,
       "raw": "15-60 phút/lượt."
     },
     "distanceKm": {
@@ -8402,7 +8925,17 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))"
+      "rawSummary": "(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))",
+      "type": "unknown",
+      "flatPrice": null,
+      "minPrice": null,
+      "maxPrice": null,
+      "studentPrice": null,
+      "tiers": [],
+      "provenance": {
+        "source": "unknown",
+        "note": "Chưa có thông tin biểu giá vé trong tài liệu gốc"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8479,6 +9012,45 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": false,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
+        "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
+      ]
     }
   },
   {
@@ -8502,8 +9074,12 @@
       "raw": "Mở tuyến: 05h45 - Đóng tuyến: 18h00 (Hành trình 60 phút/chuyến)"
     },
     "frequency": {
+      "type": "range",
       "peakMinutes": 30,
       "offPeakMinutes": 45,
+      "minMinutes": 30,
+      "maxMinutes": 45,
+      "exactHeadway": false,
       "raw": "30-45 phút/chuyến"
     },
     "distanceKm": {
@@ -8514,7 +9090,36 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n25.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 650.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho"
+      "rawSummary": "CỰ LY TUYẾN\nMỨC GIÁ (VNĐ/HK)\nNhỏ hơn 1/2 cự ly tuyến\n15.000\nTừ 1/2 tuyến đến toàn tuyến\n25.000\nGiá vé dành cho học sinh, sinh viên\n8000\nGiá vé tháng:\n- Áp dụng với đối tượng hành khách bình thường:\n+ Giá vé tháng đơn tuyến: 650.000 đồng/hành khách/tháng.\n+ Giá vé tháng liên tuyến: 1.000.000 đồng/hành khách/tháng (Vé tháng liên tuyến này áp dụng cho",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 15000,
+      "maxPrice": 25000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Nhỏ hơn 1/2 cự ly tuyến",
+          "distanceMaxKm": null,
+          "price": 15000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Từ 1/2 tuyến đến toàn tuyến",
+          "distanceMaxKm": null,
+          "price": 25000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Học sinh, sinh viên",
+          "distanceMaxKm": null,
+          "price": 8000,
+          "targetGroup": "student"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến 14"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -8583,6 +9188,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -8601,13 +9244,17 @@
       "destination": "954 Phan Châu Trinh (Cầu Tam Kỳ - Phường Hương Trà)."
     },
     "operatingHours": {
-      "start": "4:45",
+      "start": "04:45",
       "end": "17:30",
       "raw": "4h45-17h30."
     },
     "frequency": {
-      "peakMinutes": 30,
+      "type": "range",
+      "peakMinutes": 5,
       "offPeakMinutes": 30,
+      "minMinutes": 5,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "05-30 phút/lượt."
     },
     "distanceKm": {
@@ -8617,8 +9264,49 @@
       "raw": "+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt."
     },
     "fares": {
-      "singleTicket": 8000,
-      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - 45km: 35.000 đồng/hành khách/lượt.\n+ Trên 45km - 65km: 45.000 đồng/hành khách/lượt.\n+ Trên 65km - Suốt tuyến: 48.000 đồng/hành khách/l"
+      "singleTicket": null,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly di chuyển:\n+ Từ 10 km trở xuống: 8.000 đồng/hành khách/lượt.\n+ Trên 10km - 25km: 20.000 đồng/hành khách/lượt.\n+ Trên 25km - 45km: 35.000 đồng/hành khách/lượt.\n+ Trên 45km - 65km: 45.000 đồng/hành khách/lượt.\n+ Trên 65km - Suốt tuyến: 48.000 đồng/hành khách/l",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 8000,
+      "maxPrice": 48000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Từ 10km trở xuống",
+          "distanceMaxKm": 10,
+          "price": 8000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 10km - 25km",
+          "distanceMaxKm": 25,
+          "price": 20000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 25km - 45km",
+          "distanceMaxKm": 45,
+          "price": 35000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 45km - 65km",
+          "distanceMaxKm": 65,
+          "price": 45000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Trên 65km - Suốt tuyến",
+          "distanceMaxKm": null,
+          "price": 48000,
+          "targetGroup": "standard"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến 21"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -11067,6 +11755,44 @@
           "reason": "Validation failed: Stop order non-monotonic along polyline path (prog 0.836 -> 0.220)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 89,
+          "verified": 43,
+          "unresolved": 46
+        },
+        "inbound": {
+          "total": 80,
+          "verified": 34,
+          "unresolved": 46
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -11085,13 +11811,17 @@
       "destination": "Bến xe khách Bắc Trà My đến Ngã 3 Trà Đốc (một số chuyến trong ngày kết nối Bến xe khách Nam Trà My (nếu có))."
     },
     "operatingHours": {
-      "start": "5:00",
+      "start": "05:00",
       "end": "17:00",
       "raw": "từ 5h00 đến 17h00 (35 phút/chuyến)"
     },
     "frequency": {
+      "type": "fixed",
       "peakMinutes": 35,
       "offPeakMinutes": 35,
+      "minMinutes": 35,
+      "maxMinutes": 35,
+      "exactHeadway": true,
       "raw": "35 phút/chuyến"
     },
     "distanceKm": {
@@ -11102,7 +11832,16 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "a) Tam Kỳ đi Trà My:\n- Nội thành Tam Kỳ - Ngã 4 Trường Xuân\n12.000\n- Tam Kỳ - chợ Tam Dân\n18.000\n- Tam Kỳ - chợ Tiên Thọ\n24.000\n- Tam Kỳ - Thị trấn Tiên Kỳ\n30.000\n- Tam Kỳ - Ngã 3 cụ Huỳnh\n36.000\n- Tam Kỳ - Ngã 3 Tiên Hiệp\n42.000\n- Tam Kỳ - Trà My, ngã 3 Trà Đốc\n52.000\nb) Trà My đi Tam Kỳ:\n- Trà My, ngã 3 Trà Đốc - Trà Dương\n12.000\n- Trà My – Ngã 3"
+      "rawSummary": "a) Tam Kỳ đi Trà My:\n- Nội thành Tam Kỳ - Ngã 4 Trường Xuân\n12.000\n- Tam Kỳ - chợ Tam Dân\n18.000\n- Tam Kỳ - chợ Tiên Thọ\n24.000\n- Tam Kỳ - Thị trấn Tiên Kỳ\n30.000\n- Tam Kỳ - Ngã 3 cụ Huỳnh\n36.000\n- Tam Kỳ - Ngã 3 Tiên Hiệp\n42.000\n- Tam Kỳ - Trà My, ngã 3 Trà Đốc\n52.000\nb) Trà My đi Tam Kỳ:\n- Trà My, ngã 3 Trà Đốc - Trà Dương\n12.000\n- Trà My – Ngã 3",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 12000,
+      "maxPrice": 52000,
+      "studentPrice": null,
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé các chặng Tam Kỳ - Trà My"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -13038,6 +13777,41 @@
           "validation": "Validation PASS (12 anchors, 125 points, 6.87km, max_stop_dist 14.0m)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": true,
+      "hasInboundGeometry": true,
+      "hasFareModel": true,
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 18,
+          "verified": 12,
+          "unresolved": 6
+        },
+        "inbound": {
+          "total": 18,
+          "verified": 12,
+          "unresolved": 6
+        }
+      },
+      "ineligibilityReasons": []
     }
   },
   {
@@ -13056,13 +13830,17 @@
       "destination": ""
     },
     "operatingHours": {
-      "start": "6:00",
+      "start": "06:00",
       "end": "17:00",
       "raw": "từ 6h00 đến 17h00 (60 phút/chuyến)"
     },
     "frequency": {
+      "type": "fixed",
       "peakMinutes": 60,
       "offPeakMinutes": 60,
+      "minMinutes": 60,
+      "maxMinutes": 60,
+      "exactHeadway": true,
       "raw": "60 phút/chuyến"
     },
     "distanceKm": {
@@ -13073,7 +13851,16 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "a) Tam Kỳ đi Cảng Kỳ Hà:\n- Tam Kỳ - Tam Xuân I\n12.000\n- Tam Kỳ - Bà Bầu\n18.000\n- Tam Kỳ - Tam Anh, Trường Hải\n22.000\n- Tam Kỳ - thị trấn Núi Thành\n27.000\n- Tam Kỳ - Cảng Kỳ Hà\n29.000\nb) Cảng Kỳ Hà đi tam Kỳ:\n- Cảng Kỳ Hà – thị trấn Núi Thành\n12.000\n- Cảng Kỳ Hà – Trường Hải\n18.000\n- Cảng Kỳ Hà – Bà Bầu\n22.000\n- Thị trấn Núi Thành – Tam Kỳ\n27.000\n- "
+      "rawSummary": "a) Tam Kỳ đi Cảng Kỳ Hà:\n- Tam Kỳ - Tam Xuân I\n12.000\n- Tam Kỳ - Bà Bầu\n18.000\n- Tam Kỳ - Tam Anh, Trường Hải\n22.000\n- Tam Kỳ - thị trấn Núi Thành\n27.000\n- Tam Kỳ - Cảng Kỳ Hà\n29.000\nb) Cảng Kỳ Hà đi tam Kỳ:\n- Cảng Kỳ Hà – thị trấn Núi Thành\n12.000\n- Cảng Kỳ Hà – Trường Hải\n18.000\n- Cảng Kỳ Hà – Bà Bầu\n22.000\n- Thị trấn Núi Thành – Tam Kỳ\n27.000\n- ",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 12000,
+      "maxPrice": 29000,
+      "studentPrice": null,
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé các chặng Tam Kỳ - Núi Thành/Kỳ Hà"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -14868,6 +15655,41 @@
           "validation": "Validation PASS (11 anchors, 88 points, 6.16km, max_stop_dist 16.1m)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": true,
+      "hasInboundGeometry": true,
+      "hasFareModel": true,
+      "tripPlanningReady": true,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 20,
+          "verified": 12,
+          "unresolved": 8
+        },
+        "inbound": {
+          "total": 22,
+          "verified": 11,
+          "unresolved": 11
+        }
+      },
+      "ineligibilityReasons": []
     }
   },
   {
@@ -14891,8 +15713,12 @@
       "raw": "Xuất bến trước giờ bay 130 phút, lượt về sau máy bay đến 20 phút"
     },
     "frequency": {
-      "peakMinutes": 60,
-      "offPeakMinutes": 90,
+      "type": "irregular",
+      "peakMinutes": null,
+      "offPeakMinutes": null,
+      "minMinutes": null,
+      "maxMinutes": null,
+      "exactHeadway": false,
       "raw": "Theo lịch trình chuyến bay tại Sân bay Chu Lai"
     },
     "distanceKm": {
@@ -14903,7 +15729,30 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "- Vé lượt ½ chặng: 40.000 đồng/lượt;\n- Vé lượt suốt tuyến: 60.000 đồng/lượt.\nThực hiện miễn giá vé cho người khuyết tật đặc biệt nặng và trẻ em dưới 6 tuổi, giảm 50% giá vé đối với người khuyết tật nặng, giảm 25% giá vé đối với người khuyết tật nhẹ và người cao tuổi.\nHành lý được miễn cước: Không quá 10kg, kích thước không quá 30x40x60cm.\nHành lý v"
+      "rawSummary": "- Vé lượt ½ chặng: 40.000 đồng/lượt;\n- Vé lượt suốt tuyến: 60.000 đồng/lượt.\nThực hiện miễn giá vé cho người khuyết tật đặc biệt nặng và trẻ em dưới 6 tuổi, giảm 50% giá vé đối với người khuyết tật nặng, giảm 25% giá vé đối với người khuyết tật nhẹ và người cao tuổi.\nHành lý được miễn cước: Không quá 10kg, kích thước không quá 30x40x60cm.\nHành lý v",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 40000,
+      "maxPrice": 60000,
+      "studentPrice": null,
+      "tiers": [
+        {
+          "name": "Vé lượt 1/2 chặng",
+          "distanceMaxKm": null,
+          "price": 40000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Vé lượt suốt tuyến",
+          "distanceMaxKm": null,
+          "price": 60000,
+          "targetGroup": "standard"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến Tam Kỳ - Chu Lai"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -15850,6 +16699,43 @@
           "validation": "Validation PASS (10 anchors, 79 points, 4.19km, max_stop_dist 7.1m)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": true,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 22,
+          "verified": 4,
+          "unresolved": 18
+        },
+        "inbound": {
+          "total": 19,
+          "verified": 10,
+          "unresolved": 9
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -15873,8 +16759,12 @@
       "raw": "từ 05h30 - 19h00 tất cả các ngày trong tuần (14 - 15 phút/chuyến)"
     },
     "frequency": {
-      "peakMinutes": 15,
+      "type": "range",
+      "peakMinutes": 14,
       "offPeakMinutes": 15,
+      "minMinutes": 14,
+      "maxMinutes": 15,
+      "exactHeadway": false,
       "raw": "14 - 15 phút/chuyến"
     },
     "distanceKm": {
@@ -15885,7 +16775,15 @@
     },
     "fares": {
       "singleTicket": 80000,
-      "rawSummary": "80.000 đồng/ lượt\nc) Cự ly tuyến: 100 km\nd) Thời gian bắt đầu vận hành: Từ 01/01/2020"
+      "rawSummary": "80.000 đồng/ lượt\nc) Cự ly tuyến: 100 km\nd) Thời gian bắt đầu vận hành: Từ 01/01/2020",
+      "type": "flat",
+      "flatPrice": 80000,
+      "minPrice": 80000,
+      "maxPrice": 80000,
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Giá vé lượt suốt tuyến Đà Nẵng - Huế"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -15947,6 +16845,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -15970,8 +16906,12 @@
       "raw": "Mở tuyến: 08h00 - Đóng tuyến: 17h30"
     },
     "frequency": {
-      "peakMinutes": 60,
-      "offPeakMinutes": 120,
+      "type": "irregular",
+      "peakMinutes": null,
+      "offPeakMinutes": null,
+      "minMinutes": null,
+      "maxMinutes": null,
+      "exactHeadway": false,
       "raw": "Theo các khung giờ tham quan du lịch"
     },
     "distanceKm": {
@@ -15982,7 +16922,36 @@
     },
     "fares": {
       "singleTicket": null,
-      "rawSummary": "- Tuyến Hội An - Mỹ Sơn - CT Đông Giang: 250.000 đồng/lượt.\n- Vé xe buýt chặng Hội An - Mỹ Sơn: 150.000 đồng/lượt.\n- Vé xe buýt chặng Mỹ Sơn – CT Đông Giang: 150.000 đồng/lượt.\n* Giá vé giảm 50% đối với người có công với cách mạng, người cao tuổi, người khuyết tật, trẻ em dưới 6 tuổi.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: GAZ\n- Sức chứa: "
+      "rawSummary": "- Tuyến Hội An - Mỹ Sơn - CT Đông Giang: 250.000 đồng/lượt.\n- Vé xe buýt chặng Hội An - Mỹ Sơn: 150.000 đồng/lượt.\n- Vé xe buýt chặng Mỹ Sơn – CT Đông Giang: 150.000 đồng/lượt.\n* Giá vé giảm 50% đối với người có công với cách mạng, người cao tuổi, người khuyết tật, trẻ em dưới 6 tuổi.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: GAZ\n- Sức chứa: ",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 150000,
+      "maxPrice": 250000,
+      "studentPrice": null,
+      "tiers": [
+        {
+          "name": "Chặng Hội An - Mỹ Sơn",
+          "distanceMaxKm": null,
+          "price": 150000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Chặng Mỹ Sơn - Cổng Trời Đông Giang",
+          "distanceMaxKm": null,
+          "price": 150000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Suốt tuyến Hội An - Mỹ Sơn - CT Đông Giang",
+          "distanceMaxKm": null,
+          "price": 250000,
+          "targetGroup": "standard"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến du lịch 01DL"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -16173,6 +17142,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 4,
+          "verified": 2,
+          "unresolved": 2
+        },
+        "inbound": {
+          "total": 4,
+          "verified": 2,
+          "unresolved": 2
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -16196,8 +17203,12 @@
       "raw": "Từ 6h00 đến 22h00 theo lịch các chuyến bay"
     },
     "frequency": {
-      "peakMinutes": 30,
-      "offPeakMinutes": 60,
+      "type": "irregular",
+      "peakMinutes": null,
+      "offPeakMinutes": null,
+      "minMinutes": null,
+      "maxMinutes": null,
+      "exactHeadway": false,
       "raw": "Theo lịch bay Cảng hàng không Quốc tế Đà Nẵng"
     },
     "distanceKm": {
@@ -16207,8 +17218,16 @@
       "raw": "30 km"
     },
     "fares": {
-      "singleTicket": null,
-      "rawSummary": "- Vé lượt: 120,000 đồng/lượt.\nNgười có công cách mạng, người khuyết tật, trẻ em dưới 6 tuổi giảm 50% giá vé.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Huyndai Solati\n- Sức chứa: 10 chỗ ( 10 chỗ ngồi, 0 chỗ đứng)\n- Số lượng xe: 03 xe (03 xe vận doanh + 0 xe dự phòng)\nf) Đơn vị vận hành: Chi nhánh Công ty liên doanh vận chuyển quốc tế Hải Vân t"
+      "singleTicket": 120000,
+      "rawSummary": "- Vé lượt: 120,000 đồng/lượt.\nNgười có công cách mạng, người khuyết tật, trẻ em dưới 6 tuổi giảm 50% giá vé.\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Huyndai Solati\n- Sức chứa: 10 chỗ ( 10 chỗ ngồi, 0 chỗ đứng)\n- Số lượng xe: 03 xe (03 xe vận doanh + 0 xe dự phòng)\nf) Đơn vị vận hành: Chi nhánh Công ty liên doanh vận chuyển quốc tế Hải Vân t",
+      "type": "flat",
+      "flatPrice": 120000,
+      "minPrice": 120000,
+      "maxPrice": 120000,
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Giá vé lượt tuyến sân bay Đà Nẵng - Hội An"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -16441,6 +17460,44 @@
           "reason": "Validation failed: Stop 'Cảng hàng không Quốc tế Đà Nẵng' is too far from polyline (380.2m > 350m)"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": true,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 4,
+          "verified": 3,
+          "unresolved": 1
+        },
+        "inbound": {
+          "total": 7,
+          "verified": 5,
+          "unresolved": 2
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -16464,8 +17521,12 @@
       "raw": "Mở: 05h00 (Cửa Đại) / 06h05 (ĐH Việt Hàn) - Đóng: 18h00 (Cửa Đại) / 19h05 (ĐH Việt Hàn)"
     },
     "frequency": {
+      "type": "range",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15-30 phút/chuyến (72 lượt xe/ngày)"
     },
     "distanceKm": {
@@ -16475,8 +17536,37 @@
       "raw": "23,2 km"
     },
     "fares": {
-      "singleTicket": 8000,
-      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 11,6km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ ½ cự ly tuyến đến toàn cự ly tuyến (Từ 11,6km đến hết tuyến): 15.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khá"
+      "singleTicket": null,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng ½ cự ly tuyến (Từ 11,6km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ ½ cự ly tuyến đến toàn cự ly tuyến (Từ 11,6km đến hết tuyến): 15.000 đồng/hành khách/lượt.\n- Giá vé lượt áp dụng cho học sinh, sinh viên: 8.000 đồng/hành khá",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 8000,
+      "maxPrice": 15000,
+      "studentPrice": 8000,
+      "tiers": [
+        {
+          "name": "Nhỏ hơn hoặc bằng 1/2 cự ly tuyến (≤ 11,6km)",
+          "distanceMaxKm": 11.6,
+          "price": 8000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Từ 1/2 cự ly tuyến đến toàn cự ly tuyến (> 11,6km)",
+          "distanceMaxKm": null,
+          "price": 15000,
+          "targetGroup": "standard"
+        },
+        {
+          "name": "Học sinh, sinh viên",
+          "distanceMaxKm": null,
+          "price": 8000,
+          "targetGroup": "student"
+        }
+      ],
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến liền kề LK02"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -17431,6 +18521,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 64,
+          "verified": 44,
+          "unresolved": 20
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -17454,8 +18582,12 @@
       "raw": "Mở: 04h45 (Tam Kỳ) / 05h30 (BX Phía Nam) - Đóng: 17h30 (Tam Kỳ) / 18h15 (BX Phía Nam)"
     },
     "frequency": {
+      "type": "range",
       "peakMinutes": 15,
       "offPeakMinutes": 25,
+      "minMinutes": 15,
+      "maxMinutes": 25,
+      "exactHeadway": false,
       "raw": "15-25 phút/chuyến (64 lượt xe/ngày)"
     },
     "distanceKm": {
@@ -17465,8 +18597,17 @@
       "raw": "56,5 km"
     },
     "fares": {
-      "singleTicket": 8000,
-      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng 1/5 cự ly tuyến (Từ 11,3km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ 1/5 cự ly tuyến đến hoặc bằng 2/5 cự ly tuyến (Từ 11,3km đến 22,6km): 15.000 đồng/hành khách/lượt.\n+ Từ 2/5 cự ly tuyến đến hoặc bằng 3/5 cự ly tuyến (Từ 2"
+      "singleTicket": null,
+      "rawSummary": "a. Giá vé lượt:\n- Giá vé lượt áp dụng đối với hành khách (trừ học sinh, sinh viên) có cự ly\ndi chuyển:\n+ Nhỏ hơn hoặc bằng 1/5 cự ly tuyến (Từ 11,3km trở xuống): 8.000 đồng/hành khách/lượt.\n+ Từ 1/5 cự ly tuyến đến hoặc bằng 2/5 cự ly tuyến (Từ 11,3km đến 22,6km): 15.000 đồng/hành khách/lượt.\n+ Từ 2/5 cự ly tuyến đến hoặc bằng 3/5 cự ly tuyến (Từ 2",
+      "type": "distance_tiered",
+      "flatPrice": null,
+      "minPrice": 8000,
+      "maxPrice": 30000,
+      "studentPrice": 8000,
+      "provenance": {
+        "source": "official_fare_table",
+        "note": "Biểu giá vé tuyến liền kề LK21"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -18987,6 +20128,44 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": true,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": true,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 104,
+          "verified": 43,
+          "unresolved": 61
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -19012,8 +20191,12 @@
       "raw": "từ 05h45 đến 19h00 (15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại)"
     },
     "frequency": {
+      "type": "peak_offpeak",
       "peakMinutes": 15,
       "offPeakMinutes": 30,
+      "minMinutes": 15,
+      "maxMinutes": 30,
+      "exactHeadway": false,
       "raw": "15 phút/chuyến trong giờ cao điểm; 30 phút/chuyến trong các khung giờ còn lại"
     },
     "distanceKm": {
@@ -19024,7 +20207,15 @@
     },
     "fares": {
       "singleTicket": 8000,
-      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý"
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý",
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé trước khi tạm dừng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -19104,6 +20295,45 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 04 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -19127,8 +20357,12 @@
       "raw": "từ 05h45 đến 18h00 (Giãn cách 45 phút/chuyến)"
     },
     "frequency": {
+      "type": "fixed",
       "peakMinutes": 45,
       "offPeakMinutes": 45,
+      "minMinutes": 45,
+      "maxMinutes": 45,
+      "exactHeadway": true,
       "raw": "Giãn cách 45 phút/chuyến"
     },
     "distanceKm": {
@@ -19139,7 +20373,15 @@
     },
     "fares": {
       "singleTicket": 8000,
-      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))"
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))",
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé trước khi tạm dừng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -19211,6 +20453,45 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 10 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   },
   {
@@ -19236,8 +20517,12 @@
       "raw": "từ 05h45 đến 18h00 (45 phút/chuyến)"
     },
     "frequency": {
+      "type": "fixed",
       "peakMinutes": 45,
       "offPeakMinutes": 45,
+      "minMinutes": 45,
+      "maxMinutes": 45,
+      "exactHeadway": true,
       "raw": "45 phút/chuyến"
     },
     "distanceKm": {
@@ -19248,7 +20533,15 @@
     },
     "fares": {
       "singleTicket": 8000,
-      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý"
+      "rawSummary": "+ Vé lượt: 8.000 đồng/lượt.\n+ Vé tháng ưu tiên 85.000 đồng/tháng.\n+ Vé tháng không ưu tiên 170.000 đồng/tháng.\n(Hướng dẫn đăng ký vé qua mã QRCode [tại đây](https://www.danangbus.vn/dang-ky-ve.html[)](https://www.danangbus.vn/tin-tuc/tin-tuc/huong-dan-dang-ky-the-ve-thang-truc-tuyen-1135.html))\ne) Nhãn hiệu, sức chứa và số xe:\n- Nhãn hiệu: Xe buý",
+      "type": "flat",
+      "flatPrice": 8000,
+      "minPrice": 8000,
+      "maxPrice": 8000,
+      "provenance": {
+        "source": "subsidized_policy",
+        "note": "Chính sách trợ giá vé trước khi tạm dừng"
+      }
     },
     "routePaths": {
       "outbound": {
@@ -19304,6 +20597,45 @@
           "reason": "Chưa đủ dữ liệu mốc xác thực đối chiếu toàn bộ danh sách đường"
         }
       }
+    },
+    "dataQuality": {
+      "hasOutboundStops": false,
+      "hasInboundStops": false,
+      "hasOutboundGeometry": false,
+      "hasInboundGeometry": false,
+      "hasFareModel": true,
+      "tripPlanningReady": false,
+      "directions": {
+        "outbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        },
+        "inbound": {
+          "stopsReady": false,
+          "geometryReady": false,
+          "eligibleForPlanning": false,
+          "reason": "Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        }
+      },
+      "stopMetrics": {
+        "outbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        },
+        "inbound": {
+          "total": 0,
+          "verified": 0,
+          "unresolved": 0
+        }
+      },
+      "ineligibilityReasons": [
+        "Tuyến 15 tạm ngừng (status=suspended)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+      ]
     }
   }
 ]

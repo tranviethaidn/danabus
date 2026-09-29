@@ -11,32 +11,22 @@
 
 ## 1. Executive Summary
 
-DEV đã hoàn thành toàn bộ phạm vi triển khai và productionization cho **Task 4: Address-to-Address Trip Planner & PWA Release Upgrade (v10)** theo đúng chỉ đạo và proposal kỹ thuật được TL chấp thuận.
-
-Toàn bộ các mục tiêu cốt lõi đã được kiểm chứng bằng chứng thực tế:
-1. **PWA Release Identity Bump (`v10`)**: Cập nhật đồng bộ cache store `danabus-cache-v10` và query cache-busting `v=20260929_v10` trên toàn bộ source, manifests và bộ kiểm thử tự động.
-2. **Staged Deployment (Zero Mixed-State)**: Nâng cấp `scripts/deploy_danabus_production.sh` theo mô hình 3 giai đoạn: sync payload assets/data trước, sync manifest/sw kế tiếp, và xuất bản `index.html` cuối cùng bằng atomic swap (`.tmp` -> `rename`). Kịch bản hoạt động độc lập không yêu cầu quyền sudo không cần thiết đối với các release tĩnh.
-3. **100% SHA-256 Deliverable Equivalence**: Toàn bộ 17 tệp deliverable trong whitelist sản phẩm giữa `/home/opc/danabus` và `/var/www/danabus/public` có mã băm SHA-256 trùng khớp hoàn toàn.
-4. **Production Runtime Verification (6/6 PASS)**: Headless Chrome CDP kiểm tra trực tiếp trên `https://danabus.638686.xyz/`:
-   - Feature markers & DOM containers của Address-to-Address Trip Planner hoạt động chính xác.
-   - Live Trip Planner E2E: Tìm 5 phương án di chuyển (Bách Khoa ➔ Biển Đông), render multi-leg trên Leaflet gồm 3 polylines (2 chặng đi bộ nét đứt + 1 chặng buýt) và marker A/B/trạm đón/trạm xuống.
-   - Fresh install precache: 33 assets được precache vào `danabus-cache-v10`.
-   - Warm-cache migration: Nạp các cache cũ (`v4`, `v5`, `v6`, `v7`, `v9`) và xác minh Service Worker tự động thanh trừng triệt để toàn bộ cache cũ, chỉ giữ lại `danabus-cache-v10`.
-   - Offline fallback resilience: Giả lập ngắt mạng hoàn toàn qua CDP Network emulation; HTML, CSS, JS bundles và dataset `danangbus_routes.json` phản hồi HTTP 200 từ cache.
-5. **Zero Regression Across All Baselines**: Toàn bộ ma trận kiểm thử hồi quy đạt tỷ lệ đạt 100%:
-   - `test_trip_planner.py`: 10/10 PASS
-   - `test_browser_trip_planner.py`: 6/6 PASS
-   - `test_production_pwa_runtime.py`: 6/6 PASS
-   - `browser_smoke_test.py` (trên production): 8/8 PASS
-   - `security_smoke_test.py` (trên production): 15/15 negative + positive headers PASS
-   - `test_search_correctness.py`: 10/10 PASS
-   - `test_schedule_and_fare.py`: 9/9 PASS
-   - `test_browser_schedule_and_fare.py`: 7/7 PASS
-   - `test_data_quality_and_planner_readiness.py`: 11/11 PASS
-   - `test_map_and_gps.py`: 11/11 PASS
-   - `validate_data_quality.py`: PASS (100% routes)
-   - `test_ui_integrity_and_accessibility.py`: 100% PASS
-   - `test_task10_regression_acceptance.py`: 20/20 PASS (16.01s)
+DEV đã hoàn thành việc sửa chữa và kiểm chứng 2 release-gate defects theo yêu cầu của TL Review:
+1. **Defect 1: Deterministic Controllerchange Verification & Bounded Predicates**
+   - Nâng cấp [`scripts/test_production_pwa_runtime.py`](file:///home/opc/danabus/scripts/test_production_pwa_runtime.py) tích hợp cơ chế settled-state barrier từ `test_ui_integrity_and_accessibility.py`.
+   - Bắt trọn vẹn và xác nhận vòng đời first-install Service Worker takeover, sự kiện `controllerchange`, và reload tự động của trình duyệt (`navType === 'reload'`, `controllerActive === true`, `appState === 'ready'`).
+   - Loại bỏ hoàn toàn các lệnh `time.sleep` cố định tại Check 2 (bây giờ là Check 3), thay thế bằng bounded predicate `wait_for_condition` cho kết quả tìm chuyến và Leaflet multi-leg map rendering.
+   - Hỗ trợ cờ `--repeat N` và kiểm thử ổn định 3 lần liên tiếp từ 3 browser profile cô lập hoàn toàn (3/3 runs 100% PASS).
+2. **Defect 2: Staged Deploy Order Invariant (Triệt tiêu v10-Worker / v9-Index Cache Race)**
+   - Tái cấu trúc [`scripts/deploy_danabus_production.sh`](file:///home/opc/danabus/scripts/deploy_danabus_production.sh) theo thứ tự xuất bản nghiêm ngặt:
+     - **Stage 2.1**: Payload assets phụ thuộc (`css/`, `js/`, `assets/`, `data/`) được rsync đầy đủ lên disk trước.
+     - **Stage 2.2**: Metadata `manifest.json`.
+     - **Stage 2.3**: Xuất bản `index.html` bằng atomic swap (`index.html.tmp` -> `index.html`).
+     - **Stage 2.4**: Xuất bản `sw.js` **CUỐI CÙNG** bằng atomic swap (`sw.js.tmp` -> `sw.js`).
+     - *Bảo đảm tuyệt đối*: Khi client hoặc browser phát hiện `sw.js` v10 và kích hoạt precache (`./` và `./index.html`), `index.html` v10 và toàn bộ assets v10 đã hiện diện hoàn chỉnh trên disk, triệt tiêu 100% nguy cơ worker v10 precache nhầm HTML v9.
+   - Thêm automated static deploy-order assertion vào cả `scripts/test_production_pwa_runtime.py` (Check 0) và `scripts/test_ui_integrity_and_accessibility.py` (Check 8).
+3. **100% SHA-256 Deliverable Equivalence**: Tái triển khai và đối soát 17/17 tệp deliverable trong whitelist sản phẩm giữa `/home/opc/danabus` và `/var/www/danabus/public`: 100% trùng khớp mã băm SHA-256.
+4. **Unified Regression Acceptance**: Toàn bộ 20/20 tiêu chí nghiệm thu Task 10 đạt 100% PASS trong 13.57s.
 
 ---
 
@@ -66,15 +56,28 @@ Toàn bộ các mục tiêu cốt lõi đã được kiểm chứng bằng chứ
 
 ---
 
-## 3. Production Runtime Verification Results
+## 3. Production Runtime Verification Results (Repeated Fresh Profiles)
 
-Chạy suite `scripts/test_production_pwa_runtime.py` trực tiếp trên domain chính thức `https://danabus.638686.xyz/`:
+Kết quả chạy `python3 scripts/test_production_pwa_runtime.py --repeat 3` trực tiếp trên domain chính thức `https://danabus.638686.xyz/`:
 
 ```
-=== Danabus Production Runtime Verification (https://danabus.638686.xyz/) ===
+=== Starting Production Runtime Test Suite (Total runs: 3) ===
 
-[Check 1] Navigating to Production & Verifying Feature Markers...
- -> Feature Markers: {
+[RUN 1/3] === Danabus Production Runtime Verification (https://danabus.638686.xyz/) ===
+[RUN 1/3] [Check 0] Verifying Staged Deploy Order Invariant (zero mixed-state cache race)...
+[RUN 1/3]  [PASS] Check 0: Deploy script publishes payload -> manifest -> index.html (atomic) -> sw.js (atomic, last).
+[RUN 1/3] [Check 1] Verifying First-Install Service Worker Takeover & Controllerchange Lifecycle...
+[RUN 1/3]  -> Settled Lifecycle: {
+  "navType": "reload",
+  "controllerActive": true,
+  "controllerScriptURL": "https://danabus.638686.xyz/sw.js",
+  "appState": "ready",
+  "routesCount": 23,
+  "stopsCount": 421
+}
+[RUN 1/3]  [PASS] Check 1: Controllerchange reload settled cleanly with active Service Worker.
+[RUN 1/3] [Check 2] Verifying Production Feature Markers & DOM Elements...
+[RUN 1/3]  -> Feature Markers: {
   "hasTransitPlannerClass": true,
   "hasTransitPlannerInstance": true,
   "hasRenderTrip": true,
@@ -86,41 +89,48 @@ Chạy suite `scripts/test_production_pwa_runtime.py` trực tiếp trên domain
   "routesCount": 23,
   "appVersionScript": "js/app.js?v=20260929_v10"
 }
- [PASS] Check 1: Feature markers and Task 4 DOM containers verified on production.
-
-[Check 2] Live Trip Planner E2E on Production (Bách Khoa -> Biển Đông)...
- -> Live Planner Execution Result: {
+[RUN 1/3]  [PASS] Check 2: Feature markers and Task 4 DOM containers verified on production.
+[RUN 1/3] [Check 3] Live Trip Planner E2E on Production (Bách Khoa -> Biển Đông)...
+[RUN 1/3]  -> Live Planner Execution Result: {
   "tripViewActive": true,
   "optionsCount": 5,
   "firstBadge": "Tuyến trực tiếp"
 }
- -> Map Render Result: {
+[RUN 1/3]  -> Map Render Result: {
   "mapViewActive": true,
   "hasOrigMarker": true,
   "hasDestMarker": true,
   "tripPolylinesCount": 3
 }
- [PASS] Check 2: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.
+[RUN 1/3]  [PASS] Check 3: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.
+[RUN 1/3] [Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v10)...
+[RUN 1/3]  -> Fresh SW State: {'hasReg': True, 'active': True, 'keys': ['danabus-cache-v10']}
+[RUN 1/3]  -> Cached assets count: 33
+[RUN 1/3]  [PASS] Check 4: Fresh PWA install & static asset precache verified.
+[RUN 1/3] [Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v9 -> v10)...
+[RUN 1/3]  -> Injected legacy caches: ['danabus-cache-v10', 'danabus-cache-v4', 'danabus-cache-v5', 'danabus-cache-v6', 'danabus-cache-v7', 'danabus-cache-v9']
+[RUN 1/3]  -> Post-migration cache keys: ['danabus-cache-v10']
+[RUN 1/3]  [PASS] Check 5: Warm-cache migration cleanly purged v9 and earlier legacy stores.
+[RUN 1/3] [Check 6] Testing Offline Fallback Resilience via CDP Network Emulation...
+[RUN 1/3]  -> Offline fetch test results: {'appStatus': 200, 'busStatus': 200, 'cssStatus': 200, 'routesStatus': 200, 'routesOk': True}
+[RUN 1/3]  [PASS] Check 6: Offline fallback resilience confirmed under simulated offline mode.
+[RUN 1/3] [Check 7] Capturing Production Verification Screenshot...
+[RUN 1/3]  -> Screenshot saved to /home/opc/danabus/docs/reports/task4_production_pwa_v10_evidence.png (38363 bytes)
+[RUN 1/3]  [PASS] Check 7: Screenshot captured.
+[RUN 1/3] >>> ALL PRODUCTION RUNTIME CHECKS PASSED (8/8) <<<
+--- Completed run 1/3 in 6.00s ---
 
-[Check 3] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v10)...
- -> Fresh SW State: {'hasReg': True, 'active': True, 'keys': ['danabus-cache-v10']}
- -> Cached assets count: 33
- [PASS] Check 3: Fresh PWA install & static asset precache verified.
+[RUN 2/3] === Danabus Production Runtime Verification (https://danabus.638686.xyz/) ===
+[RUN 2/3] [PASS] Check 0 through Check 7 (8/8 PASS)
+--- Completed run 2/3 in 5.42s ---
 
-[Check 4] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v9 -> v10)...
- -> Injected legacy caches: ['danabus-cache-v10', 'danabus-cache-v4', 'danabus-cache-v5', 'danabus-cache-v6', 'danabus-cache-v7', 'danabus-cache-v9']
- -> Post-migration cache keys: ['danabus-cache-v10']
- [PASS] Check 4: Warm-cache migration cleanly purged v9 and earlier legacy stores.
+[RUN 3/3] === Danabus Production Runtime Verification (https://danabus.638686.xyz/) ===
+[RUN 3/3] [PASS] Check 0 through Check 7 (8/8 PASS)
+--- Completed run 3/3 in 5.05s ---
 
-[Check 5] Testing Offline Fallback Resilience via CDP Network Emulation...
- -> Offline fetch test results: {'appStatus': 200, 'busStatus': 200, 'cssStatus': 200, 'routesStatus': 200, 'routesOk': True}
- [PASS] Check 5: Offline fallback resilience confirmed under simulated offline mode.
-
-[Check 6] Capturing Production Verification Screenshot...
- -> Screenshot saved to docs/reports/task4_production_pwa_v10_evidence.png (31007 bytes)
- [PASS] Check 6: Screenshot captured.
-
->>> ALL PRODUCTION RUNTIME CHECKS PASSED (6/6) <<<
+============================================================
+ALL 3 FRESH-PROFILE RUNS COMPLETED SUCCESSFULLY (100% PASS)
+============================================================
 ```
 
 ---
@@ -129,9 +139,10 @@ Chạy suite `scripts/test_production_pwa_runtime.py` trực tiếp trên domain
 
 | Test Suite | Script / Path | Kết quả | Ghi chú kỹ thuật |
 |---|---|---|---|
+| **Deploy Invariant** | `scripts/deploy_danabus_production.sh` | **PASS** | Payload -> manifest -> index.html (atomic) -> sw.js (atomic, last) |
 | **Trip Planner Core** | `scripts/test_trip_planner.py` | **10/10 PASS** | Haversine distance, max 1 transfer, candidate filtering, ranking, fail-closed |
 | **Browser Planner** | `scripts/test_browser_trip_planner.py` | **6/6 PASS** | Autocomplete, options UI, Leaflet multi-leg map, swap, fail-closed empty state |
-| **Production Runtime** | `scripts/test_production_pwa_runtime.py` | **6/6 PASS** | Live planner E2E, Leaflet render, fresh install, warm migration v9->v10, offline fallback |
+| **Production Runtime** | `scripts/test_production_pwa_runtime.py` | **8/8 PASS (x3)** | Settled lifecycle, live planner, map render, precache v10, warm migration, offline |
 | **Browser Smoke** | `scripts/browser_smoke_test.py` | **8/8 PASS** | Live production runtime, routes catalog, map render, geolocation, SW v10 migration & v9 purge |
 | **Security Hardening** | `scripts/security_smoke_test.py` | **15/15 PASS** | Chặn 404 cho .git, docs, scripts, schema.ts, osm_cache, headers bảo mật chuẩn |
 | **Search Correctness** | `scripts/test_search_correctness.py` | **10/10 PASS** | Direct-match outbound/inbound, reverse order rejection, validation, swap non-stale |
@@ -140,18 +151,19 @@ Chạy suite `scripts/test_production_pwa_runtime.py` trực tiếp trên domain
 | **Data Quality/Readiness**| `scripts/test_data_quality_and_planner_readiness.py` | **11/11 PASS** | Spatial indexing, verified stops provenance, monotonic order, candidate integrity |
 | **Map & GPS** | `scripts/test_map_and_gps.py` | **11/11 PASS** | Polylines geometry, stops alignment, layer clearing, popup semantics |
 | **Data Quality Validator**| `scripts/validate_data_quality.py` | **PASS** | 100% routes (23 tuyến) khớp metadata validator tất định |
-| **UI & Accessibility** | `scripts/test_ui_integrity_and_accessibility.py` | **100% PASS** | Pinch-to-zoom, ARIA labels, focus-visible, offline error/retry recovery, SW v10 |
-| **Unified Acceptance** | `scripts/test_task10_regression_acceptance.py` | **20/20 PASS** | Toàn bộ 20 tiêu chí nghiệm thu Task 10 đạt trong 16.01s |
+| **UI & Accessibility** | `scripts/test_ui_integrity_and_accessibility.py` | **100% PASS** | Deploy order invariant, pinch-to-zoom, ARIA labels, focus-visible, offline recovery |
+| **Unified Acceptance** | `scripts/test_task10_regression_acceptance.py` | **20/20 PASS** | Toàn bộ 20 tiêu chí nghiệm thu Task 10 đạt trong 13.57s |
 
 ---
 
 ## 5. Deployment Script Optimization Details
 
 Kịch bản [`scripts/deploy_danabus_production.sh`](file:///home/opc/danabus/scripts/deploy_danabus_production.sh) đã được cấu trúc lại như sau:
-1. **Stage 1 (Payload)**: `rsync -a --delete` cho `css/`, `js/`, `assets/` và các tệp JSON trong `data/`. Đảm bảo các script và style `v10` đã có sẵn trên ổ cứng trước khi client nhận mã nguồn tham chiếu.
-2. **Stage 2 (Metadata & Worker)**: `cp -f` cho `manifest.json` và `sw.js`.
-3. **Stage 3 (Atomic HTML Swap)**: `cp -f index.html index.html.tmp && mv -f index.html.tmp index.html`. Loại bỏ hoàn toàn khoảng trống lỗi dở dang (mixed-state hoặc 404 script bundle).
-4. **Zero-Sudo Execution**: Do `/var/www/danabus/public` được phân quyền `opc:nginx` với quyền ghi cho `opc`, quy trình phát hành static release không gọi `sudo`, `nginx -t` hay `systemctl reload nginx` khi cấu hình Nginx và SSL đã sẵn sàng.
+1. **Stage 2.1 (Payload Assets)**: `rsync -a --delete` cho `css/`, `js/`, `assets/` và các tệp JSON trong `data/`. Đảm bảo các script và style `v10` đã có sẵn trên ổ cứng trước khi client nhận mã nguồn tham chiếu.
+2. **Stage 2.2 (Web App Manifest)**: `cp -f` cho `manifest.json`.
+3. **Stage 2.3 (Atomic index.html Swap)**: `cp -f index.html index.html.tmp && mv -f index.html.tmp index.html`. Bảo đảm client mới chỉ tải `index.html` khi payload assets đã hiện diện 100% trên disk.
+4. **Stage 2.4 (Atomic sw.js Swap Last)**: `cp -f sw.js sw.js.tmp && mv -f sw.js.tmp sw.js`. Triệt tiêu hoàn toàn race condition: worker v10 chỉ precache khi `index.html` v10 đã có trên disk.
+5. **Zero-Sudo Execution**: Do `/var/www/danabus/public` được phân quyền `opc:nginx` với quyền ghi cho `opc`, quy trình phát hành static release không gọi `sudo`, `nginx -t` hay `systemctl reload nginx` khi cấu hình Nginx và SSL đã sẵn sàng.
 
 ---
 

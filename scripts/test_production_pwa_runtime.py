@@ -3,12 +3,14 @@
 Production Runtime Verification for Task 4: Address-to-Address Trip Planner & PWA v10
 Target: https://danabus.638686.xyz/
 Verifies:
-1. Feature markers of TransitPlanner and multi-leg UI
-2. Live planner E2E execution and Leaflet multi-leg map rendering
-3. Fresh install precache in isolated profile (danabus-cache-v10)
-4. Warm-cache migration from v9 (and v4-v7) to v10 with clean purge
-5. Offline fallback resilience for app shell, scripts, styles, and datasets
-6. Deliverable screenshot capture
+0. Staged deploy order invariant: payload -> manifest -> index.html (atomic) -> sw.js (atomic, last)
+1. First-install Service Worker takeover, controllerchange, and reload settled lifecycle
+2. Feature markers of TransitPlanner and multi-leg UI
+3. Live planner E2E execution and Leaflet multi-leg map rendering (bounded predicates)
+4. Fresh install precache in isolated profile (danabus-cache-v10)
+5. Warm-cache migration from v9 (and v4-v7) to v10 with clean purge
+6. Offline fallback resilience for app shell, scripts, styles, and datasets
+7. Deliverable screenshot capture
 """
 
 import os
@@ -21,11 +23,37 @@ import tempfile
 import shutil
 import urllib.request
 import subprocess
+import argparse
 from pathlib import Path
 
 TARGET_URL = "https://danabus.638686.xyz/"
 WORKSPACE = Path(__file__).resolve().parent.parent
 SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task4_production_pwa_v10_evidence.png"
+
+
+def verify_deploy_order_invariant():
+    """
+    Verifies that scripts/deploy_danabus_production.sh implements the strict publish order:
+    1. payload assets (css, js, assets, data)
+    2. manifest.json
+    3. atomic index.html swap
+    4. atomic sw.js swap (LAST)
+    Ensuring sw.js v10 can never precache an outdated v9 index.html.
+    """
+    deploy_script = (WORKSPACE / "scripts" / "deploy_danabus_production.sh").read_text(encoding="utf-8")
+
+    pos_payload_sync = deploy_script.find('rsync -a --delete "$WORKSPACE"/css/')
+    pos_manifest_copy = deploy_script.find('cp -f "$WORKSPACE"/manifest.json')
+    pos_index_swap = deploy_script.find('mv -f "$PUBLIC_DIR/index.html.tmp" "$PUBLIC_DIR/index.html"')
+    pos_sw_swap = deploy_script.find('mv -f "$PUBLIC_DIR/sw.js.tmp" "$PUBLIC_DIR/sw.js"')
+
+    assert pos_payload_sync != -1 and pos_manifest_copy != -1 and pos_index_swap != -1 and pos_sw_swap != -1, \
+        "Deploy script missing required staged deploy milestones"
+    assert pos_payload_sync < pos_manifest_copy, "Payload assets must be synced before manifest"
+    assert pos_manifest_copy < pos_index_swap, "Manifest must be copied before atomic index.html swap"
+    assert pos_index_swap < pos_sw_swap, \
+        "Atomic index.html swap MUST precede atomic sw.js swap to prevent v10-worker precaching v9-index"
+
 
 class SimpleWebSocket:
     def __init__(self, url):
@@ -101,7 +129,7 @@ class SimpleWebSocket:
     def close(self):
         try:
             self.sock.close()
-        except:
+        except Exception:
             pass
 
 
@@ -112,6 +140,7 @@ class ChromeBrowserSession:
         self.proc = None
         self.ws = None
         self.msg_id = 0
+        self.settled_lifecycle = None
 
     def start(self, target_url=TARGET_URL):
         chrome_bin = "/bin/google-chrome"
@@ -132,11 +161,11 @@ class ChromeBrowserSession:
             target_url
         ]
         self.proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        time.sleep(1.5)
+        time.sleep(1.2)
 
         tabs_url = f"http://127.0.0.1:{self.port}/json"
         ws_url = None
-        for _ in range(25):
+        for _ in range(30):
             try:
                 with urllib.request.urlopen(tabs_url, timeout=2) as r:
                     tabs = json.loads(r.read().decode())
@@ -144,7 +173,7 @@ class ChromeBrowserSession:
                     if page_tabs:
                         ws_url = page_tabs[0]["webSocketDebuggerUrl"]
                         break
-            except:
+            except Exception:
                 time.sleep(0.2)
         if not ws_url:
             raise RuntimeError("Failed to connect to Headless Chrome CDP")
@@ -154,12 +183,9 @@ class ChromeBrowserSession:
         self.call("Runtime.enable")
         self.call("Network.enable")
 
-        # Wait until page and data load completely (both routes and stops datasets)
-        for _ in range(50):
-            ready = self.evaluate("document.readyState === 'complete' && !!document.title && !!(window.busService?.routes?.length > 0 && window.busService?.stops?.length > 0)")
-            if ready:
-                break
-            time.sleep(0.3)
+        # Deterministic settled barrier: survive and wait for first-install Service Worker
+        # takeover and controllerchange reload to complete.
+        self.settled_lifecycle = self.wait_for_settled(timeout=15.0)
 
     def call(self, method, params=None):
         self.msg_id += 1
@@ -168,7 +194,12 @@ class ChromeBrowserSession:
         self.ws.send_text(json.dumps(req))
         while True:
             raw = self.ws.recv_text()
-            res = json.loads(raw)
+            if not raw:
+                raise ConnectionError("Empty CDP response received")
+            try:
+                res = json.loads(raw)
+            except Exception:
+                continue
             if res.get("id") == curr_id:
                 if "error" in res:
                     raise RuntimeError(f"CDP error: {res['error']}")
@@ -180,8 +211,69 @@ class ChromeBrowserSession:
             "returnByValue": True,
             "awaitPromise": True
         })
-        val = res.get("result", {}).get("value")
-        return val
+        if "exceptionDetails" in res:
+            exc = res["exceptionDetails"]
+            desc = exc.get("exception", {}).get("description") or exc.get("text", "Unknown JS error")
+            raise RuntimeError(f"JavaScript evaluation threw exception: {desc} (expr: {expr[:200]})")
+        res_obj = res.get("result", {})
+        if res_obj.get("subtype") == "error":
+            raise RuntimeError(f"JavaScript error: {res_obj.get('description', 'Unknown error')} (expr: {expr[:200]})")
+        return res_obj.get("value")
+
+    def wait_for_condition(self, expr, timeout=10.0, step=0.1, description=""):
+        start = time.time()
+        desc = description or expr[:80]
+        while time.time() - start < timeout:
+            try:
+                val = self.evaluate(expr)
+                if val:
+                    return val
+            except Exception:
+                pass
+            time.sleep(step)
+        raise TimeoutError(f"Condition timed out after {timeout:.1f}s: {desc}")
+
+    def wait_for_settled(self, timeout=15.0):
+        start = time.time()
+        predicate = """
+            (() => {
+                if (document.readyState !== 'complete') return null;
+                const sw = window.navigator?.serviceWorker;
+                if (!sw) return null;
+                const nav = performance.getEntriesByType('navigation')[0];
+                const navType = nav ? nav.type : null;
+                const controller = sw.controller;
+
+                const swSettled = (controller !== null && navType === 'reload');
+                if (!swSettled) return null;
+
+                const appReady = window.app && window.app.loadState === 'ready';
+                const busReady = window.busService && window.busService.isLoaded &&
+                                 window.busService.routes && window.busService.routes.length > 0 &&
+                                 window.busService.stops && window.busService.stops.length > 0;
+
+                if (appReady && busReady) {
+                    return {
+                        navType,
+                        controllerActive: true,
+                        controllerScriptURL: controller.scriptURL,
+                        appState: window.app.loadState,
+                        routesCount: window.busService.routes.length,
+                        stopsCount: window.busService.stops.length
+                    };
+                }
+                return null;
+            })()
+        """
+        while time.time() - start < timeout:
+            try:
+                val = self.evaluate(predicate)
+                if val:
+                    return val
+            except Exception:
+                pass
+            time.sleep(0.15)
+        raise TimeoutError(f"Page did not settle with SW controller & reload within {timeout}s")
 
     def close(self):
         if self.ws:
@@ -193,15 +285,37 @@ class ChromeBrowserSession:
             shutil.rmtree(self.user_data_dir, ignore_errors=True)
 
 
-def test_production():
-    print(f"=== Danabus Production Runtime Verification ({TARGET_URL}) ===\n")
-    session = ChromeBrowserSession(port=9455)
+def test_production_single(port=9455, iteration_label=""):
+    prefix = f"[{iteration_label}] " if iteration_label else ""
+    print(f"{prefix}=== Danabus Production Runtime Verification ({TARGET_URL}) ===\n")
+
+    # Check 0: Staged deploy order invariant
+    print(f"{prefix}[Check 0] Verifying Staged Deploy Order Invariant (zero mixed-state cache race)...")
+    verify_deploy_order_invariant()
+    print(f"{prefix} [PASS] Check 0: Deploy script publishes payload -> manifest -> index.html (atomic) -> sw.js (atomic, last).\n")
+
+    session = ChromeBrowserSession(port=port)
     try:
         session.start()
-        print("[Check 1] Navigating to Production & Verifying Feature Markers...")
 
-        markers = session.evaluate("""
+        # Check 1: First-Install Service Worker Takeover & Controllerchange Lifecycle
+        print(f"{prefix}[Check 1] Verifying First-Install Service Worker Takeover & Controllerchange Lifecycle...")
+        lifecycle = session.settled_lifecycle
+        print(f"{prefix} -> Settled Lifecycle: {json.dumps(lifecycle, indent=2)}")
+        assert lifecycle is not None, "Page must achieve settled state"
+        assert lifecycle['controllerActive'] is True, "Service Worker must control the page"
+        assert lifecycle['navType'] == 'reload', f"Expected reload after controllerchange, got {lifecycle['navType']}"
+        assert lifecycle['appState'] == 'ready', f"App state must be 'ready', got {lifecycle['appState']}"
+        assert lifecycle['routesCount'] == 23, f"Expected 23 routes loaded, got {lifecycle['routesCount']}"
+        assert lifecycle['stopsCount'] > 0, f"Expected stops loaded, got {lifecycle['stopsCount']}"
+        assert "sw.js" in lifecycle['controllerScriptURL'], f"Controller URL must point to sw.js, got {lifecycle['controllerScriptURL']}"
+        print(f"{prefix} [PASS] Check 1: Controllerchange reload settled cleanly with active Service Worker.\n")
+
+        # Check 2: Production Feature Markers & DOM Elements
+        print(f"{prefix}[Check 2] Verifying Production Feature Markers & DOM Elements...")
+        markers = session.wait_for_condition("""
             (() => {
+                if (!window.TransitPlanner || !window.transitPlanner || !window.busService?.routes) return null;
                 return {
                     hasTransitPlannerClass: typeof window.TransitPlanner === 'function',
                     hasTransitPlannerInstance: !!window.transitPlanner,
@@ -217,8 +331,8 @@ def test_production():
                         .find(s => s.includes('app.js'))
                 };
             })()
-        """)
-        print(f" -> Feature Markers: {json.dumps(markers, indent=2)}")
+        """, timeout=10.0, description="Feature markers query")
+        print(f"{prefix} -> Feature Markers: {json.dumps(markers, indent=2)}")
         assert markers['hasTransitPlannerClass'] is True, "TransitPlanner class must be exposed"
         assert markers['hasTransitPlannerInstance'] is True, "window.transitPlanner instance must exist"
         assert markers['hasRenderTrip'] is True, "window.mapService.renderTrip must exist"
@@ -229,102 +343,106 @@ def test_production():
         assert markers['hasDestinationInput'] is True, "#home-destination-input must exist"
         assert markers['routesCount'] == 23, f"Must have 23 catalog routes, got {markers['routesCount']}"
         assert "v=20260929_v10" in markers['appVersionScript'], f"Script query must be v10, got {markers['appVersionScript']}"
-        print(" [PASS] Check 1: Feature markers and Task 4 DOM containers verified on production.\n")
+        print(f"{prefix} [PASS] Check 2: Feature markers and Task 4 DOM containers verified on production.\n")
 
-        print("[Check 2] Live Trip Planner E2E on Production (Bách Khoa -> Biển Đông)...")
+        # Check 3: Live Address-to-Address Trip Planner E2E & Leaflet Map Rendering
+        print(f"{prefix}[Check 3] Live Trip Planner E2E on Production (Bách Khoa -> Biển Đông)...")
         session.evaluate("""
             (() => {
                 window.app.showTripResults('Trường Đại học Bách Khoa - ĐHĐN', 'Công viên Biển Đông');
             })()
         """)
-        time.sleep(0.8)
 
-        plan_state = session.evaluate("""
+        plan_state = session.wait_for_condition("""
             (() => {
-                const tripViewActive = !!document.getElementById('view-trip-results')?.classList.contains('active');
-                const optionsCount = document.querySelectorAll('#trip-planner-options .bg-white').length;
-                const firstBadge = document.querySelector('#trip-planner-options .bg-white span')?.textContent?.trim() || '';
-                return {
-                    tripViewActive,
-                    optionsCount,
-                    firstBadge
-                };
+                const tripView = document.getElementById('view-trip-results');
+                const tripViewActive = !!(tripView && tripView.classList.contains('active'));
+                const options = document.querySelectorAll('#trip-planner-options .bg-white');
+                const firstBadge = options[0]?.querySelector('span')?.textContent?.trim() || '';
+                if (tripViewActive && options.length > 0) {
+                    return {
+                        tripViewActive: true,
+                        optionsCount: options.length,
+                        firstBadge: firstBadge
+                    };
+                }
+                return null;
             })()
-        """)
-        print(f" -> Live Planner Execution Result: {json.dumps(plan_state, indent=2)}")
+        """, timeout=10.0, description="Wait for trip planner options rendered")
+        print(f"{prefix} -> Live Planner Execution Result: {json.dumps(plan_state, indent=2)}")
         assert plan_state['tripViewActive'] is True, "Trip results screen must be active"
         assert plan_state['optionsCount'] > 0, "Planned trip options must be rendered"
         assert plan_state['firstBadge'] in ["Tuyến trực tiếp", "Ít đi bộ nhất", "Nhanh nhất"], f"Unexpected badge: {plan_state['firstBadge']}"
 
         # Render trip on map via user click
+        session.wait_for_condition("document.querySelector('.btn-view-planned-map') !== null", timeout=5.0, description="Wait for view map button")
         session.evaluate("document.querySelector('.btn-view-planned-map')?.click()")
-        time.sleep(0.6)
 
-        render_result = session.evaluate("""
+        render_result = session.wait_for_condition("""
             (() => {
                 const mapViewActive = !!document.getElementById('view-map')?.classList.contains('active');
                 const hasOrigMarker = document.querySelectorAll('.trip-origin-marker').length > 0;
                 const hasDestMarker = document.querySelectorAll('.trip-dest-marker').length > 0;
                 const tripPolylinesCount = window.mapService?.tripPolylines?.length || 0;
-                return {
-                    mapViewActive,
-                    hasOrigMarker,
-                    hasDestMarker,
-                    tripPolylinesCount
-                };
+                if (mapViewActive && hasOrigMarker && hasDestMarker && tripPolylinesCount >= 2) {
+                    return {
+                        mapViewActive: true,
+                        hasOrigMarker: true,
+                        hasDestMarker: true,
+                        tripPolylinesCount: tripPolylinesCount
+                    };
+                }
+                return null;
             })()
-        """)
-        print(f" -> Map Render Result: {json.dumps(render_result, indent=2)}")
+        """, timeout=10.0, description="Wait for map trip render")
+        print(f"{prefix} -> Map Render Result: {json.dumps(render_result, indent=2)}")
         assert render_result['mapViewActive'] is True, "Map view must become active"
         assert render_result['hasOrigMarker'] is True, "Trip origin marker must be present"
         assert render_result['hasDestMarker'] is True, "Trip dest marker must be present"
         assert render_result['tripPolylinesCount'] >= 2, "Trip polylines must be rendered (walking + bus)"
-        print(" [PASS] Check 2: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.\n")
+        print(f"{prefix} [PASS] Check 3: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.\n")
 
-        print("[Check 3] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v10)...")
-        sw_ready = None
-        for _ in range(40):
-            state = session.evaluate("""
-                (async () => {
-                    const reg = await navigator.serviceWorker.getRegistration();
-                    const keys = await caches.keys();
+        # Check 4: Fresh Install Precache
+        print(f"{prefix}[Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v10)...")
+        sw_ready = session.wait_for_condition("""
+            (async () => {
+                const reg = await navigator.serviceWorker.getRegistration();
+                const keys = await caches.keys();
+                if (reg && keys.includes('danabus-cache-v10')) {
                     return {
-                        hasReg: !!reg,
-                        active: !!(reg && (reg.active || reg.installing || reg.waiting)),
+                        hasReg: true,
+                        active: !!(reg.active || reg.installing || reg.waiting),
                         keys: keys
                     };
-                })()
-            """)
-            if state and 'danabus-cache-v10' in state.get('keys', []):
-                sw_ready = state
-                break
-            time.sleep(0.3)
+                }
+                return null;
+            })()
+        """, timeout=12.0, description="Wait for danabus-cache-v10 cache registration")
 
-        if not sw_ready:
-            sw_ready = state
-
-        print(f" -> Fresh SW State: {sw_ready}")
+        print(f"{prefix} -> Fresh SW State: {sw_ready}")
         assert sw_ready['hasReg'] is True, "Service Worker registration must exist"
         assert 'danabus-cache-v10' in sw_ready['keys'], f"danabus-cache-v10 must exist in fresh install, got {sw_ready['keys']}"
 
-        # Verify static asset entries in cache
-        cached_urls = session.evaluate("""
+        cached_urls = session.wait_for_condition("""
             (async () => {
                 const cache = await caches.open('danabus-cache-v10');
                 const reqs = await cache.keys();
-                return reqs.map(r => r.url);
+                if (reqs && reqs.length >= 25) {
+                    return reqs.map(r => r.url);
+                }
+                return null;
             })()
-        """)
-        print(f" -> Cached assets count: {len(cached_urls)}")
+        """, timeout=10.0, description="Wait for cached asset keys")
+        print(f"{prefix} -> Cached assets count: {len(cached_urls)}")
         assert any("index.html" in u for u in cached_urls), "index.html must be in danabus-cache-v10"
         assert any("app.css?v=20260929_v10" in u for u in cached_urls), "app.css v10 must be in cache"
         assert any("busService.js?v=20260929_v10" in u for u in cached_urls), "busService.js v10 must be in cache"
         assert any("mapService.js?v=20260929_v10" in u for u in cached_urls), "mapService.js v10 must be in cache"
         assert any("app.js?v=20260929_v10" in u for u in cached_urls), "app.js v10 must be in cache"
-        print(" [PASS] Check 3: Fresh PWA install & static asset precache verified.\n")
+        print(f"{prefix} [PASS] Check 4: Fresh PWA install & static asset precache verified.\n")
 
-        print("[Check 4] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v9 -> v10)...")
-        # Seed legacy cache stores
+        # Check 5: Warm Cache Migration & Legacy Store Purge
+        print(f"{prefix}[Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v9 -> v10)...")
         session.evaluate("""
             (async () => {
                 await caches.open('danabus-cache-v4');
@@ -335,10 +453,9 @@ def test_production():
             })()
         """)
         pre_keys = session.evaluate("(async () => await caches.keys())()")
-        print(f" -> Injected legacy caches: {pre_keys}")
+        print(f"{prefix} -> Injected legacy caches: {pre_keys}")
         assert 'danabus-cache-v9' in pre_keys
 
-        # Trigger SW lifecycle activate
         session.evaluate("""
             (async () => {
                 const regToken = Date.now();
@@ -346,23 +463,25 @@ def test_production():
             })()
         """)
 
-        post_migration_keys = None
-        for _ in range(50):
-            k = session.evaluate("(async () => await caches.keys())()")
-            if k and 'danabus-cache-v10' in k and 'danabus-cache-v9' not in k and 'danabus-cache-v7' not in k:
-                post_migration_keys = k
-                break
-            time.sleep(0.2)
+        post_migration_keys = session.wait_for_condition("""
+            (async () => {
+                const k = await caches.keys();
+                if (k.includes('danabus-cache-v10') && !k.includes('danabus-cache-v9') && !k.includes('danabus-cache-v7') && !k.includes('danabus-cache-v4')) {
+                    return k;
+                }
+                return null;
+            })()
+        """, timeout=12.0, description="Wait for legacy caches purged")
 
-        print(f" -> Post-migration cache keys: {post_migration_keys}")
+        print(f"{prefix} -> Post-migration cache keys: {post_migration_keys}")
         assert 'danabus-cache-v10' in post_migration_keys
         assert 'danabus-cache-v9' not in post_migration_keys
         assert 'danabus-cache-v7' not in post_migration_keys
         assert 'danabus-cache-v4' not in post_migration_keys
-        print(" [PASS] Check 4: Warm-cache migration cleanly purged v9 and earlier legacy stores.\n")
+        print(f"{prefix} [PASS] Check 5: Warm-cache migration cleanly purged v9 and earlier legacy stores.\n")
 
-        print("[Check 5] Testing Offline Fallback Resilience via CDP Network Emulation...")
-        # Emulate total network disconnection
+        # Check 6: Offline Fallback Resilience
+        print(f"{prefix}[Check 6] Testing Offline Fallback Resilience via CDP Network Emulation...")
         session.call("Network.emulateNetworkConditions", {
             "offline": True,
             "latency": 0,
@@ -370,7 +489,6 @@ def test_production():
             "uploadThroughput": 0
         })
 
-        # Test offline resource retrieval from Service Worker
         offline_eval = session.evaluate("""
             (async () => {
                 const resApp = await fetch('js/app.js?v=20260929_v10');
@@ -386,34 +504,58 @@ def test_production():
                 };
             })()
         """)
-        print(f" -> Offline fetch test results: {offline_eval}")
+        print(f"{prefix} -> Offline fetch test results: {offline_eval}")
         assert offline_eval['appStatus'] == 200, "app.js must resolve offline from cache"
         assert offline_eval['busStatus'] == 200, "busService.js must resolve offline from cache"
         assert offline_eval['cssStatus'] == 200, "app.css must resolve offline from cache"
         assert offline_eval['routesStatus'] == 200, "danangbus_routes.json must resolve offline from cache/network-first"
 
-        # Restore online condition
         session.call("Network.emulateNetworkConditions", {
             "offline": False,
             "latency": 0,
             "downloadThroughput": 0,
             "uploadThroughput": 0
         })
-        print(" [PASS] Check 5: Offline fallback resilience confirmed under simulated offline mode.\n")
+        print(f"{prefix} [PASS] Check 6: Offline fallback resilience confirmed under simulated offline mode.\n")
 
-        print("[Check 6] Capturing Production Verification Screenshot...")
+        # Check 7: Deliverable Screenshot Capture
+        print(f"{prefix}[Check 7] Capturing Production Verification Screenshot...")
         shot_res = session.call("Page.captureScreenshot", {"format": "png"})
         if shot_res.get("data"):
             img_bytes = base64.b64decode(shot_res["data"])
             with open(SCREENSHOT_PATH, "wb") as f:
                 f.write(img_bytes)
-            print(f" -> Screenshot saved to {SCREENSHOT_PATH} ({len(img_bytes)} bytes)")
-            print(" [PASS] Check 6: Screenshot captured.\n")
+            print(f"{prefix} -> Screenshot saved to {SCREENSHOT_PATH} ({len(img_bytes)} bytes)")
+            print(f"{prefix} [PASS] Check 7: Screenshot captured.\n")
 
-        print(">>> ALL PRODUCTION RUNTIME CHECKS PASSED (6/6) <<<")
+        print(f"{prefix}>>> ALL PRODUCTION RUNTIME CHECKS PASSED (8/8) <<<\n")
+        return True
 
     finally:
         session.close()
 
+
+def main():
+    parser = argparse.ArgumentParser(description="Danabus Production Runtime Verification")
+    parser.add_argument("--repeat", type=int, default=1, help="Number of times to run verification from fresh profiles")
+    parser.add_argument("--base-port", type=int, default=9455, help="Base CDP port")
+    args = parser.parse_args()
+
+    total_runs = max(1, args.repeat)
+    print(f"=== Starting Production Runtime Test Suite (Total runs: {total_runs}) ===\n")
+    for r in range(total_runs):
+        port = args.base_port + r
+        label = f"RUN {r+1}/{total_runs}" if total_runs > 1 else ""
+        t0 = time.time()
+        success = test_production_single(port=port, iteration_label=label)
+        dur = time.time() - t0
+        assert success, f"Run {r+1} failed"
+        print(f"--- Completed run {r+1}/{total_runs} in {dur:.2f}s ---\n")
+
+    print(f"============================================================")
+    print(f"ALL {total_runs} FRESH-PROFILE RUNS COMPLETED SUCCESSFULLY (100% PASS)")
+    print(f"============================================================")
+
+
 if __name__ == "__main__":
-    test_production()
+    main()

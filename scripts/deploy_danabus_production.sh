@@ -29,14 +29,19 @@ rsync -a --delete "$WORKSPACE"/assets/ "$PUBLIC_DIR"/assets/
 # Data: chỉ sync các file JSON dữ liệu tuyến/trạm/báo cáo, loại bỏ schema.ts và osm_cache/
 rsync -a --delete --include="*.json" --exclude="*" "$WORKSPACE"/data/ "$PUBLIC_DIR"/data/
 
-# Stage 2.2: Đồng bộ Service Worker và Web App Manifest sau khi payload assets đã sẵn sàng
+# Stage 2.2: Đồng bộ Web App Manifest sau khi payload assets đã sẵn sàng
 cp -f "$WORKSPACE"/manifest.json "$PUBLIC_DIR/manifest.json"
-cp -f "$WORKSPACE"/sw.js "$PUBLIC_DIR/sw.js"
 
-# Stage 2.3: Xuất bản index.html cuối cùng bằng cơ chế atomic swap (temp file + rename)
-# Tránh trường hợp client đọc file dở dang hoặc nhận index.html mới trước khi assets đồng bộ
+# Stage 2.3: Xuất bản index.html bằng cơ chế atomic swap (temp file + rename)
+# Đảm bảo index.html chỉ tham chiếu tới payload assets đã hiện diện đầy đủ trên disk
 cp -f "$WORKSPACE"/index.html "$PUBLIC_DIR/index.html.tmp"
 mv -f "$PUBLIC_DIR/index.html.tmp" "$PUBLIC_DIR/index.html"
+
+# Stage 2.4: Xuất bản Service Worker sw.js CUỐI CÙNG bằng cơ chế atomic swap (temp file + rename)
+# sw.js v10 precache cả './' và './index.html'. Bằng việc xuất bản sw.js sau khi index.html v10
+# đã hiện diện an toàn trên disk, ta triệt tiêu hoàn toàn race condition v10-worker precache v9-index.
+cp -f "$WORKSPACE"/sw.js "$PUBLIC_DIR/sw.js.tmp"
+mv -f "$PUBLIC_DIR/sw.js.tmp" "$PUBLIC_DIR/sw.js"
 
 # Phân quyền chuẩn cho web deliverables (chủ sở hữu opc:nginx, người dùng khác chỉ đọc)
 chmod -R u=rwX,go=rX "$PUBLIC_DIR"

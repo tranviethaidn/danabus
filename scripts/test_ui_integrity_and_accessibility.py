@@ -532,6 +532,19 @@ def test_static_integrity():
     assert 'id="btn-retry-load"' in index_content, "[FAIL] index.html missing #btn-retry-load button"
     print(" [PASS] App-level loading and error/offline state containers present in HTML")
 
+    # 8. Staged Deploy Order Invariant (zero mixed-state precache race)
+    deploy_script_path = WORKSPACE / "scripts" / "deploy_danabus_production.sh"
+    deploy_script_content = deploy_script_path.read_text(encoding="utf-8")
+    pos_payload_sync = deploy_script_content.find('rsync -a --delete "$WORKSPACE"/css/')
+    pos_manifest_copy = deploy_script_content.find('cp -f "$WORKSPACE"/manifest.json')
+    pos_index_swap = deploy_script_content.find('mv -f "$PUBLIC_DIR/index.html.tmp" "$PUBLIC_DIR/index.html"')
+    pos_sw_swap = deploy_script_content.find('mv -f "$PUBLIC_DIR/sw.js.tmp" "$PUBLIC_DIR/sw.js"')
+    assert pos_payload_sync != -1 and pos_manifest_copy != -1 and pos_index_swap != -1 and pos_sw_swap != -1, \
+        "[FAIL] deploy script missing essential staged deploy steps"
+    assert pos_payload_sync < pos_manifest_copy < pos_index_swap < pos_sw_swap, \
+        "[FAIL] deploy order violation: payload -> manifest -> index.html (atomic) -> sw.js (atomic, last) required"
+    print(" [PASS] Staged deploy order invariant strictly verified (payload -> manifest -> index.html -> sw.js)")
+
 
 def test_nodejs_contract():
     """Verify BusService contract in Node.js runtime."""

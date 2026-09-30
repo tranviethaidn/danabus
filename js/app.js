@@ -634,7 +634,7 @@ class DanabusApp {
         if (emptyDesc) emptyDesc.textContent = 'Không tìm thấy trạm dừng xe buýt nào gần điểm đi hoặc điểm đến trong bán kính đi bộ tối đa (1.5km).';
       } else if (planned?.error === 'NO_VIABLE_ROUTE') {
         if (emptyTitle) emptyTitle.textContent = 'Không tìm thấy lộ trình phù hợp';
-        if (emptyDesc) emptyDesc.textContent = 'Hiện chưa có tuyến xe buýt trực tiếp hoặc chuyển tiếp 1 lần kết nối 2 điểm này theo dữ liệu vận hành hợp lệ.';
+        if (emptyDesc) emptyDesc.textContent = 'Hiện chưa có tuyến xe buýt trực tiếp hoặc chuyển tiếp phù hợp kết nối 2 điểm này theo dữ liệu vận hành hợp lệ.';
       } else {
         if (emptyTitle) emptyTitle.textContent = 'Không tìm thấy tuyến buýt phù hợp';
         if (emptyDesc) emptyDesc.textContent = 'Hiện tại chưa có tuyến buýt phù hợp kết nối 2 điểm này. Vui lòng kiểm tra lại điểm đón/đến hoặc tra cứu toàn bộ danh mục tuyến xe.';
@@ -892,7 +892,7 @@ class DanabusApp {
     if (fareEl) fareEl.textContent = bestTrip.fareText || '--';
 
     const freqEl = document.getElementById('trip-freq-value');
-    if (freqEl) freqEl.textContent = bestTrip.type === 'direct' ? 'Trực tiếp' : '1 chuyển tiếp';
+    if (freqEl) freqEl.textContent = bestTrip.type === 'direct' ? 'Trực tiếp' : (bestTrip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp');
 
     const fleetEl = document.getElementById('trip-fleet-value');
     if (fleetEl) fleetEl.textContent = 'Xe buýt Danabus';

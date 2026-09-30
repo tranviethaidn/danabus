@@ -2182,10 +2182,10 @@ class WalkingRouter {
     };
   }
 
-  createWalkingLeg(fromLabel, toLabel, fromCoords, toCoords) {
+  createWalkingLeg(fromLabel, toLabel, fromCoords, toCoords, walkingRole = null) {
     const r = this.route(fromCoords, toCoords);
     if (!r) return null;
-    return {
+    const leg = {
       type: 'walking',
       fromLabel,
       toLabel,
@@ -2197,6 +2197,811 @@ class WalkingRouter {
       toCoords,
       summary: `Đi bộ ước tính ~${r.distanceMeters}m (${r.durationMinutes} phút)`
     };
+    if (walkingRole) {
+      leg.walkingRole = walkingRole;
+    }
+    return leg;
+  }
+}
+
+/**
+ * TransitGraphRouter
+ * Internal graph and topological routing engine.
+ * Direction planner-ready indexing, transfer adjacency caching,
+ * bounded layered search (direct -> 1 transfer -> 2 transfers),
+ * anti-loop/backtrack, monotonic stop ordering, and lazy geometry materialization.
+ */
+class TransitGraphRouter {
+  constructor(busService, walkingRouter = null, options = {}) {
+    this.busService = busService;
+    this.walkingRouter = walkingRouter || new WalkingRouter();
+    this.MAX_TRANSFER_WALK_METERS = options.maxTransferWalkMeters || 400;
+    this.MAX_DETOUR_RATIO = options.maxDetourRatio || 1.8;
+    this.MIN_TRANSFER_TIME_MINUTES = options.minTransferTimeMinutes || 5;
+    this.calculateConfidencePenalty = options.calculateConfidencePenalty || ((r, dir) => 0);
+
+    this._cachedRoutes = null;
+    this._spatialTransferByFromKey = null;
+  }
+
+  clearCache() {
+    this._cachedRoutes = null;
+    this._spatialTransferByFromKey = null;
+  }
+
+  _ensureTransferIndex() {
+    const currentRoutes = this.busService?.routes || [];
+    if (this._cachedRoutes === currentRoutes && this._spatialTransferByFromKey) {
+      return this._spatialTransferByFromKey;
+    }
+
+    const transferByFromKey = new Map();
+
+    for (const rA of currentRoutes) {
+      for (const dirA of ['outbound', 'inbound']) {
+        const stopsA = rA.stops?.[dirA] || [];
+        if (stopsA.length < 2) continue;
+
+        for (const rB of currentRoutes) {
+          if (rA.id === rB.id) continue;
+
+          for (const dirB of ['outbound', 'inbound']) {
+            const stopsB = rB.stops?.[dirB] || [];
+            if (stopsB.length < 2) continue;
+
+            const fromKey = `${rA.id}_${dirA}`;
+            for (let iA = 0; iA < stopsA.length; iA++) {
+              const sA = stopsA[iA];
+              if (!sA || typeof sA.lat !== 'number' || typeof sA.lng !== 'number' || isNaN(sA.lat) || isNaN(sA.lng)) {
+                continue; // Stop without coordinates cannot be a transfer stop
+              }
+
+              for (let iB = 0; iB < stopsB.length; iB++) {
+                const sB = stopsB[iB];
+                if (!sB || typeof sB.lat !== 'number' || typeof sB.lng !== 'number' || isNaN(sB.lat) || isNaN(sB.lng)) {
+                  continue; // Stop without coordinates cannot be a transfer stop
+                }
+
+                const walkDist = haversineDistance(sA.lat, sA.lng, sB.lat, sB.lng);
+                if (walkDist !== null && walkDist <= this.MAX_TRANSFER_WALK_METERS) {
+                  const edge = {
+                    fromRouteId: rA.id,
+                    fromDir: dirA,
+                    fromStopIndex: iA,
+                    fromStop: sA,
+                    toRouteId: rB.id,
+                    toDir: dirB,
+                    toStopIndex: iB,
+                    toStop: sB,
+                    walkDist: Math.round(walkDist)
+                  };
+                  if (!transferByFromKey.has(fromKey)) {
+                    transferByFromKey.set(fromKey, []);
+                  }
+                  transferByFromKey.get(fromKey).push(edge);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    this._cachedRoutes = currentRoutes;
+    this._spatialTransferByFromKey = transferByFromKey;
+    return transferByFromKey;
+  }
+
+  _matchCandidate(stop, candidate) {
+    if (!stop || !candidate) return false;
+    if (stop.name && candidate.name && stop.name === candidate.name) return true;
+    if (typeof stop.lat === 'number' && typeof candidate.lat === 'number' &&
+        typeof stop.lng === 'number' && typeof candidate.lng === 'number') {
+      return Math.abs(stop.lat - candidate.lat) < 0.0001 && Math.abs(stop.lng - candidate.lng) < 0.0001;
+    }
+    return false;
+  }
+
+  _compareTrips(a, b) {
+    if (a.transfers !== b.transfers) {
+      return a.transfers - b.transfers;
+    }
+    if (Math.abs(a.cost - b.cost) > 0.001) {
+      return a.cost - b.cost;
+    }
+    if (a.totalWalkingMeters !== b.totalWalkingMeters) {
+      return a.totalWalkingMeters - b.totalWalkingMeters;
+    }
+    if (a.totalDurationMinutes !== b.totalDurationMinutes) {
+      return a.totalDurationMinutes - b.totalDurationMinutes;
+    }
+    const idA = a.id || '';
+    const idB = b.id || '';
+    return idA.localeCompare(idB);
+  }
+
+  findNearestGeomIndex(points, stop) {
+    if (!Array.isArray(points) || !stop || typeof stop.lat !== 'number' || typeof stop.lng !== 'number') return 0;
+    let bestIdx = 0;
+    let minD = Infinity;
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i];
+      const d = (p[0] - stop.lat) ** 2 + (p[1] - stop.lng) ** 2;
+      if (d < minD) {
+        minD = d;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  }
+
+  searchJourneys(originLocation, destLocation, originCandidates, destCandidates, queryTime, straightDist, options = {}) {
+    const maxTransfers = options.maxTransfers !== undefined ? options.maxTransfers : 2;
+    const transferMap = this._ensureTransferIndex();
+
+    // Filter active, planning-ready routes and directions
+    const readyDirections = new Map();
+    const allRoutes = this.busService?.routes || [];
+    for (const r of allRoutes) {
+      for (const dir of ['outbound', 'inbound']) {
+        if (!this.busService.isServiceUsable(r, queryTime, dir)) continue;
+        if (!this.busService.isDirectionPlanningReady(r, dir)) continue;
+        const stops = r.stops?.[dir] || [];
+        if (stops.length < 2) continue;
+        readyDirections.set(`${r.id}_${dir}`, { route: r, direction: dir, stops });
+      }
+    }
+
+    const candidateTrips = [];
+    const walkSpeed = this.walkingRouter.walkingSpeedMetersPerMinute || 75;
+    const calcWalkMin = (meters) => Math.max(1, Math.round(meters / walkSpeed));
+
+    // LAYER 0: Direct trips (0 transfers)
+    for (const [keyA, dirInfoA] of readyDirections.entries()) {
+      const { route: r, direction: dir, stops } = dirInfoA;
+
+      for (const oCand of originCandidates) {
+        const oi = stops.findIndex(s => this._matchCandidate(s, oCand));
+        if (oi < 0) continue;
+        const boardStop = stops[oi];
+        if (typeof boardStop.lat !== 'number' || typeof boardStop.lng !== 'number') continue;
+
+        for (const dCand of destCandidates) {
+          const di = stops.findIndex(s => this._matchCandidate(s, dCand));
+          if (di < 0 || oi >= di) continue; // Monotonic order strictly enforced
+          const alightStop = stops[di];
+          if (typeof alightStop.lat !== 'number' || typeof alightStop.lng !== 'number') continue;
+
+          const stopsCount = di - oi;
+          const transitMinutes = Math.max(stopsCount * 2, 5);
+
+          const oWalkDist = typeof oCand.distanceMeters === 'number' ? oCand.distanceMeters :
+            Math.round(haversineDistance(originLocation.lat, originLocation.lng, boardStop.lat, boardStop.lng) || 0);
+          const dWalkDist = typeof dCand.distanceMeters === 'number' ? dCand.distanceMeters :
+            Math.round(haversineDistance(alightStop.lat, alightStop.lng, destLocation.lat, destLocation.lng) || 0);
+
+          const oWalkMin = calcWalkMin(oWalkDist);
+          const dWalkMin = calcWalkMin(dWalkDist);
+          const totalWalkMeters = oWalkDist + dWalkDist;
+          const totalDuration = oWalkMin + transitMinutes + dWalkMin;
+
+          const confidencePenalty = this.calculateConfidencePenalty(r, dir);
+          const cost = (oWalkMin + dWalkMin) * 1.5 + transitMinutes + confidencePenalty;
+
+          candidateTrips.push({
+            type: 'direct',
+            transfers: 0,
+            badge: 'Tuyến trực tiếp',
+            route: r,
+            routes: [r],
+            direction: dir,
+            boardIndex: oi,
+            alightIndex: di,
+            boardStop,
+            alightStop,
+            stopsCount,
+            transitDurationMinutes: transitMinutes,
+            oWalkDist,
+            dWalkDist,
+            oWalkMin,
+            dWalkMin,
+            transferBufferMinutes: 0,
+            totalDurationMinutes: totalDuration,
+            totalWalkingMeters: totalWalkMeters,
+            confidencePenalty,
+            cost,
+            id: `direct_${r.id}_${dir}_${oi}_${di}`
+          });
+        }
+      }
+    }
+
+    // LAYER 1: 1-transfer trips
+    if (maxTransfers >= 1) {
+      for (const [keyA, dirInfoA] of readyDirections.entries()) {
+        const { route: rA, direction: dirA, stops: stopsA } = dirInfoA;
+        const outEdgesA = transferMap.get(keyA) || [];
+        if (outEdgesA.length === 0) continue;
+
+        for (const oCand of originCandidates) {
+          const oiA = stopsA.findIndex(s => this._matchCandidate(s, oCand));
+          if (oiA < 0 || oiA >= stopsA.length - 1) continue;
+          const boardA = stopsA[oiA];
+          if (typeof boardA.lat !== 'number' || typeof boardA.lng !== 'number') continue;
+
+          const oWalkDist = typeof oCand.distanceMeters === 'number' ? oCand.distanceMeters :
+            Math.round(haversineDistance(originLocation.lat, originLocation.lng, boardA.lat, boardA.lng) || 0);
+          const oWalkMin = calcWalkMin(oWalkDist);
+
+          for (const edge of outEdgesA) {
+            const tiA = edge.fromStopIndex;
+            if (tiA <= oiA) continue; // Monotonic on Route A
+
+            const keyB = `${edge.toRouteId}_${edge.toDir}`;
+            const dirInfoB = readyDirections.get(keyB);
+            if (!dirInfoB) continue;
+            if (dirInfoB.route.id === rA.id) continue; // Anti-route-reuse
+
+            const { route: rB, direction: dirB, stops: stopsB } = dirInfoB;
+            const tiB = edge.toStopIndex;
+            const tStopA = edge.fromStop;
+            const tStopB = edge.toStop;
+            const tWalkDist = edge.walkDist;
+            const tWalkMin = calcWalkMin(tWalkDist);
+
+            const legAEstMeters = haversineDistance(boardA.lat, boardA.lng, tStopA.lat, tStopA.lng) || 0;
+
+            for (const dCand of destCandidates) {
+              const diB = stopsB.findIndex(s => this._matchCandidate(s, dCand));
+              if (diB <= tiB) continue; // Monotonic on Route B
+              const alightB = stopsB[diB];
+              if (typeof alightB.lat !== 'number' || typeof alightB.lng !== 'number') continue;
+
+              const dWalkDist = typeof dCand.distanceMeters === 'number' ? dCand.distanceMeters :
+                Math.round(haversineDistance(alightB.lat, alightB.lng, destLocation.lat, destLocation.lng) || 0);
+              const legBEstMeters = haversineDistance(tStopB.lat, tStopB.lng, alightB.lat, alightB.lng) || 0;
+
+              // Detour ratio check
+              const totalTripDist = oWalkDist + legAEstMeters + tWalkDist + legBEstMeters + dWalkDist;
+              if (totalTripDist / straightDist > this.MAX_DETOUR_RATIO) {
+                continue;
+              }
+
+              const dWalkMin = calcWalkMin(dWalkDist);
+              const stopsCountA = tiA - oiA;
+              const stopsCountB = diB - tiB;
+              const durA = Math.max(stopsCountA * 2, 4);
+              const durB = Math.max(stopsCountB * 2, 4);
+
+              const transferBufferMinutes = this.MIN_TRANSFER_TIME_MINUTES; // 5 mins
+              const totalDuration = oWalkMin + durA + tWalkMin + durB + dWalkMin + transferBufferMinutes;
+              const totalWalkMeters = oWalkDist + tWalkDist + dWalkDist;
+
+              const confA = this.calculateConfidencePenalty(rA, dirA);
+              const confB = this.calculateConfidencePenalty(rB, dirB);
+              const totalConfidencePenalty = confA + confB;
+              const cost = (oWalkMin + tWalkMin + dWalkMin) * 1.5 + durA + durB + 12 + transferBufferMinutes + totalConfidencePenalty;
+
+              candidateTrips.push({
+                type: 'connecting',
+                transfers: 1,
+                badge: 'Chuyển tuyến 1 lần',
+                routeA: rA,
+                routeB: rB,
+                routes: [rA, rB],
+                dirA,
+                dirB,
+                oiA,
+                tiA,
+                tiB,
+                diB,
+                boardA,
+                tStopA,
+                tStopB,
+                alightB,
+                stopsCountA,
+                stopsCountB,
+                durA,
+                durB,
+                oWalkDist,
+                dWalkDist,
+                tWalkDist,
+                oWalkMin,
+                dWalkMin,
+                tWalkMin,
+                transferBufferMinutes,
+                transferBufferNote: 'Thời gian đệm chuyển tuyến ước tính (không phải dự báo realtime)',
+                totalDurationMinutes: totalDuration,
+                totalWalkingMeters: totalWalkMeters,
+                confidencePenalty: totalConfidencePenalty,
+                confidencePenaltyA: confA,
+                confidencePenaltyB: confB,
+                cost,
+                id: `transfer_${rA.id}_${rB.id}_${oiA}_${tiA}_${tiB}_${diB}`
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // LAYER 2: 2-transfer trips (3 distinct routes: rA -> rB -> rC)
+    if (maxTransfers >= 2) {
+      for (const [keyA, dirInfoA] of readyDirections.entries()) {
+        const { route: rA, direction: dirA, stops: stopsA } = dirInfoA;
+        const outEdgesA = transferMap.get(keyA) || [];
+        if (outEdgesA.length === 0) continue;
+
+        for (const oCand of originCandidates) {
+          const oiA = stopsA.findIndex(s => this._matchCandidate(s, oCand));
+          if (oiA < 0 || oiA >= stopsA.length - 1) continue;
+          const boardA = stopsA[oiA];
+          if (typeof boardA.lat !== 'number' || typeof boardA.lng !== 'number') continue;
+
+          const oWalkDist = typeof oCand.distanceMeters === 'number' ? oCand.distanceMeters :
+            Math.round(haversineDistance(originLocation.lat, originLocation.lng, boardA.lat, boardA.lng) || 0);
+          const oWalkMin = calcWalkMin(oWalkDist);
+
+          for (const edge1 of outEdgesA) {
+            const tiA = edge1.fromStopIndex;
+            if (tiA <= oiA) continue; // Monotonic on Route A
+
+            const keyB = `${edge1.toRouteId}_${edge1.toDir}`;
+            const dirInfoB = readyDirections.get(keyB);
+            if (!dirInfoB) continue;
+            if (dirInfoB.route.id === rA.id) continue; // Anti-route-reuse
+
+            const { route: rB, direction: dirB, stops: stopsB } = dirInfoB;
+            const tiB1 = edge1.toStopIndex;
+            const tStopA = edge1.fromStop;
+            const tStopB1 = edge1.toStop;
+            const tWalkDist1 = edge1.walkDist;
+            const tWalkMin1 = calcWalkMin(tWalkDist1);
+
+            const outEdgesB = transferMap.get(keyB) || [];
+            if (outEdgesB.length === 0) continue;
+
+            const legAEstMeters = haversineDistance(boardA.lat, boardA.lng, tStopA.lat, tStopA.lng) || 0;
+
+            for (const edge2 of outEdgesB) {
+              const tiB2 = edge2.fromStopIndex;
+              if (tiB2 <= tiB1) continue; // Monotonic on Route B
+
+              const keyC = `${edge2.toRouteId}_${edge2.toDir}`;
+              const dirInfoC = readyDirections.get(keyC);
+              if (!dirInfoC) continue;
+
+              const { route: rC, direction: dirC, stops: stopsC } = dirInfoC;
+              // Anti-route-reuse: All 3 routes must be distinct!
+              if (rC.id === rA.id || rC.id === rB.id) continue;
+
+              const tiC = edge2.toStopIndex;
+              const tStopB2 = edge2.fromStop;
+              const tStopC = edge2.toStop;
+              const tWalkDist2 = edge2.walkDist;
+              const tWalkMin2 = calcWalkMin(tWalkDist2);
+
+              const legBEstMeters = haversineDistance(tStopB1.lat, tStopB1.lng, tStopB2.lat, tStopB2.lng) || 0;
+
+              // Early detour pruning
+              const partialDist = oWalkDist + legAEstMeters + tWalkDist1 + legBEstMeters + tWalkDist2;
+              if (partialDist / straightDist > this.MAX_DETOUR_RATIO) {
+                continue;
+              }
+
+              for (const dCand of destCandidates) {
+                const diC = stopsC.findIndex(s => this._matchCandidate(s, dCand));
+                if (diC <= tiC) continue; // Monotonic on Route C
+                const alightC = stopsC[diC];
+                if (typeof alightC.lat !== 'number' || typeof alightC.lng !== 'number') continue;
+
+                const dWalkDist = typeof dCand.distanceMeters === 'number' ? dCand.distanceMeters :
+                  Math.round(haversineDistance(alightC.lat, alightC.lng, destLocation.lat, destLocation.lng) || 0);
+                const legCEstMeters = haversineDistance(tStopC.lat, tStopC.lng, alightC.lat, alightC.lng) || 0;
+
+                const totalTripDist = partialDist + legCEstMeters + dWalkDist;
+                if (totalTripDist / straightDist > this.MAX_DETOUR_RATIO) {
+                  continue;
+                }
+
+                const dWalkMin = calcWalkMin(dWalkDist);
+                const stopsCountA = tiA - oiA;
+                const stopsCountB = tiB2 - tiB1;
+                const stopsCountC = diC - tiC;
+                const durA = Math.max(stopsCountA * 2, 4);
+                const durB = Math.max(stopsCountB * 2, 4);
+                const durC = Math.max(stopsCountC * 2, 4);
+
+                const transferBufferMinutes = this.MIN_TRANSFER_TIME_MINUTES * 2; // 10 mins (5 * 2)
+                const totalDuration = oWalkMin + durA + tWalkMin1 + durB + tWalkMin2 + durC + dWalkMin + transferBufferMinutes;
+                const totalWalkMeters = oWalkDist + tWalkDist1 + tWalkDist2 + dWalkDist;
+
+                const confA = this.calculateConfidencePenalty(rA, dirA);
+                const confB = this.calculateConfidencePenalty(rB, dirB);
+                const confC = this.calculateConfidencePenalty(rC, dirC);
+                const totalConfidencePenalty = confA + confB + confC;
+
+                const transferPenalty = 24; // 12 * 2
+                const cost = (oWalkMin + tWalkMin1 + tWalkMin2 + dWalkMin) * 1.5 + durA + durB + durC + transferPenalty + transferBufferMinutes + totalConfidencePenalty;
+
+                candidateTrips.push({
+                  type: 'connecting',
+                  transfers: 2,
+                  badge: 'Chuyển tuyến 2 lần',
+                  routeA: rA,
+                  routeB: rB,
+                  routeC: rC,
+                  routes: [rA, rB, rC],
+                  dirA,
+                  dirB,
+                  dirC,
+                  oiA,
+                  tiA,
+                  tiB1,
+                  tiB2,
+                  tiC,
+                  diC,
+                  boardA,
+                  tStopA,
+                  tStopB1,
+                  tStopB2,
+                  tStopC,
+                  alightC,
+                  stopsCountA,
+                  stopsCountB,
+                  stopsCountC,
+                  durA,
+                  durB,
+                  durC,
+                  oWalkDist,
+                  tWalkDist1,
+                  tWalkDist2,
+                  dWalkDist,
+                  oWalkMin,
+                  tWalkMin1,
+                  tWalkMin2,
+                  dWalkMin,
+                  transferBufferMinutes,
+                  transferBufferNote: 'Thời gian đệm chuyển tuyến ước tính (không phải dự báo realtime)',
+                  totalDurationMinutes: totalDuration,
+                  totalWalkingMeters: totalWalkMeters,
+                  confidencePenalty: totalConfidencePenalty,
+                  confidencePenaltyA: confA,
+                  confidencePenaltyB: confB,
+                  confidencePenaltyC: confC,
+                  cost,
+                  id: `transfer2_${rA.id}_${dirA}_${oiA}_${tiA}_${rB.id}_${dirB}_${tiB1}_${tiB2}_${rC.id}_${dirC}_${tiC}_${diC}`
+                });
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (candidateTrips.length === 0) return [];
+
+    // Sort candidates deterministically
+    candidateTrips.sort((a, b) => this._compareTrips(a, b));
+
+    // Deduplicate similar candidates
+    const finalists = [];
+    const seenSignatures = new Set();
+    for (const c of candidateTrips) {
+      let sig = '';
+      if (c.type === 'direct') {
+        sig = `direct_${c.route.id}_${c.direction}_${c.boardStop.name}_${c.alightStop.name}`;
+      } else if (c.transfers === 1) {
+        sig = `transfer_${c.routeA.id}_${c.routeB.id}_${c.boardA.name}_${c.tStopA.name}_${c.alightB.name}`;
+      } else {
+        const routeKey = c.routes ? c.routes.map(r => r.id).join('_') : `${c.routeA?.id}_${c.routeB?.id}_${c.routeC?.id}`;
+        sig = `transfer2_${routeKey}_${c.boardA.name}_${c.tStopA.name}_${c.tStopB2.name}_${c.alightC.name}`;
+      }
+      if (!seenSignatures.has(sig)) {
+        seenSignatures.add(sig);
+        finalists.push(c);
+        if (finalists.length >= 5) break;
+      }
+    }
+
+    // Materialize legs & lazy slice geometry for finalists only
+    const materializedTrips = finalists.map(c => this._materializeTrip(c, originLocation, destLocation));
+    return materializedTrips;
+  }
+
+  _materializeTrip(c, originLocation, destLocation) {
+    if (c.type === 'direct') {
+      const walkOrigin = this.walkingRouter.createWalkingLeg(
+        originLocation.displayName,
+        c.boardStop.name,
+        [originLocation.lat, originLocation.lng],
+        [c.boardStop.lat, c.boardStop.lng],
+        'origin'
+      );
+      if (walkOrigin) walkOrigin.walkingRole = 'origin';
+
+      const walkDest = this.walkingRouter.createWalkingLeg(
+        c.alightStop.name,
+        destLocation.displayName,
+        [c.alightStop.lat, c.alightStop.lng],
+        [destLocation.lat, destLocation.lng],
+        'destination'
+      );
+      if (walkDest) walkDest.walkingRole = 'destination';
+
+      const routeGeom = c.route.geometry?.[c.direction] || [];
+      let slicedGeom = null;
+      if (Array.isArray(routeGeom) && routeGeom.length > 1) {
+        const startIdx = this.findNearestGeomIndex(routeGeom, c.boardStop);
+        const endIdx = this.findNearestGeomIndex(routeGeom, c.alightStop);
+        if (startIdx <= endIdx) {
+          slicedGeom = routeGeom.slice(startIdx, endIdx + 1);
+        }
+      }
+
+      return {
+        id: c.id,
+        type: 'direct',
+        transfers: 0,
+        badge: 'Tuyến trực tiếp',
+        route: c.route,
+        routes: [c.route],
+        direction: c.direction,
+        totalDurationMinutes: c.totalDurationMinutes,
+        totalWalkingMeters: c.totalWalkingMeters,
+        transitDurationMinutes: c.transitDurationMinutes,
+        fareText: this.busService.formatRouteFare(c.route),
+        confidencePenalty: c.confidencePenalty,
+        dataConfidenceScore: c.route.dataQuality?.stopMetrics?.[c.direction]?.total ?
+          Math.round(((c.route.dataQuality.stopMetrics[c.direction].verified || 0) / c.route.dataQuality.stopMetrics[c.direction].total) * 100) / 100 : 1.0,
+        cost: c.cost,
+        transferBufferMinutes: 0,
+        legs: [
+          walkOrigin,
+          {
+            type: 'transit',
+            routeId: c.route.id,
+            routeNumber: c.route.routeNumber,
+            routeName: c.route.shortName || c.route.name,
+            direction: c.direction,
+            boardingStop: c.boardStop,
+            alightingStop: c.alightStop,
+            stopsCount: c.stopsCount,
+            durationMinutes: c.transitDurationMinutes,
+            geometry: slicedGeom
+          },
+          walkDest
+        ]
+      };
+    }
+
+    if (c.transfers === 1) {
+      const walkOrigin = this.walkingRouter.createWalkingLeg(
+        originLocation.displayName,
+        c.boardA.name,
+        [originLocation.lat, originLocation.lng],
+        [c.boardA.lat, c.boardA.lng],
+        'origin'
+      );
+      if (walkOrigin) walkOrigin.walkingRole = 'origin';
+
+      const walkTransfer = this.walkingRouter.createWalkingLeg(
+        c.tStopA.name,
+        c.tStopB.name,
+        [c.tStopA.lat, c.tStopA.lng],
+        [c.tStopB.lat, c.tStopB.lng],
+        'transfer'
+      );
+      if (walkTransfer) walkTransfer.walkingRole = 'transfer';
+
+      const walkDest = this.walkingRouter.createWalkingLeg(
+        c.alightB.name,
+        destLocation.displayName,
+        [c.alightB.lat, c.alightB.lng],
+        [destLocation.lat, destLocation.lng],
+        'destination'
+      );
+      if (walkDest) walkDest.walkingRole = 'destination';
+
+      const geomA = c.routeA.geometry?.[c.dirA] || [];
+      const geomB = c.routeB.geometry?.[c.dirB] || [];
+      let slicedGeomA = null;
+      let slicedGeomB = null;
+      if (Array.isArray(geomA) && geomA.length > 1) {
+        const sIdx = this.findNearestGeomIndex(geomA, c.boardA);
+        const eIdx = this.findNearestGeomIndex(geomA, c.tStopA);
+        if (sIdx <= eIdx) slicedGeomA = geomA.slice(sIdx, eIdx + 1);
+      }
+      if (Array.isArray(geomB) && geomB.length > 1) {
+        const sIdx = this.findNearestGeomIndex(geomB, c.tStopB);
+        const eIdx = this.findNearestGeomIndex(geomB, c.alightB);
+        if (sIdx <= eIdx) slicedGeomB = geomB.slice(sIdx, eIdx + 1);
+      }
+
+      const fareA = this.busService.formatRouteFare(c.routeA);
+      const fareB = this.busService.formatRouteFare(c.routeB);
+      const fareText = `${fareA} + ${fareB}`;
+
+      return {
+        id: c.id,
+        type: 'connecting',
+        transfers: 1,
+        badge: 'Chuyển tuyến 1 lần',
+        routeA: c.routeA,
+        routeB: c.routeB,
+        routes: [c.routeA, c.routeB],
+        totalDurationMinutes: c.totalDurationMinutes,
+        totalWalkingMeters: c.totalWalkingMeters,
+        transitDurationMinutes: c.durA + c.durB,
+        fareText,
+        confidencePenalty: c.confidencePenalty,
+        confidencePenaltyA: c.confidencePenaltyA,
+        confidencePenaltyB: c.confidencePenaltyB,
+        cost: c.cost,
+        transferBufferMinutes: c.transferBufferMinutes,
+        transferBufferNote: c.transferBufferNote,
+        legs: [
+          walkOrigin,
+          {
+            type: 'transit',
+            routeId: c.routeA.id,
+            routeNumber: c.routeA.routeNumber,
+            routeName: c.routeA.shortName || c.routeA.name,
+            direction: c.dirA,
+            boardingStop: c.boardA,
+            alightingStop: c.tStopA,
+            stopsCount: c.stopsCountA,
+            durationMinutes: c.durA,
+            geometry: slicedGeomA
+          },
+          walkTransfer,
+          {
+            type: 'transit',
+            routeId: c.routeB.id,
+            routeNumber: c.routeB.routeNumber,
+            routeName: c.routeB.shortName || c.routeB.name,
+            direction: c.dirB,
+            boardingStop: c.tStopB,
+            alightingStop: c.alightB,
+            stopsCount: c.stopsCountB,
+            durationMinutes: c.durB,
+            geometry: slicedGeomB
+          },
+          walkDest
+        ]
+      };
+    }
+
+    if (c.transfers === 2) {
+      const walkOrigin = this.walkingRouter.createWalkingLeg(
+        originLocation.displayName,
+        c.boardA.name,
+        [originLocation.lat, originLocation.lng],
+        [c.boardA.lat, c.boardA.lng],
+        'origin'
+      );
+      if (walkOrigin) walkOrigin.walkingRole = 'origin';
+
+      const walkTransfer1 = this.walkingRouter.createWalkingLeg(
+        c.tStopA.name,
+        c.tStopB1.name,
+        [c.tStopA.lat, c.tStopA.lng],
+        [c.tStopB1.lat, c.tStopB1.lng],
+        'transfer'
+      );
+      if (walkTransfer1) walkTransfer1.walkingRole = 'transfer';
+
+      const walkTransfer2 = this.walkingRouter.createWalkingLeg(
+        c.tStopB2.name,
+        c.tStopC.name,
+        [c.tStopB2.lat, c.tStopB2.lng],
+        [c.tStopC.lat, c.tStopC.lng],
+        'transfer'
+      );
+      if (walkTransfer2) walkTransfer2.walkingRole = 'transfer';
+
+      const walkDest = this.walkingRouter.createWalkingLeg(
+        c.alightC.name,
+        destLocation.displayName,
+        [c.alightC.lat, c.alightC.lng],
+        [destLocation.lat, destLocation.lng],
+        'destination'
+      );
+      if (walkDest) walkDest.walkingRole = 'destination';
+
+      const geomA = c.routeA.geometry?.[c.dirA] || [];
+      const geomB = c.routeB.geometry?.[c.dirB] || [];
+      const geomC = c.routeC.geometry?.[c.dirC] || [];
+      let slicedGeomA = null;
+      let slicedGeomB = null;
+      let slicedGeomC = null;
+      if (Array.isArray(geomA) && geomA.length > 1) {
+        const sIdx = this.findNearestGeomIndex(geomA, c.boardA);
+        const eIdx = this.findNearestGeomIndex(geomA, c.tStopA);
+        if (sIdx <= eIdx) slicedGeomA = geomA.slice(sIdx, eIdx + 1);
+      }
+      if (Array.isArray(geomB) && geomB.length > 1) {
+        const sIdx = this.findNearestGeomIndex(geomB, c.tStopB1);
+        const eIdx = this.findNearestGeomIndex(geomB, c.tStopB2);
+        if (sIdx <= eIdx) slicedGeomB = geomB.slice(sIdx, eIdx + 1);
+      }
+      if (Array.isArray(geomC) && geomC.length > 1) {
+        const sIdx = this.findNearestGeomIndex(geomC, c.tStopC);
+        const eIdx = this.findNearestGeomIndex(geomC, c.alightC);
+        if (sIdx <= eIdx) slicedGeomC = geomC.slice(sIdx, eIdx + 1);
+      }
+
+      const fareA = this.busService.formatRouteFare(c.routeA);
+      const fareB = this.busService.formatRouteFare(c.routeB);
+      const fareC = this.busService.formatRouteFare(c.routeC);
+      const fareText = `${fareA} + ${fareB} + ${fareC}`;
+
+      return {
+        id: c.id,
+        type: 'connecting',
+        transfers: 2,
+        badge: 'Chuyển tuyến 2 lần',
+        routeA: c.routeA,
+        routeB: c.routeB,
+        routeC: c.routeC,
+        routes: [c.routeA, c.routeB, c.routeC],
+        totalDurationMinutes: c.totalDurationMinutes,
+        totalWalkingMeters: c.totalWalkingMeters,
+        transitDurationMinutes: c.durA + c.durB + c.durC,
+        fareText,
+        confidencePenalty: c.confidencePenalty,
+        confidencePenaltyA: c.confidencePenaltyA,
+        confidencePenaltyB: c.confidencePenaltyB,
+        confidencePenaltyC: c.confidencePenaltyC,
+        cost: c.cost,
+        transferBufferMinutes: c.transferBufferMinutes,
+        transferBufferNote: c.transferBufferNote,
+        legs: [
+          walkOrigin,
+          {
+            type: 'transit',
+            routeId: c.routeA.id,
+            routeNumber: c.routeA.routeNumber,
+            routeName: c.routeA.shortName || c.routeA.name,
+            direction: c.dirA,
+            boardingStop: c.boardA,
+            alightingStop: c.tStopA,
+            stopsCount: c.stopsCountA,
+            durationMinutes: c.durA,
+            geometry: slicedGeomA
+          },
+          walkTransfer1,
+          {
+            type: 'transit',
+            routeId: c.routeB.id,
+            routeNumber: c.routeB.routeNumber,
+            routeName: c.routeB.shortName || c.routeB.name,
+            direction: c.dirB,
+            boardingStop: c.tStopB1,
+            alightingStop: c.tStopB2,
+            stopsCount: c.stopsCountB,
+            durationMinutes: c.durB,
+            geometry: slicedGeomB
+          },
+          walkTransfer2,
+          {
+            type: 'transit',
+            routeId: c.routeC.id,
+            routeNumber: c.routeC.routeNumber,
+            routeName: c.routeC.shortName || c.routeC.name,
+            direction: c.dirC,
+            boardingStop: c.tStopC,
+            alightingStop: c.alightC,
+            stopsCount: c.stopsCountC,
+            durationMinutes: c.durC,
+            geometry: slicedGeomC
+          },
+          walkDest
+        ]
+      };
+    }
+
+    return null;
   }
 }
 
@@ -2215,6 +3020,13 @@ class BestStopResolver {
     this.MAX_RADIUS_METERS = options.maxRadiusMeters || 1500;
     this.MAX_TRANSFER_WALK_METERS = options.maxTransferWalkMeters || 400;
     this.MAX_DETOUR_RATIO = options.maxDetourRatio || 1.8;
+    this.MIN_TRANSFER_TIME_MINUTES = options.minTransferTimeMinutes || 5;
+    this.graphRouter = options.graphRouter || new TransitGraphRouter(this.busService, this.walkingRouter, {
+      maxTransferWalkMeters: this.MAX_TRANSFER_WALK_METERS,
+      maxDetourRatio: this.MAX_DETOUR_RATIO,
+      minTransferTimeMinutes: this.MIN_TRANSFER_TIME_MINUTES,
+      calculateConfidencePenalty: (r, dir) => this.calculateConfidencePenalty(r, dir)
+    });
   }
 
   isWithinServiceArea(lat, lng) {
@@ -2330,8 +3142,11 @@ class BestStopResolver {
       let sig = '';
       if (t.type === 'direct') {
         sig = `direct_${t.route.id}_${t.direction}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}`;
-      } else {
+      } else if (t.transfers === 1) {
         sig = `transfer_${t.routeA.id}_${t.routeB.id}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}_${t.legs[3].alightingStop.name}`;
+      } else {
+        const routeKey = t.routes ? t.routes.map(r => r.id).join('_') : `${t.routeA?.id}_${t.routeB?.id}_${t.routeC?.id}`;
+        sig = `transfer2_${routeKey}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}_${t.legs[3].alightingStop.name}_${t.legs[5].alightingStop.name}`;
       }
       if (!seenTripSignatures.has(sig)) {
         seenTripSignatures.add(sig);
@@ -2391,282 +3206,20 @@ class BestStopResolver {
     return idA.localeCompare(idB);
   }
 
-  _evaluateJourneys(originLocation, destLocation, originCandidates, destCandidates, queryTime, straightDist) {
-    const eligibleRoutes = (this.busService.routes || []).filter(r => this.busService.isServiceUsable(r, queryTime));
-    const trips = [];
-
-    // Direct Trip Search
-    for (const r of eligibleRoutes) {
-      for (const dir of ['outbound', 'inbound']) {
-        if (!this.busService.isServiceUsable(r, queryTime, dir)) continue;
-        if (!this.busService.isDirectionPlanningReady(r, dir)) continue;
-
-        const stops = r.stops?.[dir] || [];
-        if (stops.length < 2) continue;
-
-        for (const oCand of originCandidates) {
-          const oi = stops.findIndex(s => s.name === oCand.name || (s.lat && oCand.lat && Math.abs(s.lat - oCand.lat) < 0.0001 && Math.abs(s.lng - oCand.lng) < 0.0001));
-          if (oi < 0) continue;
-
-          for (const dCand of destCandidates) {
-            const di = stops.findIndex(s => s.name === dCand.name || (s.lat && dCand.lat && Math.abs(s.lat - dCand.lat) < 0.0001 && Math.abs(s.lng - dCand.lng) < 0.0001));
-            // Monotonic order: oi < di. Wrong direction candidates (oi >= di) are strictly rejected!
-            if (di < 0 || oi >= di) continue;
-
-            const boardStop = stops[oi];
-            const alightStop = stops[di];
-            const stopsCount = di - oi;
-
-            // Sliced geometry from verified route
-            const routeGeom = r.geometry?.[dir] || [];
-            let slicedGeom = null;
-            if (Array.isArray(routeGeom) && routeGeom.length > 1) {
-              const startIdx = this.findNearestGeomIndex(routeGeom, boardStop);
-              const endIdx = this.findNearestGeomIndex(routeGeom, alightStop);
-              if (startIdx <= endIdx) {
-                slicedGeom = routeGeom.slice(startIdx, endIdx + 1);
-              }
-            }
-
-            const walkOrigin = this.walkingRouter.createWalkingLeg(
-              originLocation.displayName,
-              boardStop.name,
-              [originLocation.lat, originLocation.lng],
-              [boardStop.lat, boardStop.lng]
-            );
-            const walkDest = this.walkingRouter.createWalkingLeg(
-              alightStop.name,
-              destLocation.displayName,
-              [alightStop.lat, alightStop.lng],
-              [destLocation.lat, destLocation.lng]
-            );
-
-            if (!walkOrigin || !walkDest) continue;
-
-            const transitMinutes = Math.max(stopsCount * 2, 5);
-            const totalDuration = walkOrigin.durationMinutes + transitMinutes + walkDest.durationMinutes;
-            const totalWalkingMeters = walkOrigin.distanceMeters + walkDest.distanceMeters;
-
-            const confidencePenalty = this.calculateConfidencePenalty(r, dir);
-            const cost = (walkOrigin.durationMinutes + walkDest.durationMinutes) * 1.5 + transitMinutes + confidencePenalty;
-
-            trips.push({
-              id: `direct_${r.id}_${dir}_${oi}_${di}`,
-              type: 'direct',
-              transfers: 0,
-              badge: 'Tuyến trực tiếp',
-              route: r,
-              direction: dir,
-              totalDurationMinutes: totalDuration,
-              totalWalkingMeters,
-              transitDurationMinutes: transitMinutes,
-              fareText: this.busService.formatRouteFare(r),
-              confidencePenalty,
-              dataConfidenceScore: r.dataQuality?.stopMetrics?.[dir]?.total ? Math.round(((r.dataQuality.stopMetrics[dir].verified || 0) / r.dataQuality.stopMetrics[dir].total) * 100) / 100 : 1.0,
-              cost,
-              legs: [
-                walkOrigin,
-                {
-                  type: 'transit',
-                  routeId: r.id,
-                  routeNumber: r.routeNumber,
-                  routeName: r.shortName || r.name,
-                  direction: dir,
-                  boardingStop: boardStop,
-                  alightingStop: alightStop,
-                  stopsCount,
-                  durationMinutes: transitMinutes,
-                  geometry: slicedGeom
-                },
-                walkDest
-              ]
-            });
-          }
-        }
-      }
-    }
-
-    // Connecting Trips Search (Max 1 transfer)
-    for (const rA of eligibleRoutes) {
-      for (const dirA of ['outbound', 'inbound']) {
-        if (!this.busService.isServiceUsable(rA, queryTime, dirA)) continue;
-        if (!this.busService.isDirectionPlanningReady(rA, dirA)) continue;
-        const stopsA = rA.stops?.[dirA] || [];
-        if (stopsA.length < 2) continue;
-
-        for (const rB of eligibleRoutes) {
-          if (rA.id === rB.id) continue; // Anti-loop: no transfer on same route
-
-          for (const dirB of ['outbound', 'inbound']) {
-            if (!this.busService.isServiceUsable(rB, queryTime, dirB)) continue;
-            if (!this.busService.isDirectionPlanningReady(rB, dirB)) continue;
-            const stopsB = rB.stops?.[dirB] || [];
-            if (stopsB.length < 2) continue;
-
-            for (const oCand of originCandidates) {
-              const oiA = stopsA.findIndex(s => s.name === oCand.name || (s.lat && oCand.lat && Math.abs(s.lat - oCand.lat) < 0.0001 && Math.abs(s.lng - oCand.lng) < 0.0001));
-              if (oiA < 0 || oiA >= stopsA.length - 1) continue;
-
-              for (const dCand of destCandidates) {
-                const diB = stopsB.findIndex(s => s.name === dCand.name || (s.lat && dCand.lat && Math.abs(s.lat - dCand.lat) < 0.0001 && Math.abs(s.lng - dCand.lng) < 0.0001));
-                if (diB <= 0) continue;
-
-                for (let tiA = oiA + 1; tiA < stopsA.length; tiA++) {
-                  const tStopA = stopsA[tiA];
-                  if (!tStopA.lat || !tStopA.lng) continue;
-
-                  for (let tiB = 0; tiB < diB; tiB++) {
-                    const tStopB = stopsB[tiB];
-                    if (!tStopB.lat || !tStopB.lng) continue;
-
-                    const transferWalkDist = haversineDistance(tStopA.lat, tStopA.lng, tStopB.lat, tStopB.lng);
-                    if (transferWalkDist === null || transferWalkDist > this.MAX_TRANSFER_WALK_METERS) {
-                      continue; // Transfer walking must be <= 400m
-                    }
-
-                    // Detour ratio check
-                    const boardA = stopsA[oiA];
-                    const alightB = stopsB[diB];
-                    const legAEstMeters = haversineDistance(boardA.lat, boardA.lng, tStopA.lat, tStopA.lng) || 0;
-                    const legBEstMeters = haversineDistance(tStopB.lat, tStopB.lng, alightB.lat, alightB.lng) || 0;
-                    const walkOriginDist = oCand.distanceMeters || 0;
-                    const walkDestDist = dCand.distanceMeters || 0;
-
-                    const totalTripDist = walkOriginDist + legAEstMeters + transferWalkDist + legBEstMeters + walkDestDist;
-                    if (totalTripDist / straightDist > this.MAX_DETOUR_RATIO) {
-                      continue; // Detour penalty: reject excessive circuity (detour ratio <= 1.8)
-                    }
-
-                    const walkOrigin = this.walkingRouter.createWalkingLeg(
-                      originLocation.displayName,
-                      boardA.name,
-                      [originLocation.lat, originLocation.lng],
-                      [boardA.lat, boardA.lng]
-                    );
-                    const walkTransfer = this.walkingRouter.createWalkingLeg(
-                      tStopA.name,
-                      tStopB.name,
-                      [tStopA.lat, tStopA.lng],
-                      [tStopB.lat, tStopB.lng]
-                    );
-                    const walkDest = this.walkingRouter.createWalkingLeg(
-                      alightB.name,
-                      destLocation.displayName,
-                      [alightB.lat, alightB.lng],
-                      [destLocation.lat, destLocation.lng]
-                    );
-
-                    if (!walkOrigin || !walkTransfer || !walkDest) continue;
-
-                    const stopsCountA = tiA - oiA;
-                    const stopsCountB = diB - tiB;
-                    const durA = Math.max(stopsCountA * 2, 4);
-                    const durB = Math.max(stopsCountB * 2, 4);
-                    const totalDur = walkOrigin.durationMinutes + durA + walkTransfer.durationMinutes + durB + walkDest.durationMinutes;
-                    const totalWalk = walkOrigin.distanceMeters + walkTransfer.distanceMeters + walkDest.distanceMeters;
-
-                    // Sliced geometries
-                    const geomA = rA.geometry?.[dirA] || [];
-                    const geomB = rB.geometry?.[dirB] || [];
-                    let slicedGeomA = null;
-                    let slicedGeomB = null;
-                    if (Array.isArray(geomA) && geomA.length > 1) {
-                      const sIdx = this.findNearestGeomIndex(geomA, boardA);
-                      const eIdx = this.findNearestGeomIndex(geomA, tStopA);
-                      if (sIdx <= eIdx) slicedGeomA = geomA.slice(sIdx, eIdx + 1);
-                    }
-                    if (Array.isArray(geomB) && geomB.length > 1) {
-                      const sIdx = this.findNearestGeomIndex(geomB, tStopB);
-                      const eIdx = this.findNearestGeomIndex(geomB, alightB);
-                      if (sIdx <= eIdx) slicedGeomB = geomB.slice(sIdx, eIdx + 1);
-                    }
-
-                    const fareA = this.busService.formatRouteFare(rA);
-                    const fareB = this.busService.formatRouteFare(rB);
-                    const fareText = `${fareA} + ${fareB}`;
-
-                    const confidencePenaltyA = this.calculateConfidencePenalty(rA, dirA);
-                    const confidencePenaltyB = this.calculateConfidencePenalty(rB, dirB);
-                    const totalConfidencePenalty = confidencePenaltyA + confidencePenaltyB;
-
-                    trips.push({
-                      id: `transfer_${rA.id}_${rB.id}_${oiA}_${tiA}_${tiB}_${diB}`,
-                      type: 'connecting',
-                      transfers: 1,
-                      badge: 'Chuyển tuyến 1 lần',
-                      routeA: rA,
-                      routeB: rB,
-                      totalDurationMinutes: totalDur,
-                      totalWalkingMeters: totalWalk,
-                      transitDurationMinutes: durA + durB,
-                      fareText,
-                      confidencePenalty: totalConfidencePenalty,
-                      confidencePenaltyA,
-                      confidencePenaltyB,
-                      cost: (walkOrigin.durationMinutes + walkTransfer.durationMinutes + walkDest.durationMinutes) * 1.5 + durA + durB + 12 + totalConfidencePenalty,
-                      legs: [
-                        walkOrigin,
-                        {
-                          type: 'transit',
-                          routeId: rA.id,
-                          routeNumber: rA.routeNumber,
-                          routeName: rA.shortName || rA.name,
-                          direction: dirA,
-                          boardingStop: boardA,
-                          alightingStop: tStopA,
-                          stopsCount: stopsCountA,
-                          durationMinutes: durA,
-                          geometry: slicedGeomA
-                        },
-                        walkTransfer,
-                        {
-                          type: 'transit',
-                          routeId: rB.id,
-                          routeNumber: rB.routeNumber,
-                          routeName: rB.shortName || rB.name,
-                          direction: dirB,
-                          boardingStop: tStopB,
-                          alightingStop: alightB,
-                          stopsCount: stopsCountB,
-                          durationMinutes: durB,
-                          geometry: slicedGeomB
-                        },
-                        walkDest
-                      ]
-                    });
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return trips;
+  findNearestGeomIndex(points, stop) {
+    return this.graphRouter.findNearestGeomIndex(points, stop);
   }
 
-  findNearestGeomIndex(points, stop) {
-    if (!Array.isArray(points) || !stop || typeof stop.lat !== 'number') return 0;
-    let bestIdx = 0;
-    let minD = Infinity;
-    for (let i = 0; i < points.length; i++) {
-      const p = points[i];
-      const d = (p[0] - stop.lat) ** 2 + (p[1] - stop.lng) ** 2;
-      if (d < minD) {
-        minD = d;
-        bestIdx = i;
-      }
-    }
-    return bestIdx;
+  _evaluateJourneys(originLocation, destLocation, originCandidates, destCandidates, queryTime, straightDist, options = {}) {
+    return this.graphRouter.searchJourneys(originLocation, destLocation, originCandidates, destCandidates, queryTime, straightDist, options);
   }
 }
 
 /**
  * TransitPlanner
- * Uses BestStopResolver for multi-candidate evaluation and controlled radius expansion.
- * Direct + maximum 1 transfer routing, detour ratio <= 1.8,
- * fail-closed on unverified geometry or ineligible directions.
+ * Uses BestStopResolver and TransitGraphRouter for multi-candidate evaluation,
+ * controlled radius expansion, and bounded multi-transfer routing (direct, 1, 2 transfers).
+ * Detour ratio <= 1.8, fail-closed on unverified geometry or ineligible directions.
  */
 class TransitPlanner {
   constructor(busService, walkingRouter = null) {
@@ -2675,12 +3228,21 @@ class TransitPlanner {
     this.MAX_WALK_METERS = 1200;
     this.MAX_TRANSFER_WALK_METERS = 400;
     this.MAX_DETOUR_RATIO = 1.8; // STRICT: <= 1.8 per TL decision
+    this.MIN_TRANSFER_TIME_MINUTES = 5;
+    this.graphRouter = new TransitGraphRouter(this.busService, this.walkingRouter, {
+      maxTransferWalkMeters: this.MAX_TRANSFER_WALK_METERS,
+      maxDetourRatio: this.MAX_DETOUR_RATIO,
+      minTransferTimeMinutes: this.MIN_TRANSFER_TIME_MINUTES
+    });
     this.bestStopResolver = new BestStopResolver(this.busService, this.walkingRouter, {
       initialRadiusMeters: 800,
       maxRadiusMeters: 1500,
       maxTransferWalkMeters: this.MAX_TRANSFER_WALK_METERS,
-      maxDetourRatio: this.MAX_DETOUR_RATIO
+      maxDetourRatio: this.MAX_DETOUR_RATIO,
+      minTransferTimeMinutes: this.MIN_TRANSFER_TIME_MINUTES,
+      graphRouter: this.graphRouter
     });
+    this.graphRouter.calculateConfidencePenalty = (r, dir) => this.bestStopResolver.calculateConfidencePenalty(r, dir);
   }
 
   planTrip(originLocation, destLocation, options = {}) {
@@ -2702,6 +3264,7 @@ if (typeof window !== 'undefined') {
   window.locationManager = new LocationManager(window.busService);
   window.WalkingRouter = WalkingRouter;
   window.walkingRouter = new WalkingRouter();
+  window.TransitGraphRouter = TransitGraphRouter;
   window.BestStopResolver = BestStopResolver;
   window.TransitPlanner = TransitPlanner;
   window.transitPlanner = new TransitPlanner(window.busService, window.walkingRouter);
@@ -2720,6 +3283,7 @@ if (typeof module !== 'undefined' && module.exports) {
     LocalLocationProvider,
     LocationManager,
     WalkingRouter,
+    TransitGraphRouter,
     BestStopResolver,
     TransitPlanner,
     isWithinServiceArea,

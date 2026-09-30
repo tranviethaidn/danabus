@@ -915,6 +915,7 @@ class TestTripPlanner(unittest.TestCase):
         self.assertIn('trip-planner-options', content, "app.js must integrate trip-planner-options")
         self.assertIn('btn-picker-map-pin', content, "app.js must bind map pin picker CTA")
         self.assertIn('searchDebounceTimer', content, "app.js must debounce search input")
+        self.assertIn("bestTrip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp'", content, "app.js must dynamically display 1 or 2 chuyen tiep based on transfers")
 
     # 15. Backward Compatibility: findRoutesBetween Unchanged
     def test_find_routes_between_backward_compatibility(self):
@@ -1094,6 +1095,308 @@ class TestTripPlanner(unittest.TestCase):
         """
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Data confidence ranking test failed")
+
+    # 21. Task 008: 2-Transfer Route Planning, 7 Legs & Walking Roles Contract
+    def test_task008_two_transfer_seven_legs_contract(self):
+        node_script = """
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+
+        const r1 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        const r2 = {
+          id: 'R2', routeNumber: 'R2', name: 'Tuyến R2', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: 16.0105, lng: 108.0105, status: 'verified' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' },
+            { name: 'Stop R2_3', lat: 16.030, lng: 108.030, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020], [16.030, 108.030]] }
+        };
+        const r3 = {
+          id: 'R3', routeNumber: 'R3', name: 'Tuyến R3', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R3_1', lat: 16.0305, lng: 108.0305, status: 'verified' },
+            { name: 'Stop R3_2', lat: 16.040, lng: 108.040, status: 'verified' },
+            { name: 'Stop R3_3', lat: 16.050, lng: 108.050, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0305, 108.0305], [16.040, 108.040], [16.050, 108.050]] }
+        };
+
+        const bs = new BusService();
+        bs.routes = [r1, r2, r3];
+        bs.stops = [...r1.stops.outbound, ...r2.stops.outbound, ...r3.stops.outbound];
+        bs.isLoaded = true;
+        bs.isDirectionPlanningReady = (r, dir) => true;
+        bs.isServiceUsable = (r, time, dir) => true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'Điểm Đi', lat: 16.0001, lng: 108.0001 });
+        const dLoc = new ResolvedLocation({ displayName: 'Điểm Đến', lat: 16.0499, lng: 108.0499 });
+
+        const plan = tp.planTrip(oLoc, dLoc);
+        if (!plan.trips || plan.trips.length === 0) process.exit(1);
+
+        const t = plan.trips[0];
+        if (t.type !== 'connecting') process.exit(2);
+        if (t.transfers !== 2) process.exit(3);
+        if (t.badge !== 'Chuyển tuyến 2 lần') process.exit(4);
+        if (t.legs.length !== 7) process.exit(5);
+        if (t.legs[0].walkingRole !== 'origin') process.exit(6);
+        if (t.legs[1].type !== 'transit') process.exit(7);
+        if (t.legs[2].walkingRole !== 'transfer') process.exit(8);
+        if (t.legs[3].type !== 'transit') process.exit(9);
+        if (t.legs[4].walkingRole !== 'transfer') process.exit(10);
+        if (t.legs[5].type !== 'transit') process.exit(11);
+        if (t.legs[6].walkingRole !== 'destination') process.exit(12);
+        if (t.transferBufferMinutes !== 10) process.exit(13);
+        if (!Array.isArray(t.routes) || t.routes.length !== 3) process.exit(14);
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Task 008 2-transfer 7-legs contract failed")
+
+    # 22. Task 008: Anti-Loop & Route Reuse Rejection Fail-Closed
+    def test_task008_anti_loop_and_route_reuse_rejection(self):
+        node_script = """
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+
+        const r1 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        const r2 = {
+          id: 'R2', routeNumber: 'R2', name: 'Tuyến R2', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: 16.0105, lng: 108.0105, status: 'verified' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' },
+            { name: 'Stop R2_3', lat: 16.030, lng: 108.030, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020], [16.030, 108.030]] }
+        };
+        // Reused route ID: R3 has same ID as R1 -> R1 -> R2 -> R1 loop
+        const r3 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R3_1', lat: 16.0305, lng: 108.0305, status: 'verified' },
+            { name: 'Stop R3_2', lat: 16.040, lng: 108.040, status: 'verified' },
+            { name: 'Stop R3_3', lat: 16.050, lng: 108.050, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0305, 108.0305], [16.040, 108.040], [16.050, 108.050]] }
+        };
+
+        const bs = new BusService();
+        bs.routes = [r1, r2, r3];
+        bs.stops = [...r1.stops.outbound, ...r2.stops.outbound, ...r3.stops.outbound];
+        bs.isLoaded = true;
+        bs.isDirectionPlanningReady = (r, dir) => true;
+        bs.isServiceUsable = (r, time, dir) => true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'Điểm Đi', lat: 16.0001, lng: 108.0001 });
+        const dLoc = new ResolvedLocation({ displayName: 'Điểm Đến', lat: 16.0499, lng: 108.0499 });
+
+        const plan = tp.planTrip(oLoc, dLoc);
+        const hasReused = plan.trips.some(t => {
+          const ids = t.routes.map(r => r.id);
+          return new Set(ids).size !== ids.length;
+        });
+        if (hasReused) process.exit(1);
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Anti-loop route reuse rejection failed")
+
+    # 23. Task 008: Monotonic Direction, Inactive & Unready Route Rejection
+    def test_task008_monotonic_direction_and_unready_rejection(self):
+        node_script = """
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+
+        const r1 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        const r2 = {
+          id: 'R2', routeNumber: 'R2', name: 'Tuyến R2', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: 16.0105, lng: 108.0105, status: 'verified' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' },
+            { name: 'Stop R2_3', lat: 16.030, lng: 108.030, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020], [16.030, 108.030]] }
+        };
+        const r3 = {
+          id: 'R3', routeNumber: 'R3', name: 'Tuyến R3', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R3_1', lat: 16.0305, lng: 108.0305, status: 'verified' },
+            { name: 'Stop R3_2', lat: 16.040, lng: 108.040, status: 'verified' },
+            { name: 'Stop R3_3', lat: 16.050, lng: 108.050, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0305, 108.0305], [16.040, 108.040], [16.050, 108.050]] }
+        };
+
+        const oLoc = new ResolvedLocation({ displayName: 'Điểm Đi', lat: 16.0001, lng: 108.0001 });
+        const dLoc = new ResolvedLocation({ displayName: 'Điểm Đến', lat: 16.0499, lng: 108.0499 });
+
+        // Case A: Intermediate route is NOT planning ready
+        const bsA = new BusService();
+        bsA.routes = [r1, r2, r3];
+        bsA.stops = [...r1.stops.outbound, ...r2.stops.outbound, ...r3.stops.outbound];
+        bsA.isLoaded = true;
+        bsA.isDirectionPlanningReady = (r, dir) => r.id !== 'R2';
+        bsA.isServiceUsable = (r, time, dir) => true;
+
+        const tpA = new TransitPlanner(bsA, new WalkingRouter());
+        const planA = tpA.planTrip(oLoc, dLoc);
+        if (planA.trips.length !== 0) process.exit(1);
+
+        // Case B: Final route is suspended/not usable
+        const bsB = new BusService();
+        bsB.routes = [r1, r2, r3];
+        bsB.stops = [...r1.stops.outbound, ...r2.stops.outbound, ...r3.stops.outbound];
+        bsB.isLoaded = true;
+        bsB.isDirectionPlanningReady = (r, dir) => true;
+        bsB.isServiceUsable = (r, time, dir) => r.id !== 'R3';
+
+        const tpB = new TransitPlanner(bsB, new WalkingRouter());
+        const planB = tpB.planTrip(oLoc, dLoc);
+        if (planB.trips.length !== 0) process.exit(2);
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Monotonic direction / unready route rejection failed")
+
+    # 24. Task 008: Unresolved Transfer Stop Fail-Closed & Transfer Walk <= 400m
+    def test_task008_unresolved_transfer_stop_fail_closed(self):
+        node_script = """
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+
+        const r1 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        const r2Unresolved = {
+          id: 'R2', routeNumber: 'R2', name: 'Tuyến R2', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: null, lng: null, status: 'unresolved' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' },
+            { name: 'Stop R2_3', lat: 16.030, lng: 108.030, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020], [16.030, 108.030]] }
+        };
+        const r3 = {
+          id: 'R3', routeNumber: 'R3', name: 'Tuyến R3', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R3_1', lat: 16.0305, lng: 108.0305, status: 'verified' },
+            { name: 'Stop R3_2', lat: 16.040, lng: 108.040, status: 'verified' },
+            { name: 'Stop R3_3', lat: 16.050, lng: 108.050, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0305, 108.0305], [16.040, 108.040], [16.050, 108.050]] }
+        };
+
+        const bs = new BusService();
+        bs.routes = [r1, r2Unresolved, r3];
+        bs.stops = [...r1.stops.outbound, ...r2Unresolved.stops.outbound, ...r3.stops.outbound];
+        bs.isLoaded = true;
+        bs.isDirectionPlanningReady = (r, dir) => true;
+        bs.isServiceUsable = (r, time, dir) => true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'Điểm Đi', lat: 16.0001, lng: 108.0001 });
+        const dLoc = new ResolvedLocation({ displayName: 'Điểm Đến', lat: 16.0499, lng: 108.0499 });
+
+        const plan = tp.planTrip(oLoc, dLoc);
+        if (plan.trips.length !== 0) process.exit(1);
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Unresolved transfer stop fail-closed test failed")
+
+    # 25. Task 008: Deterministic Multi-Factor Ranking & Stable Tie-Break
+    def test_task008_deterministic_ranking_multi_factor(self):
+        node_script = """
+        const fs = require('fs');
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+        const routes = JSON.parse(fs.readFileSync('./data/danangbus_routes.json', 'utf8'));
+        const stops = JSON.parse(fs.readFileSync('./data/danangbus_stops.json', 'utf8'));
+        const bs = new BusService();
+        bs.routes = routes;
+        bs.stops = stops;
+        bs.isLoaded = true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'Huỳnh Thúc Kháng', lat: 15.5673332, lng: 108.4904846 });
+        const dLoc = new ResolvedLocation({ displayName: '954 Phan Châu Trinh', lat: 15.555436, lng: 108.5059009 });
+
+        const run1 = tp.planTrip(oLoc, dLoc);
+        const ids1 = run1.trips.map(t => t.id);
+
+        for (let r = 0; r < 4; r++) {
+          const runN = tp.planTrip(oLoc, dLoc);
+          const idsN = runN.trips.map(t => t.id);
+          if (JSON.stringify(ids1) !== JSON.stringify(idsN)) {
+            process.exit(1);
+          }
+        }
+
+        for (let i = 0; i < run1.trips.length - 1; i++) {
+          const a = run1.trips[i];
+          const b = run1.trips[i + 1];
+          if (a.transfers > b.transfers) process.exit(2);
+        }
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Deterministic multi-factor ranking test failed")
+
+    # 26. Task 008: Performance Benchmark <250ms per Query
+    def test_task008_search_performance_benchmark(self):
+        node_script = """
+        const fs = require('fs');
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+        const routes = JSON.parse(fs.readFileSync('./data/danangbus_routes.json', 'utf8'));
+        const stops = JSON.parse(fs.readFileSync('./data/danangbus_stops.json', 'utf8'));
+        const bs = new BusService();
+        bs.routes = routes;
+        bs.stops = stops;
+        bs.isLoaded = true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const queryPairs = [
+          [ { displayName: 'ĐH Bách Khoa', lat: 16.0754, lng: 108.1528 }, { displayName: 'CV Biển Đông', lat: 16.0687, lng: 108.2464 } ],
+          [ { displayName: 'Huỳnh Thúc Kháng', lat: 15.5673332, lng: 108.4904846 }, { displayName: '954 Phan Châu Trinh', lat: 15.555436, lng: 108.5059009 } ],
+          [ { displayName: 'Bến xe TT', lat: 16.0594, lng: 108.1738 }, { displayName: 'Phố cổ Hội An', lat: 15.8801, lng: 108.3272 } ]
+        ];
+
+        tp.planTrip(new ResolvedLocation(queryPairs[0][0]), new ResolvedLocation(queryPairs[0][1]));
+
+        for (const [o, d] of queryPairs) {
+          const oLoc = new ResolvedLocation(o);
+          const dLoc = new ResolvedLocation(d);
+          const t0 = process.hrtime.bigint();
+          const plan = tp.planTrip(oLoc, dLoc);
+          const t1 = process.hrtime.bigint();
+          const ms = Number(t1 - t0) / 1e6;
+          if (ms >= 250) {
+            console.error('Query exceeded 250ms SLA:', ms);
+            process.exit(1);
+          }
+        }
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Search performance benchmark SLA <250ms failed")
 
 if __name__ == '__main__':
     unittest.main()

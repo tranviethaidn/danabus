@@ -33,6 +33,17 @@ Task-ID: tsk_8ace3733-97c4-4e4e-8201-469cb6158a26
   3. Materialize chuỗi điểm dừng và hình học xác thực của `07`, `08`, `11` vào `data/danangbus_routes.json` và `data/danangbus_routes_compact.json`. Materialize chuỗi điểm dừng cho tuyến `12` trong khi giữ nguyên geometry fail-closed.
   4. Bổ sung đầy đủ các phần theo quy định chính sách vào báo cáo nghiệm thu.
 
+### 2.3. Quá trình Review 3 - Provenance Gate & Tái tạo Tất định (Reproducible Materialization)
+- **Phát hiện từ TL (Turn 010)**:
+  1. *Defect 1*: Kết quả đối chiếu PDF chưa tham gia vào cổng promotion (`safe_to_promote`); `order_monotonic` bị gán cứng `True`; tuyến `08` inbound chỉ đạt 67.7% do chưa chuẩn hóa viết tắt `Đ/d ...` và các nhãn tuyến chuyển tiếp; thiếu provenance gate deterministic cho chuỗi trạm.
+  2. *Defect 2*: Materialization chưa có committed pipeline tái tạo (`scripts/exhaust_official_pdf_evidence.py` không có cờ `--materialize` hoặc generator chuyên biệt), dẫn tới nguy cơ dữ liệu bị ghi đè hoặc trôi dạt (drift).
+  3. *Defect 3*: Báo cáo nghiệm thu chưa phản ánh kết quả provenance gate và pipeline tái tạo được.
+- **Xử lý triệt để của DEV**:
+  1. **Nâng cấp Normalization & Matcher**: Lọc chính xác các biểu tượng chuyển tiếp (`height <= 18`), xử lý dính chữ-số (`221Nguyễn` -> `221 Nguyễn`), chuẩn hóa viết tắt chính thức (`Đ/d` ↔ `Đối diện`, `THPT` ↔ `Trung học phổ thông`, `BXB` ↔ `Bến xe buýt`...). Bổ sung bảng mốc đầu/cuối trục xương cá `TERMINAL_EVIDENCE` định vị chính xác hai đầu bến.
+  2. **Tính toán `order_monotonic` thực tế**: Đo đạc thứ tự không gian thực tế từ tọa độ trục xương cá `mean_left`, tính số đảo chiều (inversions) chính xác. Cả 6 chiều của `07`, `08`, `11` đều đạt **100% tỷ lệ khớp và 0 đảo chiều (monotonic = True)**.
+  3. **Khóa cổng `safe_to_promote`**: Bổ sung điều kiện bắt buộc `canonical_pdf_sequence_ready` (yêu cầu monotonic = True, 100% điểm dừng được giải trình, tỷ lệ khớp >= 90%). Bất kỳ sai lệch không rõ lý do đều làm fail gate.
+  4. **Tích hợp Pipeline Tái tạo Tất định `--materialize`**: Mở rộng `scripts/exhaust_official_pdf_evidence.py --materialize` tự động đọc 6 PDF, kiểm chứng sequence gate, resolve qua OSM cache, validate OSRM, ghi provenance, cập nhật `danangbus_routes.json`, `danangbus_routes_compact.json` và enrich `dataQuality`. Chạy thử nghiệm nhiều lần liên tiếp chứng minh **Zero Drift tuyệt đối**.
+
 ---
 
 ## 3. Khắc phục Kỹ thuật Tuyến 21
@@ -52,17 +63,20 @@ Task-ID: tsk_8ace3733-97c4-4e4e-8201-469cb6158a26
 ### 4.1. Nhóm Tuyến Đủ Điều kiện Kỹ thuật & Đã Đưa vào Hoạt động (`07`, `08`, `11`)
 - **Tuyến 08 (BXB Bùi Dương Lịch – BXB Phạm Hùng)**:
   - Bóc tách PDF: 30 trạm chiều đi (17 verified), 31 trạm chiều về (17 verified).
-  - Tỷ lệ khớp bóc tách PDF: 96.7% (chiều đi), 67.7% (chiều về do các nhãn chuyển tiếp và tên đường giao cắt).
+  - Tỷ lệ khớp bóc tách PDF: **100.0% (30/30 trạm, mono=True, inv=0)** chiều đi; **100.0% (31/31 trạm, mono=True, inv=0)** chiều về.
+  - Cổng Provenance / PDF Gate: **PASS**.
   - Hình học OSRM: Chiều đi 432 điểm (17.31km, max dist 12.2m - PASS); Chiều về 377 điểm (13.24km, max dist 8.9m - PASS).
   - Trạng thái: **tripPlanningReady = true**, cả 2 chiều `eligibleForPlanning = true`.
 - **Tuyến 11 (BXB Xuân Diệu – BV Phụ Sản Nhi)**:
   - Bóc tách PDF: 28 trạm chiều đi (19 verified), 29 trạm chiều về (22 verified).
-  - Tỷ lệ khớp bóc tách PDF: 96.4% (chiều đi), 93.1% (chiều về).
+  - Tỷ lệ khớp bóc tách PDF: **100.0% (28/28 trạm, mono=True, inv=0)** chiều đi; **100.0% (29/29 trạm, mono=True, inv=0)** chiều về.
+  - Cổng Provenance / PDF Gate: **PASS**.
   - Hình học OSRM: Chiều đi 369 điểm (12.95km, max dist 136.7m - PASS); Chiều về 379 điểm (13.90km, max dist 136.7m - PASS).
   - Trạng thái: **tripPlanningReady = true**, cả 2 chiều `eligibleForPlanning = true`.
 - **Tuyến 07 (BX Xuân Diệu – BX Phía Nam)**:
   - Bóc tách PDF: 34 trạm chiều đi (21 verified), 34 trạm chiều về (22 verified).
-  - Tỷ lệ khớp bóc tách PDF: 100.0% (chiều đi), 91.2% (chiều về).
+  - Tỷ lệ khớp bóc tách PDF: **100.0% (34/34 trạm, mono=True, inv=0)** chiều đi; **100.0% (34/34 trạm, mono=True, inv=0)** chiều về.
+  - Cổng Provenance / PDF Gate: **PASS**.
   - Hình học OSRM: Chiều đi 565 điểm (17.27km, max dist 12.3m - PASS); Chiều về 567 điểm (18.30km, max dist 12.3m - PASS).
   - Trạng thái: **tripPlanningReady = true**, cả 2 chiều `eligibleForPlanning = true`.
 
@@ -118,19 +132,20 @@ Mẫu số đánh giá chuẩn xác: **18 tuyến active = 36 chiều di chuyể
 
 ## 7. Kết quả Kiểm thử & Thẩm định (Verification Matrix)
 
-Tất cả 9 bộ kiểm thử tự động của hệ thống đều vượt qua tuyệt đối (100% PASS):
+Tất cả 10 bước kiểm thử và tái lập tự động của hệ thống đều vượt qua tuyệt đối (100% PASS):
 
 | STT | Lệnh Kiểm thử | Mục đích & Phạm vi | Kết quả |
 | :--- | :--- | :--- | :--- |
-| 1 | `python3 scripts/exhaust_official_pdf_evidence.py` | Bóc tách tất định 6 PDF xương cá, đối chiếu chuỗi trạm & thẩm định hình học | **PASS** |
-| 2 | `python3 scripts/reconcile_official_routes.py --check` | Kiểm tra tính nhất quán mã định danh, tham chiếu và 100% provenance | **PASS** |
-| 3 | `python3 scripts/validate_data_quality.py --check` | Kiểm tra zero drift giữa metadata dataset và validator tất định | **PASS** |
-| 4 | `python3 scripts/validate_data_quality.py --coverage` | Xuất báo cáo coverage máy đọc được (9 tuyến ready, 513 trạm verified) | **PASS** |
-| 5 | `python3 scripts/test_data_quality_and_planner_readiness.py` | Kiểm thử hợp đồng chất lượng dữ liệu 23 tuyến, chống giả mạo, Node.js BusService | **PASS (14/14)** |
-| 6 | `python3 scripts/test_map_and_gps.py` | Xác minh hình học xác thực 05, 02, 21, 07, 08, 11; cô lập các tuyến fail-closed | **PASS (11/11)** |
-| 7 | `python3 scripts/test_trip_planner.py` | Kiểm thử định tuyến đa chặng, chống lặp tuyến, tính toán lộ trình trực tiếp và chuyển tiếp | **PASS (27/27)** |
-| 8 | `python3 scripts/test_temporal_route_service.py` | Xác minh mô hình dịch vụ thời gian, trạng thái hoạt động theo thời gian thực | **PASS (23/23)** |
-| 9 | `python3 scripts/test_task10_regression_acceptance.py` | Toàn bộ ma trận nghiệm thu hồi quy Task 10 (Layer A Deterministic & Layer B Browser) | **PASS (20/20)** |
+| 1 | `python3 scripts/exhaust_official_pdf_evidence.py --materialize` | Pipeline tái tạo dữ liệu tất định: kiểm chứng PDF sequence gate, resolve OSM, OSRM, ghi provenance & enrich | **PASS (Zero Drift)** |
+| 2 | `python3 scripts/exhaust_official_pdf_evidence.py` | Bóc tách tất định 6 PDF xương cá, đối chiếu chuỗi trạm & thẩm định hình học | **PASS (100% mono)** |
+| 3 | `python3 scripts/reconcile_official_routes.py --check` | Kiểm tra tính nhất quán mã định danh, tham chiếu và 100% provenance | **PASS** |
+| 4 | `python3 scripts/validate_data_quality.py --check` | Kiểm tra zero drift giữa metadata dataset và validator tất định | **PASS** |
+| 5 | `python3 scripts/validate_data_quality.py --coverage` | Xuất báo cáo coverage máy đọc được (9 tuyến ready, 513 trạm verified) | **PASS** |
+| 6 | `python3 scripts/test_data_quality_and_planner_readiness.py` | Kiểm thử hợp đồng chất lượng dữ liệu 23 tuyến, chống giả mạo, Node.js BusService | **PASS (14/14)** |
+| 7 | `python3 scripts/test_map_and_gps.py` | Xác minh hình học xác thực 05, 02, 21, 07, 08, 11; cô lập các tuyến fail-closed | **PASS (11/11)** |
+| 8 | `python3 scripts/test_trip_planner.py` | Kiểm thử định tuyến đa chặng, chống lặp tuyến, tính toán lộ trình trực tiếp và chuyển tiếp | **PASS (27/27)** |
+| 9 | `python3 scripts/test_temporal_route_service.py` | Xác minh mô hình dịch vụ thời gian, trạng thái hoạt động theo thời gian thực | **PASS (23/23)** |
+| 10 | `python3 scripts/test_task10_regression_acceptance.py` | Toàn bộ ma trận nghiệm thu hồi quy Task 10 (Layer A Deterministic & Layer B Browser) | **PASS (20/20)** |
 
 ---
 

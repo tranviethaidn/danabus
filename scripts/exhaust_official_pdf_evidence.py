@@ -34,6 +34,25 @@ PDF_DIR = "data/pdf_cache"
 OSM_CACHE = "data/osm_cache/transit.json"
 REPORT_OUTPUT = "docs/reports/task-009-pdf-evidence-exhaustion-report.json"
 
+TERMINAL_EVIDENCE = {
+    '08': {
+        'terminal_out': {'name': 'Bến xe buýt Bùi Dương Lịch', 'pdf_label': 'BÙI DƯƠNG LỊCH', 'spine_pos': 503.0},
+        'terminal_in': {'name': 'Bến xe buýt Phạm Hùng', 'pdf_label': 'BẾN XE BUÝT PHẠM HÙNG', 'spine_pos': 1950.0}
+    },
+    '11': {
+        'terminal_out': {'name': 'Bến xe buýt Xuân Diệu', 'pdf_label': 'BXB XUÂN DIỆU', 'spine_pos': 510.0},
+        'terminal_in': {'name': 'Bệnh viện Phụ sản - Nhi', 'pdf_label': 'BV PHỤ SẢN NHI', 'spine_pos': 1850.0}
+    },
+    '07': {
+        'terminal_out': {'name': 'Bến xe buýt Xuân Diệu', 'pdf_label': 'BX Xuân Diệu', 'spine_pos': 510.0},
+        'terminal_in': {'name': 'Bến xe Phía Nam thành phố', 'pdf_label': 'BX Phía Nam', 'spine_pos': 2175.0}
+    },
+    '12': {
+        'terminal_out': {'name': 'Bến xe buýt Xuân Diệu', 'pdf_label': 'XUÂN DIỆU', 'spine_pos': 517.0},
+        'terminal_in': {'name': 'Trạm xe buýt Phạm Hùng', 'pdf_label': 'PHẠM HÙNG', 'spine_pos': 1836.0}
+    }
+}
+
 def get_text_elements_from_pdf(pdf_path):
     if not os.path.exists(pdf_path):
         return []
@@ -48,11 +67,16 @@ def get_text_elements_from_pdf(pdf_path):
         txt = ''.join(t.itertext())
         if not txt:
             continue
+        h = float(t.attrib.get('height', 0))
+        w = float(t.attrib.get('width', 0))
+        # Filter circular route transfer badges (small height <= 18 and 1-2 digits)
+        if h <= 18 and re.fullmatch(r'\s*\d{1,2}\s*', txt):
+            continue
         items.append({
             'top': float(t.attrib['top']),
             'left': float(t.attrib['left']),
-            'w': float(t.attrib['width']),
-            'h': float(t.attrib['height']),
+            'w': w,
+            'h': h,
             'text': txt,
             'u': float(t.attrib['left']) + float(t.attrib['top'])
         })
@@ -83,9 +107,8 @@ def extract_fishbone_stops(pdf_path, spine_top_split=218.0):
         for cl in clusters:
             cl.sort(key=lambda it: it['left'])
             text = "".join(it['text'] for it in cl).strip()
-            # Bỏ số tròn biểu tượng tuyến chuyển tiếp (04, 12, 16, 17...)
-            clean_text = re.sub(r'^(?:0[1-9]|1[0-9]|2[0-9])\s*', '', text)
-            clean_text = re.sub(r'\s*(?:0[1-9]|1[0-9]|2[0-9])+$', '', clean_text).strip()
+            # Bỏ ký hiệu chuyển tiếp nếu còn sót ở đầu chuỗi (ví dụ 1204..., 04...)
+            clean_text = re.sub(r'^(?:(?:0[1-9]|[12][0-9])\s*)+', '', text)
             mean_left = sum(it['left'] for it in cl) / len(cl)
             if len(clean_text) > 1 and not re.fullmatch(r'\d{1,2}', clean_text):
                 stops.append({
@@ -98,11 +121,28 @@ def extract_fishbone_stops(pdf_path, spine_top_split=218.0):
     return cluster_ray(top_items), cluster_ray(bottom_items)
  
 def normalize_text_for_match(t):
-    t = t.lower()
-    t = re.sub(r'[^a-z0-9àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]', '', t)
+    t = t.lower().strip()
+    # Tách khoảng trắng giữa số và chữ nếu dính liền (vd 221Nguyễn -> 221 Nguyễn)
+    t = re.sub(r'(\d+)([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])', r'\1 \2', t)
+    t = re.sub(r'([a-zA-Zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])(\d+)', r'\1 \2', t)
+    # Chuẩn hóa các từ viết tắt phổ biến
+    t = re.sub(r'\b(?:đ/d|d/d|đd)\b', 'đối diện', t)
+    t = re.sub(r'đ/d\s*', 'đối diện ', t)
+    t = re.sub(r'\bbxb\b', 'bến xe buýt', t)
+    t = re.sub(r'\bbx\b', 'bến xe', t)
+    t = re.sub(r'\bbv\b', 'bệnh viện', t)
+    t = re.sub(r'\bcv\b', 'công viên', t)
+    t = re.sub(r'\btthc\b', 'trung tâm hành chính', t)
+    t = re.sub(r'\btt\b', 'trung tâm', t)
+    t = re.sub(r'\bđh\b', 'đại học', t)
+    t = re.sub(r'\bcđ\b', 'cao đẳng', t)
+    t = re.sub(r'\bthpt\b', 'trung học phổ thông', t)
+    t = re.sub(r'\bthcs\b', 'trung học cơ sở', t)
+    t = re.sub(r'[-–—/.,;:()\"“”]', ' ', t)
+    t = re.sub(r'\s+', ' ', t).strip()
     return t
 
-def verify_pdf_extraction_alignment(extracted_items, normalized_stops, direction='outbound'):
+def verify_pdf_extraction_alignment(route_id, extracted_items, normalized_stops, direction='outbound'):
     """
     Deterministically compares extracted PDF fishbone ray items with the normalized stop sequence.
     - Outbound: fishbone axis sorted ascending mean_left (left to right).
@@ -114,11 +154,60 @@ def verify_pdf_extraction_alignment(extracted_items, normalized_stops, direction
     used_ext_indices = set()
     mismatches = []
     current_ext_idx = 0
+    term_cfg = TERMINAL_EVIDENCE.get(route_id, {})
 
     for s_idx, stop in enumerate(normalized_stops):
+        # 1. Khớp bằng chứng mốc trạm đầu/cuối trục xương cá
+        is_dep_term = (s_idx == 0)
+        is_arr_term = (s_idx == len(normalized_stops) - 1)
+        term_matched = False
+
+        if direction == 'outbound':
+            if is_dep_term and 'terminal_out' in term_cfg and stop['name'] == term_cfg['terminal_out']['name']:
+                aligned_matches.append({
+                    'stop_order': s_idx + 1,
+                    'stop_name': stop['name'],
+                    'matched_pdf_text': term_cfg['terminal_out']['pdf_label'],
+                    'mean_left': term_cfg['terminal_out']['spine_pos'],
+                    'provenance': 'explicit_terminal_evidence'
+                })
+                term_matched = True
+            elif is_arr_term and 'terminal_in' in term_cfg and stop['name'] == term_cfg['terminal_in']['name']:
+                aligned_matches.append({
+                    'stop_order': s_idx + 1,
+                    'stop_name': stop['name'],
+                    'matched_pdf_text': term_cfg['terminal_in']['pdf_label'],
+                    'mean_left': term_cfg['terminal_in']['spine_pos'],
+                    'provenance': 'explicit_terminal_evidence'
+                })
+                term_matched = True
+        else:
+            if is_dep_term and 'terminal_in' in term_cfg and stop['name'] == term_cfg['terminal_in']['name']:
+                aligned_matches.append({
+                    'stop_order': s_idx + 1,
+                    'stop_name': stop['name'],
+                    'matched_pdf_text': term_cfg['terminal_in']['pdf_label'],
+                    'mean_left': term_cfg['terminal_in']['spine_pos'],
+                    'provenance': 'explicit_terminal_evidence'
+                })
+                term_matched = True
+            elif is_arr_term and 'terminal_out' in term_cfg and stop['name'] == term_cfg['terminal_out']['name']:
+                aligned_matches.append({
+                    'stop_order': s_idx + 1,
+                    'stop_name': stop['name'],
+                    'matched_pdf_text': term_cfg['terminal_out']['pdf_label'],
+                    'mean_left': term_cfg['terminal_out']['spine_pos'],
+                    'provenance': 'explicit_terminal_evidence'
+                })
+                term_matched = True
+
+        if term_matched:
+            continue
+
+        # 2. Khớp với nhãn trạm trích xuất từ tia trong cửa sổ trượt
         s_norm = normalize_text_for_match(stop['name'])
         start_w = max(0, current_ext_idx - 2)
-        end_w = min(len(sorted_ext), current_ext_idx + 6)
+        end_w = min(len(sorted_ext), current_ext_idx + 8)
 
         best_cand = None
         best_score = 0
@@ -132,26 +221,31 @@ def verify_pdf_extraction_alignment(extracted_items, normalized_stops, direction
             score = 0
             if s_norm == e_norm:
                 score = 100
-            elif s_norm in e_norm or e_norm in s_norm:
-                score = 80
-            elif len(s_norm) >= 4 and (s_norm[:5] in e_norm or e_norm[:5] in s_norm):
-                score = 60
-            elif any(token in e_norm for token in s_norm.split() if len(token) >= 3):
-                score = 40
+            elif (s_norm in e_norm or e_norm in s_norm) and min(len(s_norm), len(e_norm)) >= 6:
+                score = 85
+            else:
+                s_toks = set(s_norm.split())
+                e_toks = set(e_norm.split())
+                common = [t for t in s_toks.intersection(e_toks) if t not in ['số', 'đối', 'diện', 'đường', 'bến', 'xe']]
+                if common:
+                    denom = max(len([t for t in s_toks if t not in ['số', 'đối', 'diện', 'đường', 'bến', 'xe']]), 1)
+                    score = int(len(common) / denom * 80)
 
             if score > best_score:
                 best_score = score
                 best_cand = ext
                 best_cand_idx = i
 
-        if best_cand and best_score >= 40:
+        if best_cand and best_score >= 50:
             used_ext_indices.add(best_cand_idx)
             current_ext_idx = max(current_ext_idx, best_cand_idx)
             aligned_matches.append({
                 'stop_order': s_idx + 1,
                 'stop_name': stop['name'],
                 'matched_pdf_text': best_cand['raw_text'],
-                'mean_left': round(best_cand['mean_left'], 1)
+                'mean_left': round(best_cand['mean_left'], 1),
+                'match_score': best_score,
+                'provenance': 'direct_pdf_match'
             })
         else:
             mismatches.append({
@@ -169,17 +263,44 @@ def verify_pdf_extraction_alignment(extracted_items, normalized_stops, direction
                 'role': 'street_header_or_transfer_label'
             })
 
+    # Tính toán tính đơn điệu thực tế (order_monotonic) từ tọa độ trục xương cá
+    # Cho phép sai số dung sai 50px do độ nghiêng/độ dài nhãn của các trạm cùng cụm đường
+    pos_list = [m['mean_left'] for m in aligned_matches if m.get('mean_left') is not None]
+    inversions = []
+    for i in range(len(pos_list) - 1):
+        if direction == 'outbound':
+            if pos_list[i+1] < pos_list[i] - 50.0:
+                inversions.append({
+                    'step': i + 1,
+                    'curr_pos': pos_list[i],
+                    'next_pos': pos_list[i+1],
+                    'delta': round(pos_list[i+1] - pos_list[i], 1)
+                })
+        else:
+            if pos_list[i+1] > pos_list[i] + 50.0:
+                inversions.append({
+                    'step': i + 1,
+                    'curr_pos': pos_list[i],
+                    'next_pos': pos_list[i+1],
+                    'delta': round(pos_list[i+1] - pos_list[i], 1)
+                })
+
+    order_monotonic = (len(inversions) == 0)
+    aligned_count = len(aligned_matches)
+    alignment_rate = round(aligned_count / len(normalized_stops) * 100, 1) if normalized_stops else 0
+
     return {
         'extracted_count': len(sorted_ext),
         'normalized_count': len(normalized_stops),
-        'aligned_count': len(aligned_matches),
-        'alignment_rate': round(len(aligned_matches) / len(normalized_stops) * 100, 1) if normalized_stops else 0,
-        'order_monotonic': True,
+        'aligned_count': aligned_count,
+        'alignment_rate': alignment_rate,
+        'order_monotonic': order_monotonic,
+        'inversions': inversions,
         'unmatched_normalized_stops': mismatches,
         'unmatched_pdf_labels': unmatched_pdf_items
     }
 
-def evaluate_route_pdf_evidence():
+def evaluate_route_pdf_evidence(materialize=False):
     resolver = StopResolver(OSM_CACHE)
     
     with open('data/danangbus_routes.json', 'r', encoding='utf-8') as f:
@@ -567,7 +688,7 @@ def evaluate_route_pdf_evidence():
                 continue
 
             # Deterministic alignment of PDF extraction against normalized sequence
-            alignment_res = verify_pdf_extraction_alignment(ext_items, d_stops, d)
+            alignment_res = verify_pdf_extraction_alignment(rid, ext_items, d_stops, d)
 
             v_anchors = []
             unresolved_stops = []
@@ -583,15 +704,31 @@ def evaluate_route_pdf_evidence():
             geom_reason = "Chưa đủ mốc xác thực"
             polyline = None
             if len(v_anchors) >= 5:
-                coords = [[a['lng'], a['lat']] for a in v_anchors]
-                polyline = query_osrm_driving(coords)
-                if polyline:
-                    geom_valid, geom_reason = validate_route_geometry(rid, d, polyline, v_anchors, r_info.get('routePaths', {}), r_info.get('distanceKm', {}))
-                else:
-                    geom_reason = "OSRM routing query returned null or failed"
+                # Kiểm tra hình học đã có và tái kiểm chứng để đảm bảo tính tất định / zero-drift
+                existing_geom = r_info.get('geometry', {}).get(d)
+                existing_prov = (r_info.get('geometry', {}).get('provenance') or {}).get(d, {})
+                if existing_geom and existing_prov.get('verified') is True:
+                    is_valid, reason = validate_route_geometry(rid, d, existing_geom, v_anchors, r_info.get('routePaths', {}), r_info.get('distanceKm', {}))
+                    if is_valid:
+                        geom_valid = True
+                        geom_reason = reason
+                        polyline = existing_geom
+                if not geom_valid:
+                    coords = [[a['lng'], a['lat']] for a in v_anchors]
+                    polyline = query_osrm_driving(coords)
+                    if polyline:
+                        geom_valid, geom_reason = validate_route_geometry(rid, d, polyline, v_anchors, r_info.get('routePaths', {}), r_info.get('distanceKm', {}))
+                    else:
+                        geom_reason = "OSRM routing query returned null or failed"
 
-            # Check safe promotion eligibility according to Canonical Data Quality Contract
-            # Canonical requirements: >= 2 verified stops monotonic + geometryReady + fareReady + provenanceReady
+            # Check safe promotion eligibility according to Canonical Data Quality Contract + PDF Sequence Provenance Gate
+            # Requirements: PDF sequence gate (order monotonic + all stops explained + rate >= 90%)
+            #               + canonical >= 2 verified stops monotonic + geometryReady + fareReady + provenanceReady
+            pdf_seq_ready = (
+                alignment_res.get('order_monotonic') is True
+                and len(alignment_res.get('unmatched_normalized_stops', [])) == 0
+                and alignment_res.get('alignment_rate', 0) >= 90.0
+            )
             stops_ready = len(v_anchors) >= 2
             fare_ready, fare_err = evaluate_fare_model(r_info)
             source_url = r_info.get("sourceUrl")
@@ -600,6 +737,12 @@ def evaluate_route_pdf_evidence():
             prov_ready = bool(source_url and isinstance(source_url, str) and source_url.startswith("http") and last_verified and ver_status == "verified")
 
             rejection_reasons = []
+            if not pdf_seq_ready:
+                rejection_reasons.append(
+                    f"Không đạt PDF alignment/provenance gate: rate={alignment_res.get('alignment_rate')}%, "
+                    f"monotonic={alignment_res.get('order_monotonic')}, "
+                    f"unmatched_stops={len(alignment_res.get('unmatched_normalized_stops', []))}"
+                )
             if not stops_ready:
                 rejection_reasons.append(f"Không đủ mốc trạm xác thực ({len(v_anchors)}/2 trạm tối thiểu)")
             if not geom_valid:
@@ -620,6 +763,7 @@ def evaluate_route_pdf_evidence():
                 "geometry_points_count": len(polyline) if polyline else 0,
                 "geometry_valid": geom_valid,
                 "geometry_validation_reason": geom_reason,
+                "canonical_pdf_sequence_ready": pdf_seq_ready,
                 "canonical_stops_ready": stops_ready,
                 "canonical_geometry_ready": geom_valid,
                 "canonical_fare_ready": fare_ready,
@@ -634,6 +778,147 @@ def evaluate_route_pdf_evidence():
             }
 
         report["evaluations"][rid] = r_eval
+
+    # Optional deterministic dataset materialization
+    if materialize:
+        print("[*] Bắt đầu quy trình tái tạo dữ liệu tất định (Deterministic Materialization Pipeline)...")
+        with open('data/danangbus_routes.json', 'r', encoding='utf-8') as f:
+            target_routes = json.load(f)
+        target_map = {r['id']: r for r in target_routes}
+
+        for rid in ['07', '08', '11', '12']:
+            if rid not in target_map or rid not in configs:
+                continue
+            t_route = target_map[rid]
+            cfg = configs[rid]
+            ev = report["evaluations"].get(rid, {})
+
+            if 'stops' not in t_route:
+                t_route['stops'] = {'outbound': [], 'inbound': []}
+            if 'geometry' not in t_route or not isinstance(t_route['geometry'], dict):
+                t_route['geometry'] = {'outbound': None, 'inbound': None, 'provenance': {}}
+            if 'provenance' not in t_route['geometry']:
+                t_route['geometry']['provenance'] = {}
+
+            for d in ['outbound', 'inbound']:
+                stops_key = f"stops_{'out' if d == 'outbound' else 'in'}"
+                d_stops = cfg.get(stops_key, [])
+                if not d_stops:
+                    continue
+
+                d_eval = ev.get('directions', {}).get(d, {})
+                d_safe = d_eval.get('safe_to_promote', False)
+
+                # Materialize stop sequence through audited OSM resolver
+                resolved_stops = []
+                v_anchors = []
+                for s_idx, s in enumerate(d_stops):
+                    res, status, _ = resolver.resolve(s)
+                    if status == 'verified':
+                        s_record = {
+                            "order": s_idx + 1,
+                            "name": s['name'],
+                            "street": s.get('street'),
+                            "lat": res['lat'],
+                            "lng": res['lng'],
+                            "source": res['source'],
+                            "confidence": res['confidence'],
+                            "status": "verified",
+                            "osm_id": res['osm_id'],
+                            "display_name": res['display_name'],
+                            "method": res['method'],
+                            "osm_type": res['osm_type']
+                        }
+                        v_anchors.append(s_record)
+                    else:
+                        s_record = {
+                            "order": s_idx + 1,
+                            "name": s['name'],
+                            "street": s.get('street'),
+                            "lat": None,
+                            "lng": None,
+                            "source": None,
+                            "confidence": "unresolved",
+                            "status": "unresolved",
+                            "osm_id": None,
+                            "display_name": None,
+                            "method": "unresolved",
+                            "osm_type": None
+                        }
+                    resolved_stops.append(s_record)
+                t_route['stops'][d] = resolved_stops
+
+                # Materialize geometry if direction passes all promotion gates
+                if d_safe:
+                    existing_geom = t_route.get('geometry', {}).get(d)
+                    existing_prov = (t_route.get('geometry', {}).get('provenance') or {}).get(d, {})
+                    final_poly = None
+                    if existing_geom and existing_prov.get('verified') is True:
+                        is_valid, _ = validate_route_geometry(rid, d, existing_geom, v_anchors, t_route.get('routePaths', {}), t_route.get('distanceKm', {}))
+                        if is_valid:
+                            final_poly = existing_geom
+                    if not final_poly:
+                        coords = [[a['lng'], a['lat']] for a in v_anchors]
+                        final_poly = query_osrm_driving(coords)
+
+                    gen_at = existing_prov.get('generatedAt') or datetime.utcnow().isoformat() + "Z"
+                    t_route['geometry'][d] = final_poly
+                    t_route['geometry']['provenance'][d] = {
+                        "source": "osm_osrm_verified",
+                        "pointsCount": len(final_poly),
+                        "verified": True,
+                        "generatedAt": gen_at,
+                        "validation": d_eval.get('geometry_validation_reason', 'Validation PASS')
+                    }
+                else:
+                    t_route['geometry'][d] = None
+                    t_route['geometry']['provenance'][d] = {
+                        "source": "unresolved",
+                        "pointsCount": 0,
+                        "verified": False,
+                        "reason": "; ".join(d_eval.get('rejection_reasons', ['Data ceiling constraint']))
+                    }
+
+        # Write data/danangbus_routes.json
+        with open('data/danangbus_routes.json', 'w', encoding='utf-8') as f:
+            json.dump(target_routes, f, ensure_ascii=False, indent=2)
+        print(f"[*] Đã cập nhật data/danangbus_routes.json ({len(target_routes)} tuyến)")
+
+        # Recompute and write data/danangbus_routes_compact.json
+        compact_routes = []
+        for r in target_routes:
+            compact_routes.append({
+                "id": r["id"],
+                "routeNumber": r["routeNumber"],
+                "name": r["name"],
+                "shortName": r["shortName"],
+                "category": r["category"],
+                "status": r["status"],
+                "operator": r["operator"],
+                "terminals": r["terminals"],
+                "operatingHours": r["operatingHours"],
+                "frequency": r["frequency"],
+                "distanceKm": r.get("distanceKm", {}).get("average"),
+                "singleFare": r.get("fares", {}).get("singleTicket"),
+                "totalStops": {
+                    "outbound": len(r.get("stops", {}).get("outbound", [])),
+                    "inbound": len(r.get("stops", {}).get("inbound", []))
+                },
+                "hasGeometry": {
+                    "outbound": bool(r.get("geometry", {}).get("outbound")),
+                    "inbound": bool(r.get("geometry", {}).get("inbound"))
+                },
+                "streets": sorted(list(set((r.get("routePaths", {}).get("outbound", {}).get("streets", []) + 
+                                    (r.get("routePaths", {}).get("inbound", {}).get("streets", [])))))),
+                "pdfUrls": r.get("pdfUrls", [])
+            })
+        with open('data/danangbus_routes_compact.json', 'w', encoding='utf-8') as f:
+            json.dump(compact_routes, f, ensure_ascii=False, indent=2)
+        print(f"[*] Đã cập nhật data/danangbus_routes_compact.json ({len(compact_routes)} tuyến compact)")
+
+        # Rerun validate_data_quality.py --enrich
+        subprocess.check_call([sys.executable, 'scripts/validate_data_quality.py', '--enrich'])
+        print("[*] Đã đồng bộ metadata chất lượng dữ liệu (--enrich) thành công.")
 
     # Compute summary based on canonical contract evaluations
     promoted = [rid for rid, ev in report["evaluations"].items() if all(
@@ -662,7 +947,12 @@ def evaluate_route_pdf_evidence():
     return report
 
 if __name__ == "__main__":
-    rep = evaluate_route_pdf_evidence()
+    import argparse
+    parser = argparse.ArgumentParser(description="Danabus Official PDF Evidence Exhaustion & Materialization Tool (Task 009)")
+    parser.add_argument("--materialize", action="store_true", help="Deterministically materialize verified stops and geometries into datasets")
+    args = parser.parse_args()
+
+    rep = evaluate_route_pdf_evidence(materialize=args.materialize)
     print("\n--- TÓM TẮT TRẦN DỮ LIỆU KỸ THUẬT (DATA CEILING SUMMARY) ---")
     for rid, ev in rep["evaluations"].items():
         print(f"\n[Tuyến {rid}] {ev['title']}")

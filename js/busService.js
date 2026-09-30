@@ -296,8 +296,8 @@ class BusService {
     if (!route.sourceUrl || typeof route.sourceUrl !== 'string' || !route.sourceUrl.startsWith('http') || !route.lastVerifiedAt) {
       return { isUsable: false, status: 'unverified', effectiveStatus: 'unverified', activeOverride: null, reason: 'Tuyến thiếu thông tin nguồn chính thức (provenance)' };
     }
-    if (route.verificationStatus && route.verificationStatus !== 'verified') {
-      return { isUsable: false, status: 'unverified', effectiveStatus: 'unverified', activeOverride: null, reason: 'Tuyến chưa được xác minh nguồn chính thức' };
+    if (route.verificationStatus !== 'verified') {
+      return { isUsable: false, status: 'unverified', effectiveStatus: 'unverified', activeOverride: null, reason: 'Tuyến chưa được xác minh nguồn chính thức (verificationStatus !== "verified")' };
     }
 
     // 3. Base lifecycle status
@@ -338,8 +338,8 @@ class BusService {
       const ovrFrom = this.parseIsoTimestamp(ovr.effectiveFrom, false);
       const ovrTo = this.parseIsoTimestamp(ovr.effectiveTo, true);
       
-      // Malformed override fail closed
-      if (isNaN(ovrFrom) || isNaN(ovrTo) || ovrFrom > ovrTo) {
+      const isMalformed = isNaN(ovrFrom) || isNaN(ovrTo) || ovrFrom > ovrTo;
+      if (isMalformed) {
         return {
           isUsable: false,
           status: 'malformed_override',
@@ -356,33 +356,53 @@ class BusService {
           ovr.affectedDirections.length === 0 || 
           ovr.affectedDirections.includes(direction);
 
-        if (affectsDirection) {
-          // Temporary suspension
-          if (ovr.type === 'suspension' || ovr.statusOverride === 'suspended') {
+        if (!affectsDirection) {
+          continue;
+        }
+
+        const hasValidProvenance = Boolean(
+          ovr.sourceUrl &&
+          typeof ovr.sourceUrl === 'string' &&
+          ovr.sourceUrl.startsWith('http') &&
+          ovr.lastVerifiedAt &&
+          ovr.verificationStatus === 'verified'
+        );
+
+        if (!hasValidProvenance) {
+          return {
+            isUsable: false,
+            status: 'unverified_override',
+            effectiveStatus: 'unverified_override',
+            activeOverride: ovr,
+            reason: 'Thông báo tạm thời của tuyến thiếu nguồn chính thức hoặc chưa được xác minh (unverified override)'
+          };
+        }
+
+        // Temporary suspension
+        if (ovr.type === 'suspension' || ovr.statusOverride === 'suspended') {
+          return {
+            isUsable: false,
+            status: 'active',
+            effectiveStatus: 'suspended',
+            activeOverride: ovr,
+            reason: ovr.reason || 'Tuyến tạm dừng hoạt động theo thông báo tạm thời'
+          };
+        }
+
+        // Active detour without verified replacement truth
+        if (ovr.type === 'detour') {
+          if (!ovr.hasReplacementTruth) {
             return {
               isUsable: false,
               status: 'active',
-              effectiveStatus: 'suspended',
+              effectiveStatus: 'detour_unverified',
               activeOverride: ovr,
-              reason: ovr.reason || 'Tuyến tạm dừng hoạt động theo thông báo tạm thời'
+              reason: ovr.reason || 'Tuyến đang điều chỉnh lộ trình tạm thời nhưng chưa có dữ liệu trạm/hình học thay thế đã xác minh'
             };
           }
-
-          // Active detour without verified replacement truth
-          if (ovr.type === 'detour') {
-            if (!ovr.hasReplacementTruth) {
-              return {
-                isUsable: false,
-                status: 'active',
-                effectiveStatus: 'detour_unverified',
-                activeOverride: ovr,
-                reason: ovr.reason || 'Tuyến đang điều chỉnh lộ trình tạm thời nhưng chưa có dữ liệu trạm/hình học thay thế đã xác minh'
-              };
-            }
-          }
-
-          activeOverride = ovr;
         }
+
+        activeOverride = ovr;
       }
     }
 
@@ -671,11 +691,7 @@ class BusService {
     const direction = (options.direction === 'inbound') ? 'inbound' : 'outbound';
     const temporalState = this.getServiceTemporalState(route, queryTime, direction);
     if (!temporalState.isUsable) {
-      if (['suspended', 'retired', 'merged', 'expired', 'future', 'malformed_override'].includes(temporalState.status) ||
-          temporalState.effectiveStatus === 'suspended' ||
-          temporalState.effectiveStatus === 'detour_unverified') {
-        return unknownResult(temporalState.reason || 'Tuyến đang tạm ngưng hoạt động');
-      }
+      return unknownResult(temporalState.reason || 'Tuyến không khả dụng theo trạng thái thời gian/xác minh');
     }
 
     // Parse options.currentTime

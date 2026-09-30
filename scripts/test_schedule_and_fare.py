@@ -250,6 +250,10 @@ class TestScheduleAndFare(unittest.TestCase):
         // 2b. In service window (exact headway route): 30m fixed headway at 07:10 (start 06:00, end 18:00) -> 07:30 (20 min)
         const rFixed = {
             id: 'fixed_test',
+            status: 'active',
+            sourceUrl: 'https://www.danangbus.vn/lo-trinh-tuyen.html',
+            lastVerifiedAt: '2026-09-30',
+            verificationStatus: 'verified',
             operatingHours: { start: '06:00', end: '18:00' },
             frequency: { type: 'fixed', exactHeadway: true, peakMinutes: 30, offPeakMinutes: 30, raw: '30 phút/chuyến' }
         };

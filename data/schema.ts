@@ -23,7 +23,11 @@ export interface TemporaryOverride {
   reason: string;
   effectiveFrom: string; // ISO-8601 string, e.g. "2026-10-01T00:00:00+07:00"
   effectiveTo: string;   // ISO-8601 string, e.g. "2026-10-03T23:59:59+07:00"
-  sourceUrl?: string;
+  sourceUrl: string;     // Canonical official notice link (required)
+  sourceName?: string;   // Publishing authority (e.g. "Sở GTVT Đà Nẵng")
+  sourcePublishedAt?: string | null; // Publication date or null if unknown
+  lastVerifiedAt: string; // Date checked (required, e.g. "2026-09-30")
+  verificationStatus: 'verified' | 'unverified'; // Verification status (required)
   affectedDirections?: ('outbound' | 'inbound')[];
   statusOverride?: 'suspended' | 'active';
   hasReplacementTruth?: boolean;

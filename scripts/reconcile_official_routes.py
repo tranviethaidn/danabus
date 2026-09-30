@@ -6,6 +6,7 @@ Task 006 / Roadmap V3 Task 1: Official Route Data Reconciliation & Temporal Serv
 Performs evidence-first route reconciliation against official DanangBus / Datramac sources:
 - Extends route records with lifecycle, temporal, and provenance metadata.
 - Validates provenance completeness, alias conflicts, and lifecycle references (supersededBy/mergedInto cycles).
+- Validates temporary override provenance and bounded validity.
 - Generates machine-readable report docs/reports/task-1-official-route-reconciliation.json with computed metrics.
 - Synchronizes data/danangbus_routes.json, data/danangbus_summary.json, and data/danangbus_routes_compact.json.
 
@@ -32,7 +33,8 @@ AUTHORITY_DATRAMAC = "Trung tâm Quản lý & Điều hành Giao thông Công c�
 AUTHORITY_SGTVT_DN = "Sở GTVT Đà Nẵng / Datramac"
 AUTHORITY_REGIONAL = "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam"
 
-# Specific official provenance metadata per route based on official sources
+# Explicit official provenance evidence manifest per route
+# Every verified route MUST have an explicit entry here. Unconfigured routes remain unverified.
 ROUTE_PROVENANCE_CONFIG = {
     # 5 Subsidized routes (FUTA Bus Lines)
     "05": {
@@ -40,6 +42,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt có trợ giá FUTA (Khu Chung cư Hòa Hiệp Nam – Công viên Biển Đông)",
         "formerCodes": [],
     },
     "07": {
@@ -47,6 +53,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt có trợ giá FUTA (Xuân Diệu – Hoà Phước)",
         "formerCodes": [],
     },
     "08": {
@@ -54,6 +64,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt có trợ giá FUTA (Vũng Thùng – Bến xe buýt Phạm Hùng)",
         "formerCodes": [],
     },
     "11": {
@@ -61,6 +75,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt có trợ giá FUTA (Xuân Diệu – Bệnh viện Phụ sản Nhi)",
         "formerCodes": [],
     },
     "12": {
@@ -68,6 +86,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt có trợ giá FUTA (Xuân Diệu – Bến xe buýt Phạm Hùng)",
         "formerCodes": [],
     },
     # Non-subsidized urban routes
@@ -76,6 +98,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Đại học Việt Hàn)",
         "formerCodes": [],
     },
     "03": {
@@ -83,6 +109,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Sân bay Đà Nẵng – Khu đô thị FPT)",
         "formerCodes": [],
     },
     "06": {
@@ -90,6 +120,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Khu du lịch Non Nước)",
         "formerCodes": [],
     },
     "09": {
@@ -97,6 +131,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": "Thay thế tuyến cũ 17 / R17A theo quyết định của Sở GTVT Đà Nẵng",
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Quyết định Sở GTVT Đà Nẵng & Cổng Datramac: Tuyến 09 thay thế 17/R17A (Bệnh viện Ung bướu – Phạm Hùng)",
         "formerCodes": ["17", "R17A"],
     },
     "13": {
@@ -104,6 +142,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": "Thay thế tuyến cũ 16 / R16 theo quyết định của Sở GTVT Đà Nẵng",
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Quyết định Sở GTVT Đà Nẵng & Cổng Datramac: Tuyến 13 thay thế 16/R16 (Bệnh viện Ung bướu – Đại học Việt Hàn)",
         "formerCodes": ["16", "R16"],
     },
     "14": {
@@ -111,6 +153,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Cảng Sông Hàn – Khu Công nghệ cao)",
         "formerCodes": [],
     },
     "21": {
@@ -118,6 +164,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Công viên 29/3 – Bến xe Phía Nam)",
         "formerCodes": [],
     },
     # Quang Nam regional routes
@@ -126,6 +176,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_REGIONAL,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam: Tuyến buýt số 02 Tam Kỳ – Trà My",
         "formerCodes": [],
     },
     "TKY-NTH": {
@@ -133,6 +187,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_REGIONAL,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam: Tuyến buýt số 05 Tam Kỳ – Núi Thành",
         "formerCodes": [],
     },
     "TKY-CHU": {
@@ -140,6 +198,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_REGIONAL,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam: Tuyến buýt số 11 Tam Kỳ – Chu Lai",
         "formerCodes": [],
     },
     # Interprovincial routes
@@ -148,6 +210,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt liền kề LK01 (Đà Nẵng – Huế)",
         "formerCodes": [],
     },
     "LK02": {
@@ -155,6 +221,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt liền kề LK02 (Đà Nẵng – Hội An)",
         "formerCodes": [],
     },
     "LK21": {
@@ -162,6 +232,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt liền kề LK21 (Đà Nẵng – Tam Kỳ)",
         "formerCodes": [],
     },
     # Tourist routes
@@ -170,6 +244,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt du lịch 01DL (Bến xe Trung tâm – Bán đảo Sơn Trà – Ngũ Hành Sơn)",
         "formerCodes": [],
     },
     "01SB": {
@@ -177,6 +255,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": None,
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_DATRAMAC,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt kết nối Sân bay 01SB (Sân bay Đà Nẵng – Hội An)",
         "formerCodes": [],
     },
     # Suspended routes (former Quang An 1 routes)
@@ -185,6 +267,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_SGTVT_DN,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Thông báo Sở GTVT Đà Nẵng: Tạm dừng khai thác tuyến 04 do chấm dứt hợp đồng đơn vị vận hành Quảng An 1",
         "formerCodes": ["R4A"],
     },
     "10": {
@@ -192,6 +278,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_SGTVT_DN,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Thông báo Sở GTVT Đà Nẵng: Tạm dừng khai thác tuyến 10 do chấm dứt hợp đồng đơn vị vận hành Quảng An 1",
         "formerCodes": [],
     },
     "15": {
@@ -199,6 +289,10 @@ ROUTE_PROVENANCE_CONFIG = {
         "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
         "sourceUrl": OFFICIAL_PORTAL_URL,
         "sourceName": AUTHORITY_SGTVT_DN,
+        "sourcePublishedAt": None,
+        "lastVerifiedAt": "2026-09-30",
+        "verificationStatus": "verified",
+        "evidenceNote": "Thông báo Sở GTVT Đà Nẵng: Tạm dừng khai thác tuyến 15 do chấm dứt hợp đồng đơn vị vận hành Quảng An 1",
         "formerCodes": ["15", "R15"],
     }
 }
@@ -235,7 +329,6 @@ def validate_route_identifiers_and_references(routes):
             if sup_id not in route_by_id:
                 errors.append(f"Route '{rid}' has broken supersededBy reference '{sup_id}' (target not found)")
             else:
-                # Cycle check
                 visited = {rid}
                 curr = sup_id
                 while curr:
@@ -252,7 +345,6 @@ def validate_route_identifiers_and_references(routes):
             if mrg_id not in route_by_id:
                 errors.append(f"Route '{rid}' has broken mergedInto reference '{mrg_id}' (target not found)")
             else:
-                # Cycle check
                 visited = {rid}
                 curr = mrg_id
                 while curr:
@@ -278,56 +370,129 @@ def validate_route_identifiers_and_references(routes):
                 token_sources[tok] = []
             token_sources[tok].append(rid)
 
-    conflicts = {tok: rids for tok, rids in token_sources.items() if len(rids) > 1}
+    conflicts = [{"token": tok, "routeIds": rids} for tok, rids in token_sources.items() if len(rids) > 1]
     if conflicts:
         warnings.append(f"Potential alias/code collisions: {conflicts} (handled fail-closed via deterministic resolution)")
 
-    return errors, warnings
+    return errors, warnings, conflicts
+
+
+def validate_temporary_overrides(routes):
+    """
+    Validates override bounds, formats, and provenance for all overrides.
+    """
+    records = []
+    total = 0
+    valid_count = 0
+    invalid_count = 0
+
+    for r in routes:
+        rid = r.get("id")
+        overrides = r.get("temporaryOverrides", [])
+        if not isinstance(overrides, list):
+            continue
+        for ovr in overrides:
+            if not isinstance(ovr, dict):
+                continue
+            total += 1
+            ovr_id = ovr.get("id")
+            ovr_type = ovr.get("type")
+            src_url = ovr.get("sourceUrl")
+            last_ver = ovr.get("lastVerifiedAt")
+            ver_stat = ovr.get("verificationStatus")
+            ef_from = ovr.get("effectiveFrom")
+            ef_to = ovr.get("effectiveTo")
+
+            has_valid_prov = bool(
+                src_url and isinstance(src_url, str) and src_url.startswith("http")
+                and last_ver and ver_stat == "verified"
+            )
+            has_valid_dates = False
+            if ef_from and ef_to:
+                try:
+                    datetime.fromisoformat(ef_from)
+                    datetime.fromisoformat(ef_to)
+                    has_valid_dates = ef_from <= ef_to
+                except Exception:
+                    has_valid_dates = False
+
+            is_valid = has_valid_prov and has_valid_dates
+            if is_valid:
+                valid_count += 1
+            else:
+                invalid_count += 1
+
+            records.append({
+                "overrideId": ovr_id,
+                "routeId": rid,
+                "type": ovr_type,
+                "hasValidProvenance": has_valid_prov,
+                "hasValidDates": has_valid_dates,
+                "isValid": is_valid,
+                "sourceUrl": src_url,
+                "verificationStatus": ver_stat
+            })
+
+    return {
+        "totalOverrides": total,
+        "validOverrides": valid_count,
+        "invalidOverrides": invalid_count,
+        "records": records
+    }
 
 
 def reconcile_route(route, verification_date="2026-09-30", service_version="2026.09.30-1"):
     """
     Enriches a single route record with official temporal & provenance metadata.
     Preserves all existing route/stops/geometry/fare/timetable data without modification.
+    Fails closed for unconfigured routes without explicit official evidence:
+    - Never fabricates verificationStatus='verified' or official source for unknown routes.
+    - Missing config -> verificationStatus='unverified' and tripPlanningReady=False.
     """
     rid = route.get("id")
-    config = ROUTE_PROVENANCE_CONFIG.get(rid, {})
-    
-    # 1. Lifecycle status
-    status = config.get("status", route.get("status", "active"))
-    status_note = config.get("statusNote", route.get("statusNote"))
-    
-    # 2. Provenance
-    source_url = config.get("sourceUrl", route.get("sourceUrl", OFFICIAL_PORTAL_URL))
-    source_name = config.get("sourceName", route.get("sourceName", AUTHORITY_DATRAMAC))
-    
-    # Evidence-first: sourcePublishedAt is null when not explicitly stated in official portal
-    source_published_at = route.get("sourcePublishedAt", None)
-    
-    # 3. Temporal Validity
-    # Evidence-first: effectiveFrom/effectiveTo are null when official dates are not trustworthy
-    effective_from = route.get("effectiveFrom", None)
-    effective_to = route.get("effectiveTo", None)
-    
-    last_verified_at = route.get("lastVerifiedAt") or verification_date
-    version = route.get("serviceVersion") or service_version
-    verification_status = "verified"
-    
-    # 4. Former codes & aliases
-    existing_former = route.get("formerCodes", [])
-    config_former = config.get("formerCodes", [])
-    combined_former = list(dict.fromkeys(existing_former + config_former))
-    
-    existing_aliases = route.get("aliases", [])
-    combined_aliases = list(dict.fromkeys(existing_aliases + combined_former))
-    
-    # 5. Successor references
-    superseded_by = route.get("supersededBy", None)
-    merged_into = route.get("mergedInto", None)
-    
-    # 6. Temporary Overrides
-    temporary_overrides = route.get("temporaryOverrides", [])
-    
+    config = ROUTE_PROVENANCE_CONFIG.get(rid)
+
+    if not config:
+        # Unknown / unconfigured route: must remain unverified and fail closed
+        status = route.get("status", "unknown")
+        status_note = route.get("statusNote")
+        source_url = route.get("sourceUrl", None)
+        source_name = route.get("sourceName", None)
+        source_published_at = route.get("sourcePublishedAt", None)
+        effective_from = route.get("effectiveFrom", None)
+        effective_to = route.get("effectiveTo", None)
+        last_verified_at = route.get("lastVerifiedAt", None)
+        version = route.get("serviceVersion") or service_version
+        verification_status = "unverified"
+        combined_former = route.get("formerCodes", [])
+        combined_aliases = route.get("aliases", [])
+        superseded_by = route.get("supersededBy", None)
+        merged_into = route.get("mergedInto", None)
+        temporary_overrides = route.get("temporaryOverrides", [])
+    else:
+        # Configured route with explicit evidence
+        status = config.get("status", route.get("status", "active"))
+        status_note = config.get("statusNote", route.get("statusNote"))
+        source_url = config.get("sourceUrl") or route.get("sourceUrl")
+        source_name = config.get("sourceName") or route.get("sourceName")
+        source_published_at = config.get("sourcePublishedAt", route.get("sourcePublishedAt", None))
+        effective_from = route.get("effectiveFrom", None)
+        effective_to = route.get("effectiveTo", None)
+        last_verified_at = config.get("lastVerifiedAt") or route.get("lastVerifiedAt") or verification_date
+        version = route.get("serviceVersion") or service_version
+        verification_status = config.get("verificationStatus", "unverified")
+
+        existing_former = route.get("formerCodes", [])
+        config_former = config.get("formerCodes", [])
+        combined_former = list(dict.fromkeys(existing_former + config_former))
+
+        existing_aliases = route.get("aliases", [])
+        combined_aliases = list(dict.fromkeys(existing_aliases + combined_former))
+
+        superseded_by = route.get("supersededBy", None)
+        merged_into = route.get("mergedInto", None)
+        temporary_overrides = route.get("temporaryOverrides", [])
+
     # Update route in place
     route["status"] = status
     route["statusNote"] = status_note
@@ -345,13 +510,22 @@ def reconcile_route(route, verification_date="2026-09-30", service_version="2026
     route["mergedInto"] = merged_into
     route["temporaryOverrides"] = temporary_overrides
 
+    # If verification_status != 'verified', mark dataQuality as ineligible for planning if present
+    if verification_status != "verified" and "dataQuality" in route and isinstance(route["dataQuality"], dict):
+        route["dataQuality"]["tripPlanningReady"] = False
+        if "directions" in route["dataQuality"] and isinstance(route["dataQuality"]["directions"], dict):
+            if "outbound" in route["dataQuality"]["directions"]:
+                route["dataQuality"]["directions"]["outbound"]["eligible"] = False
+            if "inbound" in route["dataQuality"]["directions"]:
+                route["dataQuality"]["directions"]["inbound"]["eligible"] = False
+
     return route
 
 
 def compute_reconciliation_report(routes, generated_at=None):
     """
     Computes machine-readable reconciliation report from actual route records.
-    Never hardcodes metrics.
+    Never hardcodes metrics. Emits explicit evidence, gaps, validation, and override sections.
     """
     if generated_at is None:
         generated_at = datetime.now().astimezone().isoformat()
@@ -362,14 +536,86 @@ def compute_reconciliation_report(routes, generated_at=None):
     merged_count = sum(1 for r in routes if r.get("status") == "merged")
     retired_count = sum(1 for r in routes if r.get("status") == "retired")
     
-    with_prov_count = sum(1 for r in routes if r.get("sourceUrl") and r.get("lastVerifiedAt") and r.get("verificationStatus") == "verified")
+    with_prov_count = sum(
+        1 for r in routes
+        if r.get("sourceUrl")
+        and isinstance(r.get("sourceUrl"), str)
+        and r.get("sourceUrl").startswith("http")
+        and r.get("lastVerifiedAt")
+        and r.get("verificationStatus") == "verified"
+    )
     prov_coverage_pct = round((with_prov_count / total_routes * 100.0), 2) if total_routes > 0 else 0.0
     
     verified_count = sum(1 for r in routes if r.get("verificationStatus") == "verified")
     unverified_count = total_routes - verified_count
     
-    overrides_count = sum(len(r.get("temporaryOverrides", [])) for r in routes)
     planning_ready_count = sum(1 for r in routes if (r.get("dataQuality") or {}).get("tripPlanningReady") is True)
+
+    evidence_records = []
+    evidence_gaps = []
+    temporal_records = []
+
+    for r in routes:
+        rid = r.get("id")
+        config = ROUTE_PROVENANCE_CONFIG.get(rid)
+        has_cfg = config is not None and config.get("verificationStatus") == "verified"
+        has_route_prov = bool(
+            r.get("sourceUrl")
+            and isinstance(r.get("sourceUrl"), str)
+            and r.get("sourceUrl").startswith("http")
+            and r.get("lastVerifiedAt")
+            and r.get("verificationStatus") == "verified"
+        )
+        has_explicit = has_cfg and has_route_prov
+
+        ev_entry = {
+            "routeId": rid,
+            "routeNumber": r.get("routeNumber"),
+            "name": r.get("name"),
+            "status": r.get("status"),
+            "verificationStatus": r.get("verificationStatus"),
+            "sourceUrl": r.get("sourceUrl"),
+            "sourceName": r.get("sourceName"),
+            "sourcePublishedAt": r.get("sourcePublishedAt"),
+            "lastVerifiedAt": r.get("lastVerifiedAt"),
+            "hasExplicitEvidence": has_explicit,
+            "evidenceNote": config.get("evidenceNote", "Chưa có bằng chứng cấu hình") if config else "Chưa có bằng chứng cấu hình"
+        }
+        evidence_records.append(ev_entry)
+
+        if not has_explicit:
+            evidence_gaps.append({
+                "routeId": rid,
+                "routeNumber": r.get("routeNumber"),
+                "reason": "Thiếu cấu hình bằng chứng chính thức hoặc verificationStatus != 'verified'"
+            })
+
+        ef_from = r.get("effectiveFrom")
+        ef_to = r.get("effectiveTo")
+        valid_dates = True
+        if ef_from:
+            try:
+                datetime.fromisoformat(ef_from)
+            except Exception:
+                valid_dates = False
+        if ef_to:
+            try:
+                datetime.fromisoformat(ef_to)
+            except Exception:
+                valid_dates = False
+
+        temporal_records.append({
+            "routeId": rid,
+            "routeNumber": r.get("routeNumber"),
+            "effectiveFrom": ef_from,
+            "effectiveTo": ef_to,
+            "isTemporalBounded": bool(ef_from or ef_to),
+            "serviceVersion": r.get("serviceVersion"),
+            "validIsoDates": valid_dates
+        })
+
+    errors, warnings, alias_conflicts = validate_route_identifiers_and_references(routes)
+    override_val = validate_temporary_overrides(routes)
 
     route_entries = []
     for r in routes:
@@ -397,24 +643,38 @@ def compute_reconciliation_report(routes, generated_at=None):
             "tripPlanningReady": dq.get("tripPlanningReady", False)
         })
 
+    summary = {
+        "totalRoutes": total_routes,
+        "active": active_count,
+        "suspended": suspended_count,
+        "merged": merged_count,
+        "retired": retired_count,
+        "withProvenance": with_prov_count,
+        "provenanceCoveragePct": prov_coverage_pct,
+        "verifiedCount": verified_count,
+        "unverifiedCount": unverified_count,
+        "temporaryOverridesCount": override_val["totalOverrides"],
+        "validOverridesCount": override_val["validOverrides"],
+        "invalidOverridesCount": override_val["invalidOverrides"],
+        "tripPlanningReadyCount": planning_ready_count,
+        "evidenceGapsCount": len(evidence_gaps),
+        "aliasConflictsCount": len(alias_conflicts),
+        "lifecycleReferenceIssuesCount": len(errors)
+    }
+
     report = {
-        "reportVersion": "1.0",
+        "reportVersion": "1.1",
         "generatedAt": generated_at,
         "task": "Task 006 / Roadmap V3 Task 1: Official Route Data Reconciliation & Temporal Service Model",
         "dataset": ROUTES_PATH,
-        "summary": {
-            "totalRoutes": total_routes,
-            "active": active_count,
-            "suspended": suspended_count,
-            "merged": merged_count,
-            "retired": retired_count,
-            "withProvenance": with_prov_count,
-            "provenanceCoveragePct": prov_coverage_pct,
-            "verifiedCount": verified_count,
-            "unverifiedCount": unverified_count,
-            "temporaryOverridesCount": overrides_count,
-            "tripPlanningReadyCount": planning_ready_count
-        },
+        "summary": summary,
+        "evidence": evidence_records,
+        "evidenceGaps": evidence_gaps,
+        "unresolvedEvidence": evidence_gaps,
+        "aliasConflicts": alias_conflicts,
+        "lifecycleReferenceIssues": errors,
+        "temporalValidation": temporal_records,
+        "overrideValidation": override_val,
         "routes": route_entries
     }
     return report
@@ -519,7 +779,7 @@ def main():
         reconcile_route(r)
 
     # Validate
-    errors, warnings = validate_route_identifiers_and_references(routes)
+    errors, warnings, alias_conflicts = validate_route_identifiers_and_references(routes)
     for w in warnings:
         print(f"[!] Warning: {w}")
 
@@ -542,13 +802,36 @@ def main():
             sys.exit(1)
         with open(REPORT_PATH, "r", encoding="utf-8") as f:
             disk_report = json.load(f)
-        
-        disk_sum = disk_report.get("summary", {})
-        if disk_sum.get("withProvenance") != summary["withProvenance"] or disk_sum.get("totalRoutes") != summary["totalRoutes"]:
-            print(f"[X] Check failed: Provenance mismatch between disk ({disk_sum}) and memory ({summary})")
+
+        # 1. Validate that every route in dataset has explicit manifest entry in ROUTE_PROVENANCE_CONFIG
+        unconfigured = [r.get("id") for r in routes if r.get("id") not in ROUTE_PROVENANCE_CONFIG]
+        if unconfigured:
+            print(f"[X] Check failed: Routes missing explicit evidence configuration: {unconfigured}")
             sys.exit(1)
-            
-        print("[V] Check PASSED: 100% route records have valid provenance. Zero drift.")
+
+        # 2. Check evidence gaps
+        if len(report["evidenceGaps"]) > 0:
+            print(f"[X] Check failed: {len(report['evidenceGaps'])} evidence gaps detected: {report['evidenceGaps']}")
+            sys.exit(1)
+
+        # 3. Check lifecycle reference issues
+        if len(report["lifecycleReferenceIssues"]) > 0:
+            print(f"[X] Check failed: Lifecycle reference issues detected: {report['lifecycleReferenceIssues']}")
+            sys.exit(1)
+
+        # 4. Check summary metrics match disk
+        disk_sum = disk_report.get("summary", {})
+        for k in ["totalRoutes", "withProvenance", "verifiedCount", "unverifiedCount", "evidenceGapsCount", "temporaryOverridesCount"]:
+            if disk_sum.get(k) != summary.get(k):
+                print(f"[X] Check failed: Summary mismatch for '{k}': disk={disk_sum.get(k)} vs memory={summary.get(k)}")
+                sys.exit(1)
+
+        # 5. Check evidence count match disk
+        if len(disk_report.get("evidence", [])) != len(report["evidence"]):
+            print(f"[X] Check failed: Evidence count mismatch: disk={len(disk_report.get('evidence', []))} vs memory={len(report['evidence'])}")
+            sys.exit(1)
+
+        print(f"[V] Check PASSED: 100% ({summary['totalRoutes']}/{summary['totalRoutes']}) route records have verified explicit official provenance. 0 evidence gaps. Zero drift.")
         return
 
     if args.write:

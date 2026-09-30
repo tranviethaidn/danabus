@@ -6226,7 +6226,19 @@
         }
       },
       "ineligibilityReasons": []
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "07",
@@ -6396,7 +6408,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "08",
@@ -6550,7 +6574,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "11",
@@ -6714,7 +6750,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "12",
@@ -6884,7 +6932,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "02",
@@ -16674,7 +16734,19 @@
         }
       },
       "ineligibilityReasons": []
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "03",
@@ -16841,7 +16913,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "06",
@@ -17018,7 +17102,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "09",
@@ -17032,7 +17128,7 @@
     ],
     "category": "non_subsidized",
     "status": "active",
-    "statusNote": null,
+    "statusNote": "Thay thế tuyến cũ 17 / R17A theo quyết định của Sở GTVT Đà Nẵng",
     "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
     "terminals": {
       "origin": "Cảng sông Hàn",
@@ -17184,7 +17280,22 @@
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
         "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [
+      "17",
+      "R17A"
+    ],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "13",
@@ -17198,7 +17309,7 @@
     ],
     "category": "non_subsidized",
     "status": "active",
-    "statusNote": null,
+    "statusNote": "Thay thế tuyến cũ 16 / R16 theo quyết định của Sở GTVT Đà Nẵng",
     "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
     "terminals": {
       "origin": "Kim Liên",
@@ -17352,7 +17463,22 @@
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2); Loại giá vé không hợp lệ hoặc chưa rõ (unknown)",
         "Giá vé chưa sẵn sàng: Loại giá vé không hợp lệ hoặc chưa rõ (unknown)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [
+      "16",
+      "R16"
+    ],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "14",
@@ -17527,7 +17653,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "21",
@@ -20094,7 +20232,19 @@
         "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "TKY-TMY",
@@ -22113,7 +22263,19 @@
         }
       },
       "ineligibilityReasons": []
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "TKY-NTH",
@@ -23991,7 +24153,19 @@
         }
       },
       "ineligibilityReasons": []
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "TKY-CHU",
@@ -25289,7 +25463,19 @@
         }
       },
       "ineligibilityReasons": []
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng & Sở GTVT Quảng Nam",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "LK01",
@@ -25436,7 +25622,19 @@
         "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "01DL",
@@ -25733,7 +25931,19 @@
         "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "01SB",
@@ -26051,7 +26261,19 @@
         "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "LK02",
@@ -27112,7 +27334,19 @@
         "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "LK21",
@@ -28719,7 +28953,19 @@
         "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Trung tâm Quản lý & Điều hành Giao thông Công cộng Đà Nẵng (Datramac)",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "04",
@@ -28732,7 +28978,7 @@
     ],
     "category": "suspended",
     "status": "suspended",
-    "statusNote": "Tạm dừng hoạt động",
+    "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
     "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
     "terminals": {
       "origin": "cầu Trần Thị Lý",
@@ -28887,7 +29133,21 @@
         "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng / Datramac",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [
+      "R4A"
+    ],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "10",
@@ -28898,7 +29158,7 @@
     "aliases": [],
     "category": "suspended",
     "status": "suspended",
-    "statusNote": "Tạm dừng hoạt động",
+    "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
     "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
     "terminals": {
       "origin": "Sân bay Đà Nẵng",
@@ -29045,7 +29305,19 @@
         "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng / Datramac",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   },
   {
     "id": "15",
@@ -29054,11 +29326,12 @@
     "shortName": "BX Trung tâm – BX Phía Nam",
     "formerName": null,
     "aliases": [
-      "15"
+      "15",
+      "R15"
     ],
     "category": "suspended",
     "status": "suspended",
-    "statusNote": "Tạm dừng hoạt động",
+    "statusNote": "Tạm dừng hoạt động (chấm dứt hợp đồng đơn vị vận hành Quảng An 1)",
     "operator": "Công ty Cổ phần Công nghiệp Quảng An 1",
     "terminals": {
       "origin": "Bến xe Trung tâm Đà Nẵng;",
@@ -29189,6 +29462,21 @@
         "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
         "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=suspended); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
-    }
+    },
+    "sourceUrl": "https://www.danangbus.vn/lo-trinh-tuyen.html",
+    "sourceName": "Sở GTVT Đà Nẵng / Datramac",
+    "sourcePublishedAt": null,
+    "effectiveFrom": null,
+    "effectiveTo": null,
+    "lastVerifiedAt": "2026-09-30",
+    "serviceVersion": "2026.09.30-1",
+    "verificationStatus": "verified",
+    "formerCodes": [
+      "15",
+      "R15"
+    ],
+    "supersededBy": null,
+    "mergedInto": null,
+    "temporaryOverrides": []
   }
 ]

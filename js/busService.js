@@ -117,14 +117,286 @@ class BusService {
     });
   }
 
-  getRouteById(id) {
-    if (!id) return null;
-    const cleanId = String(id).trim();
-    return this.routes.find(r => 
-      r.id === cleanId || 
-      r.routeNumber === cleanId || 
-      (r.aliases && r.aliases.includes(cleanId))
+  /**
+   * Helper to parse ISO timestamp or date-only string with explicit ICT (+07:00) timezone handling.
+   * Avoids JavaScript date-only UTC parsing ambiguity.
+   */
+  parseIsoTimestamp(val, isEndOfDay = false) {
+    if (val == null) return NaN;
+    if (val instanceof Date) {
+      const ms = val.getTime();
+      return isNaN(ms) ? NaN : ms;
+    }
+    if (typeof val === 'number') {
+      return isFinite(val) ? val : NaN;
+    }
+    if (typeof val !== 'string') return NaN;
+    const s = val.trim();
+    if (!s) return NaN;
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+      const timePart = isEndOfDay ? '23:59:59.999+07:00' : '00:00:00.000+07:00';
+      return new Date(`${s}T${timePart}`).getTime();
+    }
+    const d = new Date(s);
+    return d.getTime();
+  }
+
+  /**
+   * Resolves a route identifier token (canonical ID, routeNumber, formerCode, or alias)
+   * with deterministic precedence and unambiguous conflict handling.
+   *
+   * Precedence:
+   * 1. Canonical ID exact match (r.id === cleanToken).
+   * 2. Public route number exact match (r.routeNumber === cleanToken).
+   *    If > 1 match, fails closed (returns status: 'ambiguous', candidates).
+   * 3. Former codes or search aliases exact match.
+   *    If > 1 match, fails closed (returns status: 'ambiguous', candidates).
+   */
+  resolveRouteIdentifier(token, options = {}) {
+    if (!token && token !== 0) {
+      return { route: null, status: 'not_found', candidates: [], reason: 'Token không hợp lệ' };
+    }
+    const cleanToken = String(token).trim();
+    if (!cleanToken) {
+      return { route: null, status: 'not_found', candidates: [], reason: 'Token rỗng' };
+    }
+
+    // Priority 1: Exact Canonical ID
+    const exactIdMatch = this.routes.find(r => r.id === cleanToken);
+    if (exactIdMatch) {
+      return this._handleResolvedRoute(exactIdMatch, 'exact_id', [exactIdMatch], options);
+    }
+
+    // Priority 2: Exact Route Number
+    const routeNumberMatches = this.routes.filter(r => r.routeNumber === cleanToken);
+    if (routeNumberMatches.length === 1) {
+      return this._handleResolvedRoute(routeNumberMatches[0], 'route_number', routeNumberMatches, options);
+    } else if (routeNumberMatches.length > 1) {
+      return {
+        route: null,
+        status: 'ambiguous',
+        candidates: routeNumberMatches,
+        reason: `Số hiệu tuyến '${cleanToken}' trùng khớp nhiều bản ghi (${routeNumberMatches.map(r => r.id).join(', ')})`
+      };
+    }
+
+    // Priority 3: Former Codes & Aliases
+    const codeMatches = this.routes.filter(r => 
+      (Array.isArray(r.formerCodes) && r.formerCodes.includes(cleanToken)) ||
+      (Array.isArray(r.aliases) && r.aliases.includes(cleanToken))
     );
+    if (codeMatches.length === 1) {
+      const match = codeMatches[0];
+      const isFormer = Array.isArray(match.formerCodes) && match.formerCodes.includes(cleanToken);
+      const matchedVia = isFormer ? 'former_code' : 'alias';
+      return this._handleResolvedRoute(match, matchedVia, codeMatches, options);
+    } else if (codeMatches.length > 1) {
+      return {
+        route: null,
+        status: 'ambiguous',
+        candidates: codeMatches,
+        reason: `Mã cũ/alias '${cleanToken}' trùng khớp nhiều bản ghi (${codeMatches.map(r => r.id).join(', ')})`
+      };
+    }
+
+    return { route: null, status: 'not_found', candidates: [], reason: `Không tìm thấy tuyến cho '${cleanToken}'` };
+  }
+
+  _handleResolvedRoute(route, matchedVia, candidates, options = {}) {
+    if (!options.followSuccessor) {
+      return {
+        route,
+        status: matchedVia,
+        candidates,
+        matchedVia,
+        followedSuccessor: false
+      };
+    }
+
+    // Explicit successor traversal with cycle detection
+    const visited = new Set([route.id]);
+    let curr = route;
+    let followed = false;
+    let hops = 0;
+    const maxHops = 10;
+
+    while (curr.supersededBy || curr.mergedInto) {
+      const nextId = curr.supersededBy || curr.mergedInto;
+      if (visited.has(nextId)) {
+        return {
+          route: null,
+          status: 'cycle_detected',
+          candidates,
+          reason: `Phát hiện vòng lặp kế thừa tuyến (${Array.from(visited).join(' -> ')} -> ${nextId})`
+        };
+      }
+      hops++;
+      if (hops > maxHops) {
+        return {
+          route: null,
+          status: 'max_hops_exceeded',
+          candidates,
+          reason: 'Vượt quá số bước kế thừa tối đa'
+        };
+      }
+      visited.add(nextId);
+      const nextRoute = this.routes.find(r => r.id === nextId);
+      if (!nextRoute) {
+        return {
+          route: null,
+          status: 'broken_successor_reference',
+          candidates,
+          reason: `Không tìm thấy tuyến kế thừa '${nextId}'`
+        };
+      }
+      curr = nextRoute;
+      followed = true;
+    }
+
+    return {
+      route: curr,
+      status: matchedVia,
+      candidates,
+      matchedVia,
+      followedSuccessor: followed,
+      originalRoute: route
+    };
+  }
+
+  getRouteById(id, options = {}) {
+    if (!id && id !== 0) return null;
+    const result = this.resolveRouteIdentifier(id, options);
+    return result.route || null;
+  }
+
+  /**
+   * Resolves the temporal validity and operational service state of a route at queryTime T.
+   * Single deterministic source of truth for planner, search, and schedule.
+   *
+   * @param {Object} route BusRoute entity
+   * @param {Date|string|number} queryTime Time to evaluate (defaults to new Date())
+   * @param {'outbound'|'inbound'|null} direction Direction to check (null = whole route)
+   * @returns {Object} { isUsable: boolean, status: string, effectiveStatus: string, activeOverride: Object|null, reason: string|null }
+   */
+  getServiceTemporalState(route, queryTime = new Date(), direction = null) {
+    // 1. Validate queryTime
+    if (queryTime == null) {
+      return { isUsable: false, status: 'invalid_time', effectiveStatus: 'invalid_time', activeOverride: null, reason: 'Thời gian truy vấn không hợp lệ' };
+    }
+    const tMs = this.parseIsoTimestamp(queryTime);
+    if (isNaN(tMs)) {
+      return { isUsable: false, status: 'invalid_time', effectiveStatus: 'invalid_time', activeOverride: null, reason: 'Thời gian truy vấn không hợp lệ' };
+    }
+
+    // 2. Validate route existence & required provenance
+    if (!route || typeof route !== 'object') {
+      return { isUsable: false, status: 'unknown', effectiveStatus: 'unknown', activeOverride: null, reason: 'Không có dữ liệu tuyến' };
+    }
+    if (!route.sourceUrl || typeof route.sourceUrl !== 'string' || !route.sourceUrl.startsWith('http') || !route.lastVerifiedAt) {
+      return { isUsable: false, status: 'unverified', effectiveStatus: 'unverified', activeOverride: null, reason: 'Tuyến thiếu thông tin nguồn chính thức (provenance)' };
+    }
+    if (route.verificationStatus && route.verificationStatus !== 'verified') {
+      return { isUsable: false, status: 'unverified', effectiveStatus: 'unverified', activeOverride: null, reason: 'Tuyến chưa được xác minh nguồn chính thức' };
+    }
+
+    // 3. Base lifecycle status
+    if (route.status === 'retired') {
+      return { isUsable: false, status: 'retired', effectiveStatus: 'retired', activeOverride: null, reason: route.statusNote || 'Tuyến đã ngừng khai thác vĩnh viễn' };
+    }
+    if (route.status === 'merged') {
+      return { isUsable: false, status: 'merged', effectiveStatus: 'merged', activeOverride: null, reason: route.statusNote || `Tuyến đã sáp nhập vào tuyến ${route.mergedInto || ''}`.trim() };
+    }
+    if (route.status === 'suspended' || route.isActive === false) {
+      return { isUsable: false, status: 'suspended', effectiveStatus: 'suspended', activeOverride: null, reason: route.statusNote || 'Tuyến đang tạm dừng hoạt động' };
+    }
+    if (route.status !== 'active') {
+      return { isUsable: false, status: route.status || 'unknown', effectiveStatus: route.status || 'unknown', activeOverride: null, reason: 'Trạng thái tuyến không hoạt động' };
+    }
+
+    // 4. Permanent temporal bounds
+    if (route.effectiveFrom) {
+      const fromMs = this.parseIsoTimestamp(route.effectiveFrom, false);
+      if (!isNaN(fromMs) && tMs < fromMs) {
+        return { isUsable: false, status: 'future', effectiveStatus: 'future', activeOverride: null, reason: 'Tuyến chưa đến ngày bắt đầu khai thác' };
+      }
+    }
+    if (route.effectiveTo) {
+      const toMs = this.parseIsoTimestamp(route.effectiveTo, true);
+      if (!isNaN(toMs) && tMs > toMs) {
+        return { isUsable: false, status: 'expired', effectiveStatus: 'expired', activeOverride: null, reason: 'Tuyến đã hết hạn thời gian khai thác' };
+      }
+    }
+
+    // 5. Temporary overrides evaluation
+    const overrides = Array.isArray(route.temporaryOverrides) ? route.temporaryOverrides : [];
+    let activeOverride = null;
+
+    for (const ovr of overrides) {
+      if (!ovr || typeof ovr !== 'object') continue;
+      
+      const ovrFrom = this.parseIsoTimestamp(ovr.effectiveFrom, false);
+      const ovrTo = this.parseIsoTimestamp(ovr.effectiveTo, true);
+      
+      // Malformed override fail closed
+      if (isNaN(ovrFrom) || isNaN(ovrTo) || ovrFrom > ovrTo) {
+        return {
+          isUsable: false,
+          status: 'malformed_override',
+          effectiveStatus: 'malformed_override',
+          activeOverride: ovr,
+          reason: 'Thông báo tạm thời của tuyến không hợp lệ hoặc thiếu khung giờ hiệu lực'
+        };
+      }
+
+      // Check if current time falls within override window
+      if (tMs >= ovrFrom && tMs <= ovrTo) {
+        const affectsDirection = !direction || 
+          !Array.isArray(ovr.affectedDirections) || 
+          ovr.affectedDirections.length === 0 || 
+          ovr.affectedDirections.includes(direction);
+
+        if (affectsDirection) {
+          // Temporary suspension
+          if (ovr.type === 'suspension' || ovr.statusOverride === 'suspended') {
+            return {
+              isUsable: false,
+              status: 'active',
+              effectiveStatus: 'suspended',
+              activeOverride: ovr,
+              reason: ovr.reason || 'Tuyến tạm dừng hoạt động theo thông báo tạm thời'
+            };
+          }
+
+          // Active detour without verified replacement truth
+          if (ovr.type === 'detour') {
+            if (!ovr.hasReplacementTruth) {
+              return {
+                isUsable: false,
+                status: 'active',
+                effectiveStatus: 'detour_unverified',
+                activeOverride: ovr,
+                reason: ovr.reason || 'Tuyến đang điều chỉnh lộ trình tạm thời nhưng chưa có dữ liệu trạm/hình học thay thế đã xác minh'
+              };
+            }
+          }
+
+          activeOverride = ovr;
+        }
+      }
+    }
+
+    return {
+      isUsable: true,
+      status: 'active',
+      effectiveStatus: 'active',
+      activeOverride,
+      reason: null
+    };
+  }
+
+  isServiceUsable(route, queryTime = new Date(), direction = null) {
+    return this.getServiceTemporalState(route, queryTime, direction).isUsable;
   }
 
   getAllStops() {
@@ -292,11 +564,13 @@ class BusService {
     return false;
   }
 
-  findRoutesBetween(originText = '', destinationText = '') {
+  findRoutesBetween(originText = '', destinationText = '', options = {}) {
     const o = this.normalize(originText);
     const d = this.normalize(destinationText);
 
     if (!o || !d || o === d) return [];
+
+    const queryTime = (options && options.queryTime) ? options.queryTime : ((options && options.now) ? options.now : new Date());
 
     const oTokens = this.resolveSearchTokens(o);
     const dTokens = this.resolveSearchTokens(d);
@@ -304,11 +578,15 @@ class BusService {
     const matches = [];
 
     for (const r of this.routes) {
-      if (r.status === 'suspended' || r.isActive === false) {
+      if (!this.isServiceUsable(r, queryTime)) {
         continue;
       }
 
       for (const dir of ['outbound', 'inbound']) {
+        if (!this.isServiceUsable(r, queryTime, dir)) {
+          continue;
+        }
+
         const stops = r.stops?.[dir] || [];
         if (stops.length < 2) {
           continue;
@@ -381,8 +659,23 @@ class BusService {
       return unknownResult('Không tìm thấy thông tin tuyến');
     }
 
-    if (route.status === 'suspended' || route.isActive === false) {
-      return unknownResult('Tuyến đang tạm ngưng hoạt động');
+    // Temporal service validity evaluation
+    let queryTime = options.queryTime || options.now;
+    if (!queryTime) {
+      if (typeof options.currentTime === 'object' && options.currentTime instanceof Date) {
+        queryTime = options.currentTime;
+      } else {
+        queryTime = new Date();
+      }
+    }
+    const direction = (options.direction === 'inbound') ? 'inbound' : 'outbound';
+    const temporalState = this.getServiceTemporalState(route, queryTime, direction);
+    if (!temporalState.isUsable) {
+      if (['suspended', 'retired', 'merged', 'expired', 'future', 'malformed_override'].includes(temporalState.status) ||
+          temporalState.effectiveStatus === 'suspended' ||
+          temporalState.effectiveStatus === 'detour_unverified') {
+        return unknownResult(temporalState.reason || 'Tuyến đang tạm ngưng hoạt động');
+      }
     }
 
     // Parse options.currentTime
@@ -407,7 +700,6 @@ class BusService {
       currentMinutes = now.getHours() * 60 + now.getMinutes();
     }
 
-    const direction = (options.direction === 'inbound') ? 'inbound' : 'outbound';
     const allowNextDay = (options.allowNextDay !== false);
 
     // 1. Timetable Priority
@@ -1406,12 +1698,16 @@ class TransitPlanner {
       };
     }
 
-    const eligibleRoutes = this.busService.routes.filter(r => r.status === 'active' && r.isActive !== false);
+    const queryTime = options.queryTime || options.now || new Date();
+    const eligibleRoutes = this.busService.routes.filter(r => this.busService.isServiceUsable(r, queryTime));
     const trips = [];
 
     // Step 2: Direct Trip Search
     for (const r of eligibleRoutes) {
       for (const dir of ['outbound', 'inbound']) {
+        if (!this.busService.isServiceUsable(r, queryTime, dir)) {
+          continue; // Fail-closed on temporally invalid directions
+        }
         if (!this.busService.isDirectionPlanningReady(r, dir)) {
           continue; // Fail-closed on ineligible directions
         }
@@ -1499,6 +1795,7 @@ class TransitPlanner {
     // Step 3: Connecting Trips Search (Max 1 transfer)
     for (const rA of eligibleRoutes) {
       for (const dirA of ['outbound', 'inbound']) {
+        if (!this.busService.isServiceUsable(rA, queryTime, dirA)) continue;
         if (!this.busService.isDirectionPlanningReady(rA, dirA)) continue;
         const stopsA = rA.stops?.[dirA] || [];
         if (stopsA.length < 2) continue;
@@ -1507,6 +1804,7 @@ class TransitPlanner {
           if (rA.id === rB.id) continue; // Anti-loop: no transfer on same route
 
           for (const dirB of ['outbound', 'inbound']) {
+            if (!this.busService.isServiceUsable(rB, queryTime, dirB)) continue;
             if (!this.busService.isDirectionPlanningReady(rB, dirB)) continue;
             const stopsB = rB.stops?.[dirB] || [];
             if (stopsB.length < 2) continue;

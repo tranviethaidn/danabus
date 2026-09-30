@@ -9,7 +9,25 @@ export type RouteCategory =
   | 'tourist'          // Tuyến buýt phục vụ du lịch
   | 'suspended';       // Tuyến tạm dừng hoạt động
 
-export type RouteStatus = 'active' | 'suspended';
+export type RouteStatus = 'active' | 'suspended' | 'merged' | 'retired';
+
+export type TemporaryOverrideType =
+  | 'suspension'
+  | 'detour'
+  | 'schedule_adjustment'
+  | 'fare_adjustment';
+
+export interface TemporaryOverride {
+  id: string;
+  type: TemporaryOverrideType;
+  reason: string;
+  effectiveFrom: string; // ISO-8601 string, e.g. "2026-10-01T00:00:00+07:00"
+  effectiveTo: string;   // ISO-8601 string, e.g. "2026-10-03T23:59:59+07:00"
+  sourceUrl?: string;
+  affectedDirections?: ('outbound' | 'inbound')[];
+  statusOverride?: 'suspended' | 'active';
+  hasReplacementTruth?: boolean;
+}
 
 export type StopConfidence = 'high' | 'medium' | 'low' | 'unresolved';
 export type StopStatus = 'verified' | 'unresolved';
@@ -216,6 +234,20 @@ export interface BusRoute {
   vehicleInfo?: string;
   pdfUrls: string[];
   dataQuality?: DataQuality;
+
+  // Task 006: Temporal and Provenance Model (Roadmap V3 Task 1)
+  effectiveFrom?: string | null;            // ISO Date/DateTime or null if unknown
+  effectiveTo?: string | null;              // ISO Date/DateTime or null if indefinite/unknown
+  sourceUrl: string;                        // Canonical official source URL
+  sourceName?: string;                      // Official authority name
+  sourcePublishedAt?: string | null;        // ISO Date or null if unstated in source
+  lastVerifiedAt: string;                   // Date checked: e.g. "2026-09-30"
+  serviceVersion: string;                   // Monotonic/version tag: e.g. "2026.09.30-1"
+  verificationStatus?: 'verified' | 'unverified';
+  formerCodes?: string[];                   // Former route codes, e.g. ["17", "R17A"]
+  supersededBy?: string | null;             // Route ID replacing this route
+  mergedInto?: string | null;               // Route ID merged into
+  temporaryOverrides?: TemporaryOverride[]; // Active or scheduled temporary overrides
 }
 
 /**

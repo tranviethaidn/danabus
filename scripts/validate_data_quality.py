@@ -166,10 +166,25 @@ def compute_data_quality(route):
     
     has_fare_model, fare_err = evaluate_fare_model(route)
     
+    # Provenance verification (Task 006 / Roadmap V3 Task 1)
+    source_url = route.get("sourceUrl")
+    last_verified = route.get("lastVerifiedAt")
+    ver_status = route.get("verificationStatus")
+    has_provenance = bool(
+        source_url
+        and isinstance(source_url, str)
+        and source_url.startswith("http")
+        and last_verified
+        and ver_status == "verified"
+    )
+    prov_err = "Thiếu hoặc chưa xác minh nguồn chính thức (sourceUrl, lastVerifiedAt, verificationStatus)" if not has_provenance else None
+
     # Direction-level planning eligibility
     out_reasons = []
     if not is_active:
         out_reasons.append(f"Tuyến không hoạt động (status={route_status})")
+    if not has_provenance:
+        out_reasons.append(prov_err)
     if not out_stops_ready:
         out_reasons.append(out_stop_err)
     if not out_geom_ready:
@@ -181,6 +196,8 @@ def compute_data_quality(route):
     in_reasons = []
     if not is_active:
         in_reasons.append(f"Tuyến không hoạt động (status={route_status})")
+    if not has_provenance:
+        in_reasons.append(prov_err)
     if not in_stops_ready:
         in_reasons.append(in_stop_err)
     if not in_geom_ready:
@@ -193,6 +210,8 @@ def compute_data_quality(route):
     route_reasons = []
     if not is_active:
         route_reasons.append(f"Tuyến {route.get('id')} tạm ngừng (status={route_status})")
+    if not has_provenance:
+        route_reasons.append(prov_err)
     if not out_eligible:
         route_reasons.append(f"Chiều đi chưa sẵn sàng: {'; '.join(out_reasons)}")
     if not in_eligible:
@@ -200,7 +219,7 @@ def compute_data_quality(route):
     if not has_fare_model:
         route_reasons.append(f"Giá vé chưa sẵn sàng: {fare_err}")
         
-    trip_planning_ready = is_active and out_eligible and in_eligible and has_fare_model
+    trip_planning_ready = is_active and has_provenance and out_eligible and in_eligible and has_fare_model
     
     data_quality = {
         "hasOutboundStops": out_stops_ready,

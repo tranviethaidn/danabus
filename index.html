@@ -22,9 +22,12 @@
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
-  <!-- Runtime Danabus Configuration (browser-restricted keys only, never server secrets) -->
+  <!-- Runtime Danabus Configuration: Public browser-restricted credentials only (website-restricted via HTTP Referrer), NEVER server secrets -->
   <script>
     window.DANABUS_CONFIG = window.DANABUS_CONFIG || {
+      // Public website-restricted API key for Google Maps Places client library.
+      // Must be restricted to Danabus authorized domains (e.g. danabus.638686.xyz, localhost) and Places API only.
+      // Server secrets must never be placed here.
       googlePlacesApiKey: null
     };
   </script>

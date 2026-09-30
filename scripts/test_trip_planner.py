@@ -140,78 +140,150 @@ class TestTripPlanner(unittest.TestCase):
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Google provider unconfigured/isolation test failed")
 
-    # 4. GoogleLocationProvider Network Errors, 429, Timeout & Safe Fallback
+    # 4. GoogleLocationProvider Network Errors, 429, Timeout & Safe Fallback (Finding 5)
     def test_google_provider_error_handling(self):
         node_script = """
         const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
 
-        // Test 1: Mock 429 rate limit
-        global.fetch = async () => ({
-            ok: false,
-            status: 429,
-            json: async () => ({ error: 'RATE_LIMIT_EXCEEDED' })
-        });
-
-        const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
         (async () => {
+            // Test 1: Mock 429 rate limit on search and resolve
+            global.fetch = async () => ({
+                ok: false,
+                status: 429,
+                json: async () => ({ error: 'RATE_LIMIT_EXCEEDED' })
+            });
+
+            const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
             const res429 = await gp.search('Nguyễn Văn Linh');
             if (!Array.isArray(res429) || res429.length !== 0) process.exit(1);
 
-            // Test 2: Mock network error / rejection
+            const resolve429 = await gp.resolve('place_429');
+            if (resolve429 !== null) process.exit(2);
+
+            // Test 2: Mock network error / rejection on search and resolve
             global.fetch = async () => { throw new Error('Network failure'); };
             const resNet = await gp.search('Nguyễn Văn Linh');
-            if (!Array.isArray(resNet) || resNet.length !== 0) process.exit(2);
+            if (!Array.isArray(resNet) || resNet.length !== 0) process.exit(3);
 
-            // Test 3: LocationManager fallback to local when Google fails
-            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key' } });
+            const resolveNet = await gp.resolve('place_net_err');
+            if (resolveNet !== null) process.exit(4);
+
+            // Test 3: True AbortController timeout on search (mocked fetch hangs until signal.abort fires)
+            global.fetch = (url, options) => {
+                return new Promise((resolve, reject) => {
+                    if (options && options.signal) {
+                        options.signal.addEventListener('abort', () => {
+                            const err = new Error('The user aborted a request.');
+                            err.name = 'AbortError';
+                            reject(err);
+                        });
+                    }
+                });
+            };
+
+            const gpTimeout = new GoogleLocationProvider({ apiKey: 'mock_test_key', timeoutMs: 25 });
+            const resTimeout = await gpTimeout.search('Timeout query');
+            if (!Array.isArray(resTimeout) || resTimeout.length !== 0) {
+                console.error('Expected empty search array on AbortController timeout, got:', resTimeout);
+                process.exit(5);
+            }
+
+            // Test 4: True AbortController timeout on Place Details resolve
+            const resolveTimeout = await gpTimeout.resolve('place_timeout');
+            if (resolveTimeout !== null) {
+                console.error('Expected null on Place Details AbortController timeout, got:', resolveTimeout);
+                process.exit(6);
+            }
+
+            // Test 5: LocationManager fallback to local when Google search fails or times out
+            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key', timeoutMs: 25 } });
             const lmRes = await lm.search('Cầu Rồng');
-            if (!lmRes || lmRes.length === 0 || lmRes[0].provider !== 'local') process.exit(3);
+            if (!lmRes || lmRes.length === 0 || lmRes[0].provider !== 'local') {
+                console.error('Expected LocationManager fallback to local on Google timeout');
+                process.exit(7);
+            }
         })();
         """
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Google provider error handling test failed")
 
-    # 5. Stale Response Suppression
+    # 5. Stale Response Suppression across Google Provider and LocationManager (Finding 2)
     def test_stale_response_suppression(self):
         node_script = """
-        const { GoogleLocationProvider } = require('./js/busService.js');
+        const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
 
-        let delayMs = 100;
-        global.fetch = async (url, options) => {
-            const body = JSON.parse(options.body);
-            const currentQuery = body.input;
-            // Earlier query is delayed more
-            const delay = currentQuery === 'query1' ? 80 : 10;
-            await new Promise(r => setTimeout(r, delay));
-            return {
-                ok: true,
-                json: async () => ({
-                    suggestions: [{
-                        placePrediction: {
-                            placeId: `id_${currentQuery}`,
-                            text: { text: `Result for ${currentQuery}` },
-                            structuredFormat: { mainText: { text: `Result for ${currentQuery}` } }
-                        }
-                    }]
-                })
-            };
-        };
-
-        const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
         (async () => {
+            // Part 1: Stale suppression inside GoogleLocationProvider
+            global.fetch = async (url, options) => {
+                const body = JSON.parse(options.body);
+                const currentQuery = body.input;
+                const delay = currentQuery === 'query1' ? 80 : 10;
+                await new Promise(r => setTimeout(r, delay));
+                return {
+                    ok: true,
+                    json: async () => ({
+                        suggestions: [{
+                            placePrediction: {
+                                placeId: `id_${currentQuery}`,
+                                text: { text: `Result for ${currentQuery}` },
+                                structuredFormat: { mainText: { text: `Result for ${currentQuery}` } }
+                            }
+                        }]
+                    })
+                };
+            };
+
+            const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
             const p1 = gp.search('query1');
-            // Immediately issue query2 before query1 resolves
             const p2 = gp.search('query2');
 
             const [r1, r2] = await Promise.all([p1, p2]);
-            // r1 must be suppressed (empty) because query2 was issued later
             if (r1.length !== 0) {
-                console.error('Expected r1 to be suppressed, got:', r1);
+                console.error('Expected r1 to be suppressed in Google provider, got:', r1);
                 process.exit(1);
             }
             if (r2.length === 0 || !r2[0].displayName.includes('query2')) {
                 console.error('Expected r2 to succeed with query2 results');
                 process.exit(2);
+            }
+
+            // Part 2: Staleness enforced at LocationManager level (Finding 2)
+            // Query A (old) starts first with delay, Query B (new) starts right after with shorter delay.
+            // Query A finishing later must NOT fall back to local or overwrite Query B!
+            global.fetch = async (url, options) => {
+                const body = JSON.parse(options.body);
+                const q = body.input;
+                if (q === 'Cầu Rồng Đà Nẵng') {
+                    await new Promise(r => setTimeout(r, 70));
+                } else {
+                    await new Promise(r => setTimeout(r, 10));
+                }
+                return {
+                    ok: true,
+                    json: async () => ({
+                        suggestions: [{
+                            placePrediction: {
+                                placeId: `id_${q}`,
+                                text: { text: `Result for ${q}` },
+                                structuredFormat: { mainText: { text: `Result for ${q}` } }
+                            }
+                        }]
+                    })
+                };
+            };
+
+            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key' } });
+            const searchA = lm.search('Cầu Rồng Đà Nẵng');
+            const searchB = lm.search('Rồng');
+
+            const [resA, resB] = await Promise.all([searchA, searchB]);
+            if (resA.length !== 0) {
+                console.error('Expected obsolete searchA to be suppressed at LocationManager level, got:', resA);
+                process.exit(3);
+            }
+            if (resB.length === 0 || !resB[0].displayName.includes('Rồng')) {
+                console.error('Expected newer searchB to succeed, got:', resB);
+                process.exit(4);
             }
         })();
         """
@@ -542,16 +614,15 @@ class TestTripPlanner(unittest.TestCase):
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "findRoutesBetween backward compatibility failed")
 
-    # 16. Security Contract: Zero Hardcoded API Keys / Credentials
+    # 16. Security Contract: Public/Restricted Client Credential Boundary (Finding 1)
     def test_security_credential_audit(self):
-        # Prohibited terms representing algorithm bypass or client-side Google Maps SDK
+        # Prohibited terms representing algorithm bypass or Google Map instantiations (Leaflet strictly preserved)
         prohibited_sdk_terms = [
             "findTransferRoutes",
             "buildTransferItinerary",
             "findMultiLegRoutes",
             "transferItinerary",
-            "google.maps.Map",
-            "maps.googleapis.com/maps/api/js"
+            "google.maps.Map"  # Strictly prohibited: Leaflet/OSM must never be replaced by Google Map
         ]
         files_to_check = [
             WORKSPACE / "js" / "busService.js",
@@ -565,13 +636,143 @@ class TestTripPlanner(unittest.TestCase):
             if not fpath.exists(): continue
             content = fpath.read_text(encoding="utf-8")
             
-            # 1. No committed API keys
+            # 1. No committed real API keys
             matches = google_api_key_regex.findall(content)
             self.assertEqual(len(matches), 0, f"Found hardcoded Google API key in {fpath.name}: {matches}")
 
-            # 2. No prohibited SDK terms
+            # 2. No prohibited terms (no algorithm bypass, no google.maps.Map)
             for term in prohibited_sdk_terms:
-                self.assertNotIn(term, content, f"Prohibited SDK term '{term}' found in {fpath.name}")
+                self.assertNotIn(term, content, f"Prohibited term '{term}' found in {fpath.name}")
+
+        # 3. index.html must document public website-restricted client credential boundary (never secret)
+        index_html = (WORKSPACE / "index.html").read_text(encoding="utf-8")
+        self.assertIn("website-restricted", index_html, "index.html must document website-restricted credential boundary")
+        self.assertIn("NEVER server secrets", index_html, "index.html must explicitly forbid server secrets")
+
+        # 4. app.js must provide Places policy attribution branding when Google predictions are displayed
+        app_js = (WORKSPACE / "js" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("google-attribution", app_js, "app.js must provide Google Places attribution branding")
+
+    # 17. Invalid Place Resolution & Picker Guard Contract (Finding 3)
+    def test_invalid_place_resolution_and_picker_guard(self):
+        node_script = """
+        const { LocationManager, ResolvedLocation } = require('./js/busService.js');
+
+        (async () => {
+            // Mock Place Details failure (e.g. 429 rate limit or error)
+            global.fetch = async () => ({ ok: false, status: 429 });
+
+            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key' } });
+
+            // Case 1: Google autocomplete item with null coordinates fails resolve
+            const googleItem = {
+                id: 'place_err_1',
+                placeId: 'place_err_1',
+                displayName: 'Địa điểm không có tọa độ',
+                address: 'Địa điểm không có tọa độ',
+                lat: null,
+                lng: null,
+                provider: 'google'
+            };
+
+            const resolved = await lm.resolve('place_err_1', googleItem);
+            if (resolved !== null) {
+                console.error('Expected lm.resolve to return null on details failure, got:', resolved);
+                process.exit(1);
+            }
+
+            // Case 2: Constructing ResolvedLocation with null coords fails isValid()
+            const invalidLoc = new ResolvedLocation(googleItem);
+            if (invalidLoc.isValid()) {
+                console.error('ResolvedLocation with null coordinates must NOT be valid');
+                process.exit(2);
+            }
+
+            // Case 3: Fallback ONLY occurs when real local candidate with valid coordinates exists
+            const localMatched = await lm.resolve('poi_cau_rong', { displayName: 'Cầu Rồng Đà Nẵng', provider: 'google' });
+            if (!localMatched || !localMatched.isValid() || localMatched.lat !== 16.0612) {
+                console.error('Expected fallback to local candidate with valid coordinates');
+                process.exit(3);
+            }
+        })();
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Invalid place resolution and picker guard test failed")
+
+    # 18. Data-Confidence Ranking on Real Dataset & Transfer Legs (Finding 4)
+    def test_data_confidence_ranking_on_real_data(self):
+        node_script = """
+        const fs = require('fs');
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation, BestStopResolver } = require('./js/busService.js');
+        const routes = JSON.parse(fs.readFileSync('./data/danangbus_routes.json', 'utf8'));
+        const stops = JSON.parse(fs.readFileSync('./data/danangbus_stops.json', 'utf8'));
+        const bs = new BusService();
+        bs.routes = routes;
+        bs.stops = stops;
+        bs.isLoaded = true;
+
+        const bsr = new BestStopResolver(bs);
+
+        // 1. Verify calculateConfidencePenalty on real route.dataQuality.stopMetrics
+        const r05 = routes.find(r => r.routeNumber === '05');
+        const pen05Out = bsr.calculateConfidencePenalty(r05, 'outbound');
+        const pen05In = bsr.calculateConfidencePenalty(r05, 'inbound');
+        if (pen05Out !== 0 || pen05In !== 0) {
+            console.error('Expected penalty 0 for Route 05, got out:', pen05Out, 'in:', pen05In);
+            process.exit(1);
+        }
+
+        const r12 = routes.find(r => r.routeNumber === '12 (Quảng Nam)');
+        const pen12Out = bsr.calculateConfidencePenalty(r12, 'outbound');
+        if (pen12Out !== 5.0) {
+            console.error('Expected penalty 5.0 for Route 12 outbound, got:', pen12Out);
+            process.exit(2);
+        }
+
+        // 2. Focused unit test: two viable routes with identical distance/duration where lower-quality route receives penalty
+        const rHigh = JSON.parse(JSON.stringify(r05));
+        rHigh.id = 'route_high_conf';
+        rHigh.routeNumber = 'TH';
+        rHigh.dataQuality.stopMetrics.outbound = { total: 10, verified: 9, unresolved: 1 }; // 90% verified -> 0 penalty
+
+        const rLow = JSON.parse(JSON.stringify(r05));
+        rLow.id = 'route_low_conf';
+        rLow.routeNumber = 'TL';
+        rLow.dataQuality.stopMetrics.outbound = { total: 10, verified: 5, unresolved: 5 }; // 50% verified -> 5.0 penalty
+
+        const bsTest = new BusService();
+        bsTest.routes = [rHigh, rLow];
+        bsTest.stops = stops;
+        bsTest.isLoaded = true;
+
+        const tpTest = new TransitPlanner(bsTest, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'ĐH Bách Khoa', lat: 16.0754, lng: 108.1528 });
+        const dLoc = new ResolvedLocation({ displayName: 'CV Biển Đông', lat: 16.0687, lng: 108.2464 });
+
+        const plan = tpTest.planTrip(oLoc, dLoc);
+        if (!plan.trips || plan.trips.length === 0) process.exit(3);
+
+        const topTrip = plan.trips[0];
+        if (topTrip.route.id !== 'route_high_conf') {
+            console.error('Expected top trip to be route_high_conf, got:', topTrip.route.id);
+            process.exit(4);
+        }
+        if (topTrip.confidencePenalty !== 0) {
+            console.error('Expected top trip confidencePenalty === 0, got:', topTrip.confidencePenalty);
+            process.exit(5);
+        }
+
+        // 3. For transfer trips, verify independent confidence calculation per leg
+        const penA = bsr.calculateConfidencePenalty(rHigh, 'outbound'); // 0
+        const penB = bsr.calculateConfidencePenalty(rLow, 'outbound');  // 5.0
+        const totalTransferPen = penA + penB;
+        if (totalTransferPen !== 5.0) {
+            console.error('Expected transfer total penalty 5.0, got:', totalTransferPen);
+            process.exit(6);
+        }
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Data confidence ranking test failed")
 
 if __name__ == '__main__':
     unittest.main()

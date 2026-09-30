@@ -1320,6 +1320,7 @@ class LocationSearchProvider {
 class GoogleLocationProvider extends LocationSearchProvider {
   constructor(options = {}) {
     super('google');
+    // Public browser runtime key (HTTP Referrer / website restricted in Google Cloud Console), NEVER a server secret
     this.apiKey = options.apiKey || (typeof window !== 'undefined' && window.DANABUS_CONFIG?.googlePlacesApiKey) || null;
     this.sessionToken = null;
     this.timeoutMs = options.timeoutMs || 3000;
@@ -1329,6 +1330,8 @@ class GoogleLocationProvider extends LocationSearchProvider {
       high: { latitude: SERVICE_AREA_BOUNDS.maxLat, longitude: SERVICE_AREA_BOUNDS.maxLng }
     };
     this._searchSeq = 0;
+    this._scriptLoaded = false;
+    this._scriptLoadingPromise = null;
   }
 
   isConfigured() {
@@ -1350,6 +1353,32 @@ class GoogleLocationProvider extends LocationSearchProvider {
     this.sessionToken = null;
   }
 
+  loadClientScript() {
+    if (this._scriptLoadingPromise) return this._scriptLoadingPromise;
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return Promise.resolve(false);
+    }
+    if (window.google?.maps?.places) {
+      this._scriptLoaded = true;
+      return Promise.resolve(true);
+    }
+    this._scriptLoadingPromise = new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(this.apiKey)}&libraries=places&v=weekly&loading=async`;
+      script.async = true;
+      script.onload = () => {
+        this._scriptLoaded = true;
+        resolve(true);
+      };
+      script.onerror = () => {
+        console.warn('[GoogleLocationProvider] Google Maps Places client SDK script failed to load');
+        resolve(false);
+      };
+      document.head.appendChild(script);
+    });
+    return this._scriptLoadingPromise;
+  }
+
   async search(query, options = {}) {
     const trimmed = (query || '').trim();
     if (!trimmed || trimmed.length < 2) return [];
@@ -1358,8 +1387,101 @@ class GoogleLocationProvider extends LocationSearchProvider {
     const seq = ++this._searchSeq;
     const sessionToken = this.getOrCreateSessionToken();
 
+    // 1. Google Maps JS Places client library path if available
+    const hasPlacesSDK = (typeof window !== 'undefined' && window.google?.maps?.places) ||
+                         (typeof global !== 'undefined' && global.google?.maps?.places);
+
+    if (hasPlacesSDK) {
+      const placesLib = (typeof window !== 'undefined' ? window.google.maps.places : global.google.maps.places);
+      let timeoutId;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+          const err = new Error('Google Places client SDK search timeout');
+          err.name = 'AbortError';
+          reject(err);
+        }, this.timeoutMs);
+      });
+
+      try {
+        let fetchPromise;
+        if (placesLib.AutocompleteSuggestion && typeof placesLib.AutocompleteSuggestion.fetchAutocompleteSuggestions === 'function') {
+          fetchPromise = placesLib.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+            input: trimmed,
+            includedRegionCodes: ['vn'],
+            locationRestriction: {
+              west: this.bounds.low.longitude,
+              north: this.bounds.high.latitude,
+              east: this.bounds.high.longitude,
+              south: this.bounds.low.latitude
+            },
+            language: this.languageCode,
+            sessionToken
+          }).then(res => (res && res.suggestions) || []);
+        } else if (placesLib.AutocompleteService) {
+          const service = new placesLib.AutocompleteService();
+          fetchPromise = new Promise((resolve) => {
+            service.getPlacePredictions({
+              input: trimmed,
+              componentRestrictions: { country: 'vn' },
+              sessionToken
+            }, (predictions) => {
+              if (predictions && Array.isArray(predictions)) {
+                resolve(predictions.map(p => ({
+                  placePrediction: {
+                    placeId: p.place_id,
+                    text: { text: p.description },
+                    structuredFormat: {
+                      mainText: { text: p.structured_formatting?.main_text || p.description },
+                      secondaryText: { text: p.structured_formatting?.secondary_text || '' }
+                    }
+                  }
+                })));
+              } else {
+                resolve([]);
+              }
+            });
+          });
+        } else {
+          fetchPromise = Promise.resolve([]);
+        }
+
+        const suggestions = await Promise.race([fetchPromise, timeoutPromise]);
+        clearTimeout(timeoutId);
+
+        if (seq !== this._searchSeq) return [];
+
+        const results = [];
+        for (const item of (suggestions || [])) {
+          const pred = item.placePrediction || item;
+          const placeId = pred.placeId || pred.place_id;
+          if (!placeId) continue;
+          const mainText = pred.structuredFormat?.mainText?.text || pred.text?.text || trimmed;
+          const secondaryText = pred.structuredFormat?.secondaryText?.text || 'Đà Nẵng, Việt Nam';
+          results.push({
+            id: placeId,
+            placeId: placeId,
+            displayName: mainText,
+            address: secondaryText ? `${mainText}, ${secondaryText}` : mainText,
+            lat: null,
+            lng: null,
+            type: 'address',
+            provider: 'google'
+          });
+        }
+        return results;
+      } catch (err) {
+        clearTimeout(timeoutId);
+        console.warn('[GoogleLocationProvider] Client SDK search failed gracefully:', err.message);
+        return [];
+      }
+    }
+
+    // 2. Client web fetch path with AbortController timeout & HTTP Referrer / restricted key
     const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    const timeoutId = controller ? setTimeout(() => controller.abort(), this.timeoutMs) : null;
+    let timeoutId = null;
+    if (controller) {
+      timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
+    }
 
     try {
       const response = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
@@ -1428,7 +1550,7 @@ class GoogleLocationProvider extends LocationSearchProvider {
   }
 
   async resolve(providerId, item = null) {
-    if (item && typeof item.lat === 'number' && typeof item.lng === 'number') {
+    if (item && typeof item.lat === 'number' && typeof item.lng === 'number' && Number.isFinite(item.lat) && Number.isFinite(item.lng)) {
       return new ResolvedLocation(item);
     }
     const placeId = providerId || item?.placeId || item?.id;
@@ -1438,8 +1560,93 @@ class GoogleLocationProvider extends LocationSearchProvider {
     const sessionToken = this.sessionToken;
     this.resetSessionToken();
 
+    // 1. Google Maps JS Places client library path if available
+    const hasPlacesSDK = (typeof window !== 'undefined' && window.google?.maps?.places) ||
+                         (typeof global !== 'undefined' && global.google?.maps?.places);
+
+    if (hasPlacesSDK) {
+      const placesLib = (typeof window !== 'undefined' ? window.google.maps.places : global.google.maps.places);
+      let timeoutId;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+          const err = new Error('Google Places client SDK resolve timeout');
+          err.name = 'AbortError';
+          reject(err);
+        }, this.timeoutMs);
+      });
+
+      try {
+        let detailsPromise;
+        if (placesLib.Place) {
+          const place = new placesLib.Place({ id: placeId });
+          detailsPromise = place.fetchFields({
+            fields: ['displayName', 'formattedAddress', 'location']
+          }).then(() => {
+            const lat = typeof place.location?.lat === 'function' ? place.location.lat() : place.location?.lat;
+            const lng = typeof place.location?.lng === 'function' ? place.location.lng() : place.location?.lng;
+            return {
+              displayName: place.displayName?.text || place.displayName || item?.displayName || 'Địa điểm',
+              formattedAddress: place.formattedAddress || item?.address,
+              location: { latitude: lat, longitude: lng }
+            };
+          });
+        } else if (placesLib.PlacesService) {
+          const div = (typeof document !== 'undefined') ? document.createElement('div') : null;
+          const service = new placesLib.PlacesService(div || {});
+          detailsPromise = new Promise((resolve) => {
+            service.getDetails({
+              placeId,
+              fields: ['name', 'formatted_address', 'geometry']
+            }, (res) => {
+              if (res && res.geometry && res.geometry.location) {
+                const lat = typeof res.geometry.location.lat === 'function' ? res.geometry.location.lat() : res.geometry.location.lat;
+                const lng = typeof res.geometry.location.lng === 'function' ? res.geometry.location.lng() : res.geometry.location.lng;
+                resolve({
+                  displayName: res.name || item?.displayName || 'Địa điểm',
+                  formattedAddress: res.formatted_address || item?.address,
+                  location: { latitude: lat, longitude: lng }
+                });
+              } else {
+                resolve(null);
+              }
+            });
+          });
+        } else {
+          detailsPromise = Promise.resolve(null);
+        }
+
+        const data = await Promise.race([detailsPromise, timeoutPromise]);
+        clearTimeout(timeoutId);
+
+        if (!data || !data.location) return null;
+        const lat = data.location.latitude;
+        const lng = data.location.longitude;
+        if (typeof lat !== 'number' || typeof lng !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+          return null;
+        }
+
+        return new ResolvedLocation({
+          displayName: data.displayName || item?.displayName || 'Địa điểm',
+          address: data.formattedAddress || item?.address || data.displayName,
+          lat,
+          lng,
+          provider: 'google',
+          providerId: placeId,
+          type: 'address'
+        });
+      } catch (err) {
+        clearTimeout(timeoutId);
+        console.warn('[GoogleLocationProvider] Client SDK resolve failed gracefully:', err.message);
+        return null;
+      }
+    }
+
+    // 2. Client web fetch path with AbortController timeout & HTTP Referrer / restricted key
     const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    const timeoutId = controller ? setTimeout(() => controller.abort(), this.timeoutMs) : null;
+    let timeoutId = null;
+    if (controller) {
+      timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
+    }
 
     try {
       const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}${sessionToken ? `?sessionToken=${encodeURIComponent(sessionToken)}` : ''}`;
@@ -1466,7 +1673,7 @@ class GoogleLocationProvider extends LocationSearchProvider {
       const displayName = data.displayName?.text || item?.displayName || 'Địa điểm';
       const address = data.formattedAddress || item?.address || displayName;
 
-      if (typeof lat !== 'number' || typeof lng !== 'number') {
+      if (typeof lat !== 'number' || typeof lng !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lng)) {
         return null;
       }
 
@@ -1803,6 +2010,7 @@ class LocationManager {
     this.googleProvider = new GoogleLocationProvider(options.google || {});
     this.activeProvider = this.googleProvider.isConfigured() ? this.googleProvider : this.localProvider;
     this.cache = new Map();
+    this._searchSeq = 0;
   }
 
   setBusService(busService) {
@@ -1821,6 +2029,8 @@ class LocationManager {
   async search(query, options = {}) {
     const trimmed = (query || '').trim();
     if (!trimmed || trimmed.length < 2) return [];
+
+    const seq = ++this._searchSeq;
     const cacheKey = `search_${trimmed}`;
     if (this.cache.has(cacheKey)) return this.cache.get(cacheKey);
 
@@ -1828,6 +2038,10 @@ class LocationManager {
     if (this.googleProvider.isConfigured()) {
       try {
         const gRes = await this.googleProvider.search(trimmed, options);
+        // Stale check after Google search: if a newer search started, discard immediately
+        if (seq !== this._searchSeq) {
+          return [];
+        }
         if (Array.isArray(gRes) && gRes.length > 0) {
           results = gRes;
         }
@@ -1836,8 +2050,18 @@ class LocationManager {
       }
     }
 
+    // Stale check before local fallback: obsolete requests must never fall back to local
+    if (seq !== this._searchSeq) {
+      return [];
+    }
+
     if (results.length === 0) {
       results = await this.localProvider.search(trimmed, options);
+    }
+
+    // Stale check before caching and returning
+    if (seq !== this._searchSeq) {
+      return [];
     }
 
     this.cache.set(cacheKey, results);
@@ -1845,9 +2069,18 @@ class LocationManager {
   }
 
   async resolve(providerId, item = null) {
+    if (item && typeof item.lat === 'number' && typeof item.lng === 'number' && Number.isFinite(item.lat) && Number.isFinite(item.lng)) {
+      return new ResolvedLocation(item);
+    }
     if (item?.provider === 'google' || (item?.placeId && this.googleProvider.isConfigured())) {
       const res = await this.googleProvider.resolve(providerId, item);
       if (res && res.isValid()) return res;
+      // Google details failed: fallback ONLY if a real local candidate with valid coordinates exists
+      const localMatch = this.localProvider.localPOIs.find(p => p.id === providerId || (p.displayName && p.displayName.toLowerCase() === (item?.displayName || '').toLowerCase()));
+      if (localMatch && typeof localMatch.lat === 'number' && typeof localMatch.lng === 'number' && Number.isFinite(localMatch.lat) && Number.isFinite(localMatch.lng)) {
+        return new ResolvedLocation(localMatch);
+      }
+      return null; // Never return null coordinates or invalid endpoint
     }
     return this.localProvider.resolve(providerId, item);
   }
@@ -1985,6 +2218,23 @@ class BestStopResolver {
 
   isWithinServiceArea(lat, lng) {
     return isWithinServiceArea(lat, lng);
+  }
+
+  calculateConfidencePenalty(route, direction) {
+    if (!route || !direction) return 0;
+    const metrics = route.dataQuality?.stopMetrics?.[direction];
+    if (!metrics || typeof metrics.total !== 'number' || metrics.total <= 0) {
+      return 0;
+    }
+    const verified = typeof metrics.verified === 'number' ? metrics.verified : 0;
+    const verifiedRatio = verified / metrics.total;
+    // Deterministic confidence penalty derived from existing route.dataQuality.stopMetrics:
+    // High confidence (>= 80% stops verified): 0 penalty
+    // Moderate confidence (60% <= ratio < 80%): 2.5 penalty
+    // Lower confidence (< 60% stops verified): 5.0 penalty
+    if (verifiedRatio >= 0.80) return 0;
+    if (verifiedRatio >= 0.60) return 2.5;
+    return 5.0;
   }
 
   findCandidateStops(lat, lng, radiusMeters) {
@@ -2196,7 +2446,7 @@ class BestStopResolver {
             const totalDuration = walkOrigin.durationMinutes + transitMinutes + walkDest.durationMinutes;
             const totalWalkingMeters = walkOrigin.distanceMeters + walkDest.distanceMeters;
 
-            const confidencePenalty = (r.dataConfidence === 'low' || (typeof r.dataQualityScore === 'number' && r.dataQualityScore < 0.7)) ? 5 : 0;
+            const confidencePenalty = this.calculateConfidencePenalty(r, dir);
             const cost = (walkOrigin.durationMinutes + walkDest.durationMinutes) * 1.5 + transitMinutes + confidencePenalty;
 
             trips.push({
@@ -2210,6 +2460,8 @@ class BestStopResolver {
               totalWalkingMeters,
               transitDurationMinutes: transitMinutes,
               fareText: this.busService.formatRouteFare(r),
+              confidencePenalty,
+              dataConfidenceScore: r.dataQuality?.stopMetrics?.[dir]?.total ? Math.round(((r.dataQuality.stopMetrics[dir].verified || 0) / r.dataQuality.stopMetrics[dir].total) * 100) / 100 : 1.0,
               cost,
               legs: [
                 walkOrigin,
@@ -2332,8 +2584,9 @@ class BestStopResolver {
                     const fareB = this.busService.formatRouteFare(rB);
                     const fareText = `${fareA} + ${fareB}`;
 
-                    const confidencePenaltyA = (rA.dataConfidence === 'low' || (typeof rA.dataQualityScore === 'number' && rA.dataQualityScore < 0.7)) ? 5 : 0;
-                    const confidencePenaltyB = (rB.dataConfidence === 'low' || (typeof rB.dataQualityScore === 'number' && rB.dataQualityScore < 0.7)) ? 5 : 0;
+                    const confidencePenaltyA = this.calculateConfidencePenalty(rA, dirA);
+                    const confidencePenaltyB = this.calculateConfidencePenalty(rB, dirB);
+                    const totalConfidencePenalty = confidencePenaltyA + confidencePenaltyB;
 
                     trips.push({
                       id: `transfer_${rA.id}_${rB.id}_${oiA}_${tiA}_${tiB}_${diB}`,
@@ -2346,7 +2599,10 @@ class BestStopResolver {
                       totalWalkingMeters: totalWalk,
                       transitDurationMinutes: durA + durB,
                       fareText,
-                      cost: (walkOrigin.durationMinutes + walkTransfer.durationMinutes + walkDest.durationMinutes) * 1.5 + durA + durB + 12 + confidencePenaltyA + confidencePenaltyB,
+                      confidencePenalty: totalConfidencePenalty,
+                      confidencePenaltyA,
+                      confidencePenaltyB,
+                      cost: (walkOrigin.durationMinutes + walkTransfer.durationMinutes + walkDest.durationMinutes) * 1.5 + durA + durB + 12 + totalConfidencePenalty,
                       legs: [
                         walkOrigin,
                         {

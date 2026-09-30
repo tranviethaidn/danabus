@@ -23,6 +23,7 @@ class DanabusApp {
     this.loadState = 'idle';           // 'idle' | 'loading' | 'ready' | 'error'
     this.loadError = null;
     this.eventsBound = false;
+    this._pickerRenderSeq = 0;
   }
 
   showSearchValidationError(message, errorType = null) {
@@ -1025,6 +1026,8 @@ class DanabusApp {
     const container = document.getElementById('picker-results-container');
     if (!container) return;
 
+    const currentRenderSeq = ++this._pickerRenderSeq;
+
     if (this.pickerActiveTab === 'popular' && !query) {
       const popular = window.busService.getPopularDestinations();
       container.innerHTML = popular.map((p, idx) => `
@@ -1059,6 +1062,12 @@ class DanabusApp {
       if (window.locationManager) {
         results = await window.locationManager.search(query);
       }
+
+      // Generation sequence check: drop obsolete responses immediately
+      if (currentRenderSeq !== this._pickerRenderSeq) {
+        return;
+      }
+
       if (!results || results.length === 0) {
         const stops = window.busService.searchStops(query);
         results = stops.map(s => ({
@@ -1071,7 +1080,9 @@ class DanabusApp {
         }));
       }
 
-      container.innerHTML = results.map((item, idx) => `
+      const hasGoogleResults = Array.isArray(results) && results.some(item => item.provider === 'google');
+
+      let resultsHtml = results.map((item, idx) => `
         <button type="button" class="picker-item text-left w-full bg-white rounded-xl p-3 shadow-xs border border-slate-100 active:bg-slate-50 flex items-center justify-between cursor-pointer" data-name="${item.displayName}" data-idx="${idx}" aria-label="${item.displayName}">
           <div class="flex items-center gap-3 min-w-0">
             <div class="w-9 h-9 rounded-xl ${item.type === 'poi' ? 'bg-amber-50 text-amber-600' : (item.type === 'address' ? 'bg-blue-50 text-blue-600' : (item.type === 'pin' ? 'bg-purple-50 text-purple-600' : 'bg-slate-100 text-slate-600'))} flex items-center justify-center shrink-0">
@@ -1092,27 +1103,53 @@ class DanabusApp {
         </button>
       `).join('');
 
+      // Places API Policy Attribution: show "Powered by Google" when Google-sourced results are rendered
+      if (hasGoogleResults) {
+        resultsHtml += `
+          <div class="google-attribution flex items-center justify-center gap-1.5 py-2.5 text-slate-400 text-[11px] border-t border-slate-100 mt-2">
+            <span>Tìm kiếm địa điểm hỗ trợ bởi</span>
+            <span class="font-semibold text-slate-600">Google</span>
+          </div>
+        `;
+      }
+
+      container.innerHTML = resultsHtml;
+
       container.querySelectorAll('.picker-item').forEach(btn => {
         btn.addEventListener('click', async () => {
           const idx = parseInt(btn.getAttribute('data-idx'), 10);
           const resItem = results[idx];
+          if (!resItem) return;
+
           let resolved = null;
-          if (resItem) {
-            if (window.locationManager) {
-              resolved = await window.locationManager.resolve(resItem.id || resItem.placeId, resItem);
-            }
-            if (!resolved) {
-              resolved = new window.ResolvedLocation(resItem);
-            }
+          if (window.locationManager) {
+            resolved = await window.locationManager.resolve(resItem.id || resItem.placeId, resItem);
           }
-          this.selectLocation(resItem ? resItem.displayName : btn.getAttribute('data-name'), resolved);
+          if ((!resolved || !resolved.isValid()) && typeof resItem.lat === 'number' && typeof resItem.lng === 'number' && Number.isFinite(resItem.lat) && Number.isFinite(resItem.lng)) {
+            resolved = new window.ResolvedLocation(resItem);
+          }
+
+          if (!resolved || !resolved.isValid()) {
+            console.warn('[DanabusApp] Place details unavailable for:', resItem.displayName);
+            alert('Không thể lấy tọa độ chi tiết cho địa điểm này. Vui lòng chọn địa điểm khác hoặc thử lại.');
+            return;
+          }
+
+          this.selectLocation(resItem.displayName || btn.getAttribute('data-name'), resolved);
         });
       });
     }
   }
 
   selectLocation(name, resolvedLoc = null) {
-    const loc = resolvedLoc || this.resolveLocationFromText(name);
+    let loc = resolvedLoc;
+    if (!loc || typeof loc.isValid !== 'function' || !loc.isValid()) {
+      loc = this.resolveLocationFromText(name);
+    }
+    if (!loc || typeof loc.isValid !== 'function' || !loc.isValid()) {
+      console.warn('[DanabusApp] selectLocation rejected invalid location:', name, loc);
+      return false;
+    }
     if (this.pickerTarget === 'origin') {
       const el = document.getElementById('home-origin-display');
       if (el) el.textContent = name;
@@ -1124,6 +1161,7 @@ class DanabusApp {
     }
     this.clearSearchValidationError();
     this.closeLocationPicker();
+    return true;
   }
 
   // =========================================================================

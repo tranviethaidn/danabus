@@ -1,0 +1,275 @@
+{
+  "timestamp": "2026-09-30T18:13:01.825593Z",
+  "objective": "Exhaust official PDF evidence and determine technical ceiling for active routes",
+  "evaluations": {
+    "08": {
+      "title": "Tuyến 08: BXB Bùi Dương Lịch >> BXB Phạm Hùng",
+      "pdf_file": "data/pdf_cache/08.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 30,
+          "verified_anchors_count": 17,
+          "unresolved_stops_count": 13,
+          "sample_unresolved": [
+            "Bến xe buýt Bùi Dương Lịch",
+            "Trung tâm Y tế Sơn Trà",
+            "Số 308",
+            "Sân bóng đá Tuyên Sơn",
+            "Đối diện Tổng Công ty EVNGENCO2"
+          ],
+          "geometry_points_count": 432,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (17 anchors, 432 points, 17.31km, max_stop_dist 12.2m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (13/30 trạm = 43.3%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        },
+        "inbound": {
+          "total_extracted_stops": 31,
+          "verified_anchors_count": 17,
+          "unresolved_stops_count": 14,
+          "sample_unresolved": [
+            "Bến xe buýt Phạm Hùng",
+            "THPT Hòa Vang",
+            "Đối diện Số 60",
+            "Số 773",
+            "Tổng Công ty EVNGENCO2"
+          ],
+          "geometry_points_count": 377,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (17 anchors, 377 points, 13.24km, max_stop_dist 8.9m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (14/31 trạm = 45.2%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        }
+      }
+    },
+    "11": {
+      "title": "Tuyến 11: BXB Xuân Diệu >> BV Phụ Sản Nhi",
+      "pdf_file": "data/pdf_cache/11.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 28,
+          "verified_anchors_count": 19,
+          "unresolved_stops_count": 9,
+          "sample_unresolved": [
+            "Bến xe buýt Xuân Diệu",
+            "Số 159 Đường 3/2",
+            "Toyota – Đối diện số 155",
+            "Đối diện số 159",
+            "Nhà khách Quốc phòng 206 - Số 38"
+          ],
+          "geometry_points_count": 369,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (19 anchors, 369 points, 12.95km, max_stop_dist 136.7m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (9/28 trạm = 32.1%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        },
+        "inbound": {
+          "total_extracted_stops": 29,
+          "verified_anchors_count": 22,
+          "unresolved_stops_count": 7,
+          "sample_unresolved": [
+            "Chân Cầu Tiên Sơn",
+            "Lotte",
+            "Bưu điện ĐN - Số 01",
+            "Số 162-164",
+            "Số 06-08"
+          ],
+          "geometry_points_count": 379,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (22 anchors, 379 points, 13.90km, max_stop_dist 136.7m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (7/29 trạm = 24.1%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        }
+      }
+    },
+    "07": {
+      "title": "Tuyến 07: BX Xuân Diệu >> BX Phía Nam",
+      "pdf_file": "data/pdf_cache/07.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 34,
+          "verified_anchors_count": 21,
+          "unresolved_stops_count": 13,
+          "sample_unresolved": [
+            "Bến xe buýt Xuân Diệu",
+            "Số 49",
+            "Đối diện sân Tennis",
+            "Số 62",
+            "Siêu thị Mega - CMT8"
+          ],
+          "geometry_points_count": 565,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (21 anchors, 565 points, 17.27km, max_stop_dist 12.3m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (13/34 trạm = 38.2%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        },
+        "inbound": {
+          "total_extracted_stops": 34,
+          "verified_anchors_count": 22,
+          "unresolved_stops_count": 12,
+          "sample_unresolved": [
+            "Số 467",
+            "Đối diện BXB Phạm Hùng",
+            "Số 119-121",
+            "Số 399",
+            "Số 43-45"
+          ],
+          "geometry_points_count": 567,
+          "geometry_valid": true,
+          "geometry_validation_reason": "Validation PASS (22 anchors, 567 points, 18.30km, max_stop_dist 12.3m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (12/34 trạm = 35.3%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        }
+      }
+    },
+    "12": {
+      "title": "Tuyến 12: BXB Xuân Diệu >> BXB Phạm Hùng",
+      "pdf_file": "data/pdf_cache/12.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 29,
+          "verified_anchors_count": 17,
+          "unresolved_stops_count": 12,
+          "sample_unresolved": [
+            "Bến xe buýt Xuân Diệu",
+            "Số 49 Đường 3/2",
+            "Số 126",
+            "Đối diện Công viên 29/3",
+            "Số 08"
+          ],
+          "geometry_points_count": 539,
+          "geometry_valid": false,
+          "geometry_validation_reason": "Stop 'Sân bay Đà Nẵng' is too far from polyline (380.2m > 350m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (12/29 trạm = 41.4%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Không vượt qua kiểm chứng hình học: Stop 'Sân bay Đà Nẵng' is too far from polyline (380.2m > 350m)",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        },
+        "inbound": {
+          "total_extracted_stops": 25,
+          "verified_anchors_count": 15,
+          "unresolved_stops_count": 10,
+          "sample_unresolved": [
+            "Đối diện BXB Phạm Hùng",
+            "Đối diện CV Nguyễn Xuân Lâm",
+            "Tiểu học Trần Đại Nghĩa",
+            "Số 408",
+            "Bệnh viện Gia Đình - Số 91"
+          ],
+          "geometry_points_count": 593,
+          "geometry_valid": false,
+          "geometry_validation_reason": "Stop 'Sân bay Đà Nẵng' is too far from polyline (380.2m > 350m)",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (10/25 trạm = 40.0%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Không vượt qua kiểm chứng hình học: Stop 'Sân bay Đà Nẵng' is too far from polyline (380.2m > 350m)",
+            "Trạm đầu/cuối của tuyến không có tọa độ xác thực trong dữ liệu nguồn"
+          ]
+        }
+      }
+    },
+    "09": {
+      "title": "Tuyến 09 (xương cá cũ 17): Cảng Sông Hàn >> Hòa Khương",
+      "pdf_file": "data/pdf_cache/09.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 30,
+          "verified_anchors_count": 11,
+          "unresolved_stops_count": 19,
+          "sample_unresolved": [
+            "Cảng Sông Hàn",
+            "TT Hành chính ĐN",
+            "Số 30",
+            "THCS Nguyễn Huệ - Số 136",
+            "Đối diện Số 293"
+          ],
+          "geometry_points_count": 480,
+          "geometry_valid": false,
+          "geometry_validation_reason": "Total length 12.92km deviates from expected 25.8km",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (19/30 trạm = 63.3%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Không vượt qua kiểm chứng hình học: Total length 12.92km deviates from expected 25.8km"
+          ]
+        },
+        "inbound": {
+          "status": "NOT_EVALUATED_OR_ABSENT",
+          "reason": "PDF không cung cấp dữ liệu riêng biệt cho chiều này hoặc sơ đồ một chiều"
+        }
+      }
+    },
+    "13": {
+      "title": "Tuyến 13 (xương cá cũ 16): Kim Liên >> ĐH Việt Hàn",
+      "pdf_file": "data/pdf_cache/13.pdf",
+      "pdf_exists": true,
+      "directions": {
+        "outbound": {
+          "total_extracted_stops": 13,
+          "verified_anchors_count": 4,
+          "unresolved_stops_count": 9,
+          "sample_unresolved": [
+            "Kim Liên",
+            "Đ/d số 384",
+            "Chùa Kim Quang - Số 169",
+            "CĐ Kinh tế Kế hoạch - Số 143",
+            "ĐH Sư Phạm - Số 459"
+          ],
+          "geometry_points_count": 0,
+          "geometry_valid": false,
+          "geometry_validation_reason": "Chưa đủ mốc xác thực",
+          "safe_to_promote": false,
+          "rejection_reasons": [
+            "Tỷ lệ trạm chưa xác thực cao (9/13 trạm = 69.2%), vi phạm tiêu chí Journey Planner không có unresolved boarding/alighting stop",
+            "Không vượt qua kiểm chứng hình học: Chưa đủ mốc xác thực"
+          ]
+        },
+        "inbound": {
+          "status": "NOT_EVALUATED_OR_ABSENT",
+          "reason": "PDF không cung cấp dữ liệu riêng biệt cho chiều này hoặc sơ đồ một chiều"
+        }
+      }
+    }
+  },
+  "summary": {
+    "routes_evaluated": [
+      "08",
+      "11",
+      "07",
+      "12",
+      "09",
+      "13"
+    ],
+    "routes_without_pdf": [
+      "03",
+      "06",
+      "14",
+      "LK01"
+    ],
+    "conclusion": "Data Availability Blocker confirmed by technical evidence"
+  }
+}

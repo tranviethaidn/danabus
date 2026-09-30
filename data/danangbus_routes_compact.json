@@ -98,12 +98,12 @@
     "distanceKm": 20.15,
     "singleFare": 8000,
     "totalStops": {
-      "outbound": 0,
-      "inbound": 0
+      "outbound": 34,
+      "inbound": 34
     },
     "hasGeometry": {
-      "outbound": false,
-      "inbound": false
+      "outbound": true,
+      "inbound": true
     },
     "streets": [
       "Bạch Đằng",
@@ -168,12 +168,12 @@
     "distanceKm": 15.0,
     "singleFare": 8000,
     "totalStops": {
-      "outbound": 0,
-      "inbound": 0
+      "outbound": 30,
+      "inbound": 31
     },
     "hasGeometry": {
-      "outbound": false,
-      "inbound": false
+      "outbound": true,
+      "inbound": true
     },
     "streets": [
       "Bùi Dương Lịch",
@@ -226,12 +226,12 @@
     "distanceKm": 14.0,
     "singleFare": 8000,
     "totalStops": {
-      "outbound": 0,
-      "inbound": 0
+      "outbound": 28,
+      "inbound": 29
     },
     "hasGeometry": {
-      "outbound": false,
-      "inbound": false
+      "outbound": true,
+      "inbound": true
     },
     "streets": [
       "Bến xe buýt Xuân Diệu",
@@ -292,8 +292,8 @@
     "distanceKm": 16.5,
     "singleFare": 8000,
     "totalStops": {
-      "outbound": 0,
-      "inbound": 0
+      "outbound": 29,
+      "inbound": 25
     },
     "hasGeometry": {
       "outbound": false,

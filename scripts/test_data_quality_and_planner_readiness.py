@@ -101,13 +101,13 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
     def test_drift_detection_fail_closed(self):
         """Validator must detect any metadata drift or unauthorized tampering."""
         tampered_routes = copy.deepcopy(self.routes)
-        # Illegally set route 07 to tripPlanningReady=True
-        r07 = next(r for r in tampered_routes if r["id"] == "07")
-        r07["dataQuality"]["tripPlanningReady"] = True
+        # Illegally set route 12 to tripPlanningReady=True
+        r12 = next(r for r in tampered_routes if r["id"] == "12")
+        r12["dataQuality"]["tripPlanningReady"] = True
         
         drift_count, errors = run_validation(tampered_routes, strict_check=True)
         self.assertGreater(drift_count, 0, "Validator must detect tampered tripPlanningReady")
-        self.assertTrue(any("Tuyến 07" in e for e in errors))
+        self.assertTrue(any("Tuyến 12" in e for e in errors))
 
     # -------------------------------------------------------------------------
     # 2. Strict Negative Cases (Fail-Closed Gates)
@@ -619,6 +619,16 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertTrue(dqtky["directions"]["inbound"]["eligibleForPlanning"])
         self.assertTrue(dqtky["tripPlanningReady"])
 
+        # Routes 07, 08, 11
+        for rid in ["07", "08", "11"]:
+            r = next(x for x in self.routes if x["id"] == rid)
+            dq = r["dataQuality"]
+            self.assertTrue(dq["hasOutboundGeometry"], f"Route {rid} outbound geometry must be ready")
+            self.assertTrue(dq["hasInboundGeometry"], f"Route {rid} inbound geometry must be ready")
+            self.assertTrue(dq["directions"]["outbound"]["eligibleForPlanning"], f"Route {rid} outbound must be eligible")
+            self.assertTrue(dq["directions"]["inbound"]["eligibleForPlanning"], f"Route {rid} inbound must be eligible")
+            self.assertTrue(dq["tripPlanningReady"], f"Route {rid} must be tripPlanningReady")
+
     def test_direction_level_isolation_partial_route_01sb(self):
         """Routes with verified stops but unverified geometry must fail geometryReady and eligibleForPlanning."""
         r01sb = next(x for x in self.routes if x["id"] == "01SB")
@@ -694,10 +704,10 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertEqual(summary["totalRoutes"], 23)
         self.assertEqual(summary["activeRoutes"], 18)
         self.assertEqual(summary["suspendedRoutes"], 3)
-        self.assertEqual(summary["tripPlanningReadyCount"], 6)
-        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "02", "21", "TKY-TMY", "TKY-NTH", "TKY-CHU"])
+        self.assertEqual(summary["tripPlanningReadyCount"], 9)
+        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "07", "08", "11", "02", "21", "TKY-TMY", "TKY-NTH", "TKY-CHU"])
         self.assertEqual(summary["inboundOnlyReadyRoutes"], [])
-        self.assertEqual(summary["neitherReadyCount"], 17)
+        self.assertEqual(summary["neitherReadyCount"], 14)
         self.assertGreater(summary["stops"]["total"], 0)
         self.assertGreater(summary["stops"]["verified"], 0)
         self.assertGreater(summary["stops"]["verifiedPercentage"], 56.5)
@@ -776,10 +786,16 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         const r02 = bs.getRouteById('02');
         const r21 = bs.getRouteById('21');
         const r07 = bs.getRouteById('07');
+        const r08 = bs.getRouteById('08');
+        const r11 = bs.getRouteById('11');
+        const r12 = bs.getRouteById('12');
         assert.strictEqual(bs.isRoutePlanningReady(r05), true);
         assert.strictEqual(bs.isRoutePlanningReady(r02), true);
         assert.strictEqual(bs.isRoutePlanningReady(r21), true);
-        assert.strictEqual(bs.isRoutePlanningReady(r07), false);
+        assert.strictEqual(bs.isRoutePlanningReady(r07), true);
+        assert.strictEqual(bs.isRoutePlanningReady(r08), true);
+        assert.strictEqual(bs.isRoutePlanningReady(r11), true);
+        assert.strictEqual(bs.isRoutePlanningReady(r12), false);
 
         const rTkyChu = bs.getRouteById('TKY-CHU');
         assert.strictEqual(bs.isDirectionPlanningReady(rTkyChu, 'outbound'), true);
@@ -787,7 +803,7 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         assert.strictEqual(bs.isRoutePlanningReady(rTkyChu), true);
 
         const readyRoutes = bs.getPlanningReadyRoutes();
-        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', '02', '21', 'TKY-TMY', 'TKY-NTH', 'TKY-CHU']);
+        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', '07', '08', '11', '02', '21', 'TKY-TMY', 'TKY-NTH', 'TKY-CHU']);
         results.busServiceReadinessMethods = true;
 
         // bs.findNearbyStops on real dataset

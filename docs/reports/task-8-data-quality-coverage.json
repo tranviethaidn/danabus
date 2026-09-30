@@ -1,12 +1,15 @@
 {
-  "generatedAt": "2026-10-01T01:12:42.802372",
+  "generatedAt": "2026-10-01T01:33:36.367280",
   "summary": {
     "totalRoutes": 23,
     "activeRoutes": 18,
     "suspendedRoutes": 3,
-    "tripPlanningReadyCount": 6,
+    "tripPlanningReadyCount": 9,
     "tripPlanningReadyRoutes": [
       "05",
+      "07",
+      "08",
+      "11",
       "02",
       "21",
       "TKY-TMY",
@@ -17,11 +20,8 @@
     "outboundOnlyReadyRoutes": [],
     "inboundOnlyReadyCount": 0,
     "inboundOnlyReadyRoutes": [],
-    "neitherReadyCount": 17,
+    "neitherReadyCount": 14,
     "neitherReadyRoutes": [
-      "07",
-      "08",
-      "11",
       "12",
       "03",
       "06",
@@ -38,10 +38,10 @@
       "15"
     ],
     "stops": {
-      "total": 638,
-      "verified": 363,
-      "unresolved": 275,
-      "verifiedPercentage": 56.9
+      "total": 878,
+      "verified": 513,
+      "unresolved": 365,
+      "verifiedPercentage": 58.43
     }
   },
   "routes": [
@@ -84,111 +84,102 @@
       "routeNumber": "07",
       "name": "Xuân Diệu – Hoà Phước",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         }
       },
       "stopMetrics": {
         "outbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 34,
+          "verified": 21,
+          "unresolved": 13
         },
         "inbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 34,
+          "verified": 22,
+          "unresolved": 12
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "08",
       "routeNumber": "08",
       "name": "Vũng Thùng – Bến xe buýt Phạm Hùng",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         }
       },
       "stopMetrics": {
         "outbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 30,
+          "verified": 17,
+          "unresolved": 13
         },
         "inbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 31,
+          "verified": 17,
+          "unresolved": 14
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "11",
       "routeNumber": "11",
       "name": "Xuân Diệu – Bệnh viện Phụ sản Nhi",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
-          "stopsReady": false,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "stopsReady": true,
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         }
       },
       "stopMetrics": {
         "outbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 28,
+          "verified": 19,
+          "unresolved": 9
         },
         "inbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 29,
+          "verified": 22,
+          "unresolved": 7
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "12",
@@ -198,33 +189,33 @@
       "tripPlanningReady": false,
       "directions": {
         "outbound": {
-          "stopsReady": false,
+          "stopsReady": true,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
         },
         "inbound": {
-          "stopsReady": false,
+          "stopsReady": true,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
         }
       },
       "stopMetrics": {
         "outbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 29,
+          "verified": 17,
+          "unresolved": 12
         },
         "inbound": {
-          "total": 0,
-          "verified": 0,
-          "unresolved": 0
+          "total": 25,
+          "verified": 15,
+          "unresolved": 10
         }
       },
       "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
     },
     {

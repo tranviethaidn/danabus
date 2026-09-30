@@ -1266,14 +1266,15 @@ if (typeof window !== 'undefined') {
  */
 
 class ResolvedLocation {
-  constructor({ displayName, address, lat, lng, provider = 'local', providerId = null, type = 'poi' }) {
+  constructor({ displayName, address, lat, lng, provider = 'local', providerId = null, type = 'poi', dataConfidence = null }) {
     this.displayName = displayName || 'Vị trí';
     this.address = address || displayName || '';
     this.lat = typeof lat === 'number' && Number.isFinite(lat) ? lat : null;
     this.lng = typeof lng === 'number' && Number.isFinite(lng) ? lng : null;
     this.provider = provider;
     this.providerId = providerId || `${provider}_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-    this.type = type; // 'poi' | 'address' | 'stop' | 'gps'
+    this.type = type; // 'poi' | 'address' | 'stop' | 'gps' | 'pin'
+    this.dataConfidence = dataConfidence;
   }
 
   isValid() {
@@ -1288,6 +1289,25 @@ class ResolvedLocation {
   }
 }
 
+const SERVICE_AREA_BOUNDS = {
+  minLat: 15.40,
+  maxLat: 16.35,
+  minLng: 107.90,
+  maxLng: 108.65
+};
+
+function isWithinServiceArea(lat, lng) {
+  if (typeof lat !== 'number' || typeof lng !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return false;
+  }
+  return (
+    lat >= SERVICE_AREA_BOUNDS.minLat &&
+    lat <= SERVICE_AREA_BOUNDS.maxLat &&
+    lng >= SERVICE_AREA_BOUNDS.minLng &&
+    lng <= SERVICE_AREA_BOUNDS.maxLng
+  );
+}
+
 class LocationSearchProvider {
   constructor(name = 'base') {
     this.name = name;
@@ -1295,6 +1315,180 @@ class LocationSearchProvider {
   async search(query, options = {}) { throw new Error('Not implemented'); }
   async resolve(providerId, item = null) { throw new Error('Not implemented'); }
   async reverseGeocode(lat, lng) { throw new Error('Not implemented'); }
+}
+
+class GoogleLocationProvider extends LocationSearchProvider {
+  constructor(options = {}) {
+    super('google');
+    this.apiKey = options.apiKey || (typeof window !== 'undefined' && window.DANABUS_CONFIG?.googlePlacesApiKey) || null;
+    this.sessionToken = null;
+    this.timeoutMs = options.timeoutMs || 3000;
+    this.languageCode = options.languageCode || 'vi';
+    this.bounds = options.bounds || {
+      low: { latitude: SERVICE_AREA_BOUNDS.minLat, longitude: SERVICE_AREA_BOUNDS.minLng },
+      high: { latitude: SERVICE_AREA_BOUNDS.maxLat, longitude: SERVICE_AREA_BOUNDS.maxLng }
+    };
+    this._searchSeq = 0;
+  }
+
+  isConfigured() {
+    return typeof this.apiKey === 'string' && this.apiKey.trim().length > 0;
+  }
+
+  getOrCreateSessionToken() {
+    if (!this.sessionToken) {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        this.sessionToken = crypto.randomUUID();
+      } else {
+        this.sessionToken = 'token_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
+      }
+    }
+    return this.sessionToken;
+  }
+
+  resetSessionToken() {
+    this.sessionToken = null;
+  }
+
+  async search(query, options = {}) {
+    const trimmed = (query || '').trim();
+    if (!trimmed || trimmed.length < 2) return [];
+    if (!this.isConfigured()) return [];
+
+    const seq = ++this._searchSeq;
+    const sessionToken = this.getOrCreateSessionToken();
+
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), this.timeoutMs) : null;
+
+    try {
+      const response = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': this.apiKey,
+          'X-Goog-FieldMask': 'suggestions.placePrediction.placeId,suggestions.placePrediction.text,suggestions.placePrediction.structuredFormat'
+        },
+        body: JSON.stringify({
+          input: trimmed,
+          includedRegionCodes: ['vn'],
+          locationRestriction: {
+            rectangle: {
+              low: { latitude: this.bounds.low.latitude, longitude: this.bounds.low.longitude },
+              high: { latitude: this.bounds.high.latitude, longitude: this.bounds.high.longitude }
+            }
+          },
+          languageCode: this.languageCode,
+          sessionToken: sessionToken
+        }),
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (timeoutId) clearTimeout(timeoutId);
+
+      // Stale response suppression
+      if (seq !== this._searchSeq) {
+        return [];
+      }
+
+      if (!response.ok) {
+        console.warn(`[GoogleLocationProvider] Autocomplete error: status ${response.status}`);
+        return [];
+      }
+
+      const data = await response.json();
+      if (seq !== this._searchSeq) return [];
+
+      const suggestions = data.suggestions || [];
+      const results = [];
+
+      for (const item of suggestions) {
+        const pred = item.placePrediction;
+        if (!pred || !pred.placeId) continue;
+        const mainText = pred.structuredFormat?.mainText?.text || pred.text?.text || trimmed;
+        const secondaryText = pred.structuredFormat?.secondaryText?.text || 'Đà Nẵng, Việt Nam';
+        results.push({
+          id: pred.placeId,
+          placeId: pred.placeId,
+          displayName: mainText,
+          address: secondaryText ? `${mainText}, ${secondaryText}` : mainText,
+          lat: null,
+          lng: null,
+          type: 'address',
+          provider: 'google'
+        });
+      }
+
+      return results;
+    } catch (err) {
+      if (timeoutId) clearTimeout(timeoutId);
+      console.warn('[GoogleLocationProvider] Search failed gracefully:', err.message);
+      return [];
+    }
+  }
+
+  async resolve(providerId, item = null) {
+    if (item && typeof item.lat === 'number' && typeof item.lng === 'number') {
+      return new ResolvedLocation(item);
+    }
+    const placeId = providerId || item?.placeId || item?.id;
+    if (!placeId) return null;
+    if (!this.isConfigured()) return null;
+
+    const sessionToken = this.sessionToken;
+    this.resetSessionToken();
+
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), this.timeoutMs) : null;
+
+    try {
+      const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}${sessionToken ? `?sessionToken=${encodeURIComponent(sessionToken)}` : ''}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': this.apiKey,
+          'X-Goog-FieldMask': 'id,displayName,formattedAddress,location'
+        },
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (timeoutId) clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn(`[GoogleLocationProvider] Place details error: status ${response.status}`);
+        return null;
+      }
+
+      const data = await response.json();
+      const lat = data.location?.latitude;
+      const lng = data.location?.longitude;
+      const displayName = data.displayName?.text || item?.displayName || 'Địa điểm';
+      const address = data.formattedAddress || item?.address || displayName;
+
+      if (typeof lat !== 'number' || typeof lng !== 'number') {
+        return null;
+      }
+
+      return new ResolvedLocation({
+        displayName,
+        address,
+        lat,
+        lng,
+        provider: 'google',
+        providerId: placeId,
+        type: 'address'
+      });
+    } catch (err) {
+      if (timeoutId) clearTimeout(timeoutId);
+      console.warn('[GoogleLocationProvider] Resolve failed gracefully:', err.message);
+      return null;
+    }
+  }
+
+  async reverseGeocode(lat, lng) {
+    return null;
+  }
 }
 
 class LocalLocationProvider extends LocationSearchProvider {
@@ -1463,6 +1657,60 @@ class LocalLocationProvider extends LocationSearchProvider {
         lng: 108.1631,
         type: 'poi',
         keywords: ['benh vien ung buou', 'ung buou']
+      },
+      {
+        id: 'addr_tran_phu_dn',
+        displayName: 'Trần Phú, Hải Châu',
+        address: '119 Trần Phú, Hải Châu 1, Hải Châu, Đà Nẵng',
+        lat: 16.0682,
+        lng: 108.2245,
+        type: 'address',
+        keywords: ['tran phu', 'hai chau', 'da nang']
+      },
+      {
+        id: 'addr_tran_phu_ha',
+        displayName: 'Trần Phú, Hội An',
+        address: 'Trần Phú, Phường Minh An, TP. Hội An, Quảng Nam',
+        lat: 15.8775,
+        lng: 108.3290,
+        type: 'address',
+        keywords: ['tran phu', 'hoi an', 'quang nam']
+      },
+      {
+        id: 'addr_hung_vuong_dn',
+        displayName: 'Hùng Vương, Hải Châu',
+        address: '290 Hùng Vương, Vĩnh Trung, Hải Châu, Đà Nẵng',
+        lat: 16.0688,
+        lng: 108.2148,
+        type: 'address',
+        keywords: ['hung vuong', 'vinh trung', 'da nang']
+      },
+      {
+        id: 'addr_hung_vuong_tk',
+        displayName: 'Hùng Vương, Tam Kỳ',
+        address: 'Hùng Vương, Phường An Sơn, TP. Tam Kỳ, Quảng Nam',
+        lat: 15.5684,
+        lng: 108.4816,
+        type: 'address',
+        keywords: ['hung vuong', 'tam ky', 'quang nam']
+      },
+      {
+        id: 'addr_pct_dn',
+        displayName: 'Phan Châu Trinh, Hải Châu',
+        address: 'Phan Châu Trinh, Phước Ninh, Hải Châu, Đà Nẵng',
+        lat: 16.0635,
+        lng: 108.2205,
+        type: 'address',
+        keywords: ['phan chau trinh', 'hai chau', 'da nang']
+      },
+      {
+        id: 'addr_pct_tk',
+        displayName: 'Phan Châu Trinh, Tam Kỳ',
+        address: '954 Phan Châu Trinh, An Sơn, Tam Kỳ, Quảng Nam',
+        lat: 15.555436,
+        lng: 108.5059009,
+        type: 'address',
+        keywords: ['phan chau trinh', 'tam ky', 'quang nam']
       }
     ];
   }
@@ -1550,14 +1798,24 @@ class LocalLocationProvider extends LocationSearchProvider {
 }
 
 class LocationManager {
-  constructor(busService = null) {
+  constructor(busService = null, options = {}) {
     this.localProvider = new LocalLocationProvider(busService);
-    this.activeProvider = this.localProvider;
+    this.googleProvider = new GoogleLocationProvider(options.google || {});
+    this.activeProvider = this.googleProvider.isConfigured() ? this.googleProvider : this.localProvider;
     this.cache = new Map();
   }
 
   setBusService(busService) {
     this.localProvider.busService = busService;
+  }
+
+  setGoogleApiKey(apiKey) {
+    this.googleProvider.apiKey = apiKey;
+    this.activeProvider = this.googleProvider.isConfigured() ? this.googleProvider : this.localProvider;
+  }
+
+  isWithinServiceArea(lat, lng) {
+    return isWithinServiceArea(lat, lng);
   }
 
   async search(query, options = {}) {
@@ -1566,23 +1824,57 @@ class LocationManager {
     const cacheKey = `search_${trimmed}`;
     if (this.cache.has(cacheKey)) return this.cache.get(cacheKey);
 
-    const results = await this.localProvider.search(trimmed, options);
+    let results = [];
+    if (this.googleProvider.isConfigured()) {
+      try {
+        const gRes = await this.googleProvider.search(trimmed, options);
+        if (Array.isArray(gRes) && gRes.length > 0) {
+          results = gRes;
+        }
+      } catch (err) {
+        console.warn('[LocationManager] Google search error, falling back to local:', err.message);
+      }
+    }
+
+    if (results.length === 0) {
+      results = await this.localProvider.search(trimmed, options);
+    }
+
     this.cache.set(cacheKey, results);
     return results;
   }
 
   async resolve(providerId, item = null) {
+    if (item?.provider === 'google' || (item?.placeId && this.googleProvider.isConfigured())) {
+      const res = await this.googleProvider.resolve(providerId, item);
+      if (res && res.isValid()) return res;
+    }
     return this.localProvider.resolve(providerId, item);
   }
 
-  resolveFromCoordinates(lat, lng, displayName = 'Vị trí đã chọn') {
+  resolveFromCoordinates(lat, lng, displayName = 'Vị trí đã chọn', type = 'gps') {
     return new ResolvedLocation({
       displayName,
       address: displayName,
       lat,
       lng,
-      provider: 'gps',
-      type: 'gps'
+      provider: type === 'pin' ? 'map_pin' : 'gps',
+      type: type === 'pin' ? 'pin' : 'gps'
+    });
+  }
+
+  resolveFromMapPin(lat, lng, label = null) {
+    if (typeof lat !== 'number' || typeof lng !== 'number' || !Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return null;
+    }
+    const displayName = label || `Ghim trên bản đồ (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+    return new ResolvedLocation({
+      displayName,
+      address: displayName, // STRICT: Never fabricate an address
+      lat,
+      lng,
+      provider: 'map_pin',
+      type: 'pin'
     });
   }
 
@@ -1675,26 +1967,49 @@ class WalkingRouter {
 }
 
 /**
- * TransitPlanner
- * Independent from Google and realtime.
- * Direct + maximum 1 transfer routing, detour ratio <= 1.8,
- * fail-closed on unverified geometry or ineligible directions.
+ * BestStopResolver
+ * Multi-candidate evaluation boundary for boarding and alighting stops.
+ * Controlled radius expansion: 800m -> 1500m.
+ * Multi-factor ranking: walking cost, transit cost, transfer penalty, service validity, and data confidence.
+ * Strict rejection of wrong-direction, inactive, or disconnected candidates.
  */
-class TransitPlanner {
-  constructor(busService, walkingRouter = null) {
+class BestStopResolver {
+  constructor(busService, walkingRouter = null, options = {}) {
     this.busService = busService;
     this.walkingRouter = walkingRouter || new WalkingRouter();
-    this.MAX_WALK_METERS = 1200;
-    this.MAX_TRANSFER_WALK_METERS = 400;
-    this.MAX_DETOUR_RATIO = 1.8; // STRICT: <= 1.8 per TL decision
+    this.INITIAL_RADIUS_METERS = options.initialRadiusMeters || 800;
+    this.MAX_RADIUS_METERS = options.maxRadiusMeters || 1500;
+    this.MAX_TRANSFER_WALK_METERS = options.maxTransferWalkMeters || 400;
+    this.MAX_DETOUR_RATIO = options.maxDetourRatio || 1.8;
   }
 
-  planTrip(originLocation, destLocation, options = {}) {
+  isWithinServiceArea(lat, lng) {
+    return isWithinServiceArea(lat, lng);
+  }
+
+  findCandidateStops(lat, lng, radiusMeters) {
+    if (!this.busService || typeof this.busService.findNearbyStops !== 'function') return [];
+    return this.busService.findNearbyStops(lat, lng, {
+      maxDistanceMeters: radiusMeters,
+      limit: 15
+    }).filter(s => s && s.status === 'verified');
+  }
+
+  resolveBestJourneys(originLocation, destLocation, options = {}) {
     if (!originLocation || !destLocation || !originLocation.isValid || !destLocation.isValid) {
       return { trips: [], error: 'INVALID_ENDPOINTS', message: 'Điểm đón hoặc điểm đến không hợp lệ' };
     }
     if (!originLocation.isValid() || !destLocation.isValid()) {
       return { trips: [], error: 'INVALID_COORDINATES', message: 'Tọa độ điểm đi/đến không hợp lệ' };
+    }
+
+    if (!this.isWithinServiceArea(originLocation.lat, originLocation.lng) ||
+        !this.isWithinServiceArea(destLocation.lat, destLocation.lng)) {
+      return {
+        trips: [],
+        error: 'OUT_OF_SERVICE_AREA',
+        message: 'Điểm đón hoặc điểm đến nằm ngoài phạm vi phục vụ của mạng lưới xe buýt Đà Nẵng - Quảng Nam.'
+      };
     }
 
     const straightDist = haversineDistance(originLocation.lat, originLocation.lng, destLocation.lat, destLocation.lng);
@@ -1705,49 +2020,147 @@ class TransitPlanner {
       return { trips: [], error: 'SAME_LOCATION', message: 'Điểm đón và điểm đến quá gần nhau' };
     }
 
-    // Step 1: Spatial candidate search
-    const originCandidates = this.busService.findNearbyStops(originLocation.lat, originLocation.lng, {
-      maxDistanceMeters: this.MAX_WALK_METERS,
-      limit: 10
-    });
-    const destCandidates = this.busService.findNearbyStops(destLocation.lat, destLocation.lng, {
-      maxDistanceMeters: this.MAX_WALK_METERS,
-      limit: 10
-    });
+    const queryTime = options.queryTime || options.now || new Date();
 
-    if (originCandidates.length === 0 || destCandidates.length === 0) {
+    // Stage 1: Try initial candidate radius (800m)
+    let currentRadius = this.INITIAL_RADIUS_METERS;
+    let isExpandedRadius = false;
+    let oCandidates = this.findCandidateStops(originLocation.lat, originLocation.lng, currentRadius);
+    let dCandidates = this.findCandidateStops(destLocation.lat, destLocation.lng, currentRadius);
+
+    let trips = [];
+    if (oCandidates.length > 0 && dCandidates.length > 0) {
+      trips = this._evaluateJourneys(originLocation, destLocation, oCandidates, dCandidates, queryTime, straightDist);
+    }
+
+    // Stage 2: Controlled radius expansion up to 1500m when initial candidates yield no valid journeys
+    if (trips.length === 0) {
+      currentRadius = this.MAX_RADIUS_METERS;
+      isExpandedRadius = true;
+      oCandidates = this.findCandidateStops(originLocation.lat, originLocation.lng, currentRadius);
+      dCandidates = this.findCandidateStops(destLocation.lat, destLocation.lng, currentRadius);
+
+      if (oCandidates.length === 0 || dCandidates.length === 0) {
+        return {
+          trips: [],
+          error: 'NO_NEARBY_STOPS',
+          message: 'Không tìm thấy trạm dừng xe buýt nào gần điểm đón hoặc điểm đến trong bán kính đi bộ tối đa (1.5km)',
+          searchRadiusMeters: currentRadius,
+          isExpandedRadius: true
+        };
+      }
+
+      trips = this._evaluateJourneys(originLocation, destLocation, oCandidates, dCandidates, queryTime, straightDist);
+    }
+
+    if (trips.length === 0) {
       return {
         trips: [],
-        error: 'NO_NEARBY_STOPS',
-        message: 'Không tìm thấy trạm dừng xe buýt nào gần điểm đón hoặc điểm đến trong bán kính đi bộ'
+        error: 'NO_VIABLE_ROUTE',
+        message: 'Không tìm thấy hành trình phù hợp kết nối 2 vị trí này theo dữ liệu tuyến hợp lệ',
+        searchRadiusMeters: currentRadius,
+        isExpandedRadius
       };
     }
 
-    const queryTime = options.queryTime || options.now || new Date();
-    const eligibleRoutes = this.busService.routes.filter(r => this.busService.isServiceUsable(r, queryTime));
+    // Attach search radius disclosure metadata to every trip
+    trips.forEach(t => {
+      t.isExpandedRadius = isExpandedRadius;
+      t.searchRadiusMeters = currentRadius;
+    });
+
+    // Multi-factor ranking & deterministic tie-breaking
+    trips.sort((a, b) => this._compareTrips(a, b));
+
+    // Deduplicate similar trips (same routes & boarding/alighting stops)
+    const dedupedTrips = [];
+    const seenTripSignatures = new Set();
+    for (const t of trips) {
+      let sig = '';
+      if (t.type === 'direct') {
+        sig = `direct_${t.route.id}_${t.direction}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}`;
+      } else {
+        sig = `transfer_${t.routeA.id}_${t.routeB.id}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}_${t.legs[3].alightingStop.name}`;
+      }
+      if (!seenTripSignatures.has(sig)) {
+        seenTripSignatures.add(sig);
+        dedupedTrips.push(t);
+        if (dedupedTrips.length >= 5) break;
+      }
+    }
+
+    // Assign ranking badges
+    let minWalkTrip = dedupedTrips[0];
+    let fastestTrip = dedupedTrips[0];
+    for (const t of dedupedTrips) {
+      if (t.totalWalkingMeters < minWalkTrip.totalWalkingMeters) minWalkTrip = t;
+      if (t.totalDurationMinutes < fastestTrip.totalDurationMinutes) fastestTrip = t;
+    }
+
+    dedupedTrips.forEach((t, i) => {
+      if (t.type === 'direct') {
+        t.rankingCategory = 'Tuyến trực tiếp';
+      } else if (t === minWalkTrip) {
+        t.rankingCategory = 'Ít đi bộ nhất';
+      } else if (t === fastestTrip) {
+        t.rankingCategory = 'Nhanh nhất';
+      } else {
+        t.rankingCategory = `Lựa chọn ${i + 1}`;
+      }
+    });
+
+    return {
+      trips: dedupedTrips,
+      totalOptions: dedupedTrips.length,
+      isExpandedRadius,
+      searchRadiusMeters: currentRadius
+    };
+  }
+
+  _compareTrips(a, b) {
+    // 1. Transfers ascending (direct before 1 transfer)
+    if (a.transfers !== b.transfers) {
+      return a.transfers - b.transfers;
+    }
+    // 2. Cost ascending
+    if (Math.abs(a.cost - b.cost) > 0.001) {
+      return a.cost - b.cost;
+    }
+    // 3. Total walking meters ascending
+    if (a.totalWalkingMeters !== b.totalWalkingMeters) {
+      return a.totalWalkingMeters - b.totalWalkingMeters;
+    }
+    // 4. Total duration minutes ascending
+    if (a.totalDurationMinutes !== b.totalDurationMinutes) {
+      return a.totalDurationMinutes - b.totalDurationMinutes;
+    }
+    // 5. Deterministic tie-breaker on stable identifiers
+    const idA = a.id || '';
+    const idB = b.id || '';
+    return idA.localeCompare(idB);
+  }
+
+  _evaluateJourneys(originLocation, destLocation, originCandidates, destCandidates, queryTime, straightDist) {
+    const eligibleRoutes = (this.busService.routes || []).filter(r => this.busService.isServiceUsable(r, queryTime));
     const trips = [];
 
-    // Step 2: Direct Trip Search
+    // Direct Trip Search
     for (const r of eligibleRoutes) {
       for (const dir of ['outbound', 'inbound']) {
-        if (!this.busService.isServiceUsable(r, queryTime, dir)) {
-          continue; // Fail-closed on temporally invalid directions
-        }
-        if (!this.busService.isDirectionPlanningReady(r, dir)) {
-          continue; // Fail-closed on ineligible directions
-        }
+        if (!this.busService.isServiceUsable(r, queryTime, dir)) continue;
+        if (!this.busService.isDirectionPlanningReady(r, dir)) continue;
 
         const stops = r.stops?.[dir] || [];
         if (stops.length < 2) continue;
 
-        // Match origin and dest candidates along this route direction
         for (const oCand of originCandidates) {
           const oi = stops.findIndex(s => s.name === oCand.name || (s.lat && oCand.lat && Math.abs(s.lat - oCand.lat) < 0.0001 && Math.abs(s.lng - oCand.lng) < 0.0001));
           if (oi < 0) continue;
 
           for (const dCand of destCandidates) {
             const di = stops.findIndex(s => s.name === dCand.name || (s.lat && dCand.lat && Math.abs(s.lat - dCand.lat) < 0.0001 && Math.abs(s.lng - dCand.lng) < 0.0001));
-            if (di < 0 || oi >= di) continue; // Monotonic order: oi < di
+            // Monotonic order: oi < di. Wrong direction candidates (oi >= di) are strictly rejected!
+            if (di < 0 || oi >= di) continue;
 
             const boardStop = stops[oi];
             const alightStop = stops[di];
@@ -1783,6 +2196,9 @@ class TransitPlanner {
             const totalDuration = walkOrigin.durationMinutes + transitMinutes + walkDest.durationMinutes;
             const totalWalkingMeters = walkOrigin.distanceMeters + walkDest.distanceMeters;
 
+            const confidencePenalty = (r.dataConfidence === 'low' || (typeof r.dataQualityScore === 'number' && r.dataQualityScore < 0.7)) ? 5 : 0;
+            const cost = (walkOrigin.durationMinutes + walkDest.durationMinutes) * 1.5 + transitMinutes + confidencePenalty;
+
             trips.push({
               id: `direct_${r.id}_${dir}_${oi}_${di}`,
               type: 'direct',
@@ -1794,7 +2210,7 @@ class TransitPlanner {
               totalWalkingMeters,
               transitDurationMinutes: transitMinutes,
               fareText: this.busService.formatRouteFare(r),
-              cost: (walkOrigin.durationMinutes + walkDest.durationMinutes) * 1.5 + transitMinutes,
+              cost,
               legs: [
                 walkOrigin,
                 {
@@ -1817,7 +2233,7 @@ class TransitPlanner {
       }
     }
 
-    // Step 3: Connecting Trips Search (Max 1 transfer)
+    // Connecting Trips Search (Max 1 transfer)
     for (const rA of eligibleRoutes) {
       for (const dirA of ['outbound', 'inbound']) {
         if (!this.busService.isServiceUsable(rA, queryTime, dirA)) continue;
@@ -1834,17 +2250,14 @@ class TransitPlanner {
             const stopsB = rB.stops?.[dirB] || [];
             if (stopsB.length < 2) continue;
 
-            // Match origin candidate on Route A
             for (const oCand of originCandidates) {
               const oiA = stopsA.findIndex(s => s.name === oCand.name || (s.lat && oCand.lat && Math.abs(s.lat - oCand.lat) < 0.0001 && Math.abs(s.lng - oCand.lng) < 0.0001));
               if (oiA < 0 || oiA >= stopsA.length - 1) continue;
 
-              // Match destination candidate on Route B
               for (const dCand of destCandidates) {
                 const diB = stopsB.findIndex(s => s.name === dCand.name || (s.lat && dCand.lat && Math.abs(s.lat - dCand.lat) < 0.0001 && Math.abs(s.lng - dCand.lng) < 0.0001));
                 if (diB <= 0) continue;
 
-                // Search transfer connecting points between stopsA[oiA+1..] and stopsB[..diB-1]
                 for (let tiA = oiA + 1; tiA < stopsA.length; tiA++) {
                   const tStopA = stopsA[tiA];
                   if (!tStopA.lat || !tStopA.lng) continue;
@@ -1915,10 +2328,12 @@ class TransitPlanner {
                       if (sIdx <= eIdx) slicedGeomB = geomB.slice(sIdx, eIdx + 1);
                     }
 
-                    // Combined fare text
                     const fareA = this.busService.formatRouteFare(rA);
                     const fareB = this.busService.formatRouteFare(rB);
                     const fareText = `${fareA} + ${fareB}`;
+
+                    const confidencePenaltyA = (rA.dataConfidence === 'low' || (typeof rA.dataQualityScore === 'number' && rA.dataQualityScore < 0.7)) ? 5 : 0;
+                    const confidencePenaltyB = (rB.dataConfidence === 'low' || (typeof rB.dataQualityScore === 'number' && rB.dataQualityScore < 0.7)) ? 5 : 0;
 
                     trips.push({
                       id: `transfer_${rA.id}_${rB.id}_${oiA}_${tiA}_${tiB}_${diB}`,
@@ -1931,7 +2346,7 @@ class TransitPlanner {
                       totalWalkingMeters: totalWalk,
                       transitDurationMinutes: durA + durB,
                       fareText,
-                      cost: (walkOrigin.durationMinutes + walkTransfer.durationMinutes + walkDest.durationMinutes) * 1.5 + durA + durB + 12,
+                      cost: (walkOrigin.durationMinutes + walkTransfer.durationMinutes + walkDest.durationMinutes) * 1.5 + durA + durB + 12 + confidencePenaltyA + confidencePenaltyB,
                       legs: [
                         walkOrigin,
                         {
@@ -1971,55 +2386,7 @@ class TransitPlanner {
       }
     }
 
-    if (trips.length === 0) {
-      return {
-        trips: [],
-        error: 'NO_VIABLE_ROUTE',
-        message: 'Không tìm thấy hành trình phù hợp kết nối 2 vị trí này theo dữ liệu tuyến hợp lệ'
-      };
-    }
-
-    // Step 4: Ranking & Deduplication
-    trips.sort((a, b) => a.cost - b.cost);
-
-    // Deduplicate similar trips (same routes & transfer stop)
-    const dedupedTrips = [];
-    const seenTripSignatures = new Set();
-    for (const t of trips) {
-      let sig = '';
-      if (t.type === 'direct') {
-        sig = `direct_${t.route.id}_${t.direction}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}`;
-      } else {
-        sig = `transfer_${t.routeA.id}_${t.routeB.id}_${t.legs[1].boardingStop.name}_${t.legs[1].alightingStop.name}_${t.legs[3].alightingStop.name}`;
-      }
-      if (!seenTripSignatures.has(sig)) {
-        seenTripSignatures.add(sig);
-        dedupedTrips.push(t);
-        if (dedupedTrips.length >= 5) break;
-      }
-    }
-
-    // Assign ranking badges
-    let minWalkTrip = dedupedTrips[0];
-    let fastestTrip = dedupedTrips[0];
-    for (const t of dedupedTrips) {
-      if (t.totalWalkingMeters < minWalkTrip.totalWalkingMeters) minWalkTrip = t;
-      if (t.totalDurationMinutes < fastestTrip.totalDurationMinutes) fastestTrip = t;
-    }
-
-    dedupedTrips.forEach((t, i) => {
-      if (t.type === 'direct') {
-        t.rankingCategory = 'Tuyến trực tiếp';
-      } else if (t === minWalkTrip) {
-        t.rankingCategory = 'Ít đi bộ nhất';
-      } else if (t === fastestTrip) {
-        t.rankingCategory = 'Nhanh nhất';
-      } else {
-        t.rankingCategory = `Lựa chọn ${i + 1}`;
-      }
-    });
-
-    return { trips: dedupedTrips, totalOptions: dedupedTrips.length };
+    return trips;
   }
 
   findNearestGeomIndex(points, stop) {
@@ -2038,17 +2405,51 @@ class TransitPlanner {
   }
 }
 
-// Global browser registration for Task 4
+/**
+ * TransitPlanner
+ * Uses BestStopResolver for multi-candidate evaluation and controlled radius expansion.
+ * Direct + maximum 1 transfer routing, detour ratio <= 1.8,
+ * fail-closed on unverified geometry or ineligible directions.
+ */
+class TransitPlanner {
+  constructor(busService, walkingRouter = null) {
+    this.busService = busService;
+    this.walkingRouter = walkingRouter || new WalkingRouter();
+    this.MAX_WALK_METERS = 1200;
+    this.MAX_TRANSFER_WALK_METERS = 400;
+    this.MAX_DETOUR_RATIO = 1.8; // STRICT: <= 1.8 per TL decision
+    this.bestStopResolver = new BestStopResolver(this.busService, this.walkingRouter, {
+      initialRadiusMeters: 800,
+      maxRadiusMeters: 1500,
+      maxTransferWalkMeters: this.MAX_TRANSFER_WALK_METERS,
+      maxDetourRatio: this.MAX_DETOUR_RATIO
+    });
+  }
+
+  planTrip(originLocation, destLocation, options = {}) {
+    return this.bestStopResolver.resolveBestJourneys(originLocation, destLocation, options);
+  }
+
+  findNearestGeomIndex(points, stop) {
+    return this.bestStopResolver.findNearestGeomIndex(points, stop);
+  }
+}
+
+// Global browser registration
 if (typeof window !== 'undefined') {
   window.ResolvedLocation = ResolvedLocation;
   window.LocationSearchProvider = LocationSearchProvider;
+  window.GoogleLocationProvider = GoogleLocationProvider;
   window.LocalLocationProvider = LocalLocationProvider;
   window.LocationManager = LocationManager;
   window.locationManager = new LocationManager(window.busService);
   window.WalkingRouter = WalkingRouter;
   window.walkingRouter = new WalkingRouter();
+  window.BestStopResolver = BestStopResolver;
   window.TransitPlanner = TransitPlanner;
   window.transitPlanner = new TransitPlanner(window.busService, window.walkingRouter);
+  window.isWithinServiceArea = isWithinServiceArea;
+  window.SERVICE_AREA_BOUNDS = SERVICE_AREA_BOUNDS;
 }
 
 if (typeof module !== 'undefined' && module.exports) {
@@ -2058,9 +2459,13 @@ if (typeof module !== 'undefined' && module.exports) {
     haversineDistance,
     ResolvedLocation,
     LocationSearchProvider,
+    GoogleLocationProvider,
     LocalLocationProvider,
     LocationManager,
     WalkingRouter,
-    TransitPlanner
+    BestStopResolver,
+    TransitPlanner,
+    isWithinServiceArea,
+    SERVICE_AREA_BOUNDS
   };
 }

@@ -17,6 +17,10 @@ class MapService {
     this.currentDirection = 'outbound';
     this.defaultCenter = [16.0544, 108.2022]; // Da Nang Center
     this.tripPolylines = [];
+    this.pinMarker = null;
+    this.isPinSelectionMode = false;
+    this.onPinSelectedCallback = null;
+    this._mapPinClickHandler = null;
   }
 
   init(containerId = 'map-container') {
@@ -327,8 +331,57 @@ class MapService {
       this.map.removeLayer(this.routeLine);
       this.routeLine = null;
     }
+    if (this.pinMarker && this.map) {
+      this.map.removeLayer(this.pinMarker);
+      this.pinMarker = null;
+    }
     this.clearTripLayers();
     this.removeInfoOverlay();
+  }
+
+  enableMapPinSelection(onPinSelected) {
+    if (!this.map) return;
+    this.isPinSelectionMode = true;
+    this.onPinSelectedCallback = onPinSelected;
+
+    this.showInfoOverlay('Nhấp vào vị trí bất kỳ trên bản đồ để ghim điểm.');
+
+    if (!this._mapPinClickHandler) {
+      this._mapPinClickHandler = (e) => {
+        if (!this.isPinSelectionMode) return;
+        const { lat, lng } = e.latlng;
+        this.renderMapPinMarker(lat, lng);
+        this.removeInfoOverlay();
+        this.isPinSelectionMode = false;
+        if (typeof this.onPinSelectedCallback === 'function') {
+          this.onPinSelectedCallback({ lat, lng });
+        }
+      };
+      this.map.on('click', this._mapPinClickHandler);
+    }
+  }
+
+  disableMapPinSelection() {
+    this.isPinSelectionMode = false;
+    this.removeInfoOverlay();
+  }
+
+  renderMapPinMarker(lat, lng) {
+    if (!this.map) return;
+    if (this.pinMarker) {
+      this.map.removeLayer(this.pinMarker);
+      this.pinMarker = null;
+    }
+    const pinHtml = `
+      <div class="relative flex items-center justify-center">
+        <span class="absolute w-8 h-8 rounded-full bg-emerald-500 opacity-40 animate-ping"></span>
+        <div class="w-7 h-7 rounded-full bg-emerald-700 ring-4 ring-white shadow-lg flex items-center justify-center text-white font-bold text-[12px]">
+          📍
+        </div>
+      </div>
+    `;
+    const icon = L.divIcon({ html: pinHtml, className: 'map-pin-icon', iconSize: [28, 28], iconAnchor: [14, 28] });
+    this.pinMarker = L.marker([lat, lng], { icon, zIndexOffset: 2500 }).addTo(this.map);
   }
 
   clearTripLayers() {

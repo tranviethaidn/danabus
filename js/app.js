@@ -602,7 +602,7 @@ class DanabusApp {
       // Check if Address-to-Address Trip Planner finds connecting trips or address-to-address trips
       const planned = this.tryRunPlanner(originText, destinationText);
       if (planned && planned.trips && planned.trips.length > 0) {
-        this.renderPlannerResults(planned.trips);
+        this.renderPlannerResults(planned.trips, planned);
         this.navigateTo('trip-results');
         return;
       }
@@ -617,10 +617,26 @@ class DanabusApp {
       if (statsStrip) statsStrip.classList.add('hidden');
       if (busTag) {
         busTag.className = 'px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[11px] font-bold flex items-center gap-1';
-        busTag.textContent = 'Chưa có tuyến thẳng';
+        busTag.textContent = 'Không có kết quả';
       }
       if (headerIndicator) {
         headerIndicator.className = 'w-2.5 h-2.5 rounded-full bg-slate-400 shrink-0';
+      }
+
+      const emptyTitle = document.getElementById('trip-empty-title');
+      const emptyDesc = document.getElementById('trip-empty-desc');
+      if (planned?.error === 'OUT_OF_SERVICE_AREA') {
+        if (emptyTitle) emptyTitle.textContent = 'Ngoài vùng phục vụ Danabus';
+        if (emptyDesc) emptyDesc.textContent = 'Điểm đón hoặc điểm đến nằm ngoài mạng lưới xe buýt Đà Nẵng - Quảng Nam (chỉ áp dụng khu vực Đà Nẵng, Hội An, Tam Kỳ).';
+      } else if (planned?.error === 'NO_NEARBY_STOPS') {
+        if (emptyTitle) emptyTitle.textContent = 'Không có trạm dừng lân cận';
+        if (emptyDesc) emptyDesc.textContent = 'Không tìm thấy trạm dừng xe buýt nào gần điểm đi hoặc điểm đến trong bán kính đi bộ tối đa (1.5km).';
+      } else if (planned?.error === 'NO_VIABLE_ROUTE') {
+        if (emptyTitle) emptyTitle.textContent = 'Không tìm thấy lộ trình phù hợp';
+        if (emptyDesc) emptyDesc.textContent = 'Hiện chưa có tuyến xe buýt trực tiếp hoặc chuyển tiếp 1 lần kết nối 2 điểm này theo dữ liệu vận hành hợp lệ.';
+      } else {
+        if (emptyTitle) emptyTitle.textContent = 'Không tìm thấy tuyến buýt phù hợp';
+        if (emptyDesc) emptyDesc.textContent = 'Hiện tại chưa có tuyến buýt phù hợp kết nối 2 điểm này. Vui lòng kiểm tra lại điểm đón/đến hoặc tra cứu toàn bộ danh mục tuyến xe.';
       }
 
       const optionsContainer = document.getElementById('trip-planner-options');
@@ -826,7 +842,7 @@ class DanabusApp {
     return window.transitPlanner.planTrip(oLoc, dLoc);
   }
 
-  renderPlannerResults(trips) {
+  renderPlannerResults(trips, planMetadata = null) {
     const contentSuccess = document.getElementById('trip-content-success');
     const contentEmpty = document.getElementById('trip-content-empty');
     const statsStrip = document.getElementById('trip-stats-strip');
@@ -860,7 +876,8 @@ class DanabusApp {
     const timeElStrip = document.getElementById('trip-stat-time');
     const timeDotStrip = document.getElementById('trip-stat-time-dot');
     if (timeElStrip) {
-      timeElStrip.textContent = `Đi bộ ~${bestTrip.totalWalkingMeters}m`;
+      const isExpanded = bestTrip.isExpandedRadius || planMetadata?.isExpandedRadius;
+      timeElStrip.textContent = `Đi bộ ~${bestTrip.totalWalkingMeters}m${isExpanded ? ' (Bán kính 1.5km)' : ''}`;
       timeElStrip.classList.remove('hidden');
     }
     if (timeDotStrip) timeDotStrip.classList.remove('hidden');
@@ -879,10 +896,10 @@ class DanabusApp {
     const fleetEl = document.getElementById('trip-fleet-value');
     if (fleetEl) fleetEl.textContent = 'Xe buýt Danabus';
 
-    this.renderTripOptions(trips);
+    this.renderTripOptions(trips, planMetadata);
   }
 
-  renderTripOptions(trips) {
+  renderTripOptions(trips, planMetadata = null) {
     const container = document.getElementById('trip-planner-options');
     if (!container) return;
     this.currentPlannedTrips = trips;
@@ -891,7 +908,15 @@ class DanabusApp {
       return;
     }
 
+    const hasExpanded = trips.some(t => t.isExpandedRadius) || planMetadata?.isExpandedRadius;
+
     container.innerHTML = `
+      ${hasExpanded ? `
+        <div class="bg-amber-50 border border-amber-200 text-amber-900 px-3 py-2 rounded-xl text-[12px] flex items-center gap-2 mt-2">
+          <span class="text-amber-600 font-bold shrink-0">ℹ️</span>
+          <span>Đã mở rộng bán kính tìm trạm đi bộ lên <b>1.500m</b> do không tìm thấy tuyến trong bán kính 800m.</span>
+        </div>
+      ` : ''}
       <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200/60">
         <h4 class="font-bold text-[13px] text-slate-800">Phương án di chuyển (${trips.length})</h4>
         <span class="text-[11px] text-slate-500">Đã xếp hạng</span>
@@ -1049,8 +1074,8 @@ class DanabusApp {
       container.innerHTML = results.map((item, idx) => `
         <button type="button" class="picker-item text-left w-full bg-white rounded-xl p-3 shadow-xs border border-slate-100 active:bg-slate-50 flex items-center justify-between cursor-pointer" data-name="${item.displayName}" data-idx="${idx}" aria-label="${item.displayName}">
           <div class="flex items-center gap-3 min-w-0">
-            <div class="w-9 h-9 rounded-xl ${item.type === 'poi' ? 'bg-amber-50 text-amber-600' : (item.type === 'address' ? 'bg-blue-50 text-blue-600' : 'bg-slate-100 text-slate-600')} flex items-center justify-center shrink-0">
-              ${window.renderIcon(item.type === 'poi' ? 'place' : (item.type === 'address' ? 'home' : 'directions_bus'), 'w-4 h-4')}
+            <div class="w-9 h-9 rounded-xl ${item.type === 'poi' ? 'bg-amber-50 text-amber-600' : (item.type === 'address' ? 'bg-blue-50 text-blue-600' : (item.type === 'pin' ? 'bg-purple-50 text-purple-600' : 'bg-slate-100 text-slate-600'))} flex items-center justify-center shrink-0">
+              ${window.renderIcon(item.type === 'poi' ? 'place' : (item.type === 'address' ? 'home' : (item.type === 'pin' ? 'place' : 'directions_bus')), 'w-4 h-4')}
             </div>
             <div class="min-w-0">
               <h4 class="font-bold text-[13px] text-slate-900 truncate">${item.displayName}</h4>
@@ -1068,10 +1093,18 @@ class DanabusApp {
       `).join('');
 
       container.querySelectorAll('.picker-item').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const idx = parseInt(btn.getAttribute('data-idx'), 10);
           const resItem = results[idx];
-          const resolved = resItem ? new window.ResolvedLocation(resItem) : null;
+          let resolved = null;
+          if (resItem) {
+            if (window.locationManager) {
+              resolved = await window.locationManager.resolve(resItem.id || resItem.placeId, resItem);
+            }
+            if (!resolved) {
+              resolved = new window.ResolvedLocation(resItem);
+            }
+          }
           this.selectLocation(resItem ? resItem.displayName : btn.getAttribute('data-name'), resolved);
         });
       });
@@ -1255,9 +1288,28 @@ class DanabusApp {
       }
     });
 
+    // Map Pin Picker CTA
+    document.getElementById('btn-picker-map-pin')?.addEventListener('click', () => {
+      this.closeLocationPicker();
+      this.navigateTo('map');
+      if (window.mapService) {
+        window.mapService.enableMapPinSelection(({ lat, lng }) => {
+          const pinLoc = window.locationManager
+            ? window.locationManager.resolveFromMapPin(lat, lng)
+            : new window.ResolvedLocation({ displayName: `Ghim (${lat.toFixed(4)}, ${lng.toFixed(4)})`, address: `Ghim (${lat.toFixed(4)}, ${lng.toFixed(4)})`, lat, lng, type: 'pin', provider: 'map_pin' });
+          this.selectLocation(pinLoc.displayName, pinLoc);
+          this.navigateTo('home');
+        });
+      }
+    });
+
     const pickerSearchInput = document.getElementById('picker-search-input');
+    let searchDebounceTimer = null;
     pickerSearchInput?.addEventListener('input', e => {
-      this.renderPickerResults(e.target.value);
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        this.renderPickerResults(e.target.value);
+      }, 300);
     });
 
     document.getElementById('picker-tab-popular')?.addEventListener('click', () => {

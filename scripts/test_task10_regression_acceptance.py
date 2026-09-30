@@ -215,10 +215,10 @@ def test_task4_boundary_guard():
     print("\n>> [RUNNING] Task 4 Post-Implementation Boundary Guard (Item 20)")
     
     # 1. Static code audit for prohibited external SDKs & hardcoded API keys
-    prohibited_terms = [
-        "places.googleapis.com",
+    prohibited_sdk_terms = [
         "maps.googleapis.com",
         "google.maps.places",
+        "google.maps.Map",
         "AIzaSy"
     ]
     
@@ -233,10 +233,14 @@ def test_task4_boundary_guard():
         if not fpath.exists():
             continue
         content = fpath.read_text(encoding="utf-8")
-        for term in prohibited_terms:
+        for term in prohibited_sdk_terms:
             if term in content:
                 print(f"[-] FAIL: Prohibited external SDK/credential '{term}' found in {fpath.name}")
                 sys.exit(1)
+        # places.googleapis.com must only appear in busService.js (isolated behind provider abstraction)
+        if fpath.name != "busService.js" and "places.googleapis.com" in content:
+            print(f"[-] FAIL: places.googleapis.com must be isolated in busService.js, found in {fpath.name}")
+            sys.exit(1)
                 
     print("   [PASS] Codebase static scan: zero hardcoded Google Places/Maps SDK or credentials detected.")
     

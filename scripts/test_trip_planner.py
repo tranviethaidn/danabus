@@ -140,68 +140,86 @@ class TestTripPlanner(unittest.TestCase):
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Google provider unconfigured/isolation test failed")
 
-    # 4. GoogleLocationProvider Network Errors, 429, Timeout & Safe Fallback (Finding 5)
+    # 4. GoogleLocationProvider Network Errors, Timeout & Safe Fallback
     def test_google_provider_error_handling(self):
         node_script = """
         const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
 
         (async () => {
-            // Test 1: Mock 429 rate limit on search and resolve
-            global.fetch = async () => ({
-                ok: false,
-                status: 429,
-                json: async () => ({ error: 'RATE_LIMIT_EXCEEDED' })
-            });
-
-            const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
-            const res429 = await gp.search('Nguyễn Văn Linh');
-            if (!Array.isArray(res429) || res429.length !== 0) process.exit(1);
-
-            const resolve429 = await gp.resolve('place_429');
-            if (resolve429 !== null) process.exit(2);
-
-            // Test 2: Mock network error / rejection on search and resolve
-            global.fetch = async () => { throw new Error('Network failure'); };
-            const resNet = await gp.search('Nguyễn Văn Linh');
-            if (!Array.isArray(resNet) || resNet.length !== 0) process.exit(3);
-
-            const resolveNet = await gp.resolve('place_net_err');
-            if (resolveNet !== null) process.exit(4);
-
-            // Test 3: True AbortController timeout on search (mocked fetch hangs until signal.abort fires)
-            global.fetch = (url, options) => {
-                return new Promise((resolve, reject) => {
-                    if (options && options.signal) {
-                        options.signal.addEventListener('abort', () => {
-                            const err = new Error('The user aborted a request.');
-                            err.name = 'AbortError';
-                            reject(err);
-                        });
-                    }
-                });
+            // Guard: direct REST web-service must never be called
+            global.fetch = async (url) => {
+                throw new Error('Prohibited direct REST endpoint call: ' + url);
             };
 
-            const gpTimeout = new GoogleLocationProvider({ apiKey: 'mock_test_key', timeoutMs: 25 });
-            const resTimeout = await gpTimeout.search('Timeout query');
+            global.window = {
+                google: {
+                    maps: {
+                        places: {
+                            AutocompleteSessionToken: function() { this.id = 'tok_err'; },
+                            AutocompleteSuggestion: {
+                                fetchAutocompleteSuggestions: async () => {
+                                    throw new Error('Places SDK Rate Limit or Network Error');
+                                }
+                            },
+                            Place: function() {
+                                return {
+                                    fetchFields: async () => {
+                                        throw new Error('Place Details SDK Error');
+                                    }
+                                };
+                            }
+                        }
+                    }
+                }
+            };
+
+            const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key', timeoutMs: 30 });
+            
+            // Test 1: Client SDK search rejection/error returns []
+            const resErr = await gp.search('Nguyễn Văn Linh');
+            if (!Array.isArray(resErr) || resErr.length !== 0) {
+                console.error('Expected empty search array on SDK rejection, got:', resErr);
+                process.exit(1);
+            }
+
+            // Test 2: Client SDK resolve rejection/error returns null
+            const resolveErr = await gp.resolve('place_err');
+            if (resolveErr !== null) {
+                console.error('Expected null on resolve rejection, got:', resolveErr);
+                process.exit(2);
+            }
+
+            // Test 3: True client SDK search timeout via Promise.race
+            global.window.google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions = () => {
+                return new Promise(r => setTimeout(r, 100)); // 100ms > timeoutMs 30ms
+            };
+            const resTimeout = await gp.search('Timeout query');
             if (!Array.isArray(resTimeout) || resTimeout.length !== 0) {
-                console.error('Expected empty search array on AbortController timeout, got:', resTimeout);
-                process.exit(5);
+                console.error('Expected empty search array on SDK timeout, got:', resTimeout);
+                process.exit(3);
             }
 
-            // Test 4: True AbortController timeout on Place Details resolve
-            const resolveTimeout = await gpTimeout.resolve('place_timeout');
+            // Test 4: True client SDK resolve timeout via Promise.race
+            global.window.google.maps.places.Place = function() {
+                return {
+                    fetchFields: () => new Promise(r => setTimeout(r, 100))
+                };
+            };
+            const resolveTimeout = await gp.resolve('place_timeout');
             if (resolveTimeout !== null) {
-                console.error('Expected null on Place Details AbortController timeout, got:', resolveTimeout);
-                process.exit(6);
+                console.error('Expected null on Place Details SDK timeout, got:', resolveTimeout);
+                process.exit(4);
             }
 
-            // Test 5: LocationManager fallback to local when Google search fails or times out
-            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key', timeoutMs: 25 } });
+            // Test 5: LocationManager fallback to local when Google SDK fails or times out
+            const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key', timeoutMs: 30 } });
             const lmRes = await lm.search('Cầu Rồng');
             if (!lmRes || lmRes.length === 0 || lmRes[0].provider !== 'local') {
                 console.error('Expected LocationManager fallback to local on Google timeout');
-                process.exit(7);
+                process.exit(5);
             }
+
+            delete global.window;
         })();
         """
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
@@ -213,26 +231,37 @@ class TestTripPlanner(unittest.TestCase):
         const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
 
         (async () => {
-            // Part 1: Stale suppression inside GoogleLocationProvider
-            global.fetch = async (url, options) => {
-                const body = JSON.parse(options.body);
-                const currentQuery = body.input;
-                const delay = currentQuery === 'query1' ? 80 : 10;
-                await new Promise(r => setTimeout(r, delay));
-                return {
-                    ok: true,
-                    json: async () => ({
-                        suggestions: [{
-                            placePrediction: {
-                                placeId: `id_${currentQuery}`,
-                                text: { text: `Result for ${currentQuery}` },
-                                structuredFormat: { mainText: { text: `Result for ${currentQuery}` } }
-                            }
-                        }]
-                    })
-                };
+            // Guard: direct REST web-service must never be called
+            global.fetch = async (url) => {
+                throw new Error('Prohibited direct REST endpoint call: ' + url);
             };
 
+            global.window = {
+                google: {
+                    maps: {
+                        places: {
+                            AutocompleteSessionToken: function() { this.id = 'tok_stale'; },
+                            AutocompleteSuggestion: {
+                                fetchAutocompleteSuggestions: async ({ input }) => {
+                                    const delay = (input === 'query1' || input === 'Cầu Rồng Đà Nẵng') ? 80 : 10;
+                                    await new Promise(r => setTimeout(r, delay));
+                                    return {
+                                        suggestions: [{
+                                            placePrediction: {
+                                                placeId: `id_${input}`,
+                                                text: { text: `Result for ${input}` },
+                                                structuredFormat: { mainText: { text: `Result for ${input}` } }
+                                            }
+                                        }]
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Part 1: Stale suppression inside GoogleLocationProvider
             const gp = new GoogleLocationProvider({ apiKey: 'mock_test_key' });
             const p1 = gp.search('query1');
             const p2 = gp.search('query2');
@@ -250,28 +279,6 @@ class TestTripPlanner(unittest.TestCase):
             // Part 2: Staleness enforced at LocationManager level (Finding 2)
             // Query A (old) starts first with delay, Query B (new) starts right after with shorter delay.
             // Query A finishing later must NOT fall back to local or overwrite Query B!
-            global.fetch = async (url, options) => {
-                const body = JSON.parse(options.body);
-                const q = body.input;
-                if (q === 'Cầu Rồng Đà Nẵng') {
-                    await new Promise(r => setTimeout(r, 70));
-                } else {
-                    await new Promise(r => setTimeout(r, 10));
-                }
-                return {
-                    ok: true,
-                    json: async () => ({
-                        suggestions: [{
-                            placePrediction: {
-                                placeId: `id_${q}`,
-                                text: { text: `Result for ${q}` },
-                                structuredFormat: { mainText: { text: `Result for ${q}` } }
-                            }
-                        }]
-                    })
-                };
-            };
-
             const lm = new LocationManager(null, { google: { apiKey: 'mock_test_key' } });
             const searchA = lm.search('Cầu Rồng Đà Nẵng');
             const searchB = lm.search('Rồng');
@@ -285,10 +292,195 @@ class TestTripPlanner(unittest.TestCase):
                 console.error('Expected newer searchB to succeed, got:', resB);
                 process.exit(4);
             }
+
+            delete global.window;
         })();
         """
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Stale response suppression test failed")
+
+    # 5b. Google Places Client SDK Lifecycle, Session Token & toPlace Details Contract (Turn 009)
+    def test_google_places_client_sdk_contract(self):
+        node_script = """
+        const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
+
+        class MockSessionToken {
+            constructor() {
+                this._isToken = true;
+                this.id = 'token_' + Math.random().toString(36).substring(2, 9);
+            }
+        }
+
+        (async () => {
+            // Guard: Direct REST web-service endpoint must NEVER be called
+            global.fetch = async (url) => {
+                if (typeof url === 'string' && url.includes('places.googleapis.com')) {
+                    throw new Error('Prohibited direct REST endpoint call: ' + url);
+                }
+                return { ok: false, status: 500 };
+            };
+
+            // 1. Browser-like loader invocation
+            let scriptCreated = null;
+            let scriptAppended = false;
+            global.window = {};
+            global.document = {
+                querySelector: () => null,
+                head: {
+                    appendChild: (el) => {
+                        scriptAppended = true;
+                    }
+                },
+                createElement: (tag) => {
+                    if (tag === 'script') {
+                        const s = {
+                            src: '',
+                            async: false,
+                            onload: null,
+                            onerror: null
+                        };
+                        scriptCreated = s;
+                        return s;
+                    }
+                    return {};
+                }
+            };
+
+            const gp = new GoogleLocationProvider({ apiKey: 'mock_browser_key' });
+            const searchPromise = gp.search('Cầu Rồng');
+
+            // Verify script was created with correct params and appended to head
+            if (!scriptCreated || !scriptAppended) {
+                console.error('Expected script element creation and head attachment');
+                process.exit(1);
+            }
+            if (!scriptCreated.src.includes('key=mock_browser_key') || !scriptCreated.src.includes('libraries=places')) {
+                console.error('Expected script src with key and places library, got:', scriptCreated.src);
+                process.exit(2);
+            }
+
+            // Simulate script load completing with Places SDK
+            let tokenInstances = [];
+            let fetchSuggestionsCalls = [];
+            let fetchFieldsCalls = [];
+
+            const mockPlace = {
+                displayName: { text: 'Bảo tàng Điêu khắc Chăm' },
+                formattedAddress: 'Số 2 đường 2 Tháng 9, Hải Châu, Đà Nẵng',
+                location: { lat: () => 16.0601, lng: () => 108.2235 },
+                fetchFields: async (opts) => {
+                    fetchFieldsCalls.push(opts);
+                    return mockPlace;
+                }
+            };
+
+            const mockPrediction = {
+                placeId: 'cham_museum_id',
+                structuredFormat: {
+                    mainText: { text: 'Bảo tàng Điêu khắc Chăm' },
+                    secondaryText: { text: 'Hải Châu, Đà Nẵng' }
+                },
+                toPlace: () => mockPlace
+            };
+
+            global.window.google = {
+                maps: {
+                    places: {
+                        AutocompleteSessionToken: function() {
+                            const t = new MockSessionToken();
+                            tokenInstances.push(t);
+                            return t;
+                        },
+                        AutocompleteSuggestion: {
+                            fetchAutocompleteSuggestions: async (req) => {
+                                fetchSuggestionsCalls.push(req);
+                                return { suggestions: [{ placePrediction: mockPrediction }] };
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Trigger script onload
+            scriptCreated.onload();
+
+            const results = await searchPromise;
+            if (!results || results.length !== 1) {
+                console.error('Expected 1 search result from loaded SDK, got:', results);
+                process.exit(3);
+            }
+
+            // 2. Verify AutocompleteSessionToken instance passed, not string
+            if (fetchSuggestionsCalls.length !== 1) {
+                console.error('Expected 1 suggestion call, got:', fetchSuggestionsCalls.length);
+                process.exit(4);
+            }
+            const sessionTokenUsed = fetchSuggestionsCalls[0].sessionToken;
+            if (!(sessionTokenUsed instanceof MockSessionToken) || typeof sessionTokenUsed === 'string') {
+                console.error('Session token must be an instance of AutocompleteSessionToken, not string:', sessionTokenUsed);
+                process.exit(5);
+            }
+
+            // 3. Verify resolve invokes placePrediction.toPlace().fetchFields()
+            const resolved = await gp.resolve(results[0].id, results[0]);
+            if (!resolved || resolved.displayName !== 'Bảo tàng Điêu khắc Chăm' || resolved.lat !== 16.0601) {
+                console.error('Resolve failed to produce expected ResolvedLocation:', resolved);
+                process.exit(6);
+            }
+            if (fetchFieldsCalls.length !== 1) {
+                console.error('Expected place.fetchFields to be called once, got:', fetchFieldsCalls.length);
+                process.exit(7);
+            }
+            const fieldsRequested = fetchFieldsCalls[0].fields;
+            if (!fieldsRequested || !fieldsRequested.includes('displayName') || !fieldsRequested.includes('location')) {
+                console.error('Invalid fields requested on Place instance:', fieldsRequested);
+                process.exit(8);
+            }
+
+            // 4. Verify session token reset and new token created for subsequent session
+            if (gp.sessionToken !== null) {
+                console.error('Session token must be reset to null after selection');
+                process.exit(9);
+            }
+
+            await gp.search('Nguyễn Văn Linh');
+            if (tokenInstances.length < 2) {
+                console.error('Expected second session to instantiate a new token, count:', tokenInstances.length);
+                process.exit(10);
+            }
+            if (tokenInstances[0] === tokenInstances[1]) {
+                console.error('Session token must not be reused across sessions');
+                process.exit(11);
+            }
+
+            // 5. SDK load failure -> local fallback, no crash, no REST call
+            delete global.window.google;
+            const gpFail = new GoogleLocationProvider({ apiKey: 'fail_key' });
+            global.document.createElement = (tag) => {
+                const s = { onload: null, onerror: null };
+                setTimeout(() => { if (s.onerror) s.onerror(new Error('Load failed')); }, 5);
+                return s;
+            };
+            const failResults = await gpFail.search('Cầu Rồng');
+            if (!Array.isArray(failResults) || failResults.length !== 0) {
+                console.error('Expected empty search array on SDK load failure, got:', failResults);
+                process.exit(12);
+            }
+
+            const lm = new LocationManager(null, { google: { apiKey: 'fail_key' } });
+            const lmResults = await lm.search('Cầu Rồng');
+            if (!lmResults || lmResults.length === 0 || lmResults[0].provider !== 'local') {
+                console.error('Expected LocationManager local fallback on SDK load failure');
+                process.exit(13);
+            }
+
+            delete global.window;
+            delete global.document;
+        })();
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Google Places client SDK contract test failed")
+
 
     # 6. Service Area Geofence Check & OUT_OF_SERVICE_AREA
     def test_out_of_service_area_geofence(self):

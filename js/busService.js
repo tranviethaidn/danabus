@@ -2229,6 +2229,18 @@ class TransitGraphRouter {
     this._spatialTransferByFromKey = null;
   }
 
+  _isStopVerified(stop) {
+    return Boolean(
+      stop &&
+      typeof stop === 'object' &&
+      stop.status === 'verified' &&
+      typeof stop.lat === 'number' &&
+      typeof stop.lng === 'number' &&
+      Number.isFinite(stop.lat) &&
+      Number.isFinite(stop.lng)
+    );
+  }
+
   _ensureTransferIndex() {
     const currentRoutes = this.busService?.routes || [];
     if (this._cachedRoutes === currentRoutes && this._spatialTransferByFromKey) {
@@ -2252,14 +2264,14 @@ class TransitGraphRouter {
             const fromKey = `${rA.id}_${dirA}`;
             for (let iA = 0; iA < stopsA.length; iA++) {
               const sA = stopsA[iA];
-              if (!sA || typeof sA.lat !== 'number' || typeof sA.lng !== 'number' || isNaN(sA.lat) || isNaN(sA.lng)) {
-                continue; // Stop without coordinates cannot be a transfer stop
+              if (!this._isStopVerified(sA)) {
+                continue; // Stop without verified status or valid coordinates cannot be a transfer stop
               }
 
               for (let iB = 0; iB < stopsB.length; iB++) {
                 const sB = stopsB[iB];
-                if (!sB || typeof sB.lat !== 'number' || typeof sB.lng !== 'number' || isNaN(sB.lat) || isNaN(sB.lng)) {
-                  continue; // Stop without coordinates cannot be a transfer stop
+                if (!this._isStopVerified(sB)) {
+                  continue; // Stop without verified status or valid coordinates cannot be a transfer stop
                 }
 
                 const walkDist = haversineDistance(sA.lat, sA.lng, sB.lat, sB.lng);
@@ -2294,6 +2306,7 @@ class TransitGraphRouter {
 
   _matchCandidate(stop, candidate) {
     if (!stop || !candidate) return false;
+    if (stop.status !== 'verified') return false; // Strictly require verified stop
     if (stop.name && candidate.name && stop.name === candidate.name) return true;
     if (typeof stop.lat === 'number' && typeof candidate.lat === 'number' &&
         typeof stop.lng === 'number' && typeof candidate.lng === 'number') {
@@ -2364,13 +2377,13 @@ class TransitGraphRouter {
         const oi = stops.findIndex(s => this._matchCandidate(s, oCand));
         if (oi < 0) continue;
         const boardStop = stops[oi];
-        if (typeof boardStop.lat !== 'number' || typeof boardStop.lng !== 'number') continue;
+        if (!this._isStopVerified(boardStop)) continue;
 
         for (const dCand of destCandidates) {
           const di = stops.findIndex(s => this._matchCandidate(s, dCand));
           if (di < 0 || oi >= di) continue; // Monotonic order strictly enforced
           const alightStop = stops[di];
-          if (typeof alightStop.lat !== 'number' || typeof alightStop.lng !== 'number') continue;
+          if (!this._isStopVerified(alightStop)) continue;
 
           const stopsCount = di - oi;
           const transitMinutes = Math.max(stopsCount * 2, 5);
@@ -2427,7 +2440,7 @@ class TransitGraphRouter {
           const oiA = stopsA.findIndex(s => this._matchCandidate(s, oCand));
           if (oiA < 0 || oiA >= stopsA.length - 1) continue;
           const boardA = stopsA[oiA];
-          if (typeof boardA.lat !== 'number' || typeof boardA.lng !== 'number') continue;
+          if (!this._isStopVerified(boardA)) continue;
 
           const oWalkDist = typeof oCand.distanceMeters === 'number' ? oCand.distanceMeters :
             Math.round(haversineDistance(originLocation.lat, originLocation.lng, boardA.lat, boardA.lng) || 0);
@@ -2446,6 +2459,8 @@ class TransitGraphRouter {
             const tiB = edge.toStopIndex;
             const tStopA = edge.fromStop;
             const tStopB = edge.toStop;
+            if (!this._isStopVerified(tStopA) || !this._isStopVerified(tStopB)) continue;
+
             const tWalkDist = edge.walkDist;
             const tWalkMin = calcWalkMin(tWalkDist);
 
@@ -2455,7 +2470,7 @@ class TransitGraphRouter {
               const diB = stopsB.findIndex(s => this._matchCandidate(s, dCand));
               if (diB <= tiB) continue; // Monotonic on Route B
               const alightB = stopsB[diB];
-              if (typeof alightB.lat !== 'number' || typeof alightB.lng !== 'number') continue;
+              if (!this._isStopVerified(alightB)) continue;
 
               const dWalkDist = typeof dCand.distanceMeters === 'number' ? dCand.distanceMeters :
                 Math.round(haversineDistance(alightB.lat, alightB.lng, destLocation.lat, destLocation.lng) || 0);
@@ -2536,7 +2551,7 @@ class TransitGraphRouter {
           const oiA = stopsA.findIndex(s => this._matchCandidate(s, oCand));
           if (oiA < 0 || oiA >= stopsA.length - 1) continue;
           const boardA = stopsA[oiA];
-          if (typeof boardA.lat !== 'number' || typeof boardA.lng !== 'number') continue;
+          if (!this._isStopVerified(boardA)) continue;
 
           const oWalkDist = typeof oCand.distanceMeters === 'number' ? oCand.distanceMeters :
             Math.round(haversineDistance(originLocation.lat, originLocation.lng, boardA.lat, boardA.lng) || 0);
@@ -2555,6 +2570,8 @@ class TransitGraphRouter {
             const tiB1 = edge1.toStopIndex;
             const tStopA = edge1.fromStop;
             const tStopB1 = edge1.toStop;
+            if (!this._isStopVerified(tStopA) || !this._isStopVerified(tStopB1)) continue;
+
             const tWalkDist1 = edge1.walkDist;
             const tWalkMin1 = calcWalkMin(tWalkDist1);
 
@@ -2578,6 +2595,8 @@ class TransitGraphRouter {
               const tiC = edge2.toStopIndex;
               const tStopB2 = edge2.fromStop;
               const tStopC = edge2.toStop;
+              if (!this._isStopVerified(tStopB2) || !this._isStopVerified(tStopC)) continue;
+
               const tWalkDist2 = edge2.walkDist;
               const tWalkMin2 = calcWalkMin(tWalkDist2);
 
@@ -2593,7 +2612,7 @@ class TransitGraphRouter {
                 const diC = stopsC.findIndex(s => this._matchCandidate(s, dCand));
                 if (diC <= tiC) continue; // Monotonic on Route C
                 const alightC = stopsC[diC];
-                if (typeof alightC.lat !== 'number' || typeof alightC.lng !== 'number') continue;
+                if (!this._isStopVerified(alightC)) continue;
 
                 const dWalkDist = typeof dCand.distanceMeters === 'number' ? dCand.distanceMeters :
                   Math.round(haversineDistance(alightC.lat, alightC.lng, destLocation.lat, destLocation.lng) || 0);

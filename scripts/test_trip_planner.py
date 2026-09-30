@@ -1398,5 +1398,97 @@ class TestTripPlanner(unittest.TestCase):
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Search performance benchmark SLA <250ms failed")
 
+    # 27. Task 008: Non-Verified Transfer Stop with Valid Coordinates Fail-Closed Regression
+    def test_task008_unverified_transfer_stop_with_coordinates_fail_closed(self):
+        node_script = """
+        const { BusService, WalkingRouter, TransitPlanner, ResolvedLocation } = require('./js/busService.js');
+
+        const r1 = {
+          id: 'R1', routeNumber: 'R1', name: 'Tuyến R1', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        // Transfer stop has valid coordinates but non-verified status: 'needs_review'
+        const r2NeedsReview = {
+          id: 'R2', routeNumber: 'R2', name: 'Tuyến R2', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: 16.0105, lng: 108.0105, status: 'needs_review' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' },
+            { name: 'Stop R2_3', lat: 16.030, lng: 108.030, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020], [16.030, 108.030]] }
+        };
+        const r3 = {
+          id: 'R3', routeNumber: 'R3', name: 'Tuyến R3', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R3_1', lat: 16.0305, lng: 108.0305, status: 'verified' },
+            { name: 'Stop R3_2', lat: 16.040, lng: 108.040, status: 'verified' },
+            { name: 'Stop R3_3', lat: 16.050, lng: 108.050, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0305, 108.0305], [16.040, 108.040], [16.050, 108.050]] }
+        };
+
+        const bs = new BusService();
+        bs.routes = [r1, r2NeedsReview, r3];
+        bs.stops = [...r1.stops.outbound, ...r2NeedsReview.stops.outbound, ...r3.stops.outbound];
+        bs.isLoaded = true;
+        bs.isDirectionPlanningReady = (r, dir) => true;
+        bs.isServiceUsable = (r, time, dir) => true;
+
+        const tp = new TransitPlanner(bs, new WalkingRouter());
+        const oLoc = new ResolvedLocation({ displayName: 'Điểm Đi', lat: 16.0001, lng: 108.0001 });
+        const dLoc = new ResolvedLocation({ displayName: 'Điểm Đến', lat: 16.0499, lng: 108.0499 });
+
+        // 1. Full trip planner must NOT return any trip using the needs_review transfer stop
+        const plan = tp.planTrip(oLoc, dLoc);
+        if (plan.trips && plan.trips.length > 0) {
+          console.error('Expected 0 trips due to unverified transfer stop, got:', plan.trips.length);
+          process.exit(1);
+        }
+
+        // 2. Direct check on TransitGraphRouter._ensureTransferIndex(): must not create edge to unverified stop
+        const router = tp.graphRouter;
+        const index = router._ensureTransferIndex();
+        const r1OutEdges = index.get('R1_outbound') || [];
+        const hasUnverifiedEdge = r1OutEdges.some(e => e.toRouteId === 'R2' && e.toStop.status !== 'verified');
+        if (hasUnverifiedEdge) {
+          console.error('Transfer index created edge to non-verified stop');
+          process.exit(2);
+        }
+
+        // 3. Test when fromStop on R1 is 'unverified' even with valid coordinates
+        const r1Unverified = {
+          id: 'R1_UNV', routeNumber: 'R1_UNV', name: 'Tuyến R1_UNV', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R1_1', lat: 16.000, lng: 108.000, status: 'verified' },
+            { name: 'Stop R1_2', lat: 16.010, lng: 108.010, status: 'unverified' }
+          ]},
+          geometry: { outbound: [[16.000, 108.000], [16.010, 108.010]] }
+        };
+        const r2Verified = {
+          id: 'R2_VER', routeNumber: 'R2_VER', name: 'Tuyến R2_VER', status: 'active',
+          stops: { outbound: [
+            { name: 'Stop R2_1', lat: 16.0105, lng: 108.0105, status: 'verified' },
+            { name: 'Stop R2_2', lat: 16.020, lng: 108.020, status: 'verified' }
+          ]},
+          geometry: { outbound: [[16.0105, 108.0105], [16.020, 108.020]] }
+        };
+        const bs2 = new BusService();
+        bs2.routes = [r1Unverified, r2Verified];
+        bs2.isLoaded = true;
+        const router2 = new (require('./js/busService.js').TransitGraphRouter)(bs2);
+        const index2 = router2._ensureTransferIndex();
+        const r1UnvEdges = index2.get('R1_UNV_outbound') || [];
+        if (r1UnvEdges.length !== 0) {
+          console.error('Expected 0 edges from unverified stop, got:', r1UnvEdges.length);
+          process.exit(3);
+        }
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Unverified transfer stop with valid coordinates fail-closed test failed")
+
 if __name__ == '__main__':
     unittest.main()

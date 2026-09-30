@@ -1123,7 +1123,7 @@
     "name": "Đà Nẵng (Đại học Việt Hàn) – Hội An (Cửa Đại)",
     "shortName": "ĐH Việt Hàn – Hội An (Cửa Đại)",
     "category": "interprovincial",
-    "status": "active",
+    "status": "merged",
     "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
     "terminals": {
       "origin": "Trạm xe buýt Đại học Việt Hàn (Đà Nẵng)",
@@ -1179,7 +1179,7 @@
     "name": "Đà Nẵng (Bến xe phía Nam) – Tam Kỳ",
     "shortName": "BX Phía Nam – Tam Kỳ",
     "category": "interprovincial",
-    "status": "active",
+    "status": "merged",
     "operator": "Công ty Cổ phần Xe khách Phương Trang (FUTA Bus Lines)",
     "terminals": {
       "origin": "Bến xe phía Nam (Đà Nẵng)",

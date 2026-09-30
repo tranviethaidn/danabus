@@ -305,12 +305,21 @@ class BusService {
       return { isUsable: false, status: 'retired', effectiveStatus: 'retired', activeOverride: null, reason: route.statusNote || 'Tuyến đã ngừng khai thác vĩnh viễn' };
     }
     if (route.status === 'merged') {
-      return { isUsable: false, status: 'merged', effectiveStatus: 'merged', activeOverride: null, reason: route.statusNote || `Tuyến đã sáp nhập vào tuyến ${route.mergedInto || ''}`.trim() };
+      if (route.effectiveTo) {
+        const toMs = this.parseIsoTimestamp(route.effectiveTo, true);
+        if (!isNaN(toMs) && tMs <= toMs) {
+          // Predecessor record remains usable prior to the merger effective date
+        } else {
+          return { isUsable: false, status: 'merged', effectiveStatus: 'merged', activeOverride: null, reason: route.statusNote || `Tuyến đã sáp nhập vào tuyến ${route.mergedInto || ''}`.trim() };
+        }
+      } else {
+        return { isUsable: false, status: 'merged', effectiveStatus: 'merged', activeOverride: null, reason: route.statusNote || `Tuyến đã sáp nhập vào tuyến ${route.mergedInto || ''}`.trim() };
+      }
     }
     if (route.status === 'suspended' || route.isActive === false) {
       return { isUsable: false, status: 'suspended', effectiveStatus: 'suspended', activeOverride: null, reason: route.statusNote || 'Tuyến đang tạm dừng hoạt động' };
     }
-    if (route.status !== 'active') {
+    if (route.status !== 'active' && route.status !== 'merged') {
       return { isUsable: false, status: route.status || 'unknown', effectiveStatus: route.status || 'unknown', activeOverride: null, reason: 'Trạng thái tuyến không hoạt động' };
     }
 

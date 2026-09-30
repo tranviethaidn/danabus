@@ -548,9 +548,9 @@ class TestTemporalRouteService(unittest.TestCase):
         summary = report.get("summary", {})
 
         self.assertEqual(summary["totalRoutes"], 23)
-        self.assertEqual(summary["active"], 20)
+        self.assertEqual(summary["active"], 18)
         self.assertEqual(summary["suspended"], 3)
-        self.assertEqual(summary["merged"], 0)
+        self.assertEqual(summary["merged"], 2)
         self.assertEqual(summary["retired"], 0)
         self.assertEqual(summary["withProvenance"], 23)
         self.assertEqual(summary["provenanceCoveragePct"], 100.0)
@@ -780,6 +780,103 @@ class TestTemporalRouteService(unittest.TestCase):
         self.assertIn("validOverrides", ovr_val)
         self.assertIn("invalidOverrides", ovr_val)
         self.assertIn("records", ovr_val)
+
+    def test_official_lifecycle_reconciliation_lk02_lk21(self):
+        """Regression test for official LK02/LK21 merger reconciliation & temporal boundaries."""
+        js = """
+        const { BusService } = require('./js/busService.js');
+        const fs = require('fs');
+        const routes = JSON.parse(fs.readFileSync('./data/danangbus_routes.json', 'utf8'));
+        const bs = new BusService();
+        bs.routes = routes;
+
+        const lk02 = bs.getRouteById('LK02');
+        const lk21 = bs.getRouteById('LK21');
+        const r02 = bs.getRouteById('02');
+        const r21 = bs.getRouteById('21');
+
+        // 1. Usability at 2026-09-30 (present)
+        const lk02_now = bs.getServiceTemporalState(lk02, '2026-09-30T12:00:00+07:00');
+        const lk21_now = bs.getServiceTemporalState(lk21, '2026-09-30T12:00:00+07:00');
+        const r02_now = bs.getServiceTemporalState(r02, '2026-09-30T12:00:00+07:00');
+        const r21_now = bs.getServiceTemporalState(r21, '2026-09-30T12:00:00+07:00');
+
+        // 2. Explicit followSuccessor vs historical lookup
+        const lk02_succ = bs.getRouteById('LK02', { followSuccessor: true });
+        const lk21_succ = bs.getRouteById('LK21', { followSuccessor: true });
+        const lk02_hist = bs.getRouteById('LK02');
+        const lk21_hist = bs.getRouteById('LK21');
+
+        // 3. Effective boundary before/after 2025-07-18
+        // Before boundary (2025-07-17 23:59:59)
+        const lk02_before = bs.getServiceTemporalState(lk02, '2025-07-17T23:59:59+07:00');
+        const lk21_before = bs.getServiceTemporalState(lk21, '2025-07-17T23:59:59+07:00');
+        const r02_before = bs.getServiceTemporalState(r02, '2025-07-17T23:59:59+07:00');
+        const r21_before = bs.getServiceTemporalState(r21, '2025-07-17T23:59:59+07:00');
+
+        // On/after boundary (2025-07-18 00:00:00)
+        const lk02_after = bs.getServiceTemporalState(lk02, '2025-07-18T00:00:00+07:00');
+        const lk21_after = bs.getServiceTemporalState(lk21, '2025-07-18T00:00:00+07:00');
+        const r02_after = bs.getServiceTemporalState(r02, '2025-07-18T00:00:00+07:00');
+        const r21_after = bs.getServiceTemporalState(r21, '2025-07-18T00:00:00+07:00');
+
+        console.log(JSON.stringify({
+            lk02_now, lk21_now, r02_now, r21_now,
+            lk02_succ_id: lk02_succ ? lk02_succ.id : null,
+            lk21_succ_id: lk21_succ ? lk21_succ.id : null,
+            lk02_hist_id: lk02_hist ? lk02_hist.id : null,
+            lk21_hist_id: lk21_hist ? lk21_hist.id : null,
+            lk02_before, lk21_before, r02_before, r21_before,
+            lk02_after, lk21_after, r02_after, r21_after
+        }));
+        """
+        res = run_node_eval(js)
+
+        # 1. Unusable at 2026-09-30
+        self.assertFalse(res["lk02_now"]["isUsable"], "LK02 must be unusable at 2026-09-30")
+        self.assertEqual(res["lk02_now"]["status"], "merged")
+        self.assertFalse(res["lk21_now"]["isUsable"], "LK21 must be unusable at 2026-09-30")
+        self.assertEqual(res["lk21_now"]["status"], "merged")
+        self.assertTrue(res["r02_now"]["isUsable"], "Route 02 must be usable at 2026-09-30")
+        self.assertTrue(res["r21_now"]["isUsable"], "Route 21 must be usable at 2026-09-30")
+
+        # 2. Successor following and historical retrieval
+        self.assertEqual(res["lk02_succ_id"], "02", "followSuccessor LK02 must resolve to 02")
+        self.assertEqual(res["lk21_succ_id"], "21", "followSuccessor LK21 must resolve to 21")
+        self.assertEqual(res["lk02_hist_id"], "LK02", "Historical lookup without followSuccessor must return LK02")
+        self.assertEqual(res["lk21_hist_id"], "LK21", "Historical lookup without followSuccessor must return LK21")
+
+        # 3. Deterministic effective boundary before/after 2025-07-18
+        self.assertTrue(res["lk02_before"]["isUsable"], "LK02 was operating before 2025-07-18")
+        self.assertEqual(res["lk02_before"]["status"], "active")
+        self.assertTrue(res["lk21_before"]["isUsable"], "LK21 was operating before 2025-07-18")
+        self.assertEqual(res["lk21_before"]["status"], "active")
+        self.assertFalse(res["r02_before"]["isUsable"], "Route 02 post-merger configuration is future before 2025-07-18")
+        self.assertEqual(res["r02_before"]["status"], "future")
+        self.assertFalse(res["r21_before"]["isUsable"], "Route 21 post-merger configuration is future before 2025-07-18")
+        self.assertEqual(res["r21_before"]["status"], "future")
+
+        self.assertFalse(res["lk02_after"]["isUsable"], "LK02 is merged on/after 2025-07-18")
+        self.assertEqual(res["lk02_after"]["status"], "merged")
+        self.assertFalse(res["lk21_after"]["isUsable"], "LK21 is merged on/after 2025-07-18")
+        self.assertEqual(res["lk21_after"]["status"], "merged")
+        self.assertTrue(res["r02_after"]["isUsable"], "Route 02 is active on/after 2025-07-18")
+        self.assertEqual(res["r02_after"]["status"], "active")
+        self.assertTrue(res["r21_after"]["isUsable"], "Route 21 is active on/after 2025-07-18")
+        self.assertEqual(res["r21_after"]["status"], "active")
+
+        # 4. Report verification
+        with open(REPORT_PATH, "r", encoding="utf-8") as f:
+            report = json.load(f)
+
+        lk02_ev = next(ev for ev in report["evidence"] if ev["routeId"] == "LK02")
+        lk21_ev = next(ev for ev in report["evidence"] if ev["routeId"] == "LK21")
+        self.assertIn("hop-nhat-va-dieu-chinh", lk02_ev["sourceUrl"])
+        self.assertIn("hop-nhat-va-dieu-chinh", lk21_ev["sourceUrl"])
+        self.assertEqual(lk02_ev["sourcePublishedAt"], "2025-07-17")
+        self.assertEqual(lk21_ev["sourcePublishedAt"], "2025-07-17")
+        self.assertEqual(lk02_ev["status"], "merged")
+        self.assertEqual(lk21_ev["status"], "merged")
 
 
 if __name__ == "__main__":

@@ -95,13 +95,14 @@ ROUTE_PROVENANCE_CONFIG = {
     # Non-subsidized urban routes
     "02": {
         "status": "active",
-        "statusNote": None,
-        "sourceUrl": OFFICIAL_PORTAL_URL,
+        "statusNote": "Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Cửa Đại; đã hợp nhất với LK02 từ 18/07/2025)",
+        "sourceUrl": "https://www.danangbus.vn/tin-tuc/tin-tuc/hop-nhat-va-dieu-chinh-mot-so-tuyen-buyt-khong-tro-gia-tren-dia-ban-thanh-pho-da-nang-moi-5456.html",
         "sourceName": AUTHORITY_DATRAMAC,
-        "sourcePublishedAt": None,
+        "sourcePublishedAt": "2025-07-17",
+        "effectiveFrom": "2025-07-18",
         "lastVerifiedAt": "2026-09-30",
         "verificationStatus": "verified",
-        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Đại học Việt Hàn)",
+        "evidenceNote": "Thông báo Datramac số 5456/TB-Datramac ngày 17/07/2025: Tuyến 02 sau sáp nhập LK02 (Bến xe Trung tâm – Cửa Đại, hiệu lực từ 18/07/2025)",
         "formerCodes": [],
     },
     "03": {
@@ -161,13 +162,14 @@ ROUTE_PROVENANCE_CONFIG = {
     },
     "21": {
         "status": "active",
-        "statusNote": None,
-        "sourceUrl": OFFICIAL_PORTAL_URL,
+        "statusNote": "Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Cầu Tam Kỳ; đã hợp nhất với LK21 từ 18/07/2025)",
+        "sourceUrl": "https://www.danangbus.vn/tin-tuc/tin-tuc/hop-nhat-va-dieu-chinh-mot-so-tuyen-buyt-khong-tro-gia-tren-dia-ban-thanh-pho-da-nang-moi-5456.html",
         "sourceName": AUTHORITY_DATRAMAC,
-        "sourcePublishedAt": None,
+        "sourcePublishedAt": "2025-07-17",
+        "effectiveFrom": "2025-07-18",
         "lastVerifiedAt": "2026-09-30",
         "verificationStatus": "verified",
-        "evidenceNote": "Cổng thông tin Datramac danangbus.vn: Tuyến buýt nội thành không trợ giá (Bến xe Trung tâm – Công viên 29/3 – Bến xe Phía Nam)",
+        "evidenceNote": "Thông báo Datramac số 5456/TB-Datramac ngày 17/07/2025: Tuyến 21 sau sáp nhập LK21 (Bến xe Trung tâm – Cầu Tam Kỳ, hiệu lực từ 18/07/2025)",
         "formerCodes": [],
     },
     # Quang Nam regional routes
@@ -217,25 +219,29 @@ ROUTE_PROVENANCE_CONFIG = {
         "formerCodes": [],
     },
     "LK02": {
-        "status": "active",
-        "statusNote": None,
-        "sourceUrl": OFFICIAL_PORTAL_URL,
+        "status": "merged",
+        "statusNote": "Tuyến buýt liền kề LK02 (Đà Nẵng – Hội An) sáp nhập vào tuyến 02 từ ngày 18/07/2025 theo thông báo số 5456/TB-Datramac",
+        "sourceUrl": "https://www.danangbus.vn/tin-tuc/tin-tuc/hop-nhat-va-dieu-chinh-mot-so-tuyen-buyt-khong-tro-gia-tren-dia-ban-thanh-pho-da-nang-moi-5456.html",
         "sourceName": AUTHORITY_DATRAMAC,
-        "sourcePublishedAt": None,
+        "sourcePublishedAt": "2025-07-17",
+        "effectiveTo": "2025-07-17",
+        "mergedInto": "02",
         "lastVerifiedAt": "2026-09-30",
         "verificationStatus": "verified",
-        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt liền kề LK02 (Đà Nẵng – Hội An)",
+        "evidenceNote": "Thông báo Datramac số 5456/TB-Datramac ngày 17/07/2025: Hợp nhất tuyến 02 và LK02 thành tuyến 02 (Bến xe Trung tâm – Cửa Đại) từ 18/07/2025",
         "formerCodes": [],
     },
     "LK21": {
-        "status": "active",
-        "statusNote": None,
-        "sourceUrl": OFFICIAL_PORTAL_URL,
+        "status": "merged",
+        "statusNote": "Tuyến buýt liền kề LK21 (Đà Nẵng – Tam Kỳ) sáp nhập vào tuyến 21 từ ngày 18/07/2025 theo thông báo số 5456/TB-Datramac",
+        "sourceUrl": "https://www.danangbus.vn/tin-tuc/tin-tuc/hop-nhat-va-dieu-chinh-mot-so-tuyen-buyt-khong-tro-gia-tren-dia-ban-thanh-pho-da-nang-moi-5456.html",
         "sourceName": AUTHORITY_DATRAMAC,
-        "sourcePublishedAt": None,
+        "sourcePublishedAt": "2025-07-17",
+        "effectiveTo": "2025-07-17",
+        "mergedInto": "21",
         "lastVerifiedAt": "2026-09-30",
         "verificationStatus": "verified",
-        "evidenceNote": "Cổng thông tin Datramac: Tuyến buýt liền kề LK21 (Đà Nẵng – Tam Kỳ)",
+        "evidenceNote": "Thông báo Datramac số 5456/TB-Datramac ngày 17/07/2025: Hợp nhất tuyến 21 và LK21 thành tuyến 21 (Bến xe Trung tâm – Cầu Tam Kỳ) từ 18/07/2025",
         "formerCodes": [],
     },
     # Tourist routes
@@ -476,8 +482,8 @@ def reconcile_route(route, verification_date="2026-09-30", service_version="2026
         source_url = config.get("sourceUrl") or route.get("sourceUrl")
         source_name = config.get("sourceName") or route.get("sourceName")
         source_published_at = config.get("sourcePublishedAt", route.get("sourcePublishedAt", None))
-        effective_from = route.get("effectiveFrom", None)
-        effective_to = route.get("effectiveTo", None)
+        effective_from = config.get("effectiveFrom", route.get("effectiveFrom", None))
+        effective_to = config.get("effectiveTo", route.get("effectiveTo", None))
         last_verified_at = config.get("lastVerifiedAt") or route.get("lastVerifiedAt") or verification_date
         version = route.get("serviceVersion") or service_version
         verification_status = config.get("verificationStatus", "unverified")
@@ -489,8 +495,8 @@ def reconcile_route(route, verification_date="2026-09-30", service_version="2026
         existing_aliases = route.get("aliases", [])
         combined_aliases = list(dict.fromkeys(existing_aliases + combined_former))
 
-        superseded_by = route.get("supersededBy", None)
-        merged_into = route.get("mergedInto", None)
+        superseded_by = config.get("supersededBy", route.get("supersededBy", None))
+        merged_into = config.get("mergedInto", route.get("mergedInto", None))
         temporary_overrides = route.get("temporaryOverrides", [])
 
     # Update route in place
@@ -510,14 +516,17 @@ def reconcile_route(route, verification_date="2026-09-30", service_version="2026
     route["mergedInto"] = merged_into
     route["temporaryOverrides"] = temporary_overrides
 
-    # If verification_status != 'verified', mark dataQuality as ineligible for planning if present
-    if verification_status != "verified" and "dataQuality" in route and isinstance(route["dataQuality"], dict):
+    # If verification_status != 'verified' or status in ("suspended", "merged", "retired"):
+    # ensure dataQuality marks planning as ineligible
+    if (verification_status != "verified" or status in ("suspended", "merged", "retired")) and "dataQuality" in route and isinstance(route["dataQuality"], dict):
         route["dataQuality"]["tripPlanningReady"] = False
         if "directions" in route["dataQuality"] and isinstance(route["dataQuality"]["directions"], dict):
-            if "outbound" in route["dataQuality"]["directions"]:
-                route["dataQuality"]["directions"]["outbound"]["eligible"] = False
-            if "inbound" in route["dataQuality"]["directions"]:
-                route["dataQuality"]["directions"]["inbound"]["eligible"] = False
+            for d in ("outbound", "inbound"):
+                if d in route["dataQuality"]["directions"] and isinstance(route["dataQuality"]["directions"][d], dict):
+                    if "eligible" in route["dataQuality"]["directions"][d]:
+                        route["dataQuality"]["directions"][d]["eligible"] = False
+                    if "eligibleForPlanning" in route["dataQuality"]["directions"][d]:
+                        route["dataQuality"]["directions"][d]["eligibleForPlanning"] = False
 
     return route
 
@@ -739,6 +748,7 @@ def update_summary(routes):
     """
     active_count = sum(1 for r in routes if r.get("status") == "active")
     suspended_count = sum(1 for r in routes if r.get("status") == "suspended")
+    merged_count = sum(1 for r in routes if r.get("status") == "merged")
     
     categories = {}
     for r in routes:
@@ -750,6 +760,7 @@ def update_summary(routes):
         "totalRoutes": len(routes),
         "activeRoutes": active_count,
         "suspendedRoutes": suspended_count,
+        "mergedRoutes": merged_count,
         "categories": categories,
         "totalUniqueStops": 421,
         "totalIndexedStreets": 337,

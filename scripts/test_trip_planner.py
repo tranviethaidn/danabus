@@ -481,6 +481,135 @@ class TestTripPlanner(unittest.TestCase):
         res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
         self.assertEqual(res.returncode, 0, "Google Places client SDK contract test failed")
 
+    # 5c. Google Places SDK Loader Timeout & Fail-Safe Fallback Contract (Turn 011)
+    def test_google_sdk_loader_timeout_fail_safe(self):
+        node_script = """
+        const { GoogleLocationProvider, LocationManager } = require('./js/busService.js');
+
+        (async () => {
+            // Guard: Direct REST web-service endpoint must NEVER be called
+            let restCallAttempted = false;
+            global.fetch = async (url) => {
+                if (typeof url === 'string' && url.includes('places.googleapis.com')) {
+                    restCallAttempted = true;
+                    throw new Error('Prohibited direct REST endpoint call: ' + url);
+                }
+                return { ok: false, status: 500 };
+            };
+
+            // Setup browser environment where appendChild does nothing and onload/onerror never fire
+            let scriptCreated = null;
+            let appendCalled = false;
+            global.window = {};
+            global.document = {
+                querySelector: () => null,
+                head: {
+                    appendChild: (el) => {
+                        appendCalled = true;
+                        // Neither onload nor onerror fires; simulates pending network request
+                    }
+                },
+                createElement: (tag) => {
+                    if (tag === 'script') {
+                        scriptCreated = {
+                            src: '',
+                            async: false,
+                            onload: null,
+                            onerror: null
+                        };
+                        return scriptCreated;
+                    }
+                    return {};
+                }
+            };
+
+            const gp = new GoogleLocationProvider({ apiKey: 'mock_timeout_key', timeoutMs: 25 });
+
+            // 1. Assert Google search settles within a bounded test window and returns []
+            const startSearch = Date.now();
+            const searchPromise = gp.search('Cầu Rồng');
+            const results = await searchPromise;
+            const searchElapsed = Date.now() - startSearch;
+
+            if (!appendCalled || !scriptCreated) {
+                console.error('Expected script element creation and appendChild invocation');
+                process.exit(1);
+            }
+            if (!Array.isArray(results) || results.length !== 0) {
+                console.error('Expected empty search array on SDK loader timeout, got:', results);
+                process.exit(2);
+            }
+            if (searchElapsed > 500) {
+                console.error('Google search took too long to settle on SDK loader timeout:', searchElapsed);
+                process.exit(3);
+            }
+
+            // 2. Assert Google resolve settles within a bounded window and returns null
+            const startResolve = Date.now();
+            const resolved = await gp.resolve('mock_place_id');
+            const resolveElapsed = Date.now() - startResolve;
+
+            if (resolved !== null) {
+                console.error('Expected null from resolve on SDK loader timeout, got:', resolved);
+                process.exit(4);
+            }
+            if (resolveElapsed > 500) {
+                console.error('Google resolve took too long to settle on SDK loader timeout:', resolveElapsed);
+                process.exit(5);
+            }
+
+            // 3. Assert LocationManager search returns valid local fallback
+            const lm = new LocationManager(null, { google: { apiKey: 'mock_timeout_key', timeoutMs: 25 } });
+            const lmResults = await lm.search('Cầu Rồng');
+            if (!lmResults || lmResults.length === 0 || lmResults[0].provider !== 'local') {
+                console.error('Expected LocationManager local fallback on SDK loader timeout, got:', lmResults);
+                process.exit(6);
+            }
+            if (!lmResults[0].displayName.includes('Cầu Rồng')) {
+                console.error('Expected local fallback result for Cầu Rồng, got:', lmResults[0]);
+                process.exit(7);
+            }
+
+            // 4. Assert no places.googleapis.com REST call occurred
+            if (restCallAttempted) {
+                console.error('Prohibited direct REST call was attempted during loader timeout');
+                process.exit(8);
+            }
+
+            // 5. Assert retry is unpoisoned: subsequent call after SDK loads succeeds
+            global.window.google = {
+                maps: {
+                    places: {
+                        AutocompleteSessionToken: function() { this.id = 'tok_retry'; },
+                        AutocompleteSuggestion: {
+                            fetchAutocompleteSuggestions: async () => ({
+                                suggestions: [{
+                                    placePrediction: {
+                                        placeId: 'id_recovered',
+                                        structuredFormat: {
+                                            mainText: { text: 'Cầu Rồng Đà Nẵng' },
+                                            secondaryText: { text: 'Hải Châu, Đà Nẵng' }
+                                        }
+                                    }
+                                }]
+                            })
+                        }
+                    }
+                }
+            };
+            const retryResults = await gp.search('Cầu Rồng');
+            if (!retryResults || retryResults.length !== 1 || retryResults[0].id !== 'id_recovered') {
+                console.error('Expected subsequent search after SDK becomes available to succeed, got:', retryResults);
+                process.exit(9);
+            }
+
+            delete global.window;
+            delete global.document;
+            delete global.fetch;
+        })();
+        """
+        res = subprocess.run(['node', '-e', node_script], cwd=WORKSPACE)
+        self.assertEqual(res.returncode, 0, "Google Places SDK loader timeout fail-safe test failed")
 
     # 6. Service Area Geofence Check & OUT_OF_SERVICE_AREA
     def test_out_of_service_area_geofence(self):

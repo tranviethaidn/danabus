@@ -1384,36 +1384,60 @@ class GoogleLocationProvider extends LocationSearchProvider {
     }
 
     this._scriptLoadingPromise = new Promise((resolve) => {
-      const existingScript = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
+      let settled = false;
+      let timer = null;
+
+      const finish = (success, reason = null) => {
+        if (settled) return;
+        settled = true;
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+        this._scriptLoaded = success;
+        if (!success) {
+          if (reason) console.warn('[GoogleLocationProvider] Google Maps Places client SDK script load failed:', reason);
+          this._scriptLoadingPromise = null;
+        }
+        resolve(success);
+      };
+
+      timer = setTimeout(() => {
+        finish(false, 'timeout');
+      }, this.timeoutMs);
+
+      const existingScript = typeof document.querySelector === 'function' ? document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]') : null;
       if (existingScript) {
         if (this.getPlacesLibrary()) {
-          this._scriptLoaded = true;
-          return resolve(true);
+          return finish(true);
         }
-        existingScript.addEventListener('load', () => {
-          this._scriptLoaded = !!this.getPlacesLibrary();
-          resolve(this._scriptLoaded);
-        });
-        existingScript.addEventListener('error', () => {
-          this._scriptLoaded = false;
-          resolve(false);
-        });
+        if (typeof existingScript.addEventListener === 'function') {
+          existingScript.addEventListener('load', () => finish(!!this.getPlacesLibrary()), { once: true });
+          existingScript.addEventListener('error', () => finish(false, 'script error'), { once: true });
+        } else {
+          const prevLoad = existingScript.onload;
+          const prevErr = existingScript.onerror;
+          existingScript.onload = (ev) => {
+            if (typeof prevLoad === 'function') prevLoad(ev);
+            finish(!!this.getPlacesLibrary());
+          };
+          existingScript.onerror = (ev) => {
+            if (typeof prevErr === 'function') prevErr(ev);
+            finish(false, 'script error');
+          };
+        }
         return;
       }
 
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(this.apiKey)}&libraries=places&v=weekly&loading=async`;
       script.async = true;
-      script.onload = () => {
-        this._scriptLoaded = !!this.getPlacesLibrary();
-        resolve(this._scriptLoaded);
-      };
-      script.onerror = () => {
-        console.warn('[GoogleLocationProvider] Google Maps Places client SDK script failed to load');
-        this._scriptLoaded = false;
-        resolve(false);
-      };
-      (document.head || document.body || document.documentElement).appendChild(script);
+      script.onload = () => finish(!!this.getPlacesLibrary());
+      script.onerror = () => finish(false, 'script error');
+      const target = document.head || document.body || document.documentElement;
+      if (target && typeof target.appendChild === 'function') {
+        target.appendChild(script);
+      }
     });
 
     return this._scriptLoadingPromise;
@@ -1434,10 +1458,16 @@ class GoogleLocationProvider extends LocationSearchProvider {
       const gMaps = (typeof window !== 'undefined' && window.google?.maps) ||
                     (typeof global !== 'undefined' && global.google?.maps);
       if (gMaps && typeof gMaps.importLibrary === 'function') {
+        let timeoutId;
         try {
-          placesLib = await gMaps.importLibrary('places');
+          const timeoutP = new Promise((_, reject) => {
+            timeoutId = setTimeout(() => reject(new Error('importLibrary timeout')), this.timeoutMs);
+          });
+          placesLib = await Promise.race([gMaps.importLibrary('places'), timeoutP]);
         } catch (e) {
           console.warn('[GoogleLocationProvider] importLibrary("places") failed:', e.message);
+        } finally {
+          if (timeoutId) clearTimeout(timeoutId);
         }
       }
     }

@@ -715,8 +715,8 @@ def main():
                 "outbound": bool(r.get("geometry", {}).get("outbound")),
                 "inbound": bool(r.get("geometry", {}).get("inbound"))
             },
-            "streets": list(set((r.get("routePaths", {}).get("outbound", {}).get("streets", []) + 
-                                (r.get("routePaths", {}).get("inbound", {}).get("streets", []))))),
+            "streets": sorted(list(set((r.get("routePaths", {}).get("outbound", {}).get("streets", []) + 
+                                (r.get("routePaths", {}).get("inbound", {}).get("streets", [])))))),
             "pdfUrls": r.get("pdfUrls", [])
         })
 

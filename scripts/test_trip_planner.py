@@ -869,8 +869,8 @@ class TestTripPlanner(unittest.TestCase):
 
         const tp = new TransitPlanner(bs, new WalkingRouter());
 
-        // Connect Route TKY-TMY and Route TKY-NTH in Tam Kỳ
-        const oLoc = new ResolvedLocation({ displayName: 'Huỳnh Thúc Kháng', lat: 15.5673332, lng: 108.4904846 });
+        // Connect Route TKY-TMY/TKY-NTH and Route 21 in Tam Kỳ
+        const oLoc = new ResolvedLocation({ displayName: '324 Trần Cao Vân', lat: 15.5553199, lng: 108.4860011 });
         const dLoc = new ResolvedLocation({ displayName: '954 Phan Châu Trinh', lat: 15.555436, lng: 108.5059009 });
 
         const plan = tp.planTrip(oLoc, dLoc);

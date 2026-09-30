@@ -130,8 +130,17 @@ class TestDanabusMapGPS(unittest.TestCase):
         self.assertTrue(len(r02['geometry']['outbound']) > 500)
         self.assertTrue(len(r02['geometry']['inbound']) > 500)
 
-        # Fail-closed unverified routes (e.g. Route 21, 11, 07, 08, 12, LK01...)
-        unverified_route_ids = ['21', '07', '08', '11', '12', '03', '06', '09', '13', '14', 'LK01', 'LK02', 'LK21', '04', '10', '15']
+        # Route 21 is now also verified in both directions
+        r21 = self.get_route('21')
+        self.assertIsNotNone(r21['geometry']['outbound'])
+        self.assertIsNotNone(r21['geometry']['inbound'])
+        self.assertTrue(r21['geometry']['provenance']['outbound']['verified'])
+        self.assertTrue(r21['geometry']['provenance']['inbound']['verified'])
+        self.assertTrue(len(r21['geometry']['outbound']) > 500)
+        self.assertTrue(len(r21['geometry']['inbound']) > 500)
+
+        # Fail-closed unverified routes (e.g. Route 11, 07, 08, 12, LK01...)
+        unverified_route_ids = ['07', '08', '11', '12', '03', '06', '09', '13', '14', 'LK01', 'LK02', 'LK21', '04', '10', '15']
         for rid in unverified_route_ids:
             r = self.get_route(rid)
             self.assertIsNotNone(r, f"Route {rid} must exist")

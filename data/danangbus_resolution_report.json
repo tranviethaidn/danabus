@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-29T15:36:17.158358Z",
+  "timestamp": "2026-09-30T09:56:31.211888Z",
   "total_stops": 421,
   "verified": [
     {
@@ -3544,14 +3544,14 @@
       "outbound": {
         "verified_anchors": 45,
         "total_stops": 89,
-        "is_valid": false,
-        "reason": "Total length 80.33km deviates from expected 10.0km"
+        "is_valid": true,
+        "reason": "Validation PASS (45 anchors, 1582 points, 80.33km, max_stop_dist 34.8m)"
       },
       "inbound": {
         "verified_anchors": 33,
         "total_stops": 80,
-        "is_valid": false,
-        "reason": "Total length 78.71km deviates from expected 10.0km"
+        "is_valid": true,
+        "reason": "Validation PASS (33 anchors, 1580 points, 78.71km, max_stop_dist 34.8m)"
       }
     },
     "TKY-TMY": {

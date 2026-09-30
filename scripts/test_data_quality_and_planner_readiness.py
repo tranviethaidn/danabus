@@ -101,13 +101,13 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
     def test_drift_detection_fail_closed(self):
         """Validator must detect any metadata drift or unauthorized tampering."""
         tampered_routes = copy.deepcopy(self.routes)
-        # Illegally set route 21 to tripPlanningReady=True
-        r21 = next(r for r in tampered_routes if r["id"] == "21")
-        r21["dataQuality"]["tripPlanningReady"] = True
+        # Illegally set route 07 to tripPlanningReady=True
+        r07 = next(r for r in tampered_routes if r["id"] == "07")
+        r07["dataQuality"]["tripPlanningReady"] = True
         
         drift_count, errors = run_validation(tampered_routes, strict_check=True)
         self.assertGreater(drift_count, 0, "Validator must detect tampered tripPlanningReady")
-        self.assertTrue(any("Tuyến 21" in e for e in errors))
+        self.assertTrue(any("Tuyến 07" in e for e in errors))
 
     # -------------------------------------------------------------------------
     # 2. Strict Negative Cases (Fail-Closed Gates)
@@ -591,7 +591,7 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
     # 3. Direction-Level Readiness & Two-Direction Expansion (02 & TKY-CHU)
     # -------------------------------------------------------------------------
     def test_direction_level_eligibility_and_expanded_coverage_02_and_tky_chu(self):
-        """Route 02 and TKY-CHU now have verified geometry in both directions and are tripPlanningReady."""
+        """Routes 02, 21 and TKY-CHU now have verified geometry in both directions and are tripPlanningReady."""
         # Route 02
         r02 = next(x for x in self.routes if x["id"] == "02")
         dq02 = r02["dataQuality"]
@@ -600,6 +600,15 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertTrue(dq02["directions"]["outbound"]["eligibleForPlanning"])
         self.assertTrue(dq02["directions"]["inbound"]["eligibleForPlanning"])
         self.assertTrue(dq02["tripPlanningReady"])
+
+        # Route 21
+        r21 = next(x for x in self.routes if x["id"] == "21")
+        dq21 = r21["dataQuality"]
+        self.assertTrue(dq21["hasOutboundGeometry"])
+        self.assertTrue(dq21["hasInboundGeometry"])
+        self.assertTrue(dq21["directions"]["outbound"]["eligibleForPlanning"])
+        self.assertTrue(dq21["directions"]["inbound"]["eligibleForPlanning"])
+        self.assertTrue(dq21["tripPlanningReady"])
 
         # Route TKY-CHU
         rtky = next(x for x in self.routes if x["id"] == "TKY-CHU")
@@ -610,14 +619,14 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         self.assertTrue(dqtky["directions"]["inbound"]["eligibleForPlanning"])
         self.assertTrue(dqtky["tripPlanningReady"])
 
-    def test_direction_level_isolation_partial_route_lk02_and_21(self):
+    def test_direction_level_isolation_partial_route_01sb(self):
         """Routes with verified stops but unverified geometry must fail geometryReady and eligibleForPlanning."""
-        r21 = next(x for x in self.routes if x["id"] == "21")
-        dq21 = r21["dataQuality"]
-        self.assertTrue(dq21["directions"]["outbound"]["stopsReady"])
-        self.assertFalse(dq21["directions"]["outbound"]["geometryReady"])
-        self.assertFalse(dq21["directions"]["outbound"]["eligibleForPlanning"])
-        self.assertFalse(dq21["tripPlanningReady"])
+        r01sb = next(x for x in self.routes if x["id"] == "01SB")
+        dq01sb = r01sb["dataQuality"]
+        self.assertTrue(dq01sb["directions"]["outbound"]["stopsReady"])
+        self.assertFalse(dq01sb["directions"]["outbound"]["geometryReady"])
+        self.assertFalse(dq01sb["directions"]["outbound"]["eligibleForPlanning"])
+        self.assertFalse(dq01sb["tripPlanningReady"])
 
     def test_fare_threshold_as_distance_parser_bug_regression(self):
         """Fare-tier threshold strings must never be parsed as route distance metadata."""
@@ -643,11 +652,16 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
             is_fare = any(kw in candidate.lower() for kw in ['đồng', 'hành khách', 'giá vé', 'vé lượt', 'trở xuống', 'trở lên'])
             self.assertTrue(is_fare, "Line containing 'đồng' or 'trở xuống' must be recognized as fare text and ignored")
 
-        # Ensure Route 02 distanceKm remains null/unknown without independent evidence
+        # Ensure Route 02 and Route 21 distanceKm remains null/unknown without independent evidence
         r02 = next(x for x in self.routes if x["id"] == "02")
         self.assertIsNone(r02["distanceKm"]["average"])
         self.assertIsNone(r02["distanceKm"]["outbound"])
         self.assertIsNone(r02["distanceKm"]["inbound"])
+
+        r21 = next(x for x in self.routes if x["id"] == "21")
+        self.assertIsNone(r21["distanceKm"]["average"])
+        self.assertIsNone(r21["distanceKm"]["outbound"])
+        self.assertIsNone(r21["distanceKm"]["inbound"])
 
     def test_resolver_chua_dao_nguyen_and_locality_provenance(self):
         """Chùa Đạo Nguyên must resolve to node 11898042384 with Quang Nam locality, and 463 PBC must be isolated."""
@@ -678,12 +692,12 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
             
         summary = rep.get("summary", {})
         self.assertEqual(summary["totalRoutes"], 23)
-        self.assertEqual(summary["activeRoutes"], 20)
+        self.assertEqual(summary["activeRoutes"], 18)
         self.assertEqual(summary["suspendedRoutes"], 3)
-        self.assertEqual(summary["tripPlanningReadyCount"], 5)
-        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "02", "TKY-TMY", "TKY-NTH", "TKY-CHU"])
+        self.assertEqual(summary["tripPlanningReadyCount"], 6)
+        self.assertEqual(summary["tripPlanningReadyRoutes"], ["05", "02", "21", "TKY-TMY", "TKY-NTH", "TKY-CHU"])
         self.assertEqual(summary["inboundOnlyReadyRoutes"], [])
-        self.assertEqual(summary["neitherReadyCount"], 18)
+        self.assertEqual(summary["neitherReadyCount"], 17)
         self.assertGreater(summary["stops"]["total"], 0)
         self.assertGreater(summary["stops"]["verified"], 0)
         self.assertGreater(summary["stops"]["verifiedPercentage"], 56.5)
@@ -761,9 +775,11 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         const r05 = bs.getRouteById('05');
         const r02 = bs.getRouteById('02');
         const r21 = bs.getRouteById('21');
+        const r07 = bs.getRouteById('07');
         assert.strictEqual(bs.isRoutePlanningReady(r05), true);
         assert.strictEqual(bs.isRoutePlanningReady(r02), true);
-        assert.strictEqual(bs.isRoutePlanningReady(r21), false);
+        assert.strictEqual(bs.isRoutePlanningReady(r21), true);
+        assert.strictEqual(bs.isRoutePlanningReady(r07), false);
 
         const rTkyChu = bs.getRouteById('TKY-CHU');
         assert.strictEqual(bs.isDirectionPlanningReady(rTkyChu, 'outbound'), true);
@@ -771,7 +787,7 @@ class TestDataQualityAndPlannerReadiness(unittest.TestCase):
         assert.strictEqual(bs.isRoutePlanningReady(rTkyChu), true);
 
         const readyRoutes = bs.getPlanningReadyRoutes();
-        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', '02', 'TKY-TMY', 'TKY-NTH', 'TKY-CHU']);
+        assert.deepStrictEqual(readyRoutes.map(r => r.id), ['05', '02', '21', 'TKY-TMY', 'TKY-NTH', 'TKY-CHU']);
         results.busServiceReadinessMethods = true;
 
         // bs.findNearbyStops on real dataset

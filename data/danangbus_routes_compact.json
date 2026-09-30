@@ -721,15 +721,15 @@
       "exactHeadway": false,
       "raw": "05-30 phút/lượt."
     },
-    "distanceKm": 10.0,
+    "distanceKm": null,
     "singleFare": null,
     "totalStops": {
       "outbound": 89,
       "inbound": 80
     },
     "hasGeometry": {
-      "outbound": false,
-      "inbound": false
+      "outbound": true,
+      "inbound": true
     },
     "streets": [
       "954 Phan Chu Trinh (Cầu Tam Kỳ",

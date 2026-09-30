@@ -1,13 +1,14 @@
 {
-  "generatedAt": "2026-09-29T23:18:54.484596",
+  "generatedAt": "2026-09-30T16:58:31.906061",
   "summary": {
     "totalRoutes": 23,
-    "activeRoutes": 20,
+    "activeRoutes": 18,
     "suspendedRoutes": 3,
-    "tripPlanningReadyCount": 5,
+    "tripPlanningReadyCount": 6,
     "tripPlanningReadyRoutes": [
       "05",
       "02",
+      "21",
       "TKY-TMY",
       "TKY-NTH",
       "TKY-CHU"
@@ -16,7 +17,7 @@
     "outboundOnlyReadyRoutes": [],
     "inboundOnlyReadyCount": 0,
     "inboundOnlyReadyRoutes": [],
-    "neitherReadyCount": 18,
+    "neitherReadyCount": 17,
     "neitherReadyRoutes": [
       "07",
       "08",
@@ -27,7 +28,6 @@
       "09",
       "13",
       "14",
-      "21",
       "LK01",
       "01DL",
       "01SB",
@@ -453,19 +453,19 @@
       "routeNumber": "21",
       "name": "Bến xe Trung tâm – Trung tâm hành chính thành phố Đà Nẵng – Cầu Tam Kỳ",
       "status": "active",
-      "tripPlanningReady": false,
+      "tripPlanningReady": true,
       "directions": {
         "outbound": {
           "stopsReady": true,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         },
         "inbound": {
           "stopsReady": true,
-          "geometryReady": false,
-          "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "geometryReady": true,
+          "eligibleForPlanning": true,
+          "reason": null
         }
       },
       "stopMetrics": {
@@ -480,10 +480,7 @@
           "unresolved": 47
         }
       },
-      "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)"
-      ]
+      "ineligibilityReasons": []
     },
     {
       "id": "TKY-TMY",
@@ -702,20 +699,20 @@
       "id": "LK02",
       "routeNumber": "LK02",
       "name": "Đà Nẵng (Đại học Việt Hàn) – Hội An (Cửa Đại)",
-      "status": "active",
+      "status": "merged",
       "tripPlanningReady": false,
       "directions": {
         "outbound": {
           "stopsReady": true,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Tuyến không hoạt động (status=merged); Thiếu dữ liệu lộ trình polyline (points < 2)"
         },
         "inbound": {
           "stopsReady": false,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Tuyến không hoạt động (status=merged); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
         }
       },
       "stopMetrics": {
@@ -731,28 +728,29 @@
         }
       },
       "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        "Tuyến LK02 tạm ngừng (status=merged)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=merged); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=merged); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
     },
     {
       "id": "LK21",
       "routeNumber": "LK21",
       "name": "Đà Nẵng (Bến xe phía Nam) – Tam Kỳ",
-      "status": "active",
+      "status": "merged",
       "tripPlanningReady": false,
       "directions": {
         "outbound": {
           "stopsReady": true,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Tuyến không hoạt động (status=merged); Thiếu dữ liệu lộ trình polyline (points < 2)"
         },
         "inbound": {
           "stopsReady": false,
           "geometryReady": false,
           "eligibleForPlanning": false,
-          "reason": "Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+          "reason": "Tuyến không hoạt động (status=merged); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
         }
       },
       "stopMetrics": {
@@ -768,8 +766,9 @@
         }
       },
       "ineligibilityReasons": [
-        "Chiều đi chưa sẵn sàng: Thiếu dữ liệu lộ trình polyline (points < 2)",
-        "Chiều về chưa sẵn sàng: Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
+        "Tuyến LK21 tạm ngừng (status=merged)",
+        "Chiều đi chưa sẵn sàng: Tuyến không hoạt động (status=merged); Thiếu dữ liệu lộ trình polyline (points < 2)",
+        "Chiều về chưa sẵn sàng: Tuyến không hoạt động (status=merged); Chỉ có 0/0 trạm verified (yêu cầu tối thiểu 2 trạm có tọa độ hợp lệ); Thiếu dữ liệu lộ trình polyline (points < 2)"
       ]
     },
     {

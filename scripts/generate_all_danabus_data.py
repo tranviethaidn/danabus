@@ -170,6 +170,9 @@ route_overrides = {
         "frequency": {"peakMinutes": 15, "offPeakMinutes": 25, "raw": "15-25 phút/chuyến (64 lượt xe/ngày)"},
         "distanceKm": {"average": 56.5, "outbound": 56.5, "inbound": 56.5, "raw": "56,5 km"},
         "terminals": {"origin": "Bến xe phía Nam (Đà Nẵng)", "destination": "954 Phan Châu Trinh (Cầu Tam Kỳ)"}
+    },
+    "21": {
+        "distanceKm": {"average": None, "outbound": None, "inbound": None, "raw": ""}
     }
 }
 

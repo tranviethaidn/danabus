@@ -1,8 +1,8 @@
 {
   "task_id": "tsk_fa69d045-fc12-452b-9c82-8f4da320fafc",
   "task_title": "End-to-End Release Acceptance & Production Gate",
-  "timestamp": "2026-10-01T05:32:25.611578+00:00",
-  "total_duration_seconds": 74.48,
+  "timestamp": "2026-10-01T05:37:36.441859+00:00",
+  "total_duration_seconds": 75.3,
   "release_identity": {
     "version": "v12",
     "build": "20261001_v12",
@@ -10,9 +10,9 @@
     "asset_query": "?v=20261001_v12"
   },
   "git_state": {
-    "head": "dd5ce64df24b6f4ed28add0dad3abef9c3d81c83",
+    "head": "8c4c7873cc74c4a8a0a638f2deed2d7dc27fd976",
     "branch": "main",
-    "status_line": "## main...origin/main [ahead 46]",
+    "status_line": "## main...origin/main [ahead 47]",
     "git_push_authorized": false,
     "push_policy_note": "git_push_authorized=OFF is expected policy, local commit created without push"
   },
@@ -31,49 +31,49 @@
       "name": "Trip Planner Core & Inactive Rejection",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 3.88
+      "duration_seconds": 3.84
     },
     {
       "id": "1.3",
       "name": "Search Correctness",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.21
+      "duration_seconds": 0.2
     },
     {
       "id": "1.4",
       "name": "Schedule & Fare Truthful Semantics",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.28
+      "duration_seconds": 0.27
     },
     {
       "id": "1.5",
       "name": "Data Quality Contract & Spatial Primitives",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.25
+      "duration_seconds": 0.24
     },
     {
       "id": "1.6",
       "name": "Map, GPS & Unverified Geometry Isolation",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.07
+      "duration_seconds": 0.06
     },
     {
       "id": "1.7",
       "name": "Consumer UX & Review Defects Regression",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 4.43
+      "duration_seconds": 4.63
     },
     {
       "id": "1.8",
       "name": "Task 4 Boundary Guard & Prohibited SDKs",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.11
+      "duration_seconds": 0.1
     },
     {
       "id": "2.1",
@@ -87,42 +87,42 @@
       "name": "Static Secret Audit & Negative Probe (94 files)",
       "layer": "Layer 2",
       "status": "PASS",
-      "duration_seconds": 0.26
+      "duration_seconds": 0.25
     },
     {
       "id": "2.3",
       "name": "Production Public TLS & Certificate Validation",
       "layer": "Layer 2",
       "status": "PASS",
-      "duration_seconds": 0.21
+      "duration_seconds": 0.16
     },
     {
       "id": "2.4",
       "name": "Production 3-Way Deliverables Hash Equivalence",
       "layer": "Layer 2",
       "status": "PASS",
-      "duration_seconds": 1.26
+      "duration_seconds": 1.94
     },
     {
       "id": "3.1",
       "name": "Browser Schedule & Fare Semantics",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 2.98
+      "duration_seconds": 3.17
     },
     {
       "id": "3.2",
       "name": "Browser UI Integrity & Offline Recovery",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 3.24
+      "duration_seconds": 3.39
     },
     {
       "id": "3.3",
       "name": "Browser Trip Planner E2E",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 6.46
+      "duration_seconds": 6.45
     },
     {
       "id": "3.4",
@@ -136,21 +136,21 @@
       "name": "Production Security Hardening",
       "layer": "Layer 3B",
       "status": "PASS",
-      "duration_seconds": 0.47
+      "duration_seconds": 0.5
     },
     {
       "id": "3.6",
       "name": "Production PWA Runtime v12 (3 rounds)",
       "layer": "Layer 3B",
       "status": "PASS",
-      "duration_seconds": 14.52
+      "duration_seconds": 14.42
     },
     {
       "id": "3.7",
       "name": "Repeated Production Browser Smoke (3 rounds)",
       "layer": "Layer 3B",
       "status": "PASS",
-      "duration_seconds": 15.86
+      "duration_seconds": 15.67
     }
   ],
   "deliverable_sha256": {

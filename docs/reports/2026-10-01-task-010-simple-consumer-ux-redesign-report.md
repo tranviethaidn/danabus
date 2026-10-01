@@ -1,9 +1,9 @@
 # Báo cáo Nghiệm thu Task 010: Simple Consumer UX Redesign
 
-**Mã Task:** `tsk_d45190c7-1380-48e0-9dc7-5239307f5a4b`  
+Task-ID: tsk_d45190c7-1380-48e0-9dc7-5239307f5a4b
 **Ngày thực hiện:** 2026-10-01  
 **Vai trò:** Developer (DEV)  
-**Trạng thái:** Hoàn thành triển khai & Kiểm thử hồi quy PASS  
+**Trạng thái:** Đã khắc phục toàn bộ 6 lỗi review của TL & Kiểm thử hồi quy 100% PASS  
 
 ---
 
@@ -12,9 +12,9 @@
 Nâng cấp trải nghiệm người dùng Danabus hướng tới chuẩn consumer-first theo đúng quyết định đã hội tụ cùng Team Leader:
 - **Tối giản hóa Trang chủ (`#view-home`)**: Tối ưu luồng duy nhất A→B (Điểm đón, Điểm đến, GPS, nút đổi chiều và nút CTA `Tìm đường`). Giữ nguyên các phần tử DOM kế thừa (`#home-destination-chips`, `#home-spotlight-card`, eco banner) trong container ẩn để đảm bảo 100% selector backward compatibility cho toàn bộ các suite kiểm thử hồi quy.
 - **Chuẩn hóa Journey ViewModel dùng chung**: Thiết kế adapter `buildJourneyViewModelFromDirect` và `buildJourneyViewModelFromPlanned` đồng nhất hóa cấu trúc dữ liệu cho cả tuyến trực tiếp (direct match) và tuyến chuyển tiếp (planner multi-leg).
-- **Trình bày Hành trình đề xuất dạng Timeline Stepper (`<ol class="journey-timeline">`)**: Mặc định hiển thị một phương án tối ưu nhất với đầy đủ các mốc trực quan: Điểm xuất phát A → Lên xe tại trạm đón → Di chuyển trên xe (kèm accordion danh sách trạm trung gian) → Chuyển tuyến (nếu có) → Xuống xe tại trạm trả → Đến đích B.
+- **Trình bày Hành trình đề xuất dạng Timeline Stepper (`<ol class="journey-timeline">`)**: Mặc định hiển thị duy nhất một phương án tối ưu nhất với đầy đủ các mốc trực quan: Điểm xuất phát A → Lên xe tại trạm đón → Di chuyển trên xe (kèm accordion danh sách trạm trung gian) → Chuyển tuyến (nếu có) → Xuống xe tại trạm trả → Đến đích B.
 - **Tổ chức Secondary Actions không lấn chiếm luồng chính**: Gom các hành động phụ gồm `Xem trên bản đồ`, `Chi tiết tuyến`, `Xem thêm phương án khác (N)` và `Thông số kỹ thuật & Lịch trình chi tiết` thành thanh điều hướng phụ với đầy đủ nhãn ARIA (`aria-expanded`, `aria-controls`).
-- **Sửa triệt để các lỗi sai lệch ngữ nghĩa (Truthful Semantics)**:
+- **Bảo đảm Semantics dữ liệu trung thực (Truthful Semantics)**:
   - Loại bỏ hoàn toàn việc gán số phút vào `#trip-stat-km` (hiển thị đúng cự ly km hoặc `Chưa có dữ liệu`).
   - Loại bỏ hoàn toàn việc gán ranking category vào `#trip-stat-stops` (hiển thị đúng số trạm dừng hoặc `Chưa có dữ liệu`).
   - Loại bỏ hardcode `Xe buýt Danabus` khi thiếu căn cứ nguồn (truy xuất trung thực từ `formatRouteVehicleInfo(route)`, fail-closed về `Chưa có dữ liệu`).
@@ -22,47 +22,50 @@ Nâng cấp trải nghiệm người dùng Danabus hướng tới chuẩn consum
 
 ---
 
-## 2. Chi tiết Thay đổi Kỹ thuật
+## 2. Chi tiết Sửa đổi theo Yêu cầu Review của Team Leader
 
-1. **`index.html`**:
-   - Cập nhật nhãn nút tìm kiếm trang chủ `#btn-home-search`: Đổi từ `Tìm xe` thành `Tìm đường` kèm `aria-label="Tìm đường"`.
-   - Bọc các khối làm loãng luồng A→B trên trang chủ vào container ẩn `#home-secondary-legacy` có `aria-hidden="true"` để bảo toàn selector cho headless CDP assertions.
-   - Bổ sung khối **Primary Journey Recommendation Card** (`#journey-recommendation-card`) chứa header, thẻ tổng quan chỉ số (`#journey-summary-metrics`), danh sách timeline semantic (`#journey-timeline`), và thanh secondary actions.
-   - Đóng gói khối thông tin kỹ thuật cũ (`#trip-legacy-card`, `#trip-following-bus-row`) vào `#trip-secondary-details-card` dạng collapsible phụ, bảo toàn nguyên vẹn mọi ID phục vụ regression tests (`#trip-countdown-time`, `#trip-countdown-timer`, `#trip-fare-value`, `#trip-freq-value`, `#trip-fleet-value`, `#trip-fleet-desc`, `#trip-later-note`).
-2. **`css/app.css`**:
-   - Bổ sung quy tắc CSS cho `.journey-timeline`, `.timeline-step`, `.timeline-marker`, đường kẻ dọc kết nối chặng buýt / đi bộ chuyển tuyến, danh sách trạm trung gian và hiệu ứng xoay chevron khi toggle accordion.
-   - Đảm bảo tuân thủ tiêu chuẩn mobile-first, tap target >= 44px và đường viền accessible `:focus-visible`.
-3. **`js/app.js`**:
-   - Bổ sung `buildJourneyViewModelFromDirect(match, originText, destinationText)` và `buildJourneyViewModelFromPlanned(trip, originText, destinationText)`.
-   - Bổ sung `renderJourneyRecommendation(journey, allTrips)` render timeline stepper và cập nhật truthful semantics trên toàn bộ DOM.
-   - Sửa `renderPlannerResults`: `#trip-stat-km` dùng km cự ly thực tế; `#trip-stat-stops` dùng tổng số trạm dừng; `#trip-fleet-value` truy xuất từ `formatRouteVehicleInfo`.
-   - Cập nhật `renderTripOptions`: bổ sung nút chọn phương án `btn-select-trip` để người dùng có thể kích hoạt đổi hành trình hiển thị trên timeline chính, giữ nguyên nút `.btn-view-planned-map` cho kiểm thử tự động.
-   - Bổ sung event listeners cho các secondary actions (`#btn-journey-map`, `#btn-journey-route-detail`, `#btn-toggle-alternatives`, `#btn-toggle-tech-details`).
+Thực hiện khắc phục triệt để 6 acceptance defects do TL chỉ ra tại lượt review:
+
+1. **Khắc phục Alternatives hiển thị mặc định**:
+   - Thêm class `hidden` cho `#trip-planner-options` trong `index.html`.
+   - Cập nhật `renderTripOptions()` và `renderPlannerResults()` luôn ẩn container alternatives sau mỗi lần render/tìm kiếm; chỉ mở khi người dùng chủ động nhấn `#btn-toggle-alternatives`.
+   - Tự động reset `aria-expanded="false"` khi đổi tìm kiếm hoặc khi người dùng chọn phương án hành trình khác (`.btn-select-trip`).
+2. **Khắc phục sai nhãn số lần chuyển tuyến (Transfer Count)**:
+   - Thay thế chuỗi hard-code `Chuyển tuyến (1 lần)` tại `renderPlannerResults()` bằng biểu thức trung thực `Chuyển tuyến (${bestTrip.transfers || 1} lần)`. Hành trình 2 lần chuyển tuyến hiển thị chính xác `Chuyển tuyến (2 lần)`.
+3. **Khắc phục lỗi stale direction cho Route Detail phụ**:
+   - Đồng bộ ngay `matchedDirection` và `currentDirection` theo chiều của primary transit leg trong hành trình hiện tại (`currentJourney.direction`) tại `renderPlannerResults()` và khi chọn phương án (`btn-select-trip`).
+   - `#btn-journey-route-detail` và `#btn-trip-view-route` ưu tiên sử dụng `this.currentJourney?.direction`, hoàn toàn không bị rò rỉ chiều stale từ lần tìm kiếm trực tiếp trước đó.
+4. **Tách biệt hoàn toàn `frequencyText` và metadata chuyển tuyến**:
+   - Trong `buildJourneyViewModelFromPlanned()`, loại bỏ hoàn toàn việc gán `1 chuyển tiếp / 2 chuyển tiếp` vào trường `frequencyText`. Tần suất chỉ chứa dữ liệu tần suất chạy xe xác thực từ tuyến xe (`formatRouteFrequency`), ngược lại nhận giá trị `null`.
+   - Ngăn chặn hoàn toàn việc hiển thị cụm từ sai ngữ nghĩa như `Theo lịch: 1 chuyển tiếp` hoặc `Theo lịch: 2 chuyển tiếp`.
+5. **Khắc phục Fallback Schedule khẳng định sai dữ liệu (Fail-Closed)**:
+   - Tại `renderJourneyRecommendation()`, khi hành trình không có thông tin đi bộ, không có departure hợp lệ đang chạy và không có tần suất xác thực, nhánh fallback hiển thị trung thực `Chưa có dữ liệu` (thay vì khẳng định sai `Theo lịch công bố`).
+   - Các tin nhắn trạng thái tuyến chưa xác định (`status === 'unknown'`) không gắn tiền tố `Theo lịch:`.
+6. **Khắc phục cộng dồn cự ly toàn tuyến làm giả cự ly chặng**:
+   - `buildJourneyViewModelFromPlanned()` không còn lấy `route.distanceKm.average` hay `route.distanceKm.[direction]` của toàn bộ lộ trình tuyến để cộng dồn cho các chặng transit leg.
+   - Khi transit legs chưa có dữ liệu cự ly chặng xác thực (`segmentDistanceKm`), hệ thống thiết lập `distanceKm = null` và hiển thị fail-closed `Chưa có dữ liệu` trên `#trip-stat-km`. Cự ly chỉ hiển thị khi có dữ liệu cự ly chặng thực tế.
 
 ---
 
 ## 3. Bằng chứng Kiểm thử & Xác minh Nghiệm thu
 
-Toàn bộ các test suite từ cấp độ đơn vị, hợp đồng dữ liệu đến kiểm thử tương tác trình duyệt thực tế Headless Chrome đều đạt kết quả tuyệt đối:
+Toàn bộ các test suite từ cấp độ đơn vị, hợp đồng dữ liệu, kiểm thử hồi quy 6 lỗi review đến kiểm thử tương tác trình duyệt thực tế Headless Chrome đều đạt kết quả tuyệt đối:
 
-1. **Tìm kiếm chính xác & Fail-Closed (`scripts/test_search_correctness.py`)**:
-   - `10/10` test cases PASS (Chiều đi, chiều về, thứ tự đón/trả, validate rỗng, endpoint trùng, fail-closed khi không có tuyến, loại trừ tuyến treo).
-2. **Lịch trình & Biểu giá chính thức (`scripts/test_schedule_and_fare.py`)**:
-   - `9/9` test cases PASS (Hợp đồng dữ liệu 23 tuyến, fail-safe trước/sau giờ hoạt động, biểu giá theo chặng Tuyến 02 & 06, biểu giá trợ giá 8.000đ).
-3. **Chất lượng dữ liệu & Không gian (`scripts/test_data_quality_and_planner_readiness.py`)**:
-   - `14/14` test cases PASS (Bộ lọc trạm xác thực, tính toán khoảng cách Haversine, cô lập 19 tuyến chưa đủ điều kiện).
-4. **Bản đồ & Tọa độ GPS (`scripts/test_map_and_gps.py`)**:
-   - `11/11` test cases PASS (247 trạm xác thực, cô lập hình học unverified).
-5. **Bộ lập kế hoạch hành trình (`scripts/test_trip_planner.py`)**:
-   - `27/27` test cases PASS (Địa chỉ - địa chỉ, đa chặng, fallback mở rộng bán kính 1.500m, lọc tuyến hợp lệ).
-6. **Kiểm thử trình duyệt tương tác (`scripts/test_browser_trip_planner.py`)**:
-   - `6/6` browser checks PASS (Autocomplete POI Bách Khoa, hiển thị phương án, render Leaflet multi-leg map, đổi chiều đón-đến, fail-closed ngoại thành).
-7. **Toàn vẹn UI & Khả năng tiếp cận (`scripts/test_ui_integrity_and_accessibility.py`)**:
+1. **Bộ kiểm thử hồi quy 6 lỗi review TL (`scripts/test_task10_review_fixes.py`)**:
+   - `Check 1 [PASS]`: `#trip-planner-options` ẩn mặc định; click toggle mở/đóng và đồng bộ `aria-expanded` đúng; click chọn phương án tự động đóng alternatives và reset `aria-expanded="false"`.
+   - `Check 2 [PASS]`: Hành trình 2 lần chuyển tuyến hiển thị đúng `Chuyển tuyến (2 lần)` trên `#trip-bus-tag` và `2 lần chuyển tuyến` trên badge.
+   - `Check 3 [PASS]`: Nút `#btn-journey-route-detail` nhận đúng chiều `outbound` của hành trình hiện tại, không bị stale chiều `inbound` từ lần tìm kiếm trước.
+   - `Check 4 [PASS]`: `frequencyText` của connecting trip là `null`, UI tuyệt đối không xuất hiện cụm từ `Theo lịch: 1 chuyển tiếp` hay `Theo lịch: 2 chuyển tiếp`.
+   - `Check 5 [PASS]`: Khi thiếu schedule/frequency, UI hiển thị fail-closed `Chưa có dữ liệu`, không khẳng định `Theo lịch công bố`.
+   - `Check 6 [PASS]`: Cự ly planner không lấy cự ly toàn tuyến (hiển thị `Chưa có dữ liệu` khi không có segment km; hiển thị chính xác tổng km khi có `segmentDistanceKm`).
+   - **Kết quả: 6/6 checks PASS strictly.**
+2. **Kiểm thử trình duyệt tương tác Trip Planner (`scripts/test_browser_trip_planner.py`)**:
+   - `6/6` browser checks PASS (Autocomplete POI Bách Khoa, hiển thị phương án, render Leaflet multi-leg map, đổi chiều đón-đến, fail-closed ngoại thành, lưu ảnh minh chứng `task4_trip_planner_evidence.png`).
+3. **Toàn vẹn UI & Khả năng tiếp cận (`scripts/test_ui_integrity_and_accessibility.py`)**:
    - `100%` checks PASS: Viewport cho phép phóng to, nút có `aria-label`, vùng thông báo `aria-live`, phím Enter trên spotlight card, kiểm tra trung thực kết quả tìm tuyến (Tuyến 02 và Tuyến 21 fail-closed về `Chưa có dữ liệu`), cơ chế phục hồi lỗi mạng ngoại tuyến.
-8. **Trình duyệt kiểm tra Lịch & Giá vé (`scripts/test_browser_schedule_and_fare.py`)**:
-   - `7/7` browser checks PASS.
-9. **Kiểm thử hồi quy Task 10 (`scripts/test_task10_regression_acceptance.py --local-only`)**:
-   - `100%` Layer A deterministic checks PASS nghiêm ngặt trong 1.31 giây.
+4. **Kiểm thử hồi quy tổng hợp Task 10 (`scripts/test_task10_regression_acceptance.py --local-only`)**:
+   - Tích hợp thêm Suite A.6 chạy `test_task10_review_fixes.py`.
+   - `20/20` hạng mục trong Traceability Matrix PASS strictly; Layer A hoàn thành 100% PASS trong 6.39 giây.
 
 ---
 

@@ -2,7 +2,7 @@
 """
 Task 10 Unified Acceptance & Regression Test Runner
 Business-Logic Regression & Production Acceptance
-Task-ID: tsk_bacc9b91-9386-4e80-b7bc-5b5fc294696d
+Task-ID: tsk_d45190c7-1380-48e0-9dc7-5239307f5a4b
 
 Orchestrates 2 test layers:
 - Layer A: Local Deterministic Suites (Search, Schedule/Fare, Data Quality, Map/GPS, Task 4 Boundary Guard)
@@ -390,6 +390,12 @@ def main():
     # Suite A.5: Task 4 Boundary Guard (Item 20)
     test_task4_boundary_guard()
     passed_items.add(20)
+
+    # Suite A.6: Review Fixes Regression (Task 10 Review Defects 1-6)
+    run_cmd(
+        [sys.executable, "scripts/test_task10_review_fixes.py"],
+        "Suite A.6: Review Fixes Acceptance Verification (Task 10)"
+    )
 
     # =========================================================================
     # LAYER B: BROWSER & PRODUCTION INTEGRATION SUITES

@@ -779,7 +779,12 @@ class DanabusApp {
       this.renderTripOptions(planned.trips);
     } else {
       const optionsContainer = document.getElementById('trip-planner-options');
-      if (optionsContainer) optionsContainer.innerHTML = '';
+      if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        optionsContainer.classList.add('hidden');
+      }
+      const btnAlt = document.getElementById('btn-toggle-alternatives');
+      if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
     }
 
     // Build and render unified Journey Recommendation Timeline (Consumer-First)
@@ -799,7 +804,13 @@ class DanabusApp {
     const direction = match.matchedDirection || 'outbound';
     const dep = window.busService.calculateNextDeparture(route, { direction });
     const fare = window.busService.formatRouteFare(route);
-    const freq = window.busService.formatRouteFrequency ? window.busService.formatRouteFrequency(route, true) : 'Đang cập nhật';
+    let freqText = null;
+    if (window.busService.formatRouteFrequency) {
+      const formatted = window.busService.formatRouteFrequency(route, true);
+      if (formatted && formatted !== 'Đang cập nhật') {
+        freqText = formatted;
+      }
+    }
     const fleet = window.busService.formatRouteVehicleInfo ? window.busService.formatRouteVehicleInfo(route) : { brand: 'Chưa có dữ liệu', description: 'Phương tiện' };
     const kmVal = route.distanceKm?.average || route.distanceKm?.[direction] || route.distanceKm?.outbound || null;
     const totalStops = match.stopCount || (route.stops?.[direction]?.length) || null;
@@ -835,7 +846,7 @@ class DanabusApp {
       totalStops: totalStops,
       fareText: fare,
       fareSemantics: 'Theo lịch',
-      frequencyText: freq,
+      frequencyText: freqText,
       departure: dep,
       fleetInfo: fleet,
       intermediateStops,
@@ -871,13 +882,23 @@ class DanabusApp {
 
     const totalStops = transitLegs.reduce((sum, l) => sum + (l.stopsCount || (l.intermediateStops ? l.intermediateStops.length + 1 : 1)), 0);
 
+    // Defect 6 Fix: Only use verified segment distances, never full-route distance!
     let totalKm = null;
-    const kmSum = transitLegs.reduce((sum, l) => {
-      const km = l.route?.distanceKm?.average || l.route?.distanceKm?.[l.direction] || null;
-      return (km && sum !== null) ? sum + km : null;
-    }, 0);
-    if (kmSum && Number.isFinite(kmSum)) {
-      totalKm = Math.round(kmSum * 10) / 10;
+    const hasValidSegmentDistances = transitLegs.length > 0 && transitLegs.every(l => typeof l.segmentDistanceKm === 'number' && Number.isFinite(l.segmentDistanceKm) && l.segmentDistanceKm > 0);
+    if (hasValidSegmentDistances) {
+      const kmSum = transitLegs.reduce((sum, l) => sum + l.segmentDistanceKm, 0);
+      if (kmSum > 0 && Number.isFinite(kmSum)) {
+        totalKm = Math.round(kmSum * 10) / 10;
+      }
+    }
+
+    // Defect 4 Fix: Frequency only contains real frequency data, never transfer counts or strings!
+    let freqText = null;
+    if (isDirect && primaryRoute && window.busService.formatRouteFrequency) {
+      const formatted = window.busService.formatRouteFrequency(primaryRoute, true);
+      if (formatted && formatted !== 'Đang cập nhật') {
+        freqText = formatted;
+      }
     }
 
     return {
@@ -896,7 +917,7 @@ class DanabusApp {
       totalStops: totalStops > 0 ? totalStops : null,
       fareText: trip.fareText || '--',
       fareSemantics: 'Theo lịch',
-      frequencyText: isDirect ? (primaryRoute ? window.busService.formatRouteFrequency?.(primaryRoute, true) : 'Đang cập nhật') : (trip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp'),
+      frequencyText: freqText,
       departure: dep,
       fleetInfo: fleet,
       transfers: trip.transfers || 0,
@@ -972,7 +993,7 @@ class DanabusApp {
             <span class="text-[13px] font-bold text-emerald-700">Còn ${journey.departure.minutesUntilDeparture}p (${journey.departure.timeStr || ''})</span>
           </div>
         `;
-      } else if (journey.frequencyText && journey.frequencyText !== 'Đang cập nhật') {
+      } else if (journey.frequencyText && journey.frequencyText !== 'Đang cập nhật' && journey.frequencyText !== 'Chưa có dữ liệu') {
         extraHtml = `
           <div>
             <span class="text-[11px] text-slate-400 font-medium block">Tần suất</span>
@@ -983,7 +1004,7 @@ class DanabusApp {
         extraHtml = `
           <div>
             <span class="text-[11px] text-slate-400 font-medium block">Lịch trình</span>
-            <span class="text-[13px] font-bold text-slate-800">Theo lịch công bố</span>
+            <span class="text-[13px] font-bold text-slate-500">Chưa có dữ liệu</span>
           </div>
         `;
       }
@@ -1029,8 +1050,10 @@ class DanabusApp {
             } else {
               depText = 'Theo lịch: Hoạt động theo lịch';
             }
-          } else if (leg.departure?.message) {
+          } else if (leg.departure?.status === 'before_service' || leg.departure?.status === 'after_service' || leg.departure?.status === 'next_day') {
             depText = `Theo lịch: ${leg.departure.message}`;
+          } else if (leg.departure?.message && leg.departure?.status !== 'unknown') {
+            depText = leg.departure.message;
           }
 
           timelineStepsHtml += `
@@ -1127,6 +1150,7 @@ class DanabusApp {
     // 4. Secondary Actions toolbar
     const btnAlt = document.getElementById('btn-toggle-alternatives');
     if (btnAlt) {
+      btnAlt.setAttribute('aria-expanded', 'false');
       if (allTrips && allTrips.length > 1) {
         btnAlt.classList.remove('hidden');
         const altLabel = document.getElementById('label-toggle-alternatives');
@@ -1223,13 +1247,21 @@ class DanabusApp {
 
     if (busTag) {
       busTag.className = 'px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] font-bold flex items-center gap-1';
-      busTag.textContent = bestTrip.type === 'direct' ? 'Tuyến trực tiếp' : 'Chuyển tuyến (1 lần)';
+      busTag.textContent = bestTrip.type === 'direct' ? 'Tuyến trực tiếp' : `Chuyển tuyến (${bestTrip.transfers || 1} lần)`;
     }
 
     const origText = this.lastSearchQuery?.originText || '';
     const destText = this.lastSearchQuery?.destinationText || '';
     const journey = this.buildJourneyViewModelFromPlanned(bestTrip, origText, destText);
     this.currentJourney = journey;
+    this.matchedDirection = journey.direction;
+    this.currentDirection = journey.direction;
+
+    // Reset alternatives container and toggle button
+    const optionsContainer = document.getElementById('trip-planner-options');
+    if (optionsContainer) optionsContainer.classList.add('hidden');
+    const btnAlt = document.getElementById('btn-toggle-alternatives');
+    if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
 
     const badgeEl = document.getElementById('trip-route-badge');
     if (badgeEl) badgeEl.textContent = bestTrip.type === 'direct' ? `TUYẾN ${bestTrip.route?.routeNumber || ''}` : 'KẾT HỢP';
@@ -1257,7 +1289,9 @@ class DanabusApp {
     if (timerEl) {
       if (journey.departure?.status === 'in_service' && journey.departure.minutesUntilDeparture != null) {
         timerEl.textContent = `Theo lịch: Còn ${journey.departure.minutesUntilDeparture} phút`;
-      } else if (journey.departure?.message) {
+      } else if (journey.departure?.status === 'before_service' || journey.departure?.status === 'after_service' || journey.departure?.status === 'next_day') {
+        timerEl.textContent = `Theo lịch: ${journey.departure.message}`;
+      } else if (journey.departure?.message && journey.departure?.status !== 'unknown') {
         timerEl.textContent = `Theo lịch: ${journey.departure.message}`;
       } else {
         timerEl.textContent = 'Thời gian ước tính';
@@ -1268,7 +1302,7 @@ class DanabusApp {
     if (fareEl) fareEl.textContent = bestTrip.fareText || '--';
 
     const freqEl = document.getElementById('trip-freq-value');
-    if (freqEl) freqEl.textContent = bestTrip.type === 'direct' ? 'Trực tiếp' : (bestTrip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp');
+    if (freqEl) freqEl.textContent = journey.frequencyText || 'Chưa có dữ liệu';
 
     // Fleet: Truthful provenance, never hardcoded "Xe buýt Danabus"
     const fleetEl = document.getElementById('trip-fleet-value');
@@ -1289,8 +1323,14 @@ class DanabusApp {
     this.currentPlannedTrips = trips;
     if (!trips || trips.length === 0) {
       container.innerHTML = '';
+      container.classList.add('hidden');
       return;
     }
+
+    // Alternatives must be collapsed by default after every render/search
+    container.classList.add('hidden');
+    const btnAlt = document.getElementById('btn-toggle-alternatives');
+    if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
 
     const hasExpanded = trips.some(t => t.isExpandedRadius) || planMetadata?.isExpandedRadius;
 
@@ -1382,6 +1422,14 @@ class DanabusApp {
           const destText = this.lastSearchQuery?.destinationText || '';
           const journey = this.buildJourneyViewModelFromPlanned(trip, origText, destText);
           this.currentJourney = journey;
+          this.matchedDirection = journey.direction;
+          this.currentDirection = journey.direction;
+
+          // Collapse alternatives on select and reset toggle
+          container.classList.add('hidden');
+          const btnAlt = document.getElementById('btn-toggle-alternatives');
+          if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
+
           this.renderJourneyRecommendation(journey, this.currentPlannedTrips);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1774,7 +1822,8 @@ class DanabusApp {
     // Trip Results CTA
     document.getElementById('btn-trip-view-route')?.addEventListener('click', () => {
       if (this.selectedRoute) {
-        this.openRouteDetail(this.selectedRoute.id, this.matchedDirection || 'outbound');
+        const direction = this.currentJourney?.direction || this.matchedDirection || 'outbound';
+        this.openRouteDetail(this.selectedRoute.id, direction);
       } else if (this.currentPlannedTrip) {
         this.openPlannedTripMap(this.currentPlannedTrip);
       }
@@ -1790,9 +1839,11 @@ class DanabusApp {
     });
 
     document.getElementById('btn-journey-route-detail')?.addEventListener('click', () => {
-      const route = this.selectedRoute || this.currentPlannedTrip?.route || this.currentPlannedTrip?.legs?.find(l => l.route)?.route;
+      const journey = this.currentJourney;
+      const route = journey?.route || this.selectedRoute || this.currentPlannedTrip?.route || this.currentPlannedTrip?.legs?.find(l => l.route)?.route;
+      const direction = journey?.direction || this.matchedDirection || 'outbound';
       if (route) {
-        this.openRouteDetail(route.id, this.matchedDirection || 'outbound');
+        this.openRouteDetail(route.id, direction);
       }
     });
 

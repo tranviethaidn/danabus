@@ -48,7 +48,7 @@ from pathlib import Path
 WORKSPACE = Path(__file__).resolve().parent.parent
 PORT = 8993
 CDP_PORT = 9446
-SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task9_ui_accessibility_evidence.png"
+DEFAULT_SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task9_ui_accessibility_evidence.png"
 
 
 class SimpleWebSocket:
@@ -592,7 +592,7 @@ def test_nodejs_contract():
     print(" [PASS] formatRouteVehicleInfo and electric category provenance strictly verified")
 
 
-def test_browser_acceptance(test_diagnostic=False):
+def test_browser_acceptance(test_diagnostic=False, screenshot_path=None):
     """Run Headless Chrome CDP browser interaction & accessibility suite."""
     print("\n--- 3. HEADLESS CHROME BROWSER INTERACTION & ACCESSIBILITY TESTS ---")
     diag_screenshot = WORKSPACE / "docs" / "reports" / "task9_failure_diagnostic.png"
@@ -919,9 +919,11 @@ def test_browser_acceptance(test_diagnostic=False):
         print(" [PASS] Error state recovery successfully verified")
 
         # Check 8: Deliverable evidence screenshot
-        runner.capture_screenshot(SCREENSHOT_PATH)
-        assert os.path.exists(SCREENSHOT_PATH) and os.path.getsize(SCREENSHOT_PATH) > 10000
-        print(f" [PASS] Deliverable screenshot captured: {SCREENSHOT_PATH} ({os.path.getsize(SCREENSHOT_PATH)} bytes)")
+        target_shot = Path(screenshot_path) if screenshot_path else DEFAULT_SCREENSHOT_PATH
+        target_shot.parent.mkdir(parents=True, exist_ok=True)
+        runner.capture_screenshot(target_shot)
+        assert os.path.exists(target_shot) and os.path.getsize(target_shot) > 10000
+        print(f" [PASS] Deliverable screenshot captured: {target_shot} ({os.path.getsize(target_shot)} bytes)")
 
         print("\n======================================================================")
         print("ALL TASK 9 ACCEPTANCE CRITERIA STRICTLY VERIFIED (100% PASS)")
@@ -934,10 +936,14 @@ def test_browser_acceptance(test_diagnostic=False):
 
 
 def main():
-    test_diagnostic = "--test-diagnostic" in sys.argv
+    import argparse
+    parser = argparse.ArgumentParser(description="UI Integrity & Accessibility Acceptance Test")
+    parser.add_argument("--test-diagnostic", action="store_true", help="Trigger synthetic failure")
+    parser.add_argument("--screenshot-path", default=None, help="Custom screenshot destination")
+    args = parser.parse_args()
     test_static_integrity()
     test_nodejs_contract()
-    test_browser_acceptance(test_diagnostic=test_diagnostic)
+    test_browser_acceptance(test_diagnostic=args.test_diagnostic, screenshot_path=args.screenshot_path)
 
 
 if __name__ == "__main__":

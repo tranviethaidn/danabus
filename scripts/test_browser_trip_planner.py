@@ -19,10 +19,11 @@ import base64
 import socket
 import urllib.request
 import subprocess
+import argparse
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parent.parent
-SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task4_trip_planner_evidence.png"
+DEFAULT_SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task4_trip_planner_evidence.png"
 
 class SimpleWebSocket:
     def __init__(self, url):
@@ -192,7 +193,7 @@ class ChromeRunner:
             self.http_proc.wait()
 
 
-def run_browser_checks():
+def run_browser_checks(screenshot_path=None):
     runner = ChromeRunner()
     print("[Browser Test] Launching Headless Chrome for Task 4...")
     runner.start()
@@ -257,12 +258,17 @@ def run_browser_checks():
         time.sleep(0.5)
         runner.evaluate("document.querySelector('.btn-view-planned-map')?.click()")
         time.sleep(0.5)
-        runner.capture_screenshot(SCREENSHOT_PATH)
-        print(f"[Check 6] Deliverable screenshot saved to {SCREENSHOT_PATH} ({os.path.getsize(SCREENSHOT_PATH)} bytes)")
+        target_shot = Path(screenshot_path) if screenshot_path else DEFAULT_SCREENSHOT_PATH
+        target_shot.parent.mkdir(parents=True, exist_ok=True)
+        runner.capture_screenshot(target_shot)
+        print(f"[Check 6] Deliverable screenshot saved to {target_shot} ({os.path.getsize(target_shot)} bytes)")
 
         print("\n>>> ALL TASK 4 BROWSER ACCEPTANCE CHECKS PASSED (6/6) <<<")
     finally:
         runner.stop()
 
 if __name__ == "__main__":
-    run_browser_checks()
+    parser = argparse.ArgumentParser(description="Browser Trip Planner Acceptance Test")
+    parser.add_argument("--screenshot-path", default=None, help="Custom screenshot destination")
+    args = parser.parse_args()
+    run_browser_checks(screenshot_path=args.screenshot_path)

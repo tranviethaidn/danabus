@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Production Runtime Verification for Task 005: Address-to-Address Trip Planner & PWA v11
+Production Runtime Verification for Task 011: End-to-End Release Acceptance & PWA v12
 Target: https://danabus.638686.xyz/
 Verifies:
 0. Staged deploy order invariant: payload -> manifest -> index.html (atomic) -> sw.js (atomic, last)
 1. First-install Service Worker takeover, controllerchange, and reload settled lifecycle
 2. Feature markers of TransitPlanner and multi-leg UI
 3. Live planner E2E execution and Leaflet multi-leg map rendering (bounded predicates)
-4. Fresh install precache in isolated profile (danabus-cache-v11)
-5. Warm-cache migration from v10 (and v4-v9) to v11 with clean purge
+4. Fresh install precache in isolated profile (danabus-cache-v12)
+5. Warm-cache migration from v4-v11 to v12 with clean purge
 6. Offline fallback resilience for app shell, scripts, styles, and datasets
 7. Deliverable screenshot capture
 """
@@ -28,7 +28,7 @@ from pathlib import Path
 
 TARGET_URL = "https://danabus.638686.xyz/"
 WORKSPACE = Path(__file__).resolve().parent.parent
-SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task5_production_pwa_v11_evidence.png"
+DEFAULT_SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "evidence" / "task-011" / "production_pwa_v12_evidence.png"
 
 
 def verify_deploy_order_invariant():
@@ -38,7 +38,7 @@ def verify_deploy_order_invariant():
     2. manifest.json
     3. atomic index.html swap
     4. atomic sw.js swap (LAST)
-    Ensuring sw.js v11 can never precache an outdated index.html.
+    Ensuring sw.js v12 can never precache an outdated index.html.
     """
     deploy_script = (WORKSPACE / "scripts" / "deploy_danabus_production.sh").read_text(encoding="utf-8")
 
@@ -285,7 +285,7 @@ class ChromeBrowserSession:
             shutil.rmtree(self.user_data_dir, ignore_errors=True)
 
 
-def test_production_single(port=9455, iteration_label="", target_url=None):
+def test_production_single(port=9455, iteration_label="", target_url=None, screenshot_path=None):
     url = target_url or TARGET_URL
     prefix = f"[{iteration_label}] " if iteration_label else ""
     print(f"{prefix}=== Danabus Production Runtime Verification ({url}) ===\n")
@@ -530,9 +530,11 @@ def test_production_single(port=9455, iteration_label="", target_url=None):
         shot_res = session.call("Page.captureScreenshot", {"format": "png"})
         if shot_res.get("data"):
             img_bytes = base64.b64decode(shot_res["data"])
-            with open(SCREENSHOT_PATH, "wb") as f:
+            save_path = Path(screenshot_path) if screenshot_path else DEFAULT_SCREENSHOT_PATH
+            save_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(save_path, "wb") as f:
                 f.write(img_bytes)
-            print(f"{prefix} -> Screenshot saved to {SCREENSHOT_PATH} ({len(img_bytes)} bytes)")
+            print(f"{prefix} -> Screenshot saved to {save_path} ({len(img_bytes)} bytes)")
             print(f"{prefix} [PASS] Check 7: Screenshot captured.\n")
 
         print(f"{prefix}>>> ALL PRODUCTION RUNTIME CHECKS PASSED (8/8) <<<\n")
@@ -547,6 +549,7 @@ def main():
     parser.add_argument("--repeat", type=int, default=1, help="Number of times to run verification from fresh profiles")
     parser.add_argument("--base-port", type=int, default=9455, help="Base CDP port")
     parser.add_argument("--target-url", default=TARGET_URL, help="Target URL to test")
+    parser.add_argument("--screenshot-path", default=None, help="Custom screenshot destination")
     args = parser.parse_args()
 
     total_runs = max(1, args.repeat)
@@ -555,7 +558,7 @@ def main():
         port = args.base_port + r
         label = f"RUN {r+1}/{total_runs}" if total_runs > 1 else ""
         t0 = time.time()
-        success = test_production_single(port=port, iteration_label=label, target_url=args.target_url)
+        success = test_production_single(port=port, iteration_label=label, target_url=args.target_url, screenshot_path=args.screenshot_path)
         dur = time.time() - t0
         assert success, f"Run {r+1} failed"
         print(f"--- Completed run {r+1}/{total_runs} in {dur:.2f}s ---\n")

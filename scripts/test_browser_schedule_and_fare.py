@@ -26,7 +26,7 @@ from pathlib import Path
 WORKSPACE = Path(__file__).resolve().parent.parent
 PORT = 8992
 CDP_PORT = 9445
-SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task7_schedule_fare_evidence.png"
+DEFAULT_SCREENSHOT_PATH = WORKSPACE / "docs" / "reports" / "task7_schedule_fare_evidence.png"
 
 
 class SimpleWebSocket:
@@ -403,7 +403,7 @@ class ChromeRunner:
             self.temp_dir = None
 
 
-def run_checks(test_diagnostic=False):
+def run_checks(test_diagnostic=False, screenshot_path=None):
     runner = ChromeRunner()
     print("[Browser Test] Launching Headless Chrome & connecting CDP...")
     diag_screenshot = WORKSPACE / "docs" / "reports" / "task7_failure_diagnostic.png"
@@ -593,8 +593,10 @@ def run_checks(test_diagnostic=False):
         assert trip_freq_missing == "Đang cập nhật", f"Expected 'Đang cập nhật' when frequency missing, got: {trip_freq_missing}"
 
         # Check 7: Screenshot Capture
-        runner.capture_screenshot(SCREENSHOT_PATH)
-        print(f"[Check 7] Deliverable screenshot saved to {SCREENSHOT_PATH} ({os.path.getsize(SCREENSHOT_PATH)} bytes)")
+        target_shot = Path(screenshot_path) if screenshot_path else DEFAULT_SCREENSHOT_PATH
+        target_shot.parent.mkdir(parents=True, exist_ok=True)
+        runner.capture_screenshot(target_shot)
+        print(f"[Check 7] Deliverable screenshot saved to {target_shot} ({os.path.getsize(target_shot)} bytes)")
 
         print("\n>>> ALL TASK 7 BROWSER ACCEPTANCE CHECKS PASSED (7/7) <<<")
     except Exception as e:
@@ -605,5 +607,9 @@ def run_checks(test_diagnostic=False):
 
 
 if __name__ == "__main__":
-    test_diag = "--test-diagnostic" in sys.argv
-    run_checks(test_diagnostic=test_diag)
+    import argparse
+    parser = argparse.ArgumentParser(description="Browser Schedule & Fare Acceptance Test")
+    parser.add_argument("--test-diagnostic", action="store_true", help="Trigger synthetic failure")
+    parser.add_argument("--screenshot-path", default=None, help="Custom screenshot destination")
+    args = parser.parse_args()
+    run_checks(test_diagnostic=args.test_diagnostic, screenshot_path=args.screenshot_path)

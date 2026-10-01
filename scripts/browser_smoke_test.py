@@ -23,10 +23,11 @@ import struct
 import shutil
 import subprocess
 import urllib.request
+from pathlib import Path
 
 PORT = 8991
 CDP_PORT = 9444
-SCREENSHOT_PATH = "docs/reports/browser_smoke_evidence.png"
+DEFAULT_SCREENSHOT_PATH = "docs/reports/browser_smoke_evidence.png"
 
 class SimpleWebSocket:
     """Lightweight RFC 6455 WebSocket client using Python standard library socket."""
@@ -150,7 +151,7 @@ def preflight_check():
     print(f"[Preflight OK] Using browser binary: {browser_bin}")
     return browser_bin
 
-def run_browser_smoke_test(target_url=None):
+def run_browser_smoke_test(target_url=None, screenshot_path=None):
     browser_bin = preflight_check()
     if not browser_bin:
         return False
@@ -653,9 +654,11 @@ def run_browser_smoke_test(target_url=None):
         shot_res = send_cdp('Page.captureScreenshot', {'format': 'png'})
         if shot_res.get('data'):
             img_bytes = base64.b64decode(shot_res['data'])
-            with open(SCREENSHOT_PATH, 'wb') as f:
+            save_path = Path(screenshot_path) if screenshot_path else Path(DEFAULT_SCREENSHOT_PATH)
+            save_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(save_path, 'wb') as f:
                 f.write(img_bytes)
-            print(f" -> Screenshot saved to {SCREENSHOT_PATH} ({len(img_bytes)} bytes)")
+            print(f" -> Screenshot saved to {save_path} ({len(img_bytes)} bytes)")
 
         ws.close()
         print("\n>>> ALL BROWSER SMOKE CHECKS PASSED (8/8) <<<")
@@ -689,6 +692,12 @@ def run_browser_smoke_test(target_url=None):
             shutil.rmtree(temp_profile_dir, ignore_errors=True)
 
 if __name__ == '__main__':
-    target = sys.argv[1] if len(sys.argv) > 1 else None
-    success = run_browser_smoke_test(target)
+    import argparse
+    parser = argparse.ArgumentParser(description="Danabus Browser Smoke Test")
+    parser.add_argument("target", nargs="?", default=None, help="Target URL (e.g. https://danabus.638686.xyz/)")
+    parser.add_argument("--target-url", default=None, help="Target URL")
+    parser.add_argument("--screenshot-path", default=None, help="Custom screenshot destination")
+    args = parser.parse_args()
+    target = args.target_url or args.target
+    success = run_browser_smoke_test(target_url=target, screenshot_path=args.screenshot_path)
     sys.exit(0 if success else 1)

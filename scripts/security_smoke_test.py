@@ -16,6 +16,8 @@ import ssl
 import http.client
 import urllib.parse
 
+import socket
+
 HOST_HEADER = "danabus.638686.xyz"
 TARGET_HOST = "127.0.0.1"
 TARGET_PORT_HTTPS = 443
@@ -60,14 +62,24 @@ POSITIVE_CASES = [
 ]
 
 def create_ssl_context():
+    """Returns strict TLS context with full certificate and hostname validation."""
     ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
+    ctx.check_hostname = True
+    ctx.verify_mode = ssl.CERT_REQUIRED
     return ctx
+
+class DirectOriginHTTPSConnection(http.client.HTTPSConnection):
+    """
+    Direct-origin / server-root connection to local Nginx (127.0.0.1:443).
+    Strictly verifies TLS certificate against HOST_HEADER via SNI wrap_socket.
+    """
+    def connect(self):
+        self.sock = socket.create_connection((self.host, self.port), self.timeout)
+        self.sock = self._context.wrap_socket(self.sock, server_hostname=HOST_HEADER)
 
 def run_https_request(path, method="GET"):
     ctx = create_ssl_context()
-    conn = http.client.HTTPSConnection(TARGET_HOST, TARGET_PORT_HTTPS, context=ctx, timeout=10)
+    conn = DirectOriginHTTPSConnection(TARGET_HOST, TARGET_PORT_HTTPS, context=ctx, timeout=10)
     headers = {"Host": HOST_HEADER, "User-Agent": "DanabusSecuritySmokeTest/1.0"}
     conn.request(method, path, headers=headers)
     resp = conn.getresponse()
@@ -142,18 +154,47 @@ def test_http_redirect():
         print(f" [FAIL] HTTP Port 80 Redirect -> {status} Location: {location}")
         return False
 
+def test_public_https_tls():
+    print(f"\n--- 4. RUNNING PUBLIC HTTPS & TLS CERTIFICATE VALIDATION (https://{HOST_HEADER}/) ---")
+    ctx = create_ssl_context()
+    try:
+        conn = http.client.HTTPSConnection(HOST_HEADER, 443, context=ctx, timeout=10)
+        conn.request("GET", "/", headers={"User-Agent": "DanabusSecuritySmokeTest/1.0"})
+        resp = conn.getresponse()
+        cert = conn.sock.getpeercert()
+        cipher = conn.sock.cipher()
+        conn.close()
+
+        status_ok = (resp.status == 200)
+        cert_san = [item[1] for item in cert.get('subjectAltName', ()) if item[0] == 'DNS']
+        cert_expiry = cert.get('notAfter')
+        if status_ok:
+            print(f" [PASS] Public HTTPS Endpoint: Status {resp.status} OK")
+            print(f" [PASS] Public TLS Cipher: {cipher[0]} ({resp.version})")
+            print(f" [PASS] Public TLS Certificate SAN: {cert_san}, Expiry: {cert_expiry}")
+            return True
+        else:
+            print(f" [FAIL] Public HTTPS Endpoint returned status: {resp.status}")
+            return False
+    except Exception as e:
+        print(f" [FAIL] Public HTTPS TLS verification failed: {e}")
+        return False
+
 def main():
     print("=" * 80)
     print("DANABUS PRODUCTION SECURITY HARDENING VERIFICATION")
-    print(f"Target: https://{HOST_HEADER} ({TARGET_HOST})")
+    print(f"Direct Origin / Server-Root Target: https://{HOST_HEADER} ({TARGET_HOST}:{TARGET_PORT_HTTPS})")
+    print(f"Public Endpoint Target: https://{HOST_HEADER}/")
+    print(f"TLS Certificate Validation: STRICT (ssl.CERT_REQUIRED, check_hostname=True)")
     print("=" * 80)
     
     p1 = test_negative_cases()
     p2 = test_positive_cases()
     p3 = test_http_redirect()
+    p4 = test_public_https_tls()
     
     print("\n" + "=" * 80)
-    if p1 and p2 and p3:
+    if p1 and p2 and p3 and p4:
         print(">>> ALL SECURITY SMOKE CHECKS PASSED SUCCESSFULLY (100%) <<<")
         print("=" * 80)
         return 0

@@ -147,13 +147,14 @@ class ChromeBrowserSession:
         if not os.path.exists(chrome_bin):
             chrome_bin = shutil.which("chromium") or shutil.which("chromium-browser") or "google-chrome"
 
+        # Enforce strict TLS certificate validation (no --ignore-certificate-errors)
+        # --host-rules maps danabus.638686.xyz to 127.0.0.1 for local Nginx origin/server-root verification
         cmd = [
             chrome_bin,
             "--headless=new",
             "--no-sandbox",
             "--disable-gpu",
             "--disable-dev-shm-usage",
-            "--ignore-certificate-errors",
             "--host-rules=MAP danabus.638686.xyz 127.0.0.1",
             f"--user-data-dir={self.user_data_dir}",
             "--remote-allow-origins=*",

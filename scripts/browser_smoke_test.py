@@ -177,13 +177,14 @@ def run_browser_smoke_test(target_url=None, screenshot_path=None):
     import tempfile
     temp_profile_dir = tempfile.mkdtemp(prefix="chrome_smoke_")
 
+    # Enforce strict TLS certificate validation (no --ignore-certificate-errors)
+    # --host-rules maps danabus.638686.xyz to 127.0.0.1 for local Nginx origin/server-root verification
     chrome_proc = subprocess.Popen([
         browser_bin,
         '--headless=new',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
-        '--ignore-certificate-errors',
         '--host-rules=MAP danabus.638686.xyz 127.0.0.1',
         f'--user-data-dir={temp_profile_dir}',
         '--remote-allow-origins=*',

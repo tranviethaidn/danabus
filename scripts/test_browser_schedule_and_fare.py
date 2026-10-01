@@ -151,7 +151,6 @@ class ChromeRunner:
             "--disable-default-apps",
             "--no-first-run",
             "--no-default-browser-check",
-            "--ignore-certificate-errors",
             f"--user-data-dir={self.profile_dir}",
             "--remote-allow-origins=*",
             f"--remote-debugging-port={CDP_PORT}",

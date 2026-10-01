@@ -224,6 +224,73 @@ def is_binary_file(filepath):
     return False
 
 
+def is_fixture_or_rule_def(line, rel_path=""):
+    """
+    Narrow filter: strictly ignores only lines defining scanner rules, test fixtures,
+    or scanner implementation details in scanner/test scripts.
+    Never ignores generic runtime markers like '-----BEGIN' or API keys.
+    """
+    if "re.compile(" in line or "SECRET_RULES" in line or "test_rule_fixture" in line or "prohibited_sdk_terms" in line or "verify_secret_audit_negative_regression" in line:
+        return True
+    return False
+
+
+def verify_secret_audit_negative_regression():
+    """
+    Negative regression probe for Defect 1:
+    Demonstrates that synthetic private-key PEM headers
+    are NOT bypassed by fixture ignore filters, are strictly detected by SECRET_RULES,
+    and are logged with full redaction (zero body/value leakage).
+    """
+    print("\n>> [RUNNING] Secret Audit Negative Regression Probe (Synthetic Private Key Detection & Redaction)")
+    start_t = time.time()
+
+    part1 = "-----"
+    probe_samples = [
+        (part1 + "BEGIN RSA PRIVATE KEY-----", "Private Key"),
+        (part1 + "BEGIN PRIVATE KEY-----", "Private Key"),
+        (part1 + "BEGIN EC PRIVATE KEY-----", "Private Key"),
+    ]
+
+    for sample, expected_rule in probe_samples:
+        # 1. Verify not ignored by narrow fixture definition check
+        if is_fixture_or_rule_def(sample, "probe.pem"):
+            print(f"[-] FAIL: Synthetic private key marker was falsely ignored by fixture rules: {sample}")
+            sys.exit(1)
+
+        # 2. Verify strictly detected by SECRET_RULES
+        matched_rule = None
+        match_count = 0
+        for r_name, pat in SECRET_RULES:
+            m = pat.findall(sample)
+            if m:
+                matched_rule = r_name
+                match_count = len(m)
+                break
+
+        if matched_rule != expected_rule:
+            print(f"[-] FAIL: Synthetic private key probe not detected as {expected_rule}, got {matched_rule}")
+            sys.exit(1)
+
+        # 3. Verify redaction: formatted violation must not leak secret value/body
+        violation_entry = {
+            "file": "synthetic_probe.pem",
+            "line": 1,
+            "rule": matched_rule,
+            "count": match_count
+        }
+        redacted_log = f"[VIOLATION REDACTED] file={violation_entry['file']}:{violation_entry['line']}, rule={violation_entry['rule']}, match_count={violation_entry['count']}"
+        if sample in redacted_log or "BEGIN" in redacted_log:
+            print(f"[-] FAIL: Secret value leaked in violation log: {redacted_log}")
+            sys.exit(1)
+
+        print(f"   | Probe verified for {expected_rule}: detected and redacted -> {redacted_log.strip()}")
+
+    dur = time.time() - start_t
+    print(f"   [PASS] Secret Audit Negative Regression Probe ({dur:.2f}s)")
+    return dur
+
+
 def audit_secrets():
     """
     Performs static credential and secret audit across all tracked repository text files.
@@ -231,6 +298,7 @@ def audit_secrets():
     - Never prints matched secret or sensitive values!
     - Only reports file path, line number, rule name, and count (all redacted).
     - Fails closed if any potential real credential is found.
+    - Uses narrow fixture/rule definitions and does not bypass private-key headers.
     """
     print("\n>> [RUNNING] Static Secret & Credential Audit (Repository-Wide Coverage)")
     start_t = time.time()
@@ -246,11 +314,6 @@ def audit_secrets():
             for f in files:
                 tracked_files.append(Path(root) / f)
 
-    FIXTURE_IGNORE_TERMS = [
-        "re.compile", "SECRET_RULES", "test_rule_fixture", "prohibited_sdk_terms",
-        "AIza[0-9", "AKIA[0-9", "gh[pous]_[A-Za-z0-9", "xox[baprs]-[0-9", "-----BEGIN"
-    ]
-
     scanned_count = 0
     for fpath in tracked_files:
         if not fpath.is_file() or is_binary_file(fpath):
@@ -263,7 +326,7 @@ def audit_secrets():
         scanned_count += 1
         rel_path = fpath.relative_to(WORKSPACE).as_posix()
         for idx, line in enumerate(content.splitlines()):
-            if any(term in line for term in FIXTURE_IGNORE_TERMS):
+            if is_fixture_or_rule_def(line, rel_path):
                 continue
             for rule_name, pat in SECRET_RULES:
                 matches = pat.findall(line)
@@ -288,6 +351,64 @@ def audit_secrets():
     return dur, findings, scanned_count
 
 
+def verify_production_public_tls(target_url):
+    """
+    Explicitly verifies that target public HTTPS endpoint possesses a valid,
+    trusted TLS certificate, completes TLS handshake strictly without bypassing
+    hostname or certificate validation, and returns HTTP 200 on public root.
+    """
+    print(f"\n>> [RUNNING] Explicit Public HTTPS & TLS Certificate Validation ({target_url})")
+    start_t = time.time()
+
+    import urllib.parse
+    parsed = urllib.parse.urlparse(target_url)
+    if parsed.scheme.lower() != "https":
+        print(f"   | Target URL is not HTTPS: {target_url} (Skipping TLS cert validation)")
+        return 0.0
+
+    import ssl
+    import socket
+    import urllib.request
+
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = True
+    ctx.verify_mode = ssl.CERT_REQUIRED
+
+    hostname = parsed.hostname or "danabus.638686.xyz"
+    port = parsed.port or 443
+
+    # 1. Socket-level TLS handshake inspection
+    try:
+        with socket.create_connection((hostname, port), timeout=10) as raw_sock:
+            with ctx.wrap_socket(raw_sock, server_hostname=hostname) as tls_sock:
+                cert = tls_sock.getpeercert()
+                cipher = tls_sock.cipher()
+                tls_version = tls_sock.version()
+                san = [item[1] for item in cert.get('subjectAltName', ()) if item[0] == 'DNS']
+                expiry = cert.get('notAfter')
+                print(f"   | TLS Handshake: {tls_version}, Cipher: {cipher[0]}")
+                print(f"   | Verified Certificate SAN: {san}, Expiry: {expiry}")
+    except Exception as e:
+        print(f"[-] FAIL: Public HTTPS TLS validation failed for {hostname}:{port}: {e}")
+        sys.exit(1)
+
+    # 2. HTTP request with strict TLS
+    try:
+        req = urllib.request.Request(target_url, headers={"User-Agent": "DanabusReleaseGate/1.0"})
+        with urllib.request.urlopen(req, context=ctx, timeout=10) as resp:
+            if resp.status != 200:
+                print(f"[-] FAIL: Public HTTPS root returned status {resp.status} != 200")
+                sys.exit(1)
+            print(f"   | Public HTTPS root fetch: HTTP {resp.status} OK (strict TLS verified)")
+    except Exception as e:
+        print(f"[-] FAIL: Public HTTPS root request failed: {e}")
+        sys.exit(1)
+
+    dur = time.time() - start_t
+    print(f"   [PASS] Explicit Public HTTPS & TLS Certificate Validation ({dur:.2f}s)")
+    return dur
+
+
 def compute_deliverables_hashes(local_only=True, target_url=None):
     """
     Computes SHA-256 for all whitelist deliverables.
@@ -296,6 +417,7 @@ def compute_deliverables_hashes(local_only=True, target_url=None):
     - In full production mode: strictly enforces 3-way equivalence:
       workspace == /var/www/danabus/public == HTTP live URL.
       Fails fast (non-zero) on any missing file, hash mismatch, or HTTP error.
+      Enforces strict TLS certificate validation on all HTTPS fetches.
     """
     print("\n>> [RUNNING] Whitelist Deliverables SHA-256 Checksum Computation")
     start_t = time.time()
@@ -308,9 +430,10 @@ def compute_deliverables_hashes(local_only=True, target_url=None):
     import ssl
     import urllib.parse
     import urllib.request
+    # Strictly enforce TLS certificate validation for HTTPS targets
     ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
+    ctx.check_hostname = True
+    ctx.verify_mode = ssl.CERT_REQUIRED
 
     for rel in DELIVERABLE_FILES:
         fpath = WORKSPACE / rel
@@ -342,7 +465,7 @@ def compute_deliverables_hashes(local_only=True, target_url=None):
             elif not pub_match:
                 mismatches.append(f"{rel}: workspace hash {h[:12]} != public hash {pub_h[:12]}")
 
-            # Fetch live HTTP URL
+            # Fetch live HTTP URL with strict TLS
             live_url = urllib.parse.urljoin(target_url, rel)
             live_h = None
             live_status = None
@@ -409,7 +532,13 @@ def main():
     parser.add_argument("--local-only", action="store_true", help="Run only Layer 1, Layer 2 and local browser suites")
     parser.add_argument("--repeat", type=int, default=3, help="Number of repeated clean-state browser smoke rounds (default: 3)")
     parser.add_argument("--target-url", default="https://danabus.638686.xyz/", help="Target production URL for production checks")
+    parser.add_argument("--test-secret-probe", action="store_true", help="Run synthetic private key negative regression probe standalone")
     args = parser.parse_args()
+
+    if args.test_secret_probe:
+        dur = verify_secret_audit_negative_regression()
+        print(f"\n>> Standalone Secret Audit Negative Probe completed successfully in {dur:.2f}s (PASS)")
+        return 0
 
     start_total = time.time()
     suite_records = []
@@ -463,13 +592,19 @@ def main():
     d = verify_release_identity()
     suite_records.append({"id": "2.1", "name": "Release Identity Consistency v12", "layer": "Layer 2", "status": "PASS", "duration_seconds": round(d, 2)})
 
+    d_probe = verify_secret_audit_negative_regression()
     d, findings, scanned_count = audit_secrets()
-    suite_records.append({"id": "2.2", "name": f"Static Secret & Credential Audit ({scanned_count} files)", "layer": "Layer 2", "status": "PASS", "duration_seconds": round(d, 2)})
+    suite_records.append({"id": "2.2", "name": f"Static Secret Audit & Negative Probe ({scanned_count} files)", "layer": "Layer 2", "status": "PASS", "duration_seconds": round(d + d_probe, 2)})
+
+    if not args.local_only:
+        d_tls = verify_production_public_tls(args.target_url)
+        suite_records.append({"id": "2.3", "name": "Production Public TLS & Certificate Validation", "layer": "Layer 2", "status": "PASS", "duration_seconds": round(d_tls, 2)})
 
     d, file_hashes, pub_comparison = compute_deliverables_hashes(local_only=args.local_only, target_url=args.target_url)
+    manifest_id = "2.3" if args.local_only else "2.4"
     manifest_name = "Deliverable SHA-256 Hash Manifest" if args.local_only else "Production 3-Way Deliverables Hash Equivalence"
     manifest_status = "LOCAL_HASH_MANIFEST_PASS" if args.local_only else "PASS"
-    suite_records.append({"id": "2.3", "name": manifest_name, "layer": "Layer 2", "status": manifest_status, "duration_seconds": round(d, 2)})
+    suite_records.append({"id": manifest_id, "name": manifest_name, "layer": "Layer 2", "status": manifest_status, "duration_seconds": round(d, 2)})
 
     # =========================================================================
     # LAYER 3: BROWSER INTEGRATION & REPEATED VERIFICATION

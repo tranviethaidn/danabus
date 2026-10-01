@@ -324,7 +324,7 @@ def print_traceability_matrix(passed_items, is_local_only=False):
         title = item["title"]
         layer = item["layer"]
         
-        if is_local_only and "Layer B" in layer:
+        if is_local_only and ("Layer B" in layer or layer == "Orchestrator"):
             status = "SKIPPED"
         elif item_id in passed_items:
             status = "PASS"

@@ -782,7 +782,368 @@ class DanabusApp {
       if (optionsContainer) optionsContainer.innerHTML = '';
     }
 
+    // Build and render unified Journey Recommendation Timeline (Consumer-First)
+    const journey = this.buildJourneyViewModelFromDirect(match, originText, destinationText);
+    this.currentJourney = journey;
+    this.currentPlannedTrip = planned?.trips?.[0] || null;
+    this.renderJourneyRecommendation(journey, planned?.trips || []);
+
     this.navigateTo('trip-results');
+  }
+
+  // =========================================================================
+  // TASK 10: UNIFIED JOURNEY VIEWMODEL BUILDERS & RENDERER
+  // =========================================================================
+  buildJourneyViewModelFromDirect(match, originText, destinationText) {
+    const route = match.route || match;
+    const direction = match.matchedDirection || 'outbound';
+    const dep = window.busService.calculateNextDeparture(route, { direction });
+    const fare = window.busService.formatRouteFare(route);
+    const freq = window.busService.formatRouteFrequency ? window.busService.formatRouteFrequency(route, true) : 'Đang cập nhật';
+    const fleet = window.busService.formatRouteVehicleInfo ? window.busService.formatRouteVehicleInfo(route) : { brand: 'Chưa có dữ liệu', description: 'Phương tiện' };
+    const kmVal = route.distanceKm?.average || route.distanceKm?.[direction] || route.distanceKm?.outbound || null;
+    const totalStops = match.stopCount || (route.stops?.[direction]?.length) || null;
+    const routeDuration = route.durationMinutes || route.duration || null;
+
+    let intermediateStops = [];
+    if (Array.isArray(route.stops?.[direction])) {
+      const stopsList = route.stops[direction];
+      const oName = typeof match.originStop === 'string' ? match.originStop : (match.originStop?.name || originText);
+      const dName = typeof match.destinationStop === 'string' ? match.destinationStop : (match.destinationStop?.name || destinationText);
+      const oIdx = match.originIndex != null ? match.originIndex : stopsList.findIndex(s => (s.name || s) === oName);
+      const dIdx = match.destinationIndex != null ? match.destinationIndex : stopsList.findIndex(s => (s.name || s) === dName);
+      if (oIdx >= 0 && dIdx > oIdx) {
+        intermediateStops = stopsList.slice(oIdx + 1, dIdx).map(s => typeof s === 'string' ? s : s.name);
+      }
+    }
+
+    const originStopName = typeof match.originStop === 'string' ? match.originStop : (match.originStop?.name || originText);
+    const destinationStopName = typeof match.destinationStop === 'string' ? match.destinationStop : (match.destinationStop?.name || destinationText);
+
+    return {
+      sourceType: 'direct',
+      isDirect: true,
+      route,
+      direction,
+      originName: originText,
+      destinationName: destinationText,
+      boardingStopName: originStopName,
+      alightingStopName: destinationStopName,
+      durationMinutes: routeDuration,
+      durationSemantics: routeDuration ? 'Ước tính' : null,
+      distanceKm: kmVal,
+      totalStops: totalStops,
+      fareText: fare,
+      fareSemantics: 'Theo lịch',
+      frequencyText: freq,
+      departure: dep,
+      fleetInfo: fleet,
+      intermediateStops,
+      transfers: 0,
+      legs: [
+        {
+          type: 'transit',
+          route,
+          routeNumber: route.routeNumber,
+          direction,
+          boardingStop: { name: originStopName },
+          alightingStop: { name: destinationStopName },
+          stopsCount: totalStops,
+          intermediateStops,
+          departure: dep,
+          fareText: fare,
+          fleetInfo: fleet
+        }
+      ]
+    };
+  }
+
+  buildJourneyViewModelFromPlanned(trip, originText, destinationText) {
+    const isDirect = trip.type === 'direct';
+    const legs = trip.legs || [];
+    const transitLegs = legs.filter(l => l.type === 'transit');
+    const firstTransit = transitLegs[0] || null;
+    const primaryRoute = firstTransit?.route || trip.route || null;
+    const primaryDirection = firstTransit?.direction || 'outbound';
+
+    const dep = primaryRoute ? window.busService.calculateNextDeparture(primaryRoute, { direction: primaryDirection }) : null;
+    const fleet = primaryRoute && window.busService.formatRouteVehicleInfo ? window.busService.formatRouteVehicleInfo(primaryRoute) : { brand: 'Chưa có dữ liệu', description: 'Phương tiện' };
+
+    const totalStops = transitLegs.reduce((sum, l) => sum + (l.stopsCount || (l.intermediateStops ? l.intermediateStops.length + 1 : 1)), 0);
+
+    let totalKm = null;
+    const kmSum = transitLegs.reduce((sum, l) => {
+      const km = l.route?.distanceKm?.average || l.route?.distanceKm?.[l.direction] || null;
+      return (km && sum !== null) ? sum + km : null;
+    }, 0);
+    if (kmSum && Number.isFinite(kmSum)) {
+      totalKm = Math.round(kmSum * 10) / 10;
+    }
+
+    return {
+      sourceType: 'planner',
+      isDirect,
+      rawTrip: trip,
+      route: primaryRoute,
+      direction: primaryDirection,
+      originName: trip.legs[0]?.fromLabel || originText,
+      destinationName: trip.legs[trip.legs.length - 1]?.toLabel || destinationText,
+      durationMinutes: trip.totalDurationMinutes,
+      durationSemantics: 'Ước tính',
+      totalWalkingMeters: trip.totalWalkingMeters,
+      walkingSemantics: 'Ước tính',
+      distanceKm: totalKm,
+      totalStops: totalStops > 0 ? totalStops : null,
+      fareText: trip.fareText || '--',
+      fareSemantics: 'Theo lịch',
+      frequencyText: isDirect ? (primaryRoute ? window.busService.formatRouteFrequency?.(primaryRoute, true) : 'Đang cập nhật') : (trip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp'),
+      departure: dep,
+      fleetInfo: fleet,
+      transfers: trip.transfers || 0,
+      legs: legs
+    };
+  }
+
+  renderJourneyRecommendation(journey, allTrips = []) {
+    const card = document.getElementById('journey-recommendation-card');
+    if (!card) return;
+
+    const escapeHtml = (str) => {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
+    // 1. Badge
+    const badgeEl = document.getElementById('journey-type-badge');
+    if (badgeEl) {
+      if (journey.isDirect) {
+        badgeEl.textContent = 'Tuyến trực tiếp';
+        badgeEl.className = 'px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[11px] border border-emerald-100';
+      } else {
+        badgeEl.textContent = `${journey.transfers} lần chuyển tuyến`;
+        badgeEl.className = 'px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold text-[11px] border border-blue-100';
+      }
+    }
+
+    // 2. Summary Metrics (Truthful Semantics: Ước tính / Theo lịch / Chưa có dữ liệu)
+    const metricsEl = document.getElementById('journey-summary-metrics');
+    if (metricsEl) {
+      let durationHtml = '';
+      if (journey.durationMinutes) {
+        durationHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Thời gian</span>
+            <span class="text-[13px] font-bold text-slate-800">Ước tính: ~${journey.durationMinutes} phút</span>
+          </div>
+        `;
+      } else {
+        durationHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Thời gian</span>
+            <span class="text-[13px] font-bold text-slate-500">Chưa có dữ liệu</span>
+          </div>
+        `;
+      }
+
+      const fareHtml = `
+        <div>
+          <span class="text-[11px] text-slate-400 font-medium block">Vé lượt</span>
+          <span class="text-[13px] font-bold text-slate-800">${escapeHtml(journey.fareText || 'Chưa có dữ liệu')}</span>
+        </div>
+      `;
+
+      let extraHtml = '';
+      if (journey.totalWalkingMeters) {
+        extraHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Đi bộ</span>
+            <span class="text-[13px] font-bold text-slate-800">Ước tính: ~${journey.totalWalkingMeters}m</span>
+          </div>
+        `;
+      } else if (journey.departure?.status === 'in_service' && journey.departure.minutesUntilDeparture != null) {
+        extraHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Theo lịch</span>
+            <span class="text-[13px] font-bold text-emerald-700">Còn ${journey.departure.minutesUntilDeparture}p (${journey.departure.timeStr || ''})</span>
+          </div>
+        `;
+      } else if (journey.frequencyText && journey.frequencyText !== 'Đang cập nhật') {
+        extraHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Tần suất</span>
+            <span class="text-[13px] font-bold text-slate-800">Theo lịch: ${escapeHtml(journey.frequencyText)}</span>
+          </div>
+        `;
+      } else {
+        extraHtml = `
+          <div>
+            <span class="text-[11px] text-slate-400 font-medium block">Lịch trình</span>
+            <span class="text-[13px] font-bold text-slate-800">Theo lịch công bố</span>
+          </div>
+        `;
+      }
+
+      metricsEl.innerHTML = `${durationHtml}${fareHtml}${extraHtml}`;
+    }
+
+    // 3. Timeline Stepper (<ol>)
+    const timelineEl = document.getElementById('journey-timeline');
+    if (timelineEl) {
+      let timelineStepsHtml = '';
+
+      // Step 1: Start point
+      const firstLeg = journey.legs[0];
+      const isFirstWalk = firstLeg && firstLeg.type === 'walking';
+      timelineStepsHtml += `
+        <li class="timeline-step timeline-step-start">
+          <div class="timeline-marker bg-emerald-600 text-white font-bold">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="10" fill-opacity="0.3"/></svg>
+          </div>
+          <div class="timeline-content">
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Điểm xuất phát</p>
+            <p class="text-[14px] font-bold text-slate-900">${escapeHtml(journey.originName)}</p>
+            ${isFirstWalk && firstLeg.distanceMeters > 0 ? `
+              <p class="text-[12px] text-slate-500 mt-0.5">Đi bộ ước tính: ~${firstLeg.distanceMeters}m (~${firstLeg.durationMinutes || 1} phút) đến trạm ${escapeHtml(firstLeg.toLabel || '')}</p>
+            ` : `
+              <p class="text-[12px] text-slate-500 mt-0.5">Đón xe tại trạm buýt</p>
+            `}
+          </div>
+        </li>
+      `;
+
+      // Intermediate legs
+      journey.legs.forEach((leg, legIdx) => {
+        if (leg.type === 'transit') {
+          const stopsCount = leg.stopsCount || (leg.intermediateStops ? leg.intermediateStops.length + 1 : 1);
+          const hasIntermediate = Array.isArray(leg.intermediateStops) && leg.intermediateStops.length > 0;
+          
+          let depText = '';
+          if (leg.departure?.status === 'in_service') {
+            if (leg.departure.minutesUntilDeparture != null) {
+              depText = `Theo lịch: Còn ${leg.departure.minutesUntilDeparture} phút (${leg.departure.timeStr || ''})`;
+            } else {
+              depText = 'Theo lịch: Hoạt động theo lịch';
+            }
+          } else if (leg.departure?.message) {
+            depText = `Theo lịch: ${leg.departure.message}`;
+          }
+
+          timelineStepsHtml += `
+            <li class="timeline-step timeline-step-transit">
+              <div class="timeline-marker bg-emerald-600 text-white font-bold">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></svg>
+              </div>
+              <div class="timeline-content flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="px-2 py-0.5 rounded-md bg-emerald-600 text-white font-extrabold text-[11px] shadow-xs">TUYẾN ${escapeHtml(leg.routeNumber || journey.route?.routeNumber || '')}</span>
+                  <span class="text-[13px] font-bold text-slate-900">Lên xe: ${escapeHtml(leg.boardingStop?.name || journey.boardingStopName || '')}</span>
+                </div>
+                ${depText ? `<p class="text-[12px] text-emerald-700 font-semibold">${escapeHtml(depText)}</p>` : ''}
+                
+                <div class="mt-1.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <div class="flex items-center justify-between text-[12px] text-slate-600 font-medium">
+                    <span>Di chuyển qua ${stopsCount} trạm</span>
+                    ${leg.durationMinutes ? `<span>Ước tính: ~${leg.durationMinutes} phút</span>` : ''}
+                  </div>
+                  ${hasIntermediate ? `
+                    <button type="button" class="btn-toggle-intermediate text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 mt-1.5 pt-1.5 border-t border-slate-200/60 transition-colors" aria-expanded="false" aria-controls="stops-list-${legIdx}">
+                      <span>Xem ${leg.intermediateStops.length} trạm trung gian</span>
+                      <svg class="w-3.5 h-3.5 chevron-icon transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </button>
+                    <ul id="stops-list-${legIdx}" class="intermediate-stops-list hidden pl-3 py-1.5 mt-1 border-l-2 border-emerald-300 text-[11px] text-slate-500 flex flex-col gap-1">
+                      ${leg.intermediateStops.map(s => `<li>• ${escapeHtml(typeof s === 'string' ? s : s.name)}</li>`).join('')}
+                    </ul>
+                  ` : ''}
+                </div>
+
+                <div class="flex items-center gap-2 text-[13px] font-bold text-slate-900 mt-1">
+                  <span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span>
+                  <span>Xuống xe: ${escapeHtml(leg.alightingStop?.name || journey.alightingStopName || '')}</span>
+                </div>
+              </div>
+            </li>
+          `;
+        } else if (leg.type === 'walking' && legIdx > 0 && legIdx < journey.legs.length - 1) {
+          // Transfer walking leg
+          timelineStepsHtml += `
+            <li class="timeline-step timeline-step-transfer">
+              <div class="timeline-marker bg-amber-500 text-white font-bold">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+              </div>
+              <div class="timeline-content">
+                <p class="text-[12px] font-bold text-slate-800">Chuyển tuyến</p>
+                <p class="text-[12px] text-slate-500">Đi bộ ước tính: ~${leg.distanceMeters}m (~${leg.durationMinutes || 1} phút) sang trạm kế tiếp</p>
+              </div>
+            </li>
+          `;
+        }
+      });
+
+      // Step Final: Destination point
+      const lastLeg = journey.legs[journey.legs.length - 1];
+      const isLastWalk = lastLeg && lastLeg.type === 'walking' && journey.legs.length > 1;
+      timelineStepsHtml += `
+        <li class="timeline-step timeline-step-end">
+          <div class="timeline-marker bg-rose-600 text-white font-bold">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          </div>
+          <div class="timeline-content">
+            <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Điểm đến</p>
+            <p class="text-[14px] font-bold text-slate-900">${escapeHtml(journey.destinationName)}</p>
+            ${isLastWalk && lastLeg.distanceMeters > 0 ? `
+              <p class="text-[12px] text-slate-500 mt-0.5">Đi bộ ước tính: ~${lastLeg.distanceMeters}m (~${lastLeg.durationMinutes || 1} phút) đến điểm đích</p>
+            ` : `
+              <p class="text-[12px] text-slate-500 mt-0.5">Đến nơi</p>
+            `}
+          </div>
+        </li>
+      `;
+
+      timelineEl.innerHTML = timelineStepsHtml;
+
+      // Attach accordion toggle listeners for intermediate stops
+      timelineEl.querySelectorAll('.btn-toggle-intermediate').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('aria-controls');
+          const targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+          const isHidden = targetEl.classList.contains('hidden');
+          if (isHidden) {
+            targetEl.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+          } else {
+            targetEl.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+
+    // 4. Secondary Actions toolbar
+    const btnAlt = document.getElementById('btn-toggle-alternatives');
+    if (btnAlt) {
+      if (allTrips && allTrips.length > 1) {
+        btnAlt.classList.remove('hidden');
+        const altLabel = document.getElementById('label-toggle-alternatives');
+        if (altLabel) altLabel.textContent = `Xem thêm ${allTrips.length - 1} phương án khác (${allTrips.length} phương án)`;
+      } else {
+        btnAlt.classList.add('hidden');
+      }
+    }
+
+    const btnRouteDetail = document.getElementById('btn-journey-route-detail');
+    if (btnRouteDetail) {
+      if (journey.route) {
+        btnRouteDetail.classList.remove('hidden');
+      } else {
+        btnRouteDetail.classList.add('hidden');
+      }
+    }
   }
 
   // =========================================================================
@@ -865,20 +1226,27 @@ class DanabusApp {
       busTag.textContent = bestTrip.type === 'direct' ? 'Tuyến trực tiếp' : 'Chuyển tuyến (1 lần)';
     }
 
+    const origText = this.lastSearchQuery?.originText || '';
+    const destText = this.lastSearchQuery?.destinationText || '';
+    const journey = this.buildJourneyViewModelFromPlanned(bestTrip, origText, destText);
+    this.currentJourney = journey;
+
     const badgeEl = document.getElementById('trip-route-badge');
     if (badgeEl) badgeEl.textContent = bestTrip.type === 'direct' ? `TUYẾN ${bestTrip.route?.routeNumber || ''}` : 'KẾT HỢP';
 
+    // Truthful Semantics Fix: Distance in km, never minutes!
     const kmEl = document.getElementById('trip-stat-km');
-    if (kmEl) kmEl.textContent = `~${bestTrip.totalDurationMinutes} phút`;
+    if (kmEl) kmEl.textContent = journey.distanceKm ? `${journey.distanceKm} km` : 'Chưa có dữ liệu';
 
+    // Truthful Semantics Fix: Stops count, never ranking category!
     const stopsEl = document.getElementById('trip-stat-stops');
-    if (stopsEl) stopsEl.textContent = bestTrip.rankingCategory;
+    if (stopsEl) stopsEl.textContent = journey.totalStops ? `${journey.totalStops} trạm` : 'Chưa có dữ liệu';
 
     const timeElStrip = document.getElementById('trip-stat-time');
     const timeDotStrip = document.getElementById('trip-stat-time-dot');
     if (timeElStrip) {
       const isExpanded = bestTrip.isExpandedRadius || planMetadata?.isExpandedRadius;
-      timeElStrip.textContent = `Đi bộ ~${bestTrip.totalWalkingMeters}m${isExpanded ? ' (Bán kính 1.5km)' : ''}`;
+      timeElStrip.textContent = `Đi bộ ước tính ~${bestTrip.totalWalkingMeters}m${isExpanded ? ' (Bán kính 1.5km)' : ''}`;
       timeElStrip.classList.remove('hidden');
     }
     if (timeDotStrip) timeDotStrip.classList.remove('hidden');
@@ -886,7 +1254,15 @@ class DanabusApp {
     const timeEl = document.getElementById('trip-countdown-time');
     const timerEl = document.getElementById('trip-countdown-timer');
     if (timeEl) timeEl.textContent = `~${bestTrip.totalDurationMinutes}p`;
-    if (timerEl) timerEl.textContent = bestTrip.rankingCategory;
+    if (timerEl) {
+      if (journey.departure?.status === 'in_service' && journey.departure.minutesUntilDeparture != null) {
+        timerEl.textContent = `Theo lịch: Còn ${journey.departure.minutesUntilDeparture} phút`;
+      } else if (journey.departure?.message) {
+        timerEl.textContent = `Theo lịch: ${journey.departure.message}`;
+      } else {
+        timerEl.textContent = 'Thời gian ước tính';
+      }
+    }
 
     const fareEl = document.getElementById('trip-fare-value');
     if (fareEl) fareEl.textContent = bestTrip.fareText || '--';
@@ -894,9 +1270,16 @@ class DanabusApp {
     const freqEl = document.getElementById('trip-freq-value');
     if (freqEl) freqEl.textContent = bestTrip.type === 'direct' ? 'Trực tiếp' : (bestTrip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp');
 
+    // Fleet: Truthful provenance, never hardcoded "Xe buýt Danabus"
     const fleetEl = document.getElementById('trip-fleet-value');
-    if (fleetEl) fleetEl.textContent = 'Xe buýt Danabus';
+    const fleetDescEl = document.getElementById('trip-fleet-desc');
+    if (fleetEl) fleetEl.textContent = journey.fleetInfo.brand || 'Chưa có dữ liệu';
+    if (fleetDescEl) fleetDescEl.textContent = journey.fleetInfo.description || 'Phương tiện';
 
+    // Render unified Journey Recommendation Timeline
+    this.renderJourneyRecommendation(journey, trips);
+
+    // Render Alternative Trip Options
     this.renderTripOptions(trips, planMetadata);
   }
 
@@ -962,21 +1345,45 @@ class DanabusApp {
               <span>•</span>
               <span>Vé: <b>${t.fareText || '--'}</b></span>
             </div>
-            <button type="button" class="btn-view-planned-map px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center gap-1 active:scale-95 transition-all" data-trip-index="${idx}">
-              <span>Bản đồ</span>
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-            </button>
+            <div class="flex items-center gap-2">
+              <button type="button" class="btn-select-trip px-3 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[11px] active:scale-95 transition-all" data-trip-index="${idx}">
+                <span>Chọn</span>
+              </button>
+              <button type="button" class="btn-view-planned-map px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center gap-1 active:scale-95 transition-all" data-trip-index="${idx}">
+                <span>Bản đồ</span>
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
           </div>
         </div>
       `).join('')}
     `;
 
     container.querySelectorAll('.btn-view-planned-map').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const idx = parseInt(btn.getAttribute('data-trip-index'), 10);
         const trip = this.currentPlannedTrips[idx];
         if (trip) {
           this.openPlannedTripMap(trip);
+        }
+      });
+    });
+
+    container.querySelectorAll('.btn-select-trip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute('data-trip-index'), 10);
+        const trip = this.currentPlannedTrips[idx];
+        if (trip) {
+          this.currentPlannedTrip = trip;
+          this.selectedRoute = trip.route || trip.legs?.find(l => l.route)?.route || null;
+          const origText = this.lastSearchQuery?.originText || '';
+          const destText = this.lastSearchQuery?.destinationText || '';
+          const journey = this.buildJourneyViewModelFromPlanned(trip, origText, destText);
+          this.currentJourney = journey;
+          this.renderJourneyRecommendation(journey, this.currentPlannedTrips);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
     });
@@ -1370,6 +1777,50 @@ class DanabusApp {
         this.openRouteDetail(this.selectedRoute.id, this.matchedDirection || 'outbound');
       } else if (this.currentPlannedTrip) {
         this.openPlannedTripMap(this.currentPlannedTrip);
+      }
+    });
+
+    // Journey Recommendation Actions (Task 10)
+    document.getElementById('btn-journey-map')?.addEventListener('click', () => {
+      if (this.currentPlannedTrip) {
+        this.openPlannedTripMap(this.currentPlannedTrip);
+      } else if (this.selectedRoute) {
+        this.openMapView();
+      }
+    });
+
+    document.getElementById('btn-journey-route-detail')?.addEventListener('click', () => {
+      const route = this.selectedRoute || this.currentPlannedTrip?.route || this.currentPlannedTrip?.legs?.find(l => l.route)?.route;
+      if (route) {
+        this.openRouteDetail(route.id, this.matchedDirection || 'outbound');
+      }
+    });
+
+    document.getElementById('btn-toggle-alternatives')?.addEventListener('click', () => {
+      const optionsContainer = document.getElementById('trip-planner-options');
+      const btn = document.getElementById('btn-toggle-alternatives');
+      if (!optionsContainer || !btn) return;
+      const isHidden = optionsContainer.classList.contains('hidden');
+      if (isHidden) {
+        optionsContainer.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        optionsContainer.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.getElementById('btn-toggle-tech-details')?.addEventListener('click', () => {
+      const card = document.getElementById('trip-secondary-details-card');
+      const btn = document.getElementById('btn-toggle-tech-details');
+      if (!card || !btn) return;
+      const isHidden = card.classList.contains('hidden');
+      if (isHidden) {
+        card.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        card.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
       }
     });
 

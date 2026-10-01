@@ -122,3 +122,82 @@ input:focus-visible,
   box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.25) !important;
   border-radius: 8px;
 }
+
+/* Journey Timeline Styles (Consumer UX Redesign) */
+.journey-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.timeline-step {
+  position: relative;
+  padding-left: 2.25rem;
+  padding-bottom: 1.5rem;
+}
+
+.timeline-step:last-child {
+  padding-bottom: 0.25rem;
+}
+
+/* Connecting vertical line */
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  top: 1.25rem;
+  bottom: 0;
+  width: 2px;
+  background-color: #cbd5e1;
+}
+
+.timeline-step:last-child::before {
+  display: none;
+}
+
+.timeline-step.timeline-step-transit::before {
+  background-color: #059669;
+}
+
+.timeline-step.timeline-step-transfer::before {
+  border-left: 2px dashed #f59e0b;
+  background-color: transparent;
+  width: 0;
+}
+
+/* Marker / Node icon */
+.timeline-marker {
+  position: absolute;
+  left: 0.25rem;
+  top: 0.125rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-marker svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Intermediate stops list & transitions */
+.intermediate-stops-list {
+  transition: all 0.2s ease-in-out;
+}
+
+.chevron-icon, .chevron-alt, .chevron-tech {
+  transition: transform 0.2s ease-in-out;
+}
+
+[aria-expanded="true"] .chevron-icon,
+[aria-expanded="true"] .chevron-alt,
+[aria-expanded="true"] .chevron-tech {
+  transform: rotate(180deg);
+}
+

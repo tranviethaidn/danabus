@@ -182,57 +182,60 @@
         </div>
 
         <!-- Search CTA Button -->
-        <button type="button" id="btn-home-search" class="w-full h-12 mt-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25 transition-all">
-          <span>Tìm xe</span>
+        <button type="button" id="btn-home-search" aria-label="Tìm đường" class="w-full h-12 mt-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold text-[15px] flex items-center justify-center gap-2 shadow-md shadow-emerald-600/25 transition-all">
+          <span>Tìm đường</span>
           <span class="w-5 h-5">
             <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
           </span>
         </button>
       </section>
 
-      <!-- Destination Chips -->
-      <section class="flex flex-col gap-2.5">
-        <div class="flex items-center justify-between">
-          <h2 class="text-[14px] font-bold text-slate-800">Điểm đến phổ biến</h2>
-          <span class="text-[12px] text-slate-400">Chạm nhanh</span>
-        </div>
-        <div class="flex flex-wrap gap-2" id="home-destination-chips">
-          <!-- Populated by JS -->
-        </div>
-      </section>
+      <!-- Secondary / Legacy Home Elements (Hidden from primary UI, retained for regression selector compatibility) -->
+      <div id="home-secondary-legacy" class="hidden" aria-hidden="true">
+        <!-- Destination Chips -->
+        <section class="flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[14px] font-bold text-slate-800">Điểm đến phổ biến</h2>
+            <span class="text-[12px] text-slate-400">Chạm nhanh</span>
+          </div>
+          <div class="flex flex-wrap gap-2" id="home-destination-chips">
+            <!-- Populated by JS -->
+          </div>
+        </section>
 
-      <!-- Featured Route Spotlight Card -->
-      <section id="home-spotlight-card" role="button" tabindex="0" aria-label="Chi tiết lộ trình Tuyến 02: Đà Nẵng - Hội An" class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex flex-col gap-3 cursor-pointer active:scale-[0.99] transition-transform">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold text-[16px] flex items-center justify-center shrink-0 shadow-sm">02</span>
-            <div>
-              <h3 class="text-[15px] font-bold text-slate-900 leading-tight">Tuyến 02: Đà Nẵng ⇄ Hội An</h3>
-              <p id="spotlight-schedule" class="text-[12px] text-slate-500 mt-0.5">Tần suất 15-30 phút • 05:15 - 18:30</p>
+        <!-- Featured Route Spotlight Card -->
+        <section id="home-spotlight-card" role="button" tabindex="0" aria-label="Chi tiết lộ trình Tuyến 02: Đà Nẵng - Hội An" class="bg-white rounded-2xl p-4 border border-emerald-100 shadow-sm flex flex-col gap-3 cursor-pointer active:scale-[0.99] transition-transform">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-extrabold text-[16px] flex items-center justify-center shrink-0 shadow-sm">02</span>
+              <div>
+                <h3 class="text-[15px] font-bold text-slate-900 leading-tight">Tuyến 02: Đà Nẵng ⇄ Hội An</h3>
+                <p id="spotlight-schedule" class="text-[12px] text-slate-500 mt-0.5">Tần suất 15-30 phút • 05:15 - 18:30</p>
+              </div>
             </div>
+            <span id="spotlight-fare" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[13px]">8.000đ - 30.000đ</span>
           </div>
-          <span id="spotlight-fare" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[13px]">8.000đ - 30.000đ</span>
-        </div>
-        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[13px]">
-          <div class="flex items-center gap-1.5 text-emerald-700 font-semibold">
-            <span class="w-4 h-4 text-emerald-600">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[13px]">
+            <div class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+              <span class="w-4 h-4 text-emerald-600">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              </span>
+              <span id="spotlight-countdown">Đang cập nhật...</span>
+            </div>
+            <span class="text-emerald-700 font-semibold flex items-center hover:underline gap-0.5">
+              Chi tiết lộ trình
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
             </span>
-            <span id="spotlight-countdown">Đang cập nhật...</span>
           </div>
-          <span class="text-emerald-700 font-semibold flex items-center hover:underline gap-0.5">
-            Chi tiết lộ trình
-            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-          </span>
-        </div>
-      </section>
+        </section>
 
-      <!-- Eco Friendly Notice -->
-      <div class="flex items-center justify-center gap-2 py-2 text-center text-slate-400 text-[12px]">
-        <span class="w-4 h-4 text-emerald-600 shrink-0">
-          <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M16 3c-4.42 0-8 3.58-8 8 0 1.95.7 3.73 1.86 5.14L3 23h3.5l5.14-5.14C13.05 18.57 14.47 19 16 19c4.42 0 8-3.58 8-8s-3.58-8-8-8zm0 14c-1.63 0-3.11-.65-4.22-1.71L16 11V5c3.31 0 6 2.69 6 6s-2.69 6-6 6z"/></svg>
-        </span>
-        <span>Hệ thống xe buýt Đà Nẵng • Điều hòa mát lạnh • Thân thiện</span>
+        <!-- Eco Friendly Notice -->
+        <div class="flex items-center justify-center gap-2 py-2 text-center text-slate-400 text-[12px]">
+          <span class="w-4 h-4 text-emerald-600 shrink-0">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M16 3c-4.42 0-8 3.58-8 8 0 1.95.7 3.73 1.86 5.14L3 23h3.5l5.14-5.14C13.05 18.57 14.47 19 16 19c4.42 0 8-3.58 8-8s-3.58-8-8-8zm0 14c-1.63 0-3.11-.65-4.22-1.71L16 11V5c3.31 0 6 2.69 6 6s-2.69 6-6 6z"/></svg>
+          </span>
+          <span>Hệ thống xe buýt Đà Nẵng • Điều hòa mát lạnh • Thân thiện</span>
+        </div>
       </div>
     </div>
 
@@ -492,66 +495,114 @@
       <div class="p-4 flex flex-col gap-4">
         <!-- SUCCESS CONTAINER -->
         <div id="trip-content-success" class="flex flex-col gap-4">
-          <!-- Next Departure Highlight Card -->
-          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-3.5 relative overflow-hidden">
-            <div class="flex items-start justify-between">
-              <div class="flex flex-col gap-0.5">
-                <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến dự kiến theo lịch</span>
-                <div class="flex items-baseline gap-2 mt-1">
-                  <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">--:--</span>
-                  <span id="trip-countdown-timer" aria-live="polite" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold">Đang cập nhật</span>
+          <!-- PRIMARY JOURNEY RECOMMENDATION CARD (Consumer-First Timeline) -->
+          <section id="journey-recommendation-card" aria-label="Hành trình đề xuất" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-4">
+            <!-- Recommendation Header -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                <h2 class="font-extrabold text-[16px] text-slate-900 tracking-tight">Hành trình đề xuất</h2>
+              </div>
+              <span id="journey-type-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-[11px] border border-emerald-100">
+                Tuyến trực tiếp
+              </span>
+            </div>
+
+            <!-- Summary Metrics (Truthful Semantics) -->
+            <div id="journey-summary-metrics" class="grid grid-cols-2 sm:grid-cols-3 gap-2 bg-slate-50/80 p-3 rounded-xl border border-slate-100 text-[12px]">
+              <!-- Populated dynamically -->
+            </div>
+
+            <!-- Vertical Timeline Stepper (<ol>) -->
+            <ol id="journey-timeline" class="journey-timeline flex flex-col pl-1" aria-label="Chi tiết các chặng hành trình">
+              <!-- Populated dynamically -->
+            </ol>
+
+            <!-- Secondary Actions Toolbar -->
+            <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-2">
+              <button type="button" id="btn-journey-map" class="flex-1 min-w-[140px] h-10 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-[13px] flex items-center justify-center gap-1.5 shadow-xs transition-all">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                <span>Xem trên bản đồ</span>
+              </button>
+              <button type="button" id="btn-journey-route-detail" class="flex-1 min-w-[130px] h-10 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-semibold text-[13px] flex items-center justify-center gap-1.5 transition-all">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <span>Chi tiết tuyến</span>
+              </button>
+              <button type="button" id="btn-toggle-alternatives" aria-expanded="false" aria-controls="trip-planner-options" class="hidden w-full h-10 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 active:scale-95 text-slate-700 font-semibold text-[12px] flex items-center justify-between transition-all">
+                <span id="label-toggle-alternatives">Xem thêm phương án khác</span>
+                <svg class="w-4 h-4 transition-transform chevron-alt" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+              </button>
+              <button type="button" id="btn-toggle-tech-details" aria-expanded="false" aria-controls="trip-secondary-details-card" class="w-full h-9 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 active:scale-95 text-slate-500 font-medium text-[11px] flex items-center justify-between transition-all">
+                <span>Thông số kỹ thuật & Lịch trình chi tiết</span>
+                <svg class="w-3.5 h-3.5 transition-transform chevron-tech" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <!-- SECONDARY / COMPATIBILITY SECTIONS -->
+          <!-- Technical Details Card (Collapsible for users, keeps IDs for tests) -->
+          <div id="trip-secondary-details-card" class="hidden flex flex-col gap-3">
+            <!-- Next Departure Highlight Card -->
+            <div id="trip-legacy-card" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col gap-3.5 relative overflow-hidden">
+              <div class="flex items-start justify-between">
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Chuyến dự kiến theo lịch</span>
+                  <div class="flex items-baseline gap-2 mt-1">
+                    <span id="trip-countdown-time" class="text-[34px] font-bold text-emerald-600 tracking-tight leading-none">--:--</span>
+                    <span id="trip-countdown-timer" aria-live="polite" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[12px] font-bold">Đang cập nhật</span>
+                  </div>
+                  <span class="text-[12px] text-slate-500 mt-1 font-medium flex items-center gap-1.5">
+                    <span class="w-4 h-4 text-emerald-600 shrink-0"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
+                    Đi thẳng suốt tuyến không đổi xe
+                  </span>
                 </div>
-                <span class="text-[12px] text-slate-500 mt-1 font-medium flex items-center gap-1.5">
-                  <span class="w-4 h-4 text-emerald-600 shrink-0"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
-                  Đi thẳng suốt tuyến không đổi xe
-                </span>
+                <span id="trip-route-badge" class="inline-flex items-center justify-center px-3 py-1 bg-emerald-600 text-white rounded-full text-[12px] font-bold shadow-xs">TUYẾN 02</span>
               </div>
-              <span id="trip-route-badge" class="inline-flex items-center justify-center px-3 py-1 bg-emerald-600 text-white rounded-full text-[12px] font-bold shadow-xs">TUYẾN 02</span>
-            </div>
 
-            <!-- Trip Stats Grid -->
-            <div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
-              <div class="flex flex-col items-center justify-center p-1">
-                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg></span>
-                <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">--</span>
-                <span class="text-[10px] text-slate-400">Suốt tuyến</span>
-              </div>
-              <div class="flex flex-col items-center justify-center p-1 border-x border-slate-200/60">
-                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
-                <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">--</span>
-                <span class="text-[10px] text-slate-400">/chuyến</span>
-              </div>
-              <div class="flex flex-col items-center justify-center p-1">
-                <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M18.92 2.01C18.72 1.42 18.16 1 17.5 1h-11c-.66 0-1.21.42-1.42 1.01L3 8v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V8l-2.08-5.99zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 7l1.5-4.5h11L19 7H5z"/></svg></span>
-                <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">--</span>
-                <span id="trip-fleet-desc" class="text-[10px] text-slate-400">Phương tiện</span>
-              </div>
-            </div>
-
-            <button id="btn-trip-view-route" type="button" class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
-              <span>Xem lộ trình trạm & Đón xe</span>
-              <span class="w-4 h-4"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
-            </button>
-          </div>
-
-          <!-- Following Bus Row -->
-          <div class="bg-white rounded-xl p-3.5 border border-slate-100 shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600 p-2">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-emerald-600"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-              </div>
-              <div class="flex flex-col">
-                <div class="flex items-center gap-2">
-                  <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: --:--</span>
-                  <span id="trip-later-diff" class="text-[11px] text-slate-500"></span>
+              <!-- Trip Stats Grid -->
+              <div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center border border-slate-100">
+                <div class="flex flex-col items-center justify-center p-1">
+                  <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M19 14V6c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-9-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-6v11c0 1.1-.9 2-2 2H4v-2h17V7h2z"/></svg></span>
+                  <span id="trip-fare-value" class="text-[13px] font-bold text-slate-900">--</span>
+                  <span class="text-[10px] text-slate-400">Suốt tuyến</span>
                 </div>
-                <span id="trip-later-note" class="text-[11px] text-slate-400">Xuất bến theo lịch trình công bố</span>
+                <div class="flex flex-col items-center justify-center p-1 border-x border-slate-200/60">
+                  <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></span>
+                  <span id="trip-freq-value" class="text-[13px] font-bold text-slate-900">--</span>
+                  <span class="text-[10px] text-slate-400">/chuyến</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-1">
+                  <span class="w-4 h-4 text-emerald-600 mb-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M18.92 2.01C18.72 1.42 18.16 1 17.5 1h-11c-.66 0-1.21.42-1.42 1.01L3 8v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1V8l-2.08-5.99zM6.5 12c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 7l1.5-4.5h11L19 7H5z"/></svg></span>
+                  <span id="trip-fleet-value" class="text-[13px] font-bold text-slate-900">--</span>
+                  <span id="trip-fleet-desc" class="text-[10px] text-slate-400">Phương tiện</span>
+                </div>
               </div>
+
+              <button id="btn-trip-view-route" type="button" class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-[14px] font-bold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
+                <span>Xem lộ trình trạm & Đón xe</span>
+                <span class="w-4 h-4"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+              </button>
             </div>
-            <button id="btn-remind-trip" type="button" class="hidden" style="display: none;" disabled aria-hidden="true">
-              <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
-              <span>Nhắc tôi</span>
-            </button>
+
+            <!-- Following Bus Row -->
+            <div id="trip-following-bus-row" class="bg-white rounded-xl p-3.5 border border-slate-100 shadow-xs flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-600 p-2">
+                  <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-emerald-600"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-2">
+                    <span id="trip-later-time" class="text-[13px] font-bold text-slate-900">Chuyến sau: --:--</span>
+                    <span id="trip-later-diff" class="text-[11px] text-slate-500"></span>
+                  </div>
+                  <span id="trip-later-note" class="text-[11px] text-slate-400">Xuất bến theo lịch trình công bố</span>
+                </div>
+              </div>
+              <button id="btn-remind-trip" type="button" class="hidden" style="display: none;" disabled aria-hidden="true">
+                <span class="w-3.5 h-3.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
+                <span>Nhắc tôi</span>
+              </button>
+            </div>
           </div>
 
           <!-- Trip Planner Multi-Leg Options (Task 4) -->

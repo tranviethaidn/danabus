@@ -78,3 +78,36 @@ Toàn bộ các test suite từ cấp độ đơn vị, hợp đồng dữ liệ
 
 - Toàn bộ thay đổi mã nguồn đã sẵn sàng stage và commit cục bộ.
 - Tuân thủ nghiêm ngặt chính sách `git_push_authorized=OFF`: Không thực hiện `git push` lên origin trong lượt chạy này.
+
+---
+
+## 5. Kết quả Review cuối của Tech Lead
+
+TL đã review lại actual workspace sau commit `d965b11` và xác minh trực tiếp các lỗi review trước đó.
+
+### Kiểm thử TL chạy lại trong lượt review này
+
+- `python scripts/test_task10_regression_acceptance.py --local-only`: PASS toàn bộ Layer A; Suite A.6 tự chạy `scripts/test_task10_review_fixes.py` và đạt **7/7 PASS**.
+- `python scripts/test_browser_trip_planner.py`: **6/6 PASS**.
+- `python scripts/test_ui_integrity_and_accessibility.py`: **100% PASS**.
+- Git working tree sạch trước khi TL cập nhật báo cáo nghiệm thu.
+
+### Kết quả đối chiếu acceptance
+
+- Home tập trung vào A→B, GPS, swap và CTA `Tìm đường`.
+- Một journey recommendation là primary UI; alternatives bị ẩn mặc định và chỉ mở theo hành động của người dùng.
+- Direct route và planner multi-leg dùng chung Journey ViewModel/timeline.
+- Map, route detail, alternatives, stops và technical details là secondary actions.
+- Các semantics `Theo lịch`, `Ước tính`, `Chưa có dữ liệu` được tách đúng nguồn dữ liệu.
+- Không còn stale direct-schedule data khi chuyển sang planner result.
+- Không còn hard-code transfer count, stale direction, ranking metadata trong primary UI hoặc full-route distance giả làm segment distance.
+- Accessibility/fail-closed baseline tiếp tục PASS.
+
+**Kết quả review kỹ thuật của TL: PASS. Task 010 sẵn sàng trình PO nghiệm thu.**
+
+## 6. Giới hạn đã biết
+
+- Runtime hiện tại `git_push_authorized=OFF`, vì vậy các commit Task 010 chỉ tồn tại cục bộ và chưa được publish lên remote/production.
+- Full production Layer B của unified runner chưa được chạy trên public URL với commit hiện tại vì bản thay đổi chưa được publish; thay vào đó TL đã chạy các browser suites cục bộ liên quan trực tiếp và đều PASS.
+- Planner chỉ hiển thị cự ly transit segment khi có `segmentDistanceKm` xác thực; nếu chưa có thì cố ý fail-closed thành `Chưa có dữ liệu`.
+- Task này không bổ sung realtime tracking/ETA giả; mọi dữ liệu thiếu tiếp tục fail-closed.

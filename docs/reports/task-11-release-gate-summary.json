@@ -1,8 +1,8 @@
 {
   "task_id": "tsk_fa69d045-fc12-452b-9c82-8f4da320fafc",
   "task_title": "End-to-End Release Acceptance & Production Gate",
-  "timestamp": "2026-10-01T05:05:30.300073+00:00",
-  "total_duration_seconds": 42.14,
+  "timestamp": "2026-10-01T05:15:32.504741+00:00",
+  "total_duration_seconds": 77.57,
   "release_identity": {
     "version": "v12",
     "build": "20261001_v12",
@@ -10,9 +10,9 @@
     "asset_query": "?v=20261001_v12"
   },
   "git_state": {
-    "head": "82d1d005f13a05607683d780cf8fc82f9acf87bb",
+    "head": "28ccf411249aac4444d1e4c84284e94d954eec7c",
     "branch": "main",
-    "status_line": "## main...origin/main [ahead 44]",
+    "status_line": "## main...origin/main [ahead 45]",
     "git_push_authorized": false,
     "push_policy_note": "git_push_authorized=OFF is expected policy, local commit created without push"
   },
@@ -24,28 +24,28 @@
       "name": "Temporal Route Service",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 1.28
+      "duration_seconds": 1.34
     },
     {
       "id": "1.2",
       "name": "Trip Planner Core & Inactive Rejection",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 3.88
+      "duration_seconds": 3.91
     },
     {
       "id": "1.3",
       "name": "Search Correctness",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.2
+      "duration_seconds": 0.21
     },
     {
       "id": "1.4",
       "name": "Schedule & Fare Truthful Semantics",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.27
+      "duration_seconds": 0.28
     },
     {
       "id": "1.5",
@@ -66,7 +66,7 @@
       "name": "Consumer UX & Review Defects Regression",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 4.99
+      "duration_seconds": 5.11
     },
     {
       "id": "1.8",
@@ -87,42 +87,70 @@
       "name": "Static Secret Audit & Negative Probe (93 files)",
       "layer": "Layer 2",
       "status": "PASS",
-      "duration_seconds": 0.25
+      "duration_seconds": 0.26
     },
     {
       "id": "2.3",
-      "name": "Deliverable SHA-256 Hash Manifest",
+      "name": "Production Public TLS & Certificate Validation",
       "layer": "Layer 2",
-      "status": "LOCAL_HASH_MANIFEST_PASS",
-      "duration_seconds": 0.03
+      "status": "PASS",
+      "duration_seconds": 0.14
+    },
+    {
+      "id": "2.4",
+      "name": "Production 3-Way Deliverables Hash Equivalence",
+      "layer": "Layer 2",
+      "status": "PASS",
+      "duration_seconds": 1.96
     },
     {
       "id": "3.1",
       "name": "Browser Schedule & Fare Semantics",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 2.69
+      "duration_seconds": 2.89
     },
     {
       "id": "3.2",
       "name": "Browser UI Integrity & Offline Recovery",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 3.02
+      "duration_seconds": 3.28
     },
     {
       "id": "3.3",
       "name": "Browser Trip Planner E2E",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 6.49
+      "duration_seconds": 6.74
     },
     {
       "id": "3.4",
       "name": "Repeated Local Browser Smoke (3 rounds)",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 18.61
+      "duration_seconds": 19.77
+    },
+    {
+      "id": "3.5",
+      "name": "Production Security Hardening",
+      "layer": "Layer 3B",
+      "status": "PASS",
+      "duration_seconds": 0.5
+    },
+    {
+      "id": "3.6",
+      "name": "Production PWA Runtime v12 (3 rounds)",
+      "layer": "Layer 3B",
+      "status": "PASS",
+      "duration_seconds": 13.94
+    },
+    {
+      "id": "3.7",
+      "name": "Repeated Production Browser Smoke (3 rounds)",
+      "layer": "Layer 3B",
+      "status": "PASS",
+      "duration_seconds": 16.81
     }
   ],
   "deliverable_sha256": {
@@ -142,75 +170,87 @@
   "production_hash_comparison": {
     "index.html": {
       "workspace_sha256": "5b1a06dd3876...",
-      "public_sha256": "96ca5b6079b3...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "5b1a06dd3876...",
+      "live_sha256": "5b1a06dd3876...",
+      "http_status": 200,
+      "3way_match": true
     },
     "sw.js": {
       "workspace_sha256": "eb8cb4b0457e...",
-      "public_sha256": "dc766f7ad5d5...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "eb8cb4b0457e...",
+      "live_sha256": "eb8cb4b0457e...",
+      "http_status": 200,
+      "3way_match": true
     },
     "manifest.json": {
       "workspace_sha256": "b84d2c603cac...",
       "public_sha256": "b84d2c603cac...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "b84d2c603cac...",
+      "http_status": 200,
+      "3way_match": true
     },
     "css/app.css": {
       "workspace_sha256": "cd09232cf709...",
-      "public_sha256": "ac35d6137358...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "cd09232cf709...",
+      "live_sha256": "cd09232cf709...",
+      "http_status": 200,
+      "3way_match": true
     },
     "js/app.js": {
       "workspace_sha256": "1fc601c555cb...",
-      "public_sha256": "ed4b754987ee...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "1fc601c555cb...",
+      "live_sha256": "1fc601c555cb...",
+      "http_status": 200,
+      "3way_match": true
     },
     "js/busService.js": {
       "workspace_sha256": "7252b0fbc6c4...",
-      "public_sha256": "6c7ea2cca942...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "7252b0fbc6c4...",
+      "live_sha256": "7252b0fbc6c4...",
+      "http_status": 200,
+      "3way_match": true
     },
     "js/mapService.js": {
       "workspace_sha256": "d9d834ffbacb...",
       "public_sha256": "d9d834ffbacb...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "d9d834ffbacb...",
+      "http_status": 200,
+      "3way_match": true
     },
     "js/icons.js": {
       "workspace_sha256": "ea0ade2904f0...",
       "public_sha256": "ea0ade2904f0...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "ea0ade2904f0...",
+      "http_status": 200,
+      "3way_match": true
     },
     "data/danangbus_routes.json": {
       "workspace_sha256": "4c8060f58bcf...",
-      "public_sha256": "3d8062ac9881...",
-      "sync_status": "PENDING_PUBLICATION",
-      "match": false
+      "public_sha256": "4c8060f58bcf...",
+      "live_sha256": "4c8060f58bcf...",
+      "http_status": 200,
+      "3way_match": true
     },
     "data/danangbus_stops.json": {
       "workspace_sha256": "501eb164922c...",
       "public_sha256": "501eb164922c...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "501eb164922c...",
+      "http_status": 200,
+      "3way_match": true
     },
     "data/danangbus_streets.json": {
       "workspace_sha256": "059724f605e2...",
       "public_sha256": "059724f605e2...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "059724f605e2...",
+      "http_status": 200,
+      "3way_match": true
     },
     "data/danangbus_summary.json": {
       "workspace_sha256": "e2ab84e925d5...",
       "public_sha256": "e2ab84e925d5...",
-      "sync_status": "IN_SYNC",
-      "match": true
+      "live_sha256": "e2ab84e925d5...",
+      "http_status": 200,
+      "3way_match": true
     }
   },
   "secret_audit": {
@@ -220,12 +260,12 @@
     "findings": []
   },
   "production_boundary_status": {
-    "execution_mode": "LOCAL_GATE",
-    "production_status": "PENDING_PUBLICATION",
-    "production_hash_equivalence": "PENDING_PUBLICATION",
-    "production_pwa_runtime": "PENDING_PUBLICATION",
-    "production_browser_smoke": "PENDING_PUBLICATION",
-    "boundary_note": "Local release candidate v12 verified PASS (15 suites); production publication pending PO authorization and deployment."
+    "execution_mode": "FULL_GATE",
+    "production_status": "VERIFIED_PRODUCTION",
+    "production_hash_equivalence": "PASS",
+    "production_pwa_runtime": "PASS",
+    "production_browser_smoke": "PASS",
+    "boundary_note": "Production environment verified strictly compliant and equivalent with release candidate v12."
   },
   "known_limitations": [
     "14 routes remain without verified polyline geometry per official PDF contract and fail-closed to overlay notice",

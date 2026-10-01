@@ -470,7 +470,7 @@ def compute_deliverables_hashes(local_only=True, target_url=None):
             live_h = None
             live_status = None
             try:
-                req = urllib.request.Request(live_url, headers={"User-Agent": "DanabusReleaseGate/1.0"})
+                req = urllib.request.Request(live_url, headers={"User-Agent": "DanabusReleaseGate/1.0", "Accept": "*/*"})
                 with urllib.request.urlopen(req, context=ctx, timeout=10) as resp:
                     live_status = resp.status
                     live_data = resp.read()

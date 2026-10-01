@@ -285,9 +285,10 @@ class ChromeBrowserSession:
             shutil.rmtree(self.user_data_dir, ignore_errors=True)
 
 
-def test_production_single(port=9455, iteration_label=""):
+def test_production_single(port=9455, iteration_label="", target_url=None):
+    url = target_url or TARGET_URL
     prefix = f"[{iteration_label}] " if iteration_label else ""
-    print(f"{prefix}=== Danabus Production Runtime Verification ({TARGET_URL}) ===\n")
+    print(f"{prefix}=== Danabus Production Runtime Verification ({url}) ===\n")
 
     # Check 0: Staged deploy order invariant
     print(f"{prefix}[Check 0] Verifying Staged Deploy Order Invariant (zero mixed-state cache race)...")
@@ -296,7 +297,7 @@ def test_production_single(port=9455, iteration_label=""):
 
     session = ChromeBrowserSession(port=port)
     try:
-        session.start()
+        session.start(target_url=url)
 
         # Check 1: First-Install Service Worker Takeover & Controllerchange Lifecycle
         print(f"{prefix}[Check 1] Verifying First-Install Service Worker Takeover & Controllerchange Lifecycle...")
@@ -342,7 +343,7 @@ def test_production_single(port=9455, iteration_label=""):
         assert markers['hasOriginDisplay'] is True, "#home-origin-display must exist"
         assert markers['hasDestinationInput'] is True, "#home-destination-input must exist"
         assert markers['routesCount'] == 23, f"Must have 23 catalog routes, got {markers['routesCount']}"
-        assert "v=20260929_v11" in markers['appVersionScript'], f"Script query must be v11, got {markers['appVersionScript']}"
+        assert "v=20261001_v12" in markers['appVersionScript'], f"Script query must be v12, got {markers['appVersionScript']}"
         print(f"{prefix} [PASS] Check 2: Feature markers and Task 4 DOM containers verified on production.\n")
 
         # Check 3: Live Address-to-Address Trip Planner E2E & Leaflet Map Rendering
@@ -403,12 +404,12 @@ def test_production_single(port=9455, iteration_label=""):
         print(f"{prefix} [PASS] Check 3: Live Address-to-Address Trip Planner execution and multi-leg map rendering succeeded on production.\n")
 
         # Check 4: Fresh Install Precache
-        print(f"{prefix}[Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v11)...")
+        print(f"{prefix}[Check 4] Verifying Fresh Install & Service Worker Cache Registration (danabus-cache-v12)...")
         sw_ready = session.wait_for_condition("""
             (async () => {
                 const reg = await navigator.serviceWorker.getRegistration();
                 const keys = await caches.keys();
-                if (reg && keys.includes('danabus-cache-v11')) {
+                if (reg && keys.includes('danabus-cache-v12')) {
                     return {
                         hasReg: true,
                         active: !!(reg.active || reg.installing || reg.waiting),
@@ -417,15 +418,15 @@ def test_production_single(port=9455, iteration_label=""):
                 }
                 return null;
             })()
-        """, timeout=12.0, description="Wait for danabus-cache-v11 cache registration")
+        """, timeout=12.0, description="Wait for danabus-cache-v12 cache registration")
 
         print(f"{prefix} -> Fresh SW State: {sw_ready}")
         assert sw_ready['hasReg'] is True, "Service Worker registration must exist"
-        assert 'danabus-cache-v11' in sw_ready['keys'], f"danabus-cache-v11 must exist in fresh install, got {sw_ready['keys']}"
+        assert 'danabus-cache-v12' in sw_ready['keys'], f"danabus-cache-v12 must exist in fresh install, got {sw_ready['keys']}"
 
         cached_urls = session.wait_for_condition("""
             (async () => {
-                const cache = await caches.open('danabus-cache-v11');
+                const cache = await caches.open('danabus-cache-v12');
                 const reqs = await cache.keys();
                 if (reqs && reqs.length >= 25) {
                     return reqs.map(r => r.url);
@@ -434,15 +435,15 @@ def test_production_single(port=9455, iteration_label=""):
             })()
         """, timeout=10.0, description="Wait for cached asset keys")
         print(f"{prefix} -> Cached assets count: {len(cached_urls)}")
-        assert any("index.html" in u for u in cached_urls), "index.html must be in danabus-cache-v11"
-        assert any("app.css?v=20260929_v11" in u for u in cached_urls), "app.css v11 must be in cache"
-        assert any("busService.js?v=20260929_v11" in u for u in cached_urls), "busService.js v11 must be in cache"
-        assert any("mapService.js?v=20260929_v11" in u for u in cached_urls), "mapService.js v11 must be in cache"
-        assert any("app.js?v=20260929_v11" in u for u in cached_urls), "app.js v11 must be in cache"
+        assert any("index.html" in u for u in cached_urls), "index.html must be in danabus-cache-v12"
+        assert any("app.css?v=20261001_v12" in u for u in cached_urls), "app.css v12 must be in cache"
+        assert any("busService.js?v=20261001_v12" in u for u in cached_urls), "busService.js v12 must be in cache"
+        assert any("mapService.js?v=20261001_v12" in u for u in cached_urls), "mapService.js v12 must be in cache"
+        assert any("app.js?v=20261001_v12" in u for u in cached_urls), "app.js v12 must be in cache"
         print(f"{prefix} [PASS] Check 4: Fresh PWA install & static asset precache verified.\n")
 
         # Check 5: Warm Cache Migration & Legacy Store Purge
-        print(f"{prefix}[Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v10 -> v11)...")
+        print(f"{prefix}[Check 5] Verifying Warm-Cache Migration & Purge of Legacy Stores (v4-v11 -> v12)...")
         session.evaluate("""
             (async () => {
                 await caches.open('danabus-cache-v4');
@@ -451,10 +452,12 @@ def test_production_single(port=9455, iteration_label=""):
                 await caches.open('danabus-cache-v7');
                 await caches.open('danabus-cache-v9');
                 await caches.open('danabus-cache-v10');
+                await caches.open('danabus-cache-v11');
             })()
         """)
         pre_keys = session.evaluate("(async () => await caches.keys())()")
         print(f"{prefix} -> Injected legacy caches: {pre_keys}")
+        assert 'danabus-cache-v11' in pre_keys
         assert 'danabus-cache-v10' in pre_keys
         assert 'danabus-cache-v9' in pre_keys
 
@@ -468,7 +471,7 @@ def test_production_single(port=9455, iteration_label=""):
         post_migration_keys = session.wait_for_condition("""
             (async () => {
                 const k = await caches.keys();
-                if (k.includes('danabus-cache-v11') && !k.includes('danabus-cache-v10') && !k.includes('danabus-cache-v9') && !k.includes('danabus-cache-v7') && !k.includes('danabus-cache-v4')) {
+                if (k.includes('danabus-cache-v12') && !k.includes('danabus-cache-v11') && !k.includes('danabus-cache-v10') && !k.includes('danabus-cache-v9') && !k.includes('danabus-cache-v7') && !k.includes('danabus-cache-v4')) {
                     return k;
                 }
                 return null;
@@ -476,12 +479,13 @@ def test_production_single(port=9455, iteration_label=""):
         """, timeout=12.0, description="Wait for legacy caches purged")
 
         print(f"{prefix} -> Post-migration cache keys: {post_migration_keys}")
-        assert 'danabus-cache-v11' in post_migration_keys
+        assert 'danabus-cache-v12' in post_migration_keys
+        assert 'danabus-cache-v11' not in post_migration_keys
         assert 'danabus-cache-v10' not in post_migration_keys
         assert 'danabus-cache-v9' not in post_migration_keys
         assert 'danabus-cache-v7' not in post_migration_keys
         assert 'danabus-cache-v4' not in post_migration_keys
-        print(f"{prefix} [PASS] Check 5: Warm-cache migration cleanly purged v10 and earlier legacy stores.\n")
+        print(f"{prefix} [PASS] Check 5: Warm-cache migration cleanly purged v11 and earlier legacy stores.\n")
 
         # Check 6: Offline Fallback Resilience
         print(f"{prefix}[Check 6] Testing Offline Fallback Resilience via CDP Network Emulation...")
@@ -494,9 +498,9 @@ def test_production_single(port=9455, iteration_label=""):
 
         offline_eval = session.evaluate("""
             (async () => {
-                const resApp = await fetch('js/app.js?v=20260929_v11');
-                const resBus = await fetch('js/busService.js?v=20260929_v11');
-                const resCss = await fetch('css/app.css?v=20260929_v11');
+                const resApp = await fetch('js/app.js?v=20261001_v12');
+                const resBus = await fetch('js/busService.js?v=20261001_v12');
+                const resCss = await fetch('css/app.css?v=20261001_v12');
                 const resRoutes = await fetch('data/danangbus_routes.json');
                 return {
                     appStatus: resApp.status,
@@ -542,6 +546,7 @@ def main():
     parser = argparse.ArgumentParser(description="Danabus Production Runtime Verification")
     parser.add_argument("--repeat", type=int, default=1, help="Number of times to run verification from fresh profiles")
     parser.add_argument("--base-port", type=int, default=9455, help="Base CDP port")
+    parser.add_argument("--target-url", default=TARGET_URL, help="Target URL to test")
     args = parser.parse_args()
 
     total_runs = max(1, args.repeat)
@@ -550,7 +555,7 @@ def main():
         port = args.base_port + r
         label = f"RUN {r+1}/{total_runs}" if total_runs > 1 else ""
         t0 = time.time()
-        success = test_production_single(port=port, iteration_label=label)
+        success = test_production_single(port=port, iteration_label=label, target_url=args.target_url)
         dur = time.time() - t0
         assert success, f"Run {r+1} failed"
         print(f"--- Completed run {r+1}/{total_runs} in {dur:.2f}s ---\n")

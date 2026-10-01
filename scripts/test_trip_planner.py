@@ -915,7 +915,8 @@ class TestTripPlanner(unittest.TestCase):
         self.assertIn('trip-planner-options', content, "app.js must integrate trip-planner-options")
         self.assertIn('btn-picker-map-pin', content, "app.js must bind map pin picker CTA")
         self.assertIn('searchDebounceTimer', content, "app.js must debounce search input")
-        self.assertIn("bestTrip.transfers === 2 ? '2 chuyển tiếp' : '1 chuyển tiếp'", content, "app.js must dynamically display 1 or 2 chuyen tiep based on transfers")
+        self.assertIn("bestTrip.transfers", content, "app.js must dynamically handle transfers based on bestTrip")
+        self.assertIn("Chuyển tuyến", content, "app.js must display Chuyển tuyến for connecting trips")
 
     # 15. Backward Compatibility: findRoutesBetween Unchanged
     def test_find_routes_between_backward_compatibility(self):

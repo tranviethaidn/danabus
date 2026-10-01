@@ -1,14 +1,14 @@
-// Danabus Service Worker - Task 005 Production Release Acceptance & Project Closure Gate (Build 20260929_v11)
-const CACHE_NAME = 'danabus-cache-v11';
+// Danabus Service Worker - Task 011 Production Release Acceptance & Production Gate (Build 20261001_v12)
+const CACHE_NAME = 'danabus-cache-v12';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './css/app.css?v=20260929_v11',
-  './js/icons.js?v=20260929_v11',
-  './js/app.js?v=20260929_v11',
-  './js/busService.js?v=20260929_v11',
-  './js/mapService.js?v=20260929_v11',
+  './css/app.css?v=20261001_v12',
+  './js/icons.js?v=20261001_v12',
+  './js/app.js?v=20261001_v12',
+  './js/busService.js?v=20261001_v12',
+  './js/mapService.js?v=20261001_v12',
   './assets/logo.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',

@@ -99,15 +99,35 @@ class SimpleWebSocket:
             pass
 
 
+def find_free_port():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('127.0.0.1', 0))
+        return s.getsockname()[1]
+
+
 class CleanChromeRunner:
-    def __init__(self, port=9444, http_port=8282):
-        self.port = port
-        self.http_port = http_port
+    def __init__(self, port=None, http_port=None):
+        self.port = port or find_free_port()
+        self.http_port = http_port or find_free_port()
         self.chrome_proc = None
         self.http_proc = None
         self.tmp_dir = tempfile.TemporaryDirectory()
         self.ws = None
         self.msg_id = 0
+
+    def wait_for_condition(self, expr, timeout=20.0, step=0.1, description=""):
+        start_t = time.monotonic()
+        desc = description or (expr[:80] + "..." if len(expr) > 80 else expr)
+        last_err = None
+        while time.monotonic() - start_t < timeout:
+            try:
+                res = self.evaluate(expr)
+                if res:
+                    return res
+            except Exception as e:
+                last_err = e
+            time.sleep(step)
+        raise TimeoutError(f"Condition timed out after {timeout:.1f}s: {desc} (last error: {last_err})")
 
     def start(self):
         self.http_proc = subprocess.Popen(
@@ -155,12 +175,90 @@ class CleanChromeRunner:
         self.call("Network.setCacheDisabled", {"cacheDisabled": True})
         self.call("Page.navigate", {"url": test_url})
 
-        for _ in range(40):
-            ready = self.evaluate("document.readyState === 'complete' && !!document.title && Boolean(window.busService?.routes?.length > 0) && Boolean(window.app)")
-            if ready:
-                break
-            time.sleep(0.3)
-        time.sleep(0.5)
+        # Deterministic Fail-Closed Readiness Barrier:
+        # 1. document.readyState === 'complete'
+        # 2. busService loaded (isLoaded === true && routes.length > 0)
+        # 3. window.app exists
+        # 4. typeof window.app.showTripResults === 'function'
+        # Also wait for Service Worker first-install controllerchange reload if SW is active
+        readiness_expr = """
+            (() => {
+                if (document.readyState !== 'complete') return null;
+                const sw = window.navigator?.serviceWorker;
+                const nav = performance.getEntriesByType('navigation')[0];
+                const navType = nav ? nav.type : null;
+                const controller = sw ? sw.controller : null;
+
+                // When Service Worker is enabled in clean profile, wait for post-reload settlement
+                if (sw && !(controller !== null && navType === 'reload')) {
+                    return null;
+                }
+
+                const busReady = Boolean(
+                    window.busService &&
+                    window.busService.isLoaded === true &&
+                    window.busService.routes &&
+                    window.busService.routes.length > 0
+                );
+                const appReady = Boolean(
+                    window.app &&
+                    typeof window.app.showTripResults === 'function'
+                );
+
+                if (busReady && appReady) {
+                    return {
+                        readyState: document.readyState,
+                        navType: navType,
+                        controllerActive: Boolean(controller),
+                        routesCount: window.busService.routes.length,
+                        appReady: true,
+                        methodReady: true
+                    };
+                }
+                return null;
+            })()
+        """
+        try:
+            self.wait_for_condition(
+                readiness_expr,
+                timeout=15.0,
+                step=0.1,
+                description="Readiness barrier: complete DOM, busService loaded, window.app.showTripResults function, SW settled"
+            )
+        except TimeoutError:
+            # Fallback check if SW reload did not happen but pure readiness criteria are met:
+            fallback_expr = """
+                (() => {
+                    const domReady = document.readyState === 'complete';
+                    const busReady = Boolean(
+                        window.busService &&
+                        window.busService.isLoaded === true &&
+                        window.busService.routes &&
+                        window.busService.routes.length > 0
+                    );
+                    const appReady = Boolean(
+                        window.app &&
+                        typeof window.app.showTripResults === 'function'
+                    );
+                    if (domReady && busReady && appReady) {
+                        return true;
+                    }
+                    return false;
+                })()
+            """
+            try:
+                self.wait_for_condition(
+                    fallback_expr,
+                    timeout=5.0,
+                    step=0.1,
+                    description="Readiness fallback barrier: document.readyState complete, busService loaded, window.app.showTripResults callable"
+                )
+            except TimeoutError as te:
+                raise RuntimeError(
+                    "CleanChromeRunner failed to reach readiness barrier within timeout: "
+                    "document.readyState === 'complete', busService.isLoaded === true, "
+                    "window.app exists, and typeof window.app.showTripResults === 'function'."
+                ) from te
 
     def call(self, method, params=None):
         self.msg_id += 1
@@ -206,7 +304,7 @@ def run_tests():
     print("Task-ID: tsk_d45190c7-1380-48e0-9dc7-5239307f5a4b")
     print("=" * 70)
 
-    runner = CleanChromeRunner(port=9448, http_port=8288)
+    runner = CleanChromeRunner()
     runner.start()
     try:
         # -------------------------------------------------------------

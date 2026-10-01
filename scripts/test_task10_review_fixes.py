@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
 Targeted Regression Test Suite for Task 010 Review Fixes
-Verifies all 6 acceptance defects identified in TL review:
+Verifies all 7 acceptance defects identified in TL review:
 1. Alternatives hidden by default, toggle expands/collapses, aria-expanded synced
 2. Transfer count truthful (2-transfer journey renders 'Chuyển tuyến (2 lần)')
 3. Route detail uses direction of current journey, never stale from prior search
 4. Frequency never contains transfer metadata, never renders 'Theo lịch: 1 chuyển tiếp'
 5. Missing schedule/frequency fails-closed to 'Chưa có dữ liệu', never 'Theo lịch công bố'
 6. Planner km never aggregates full-route distances; fails-closed to 'Chưa có dữ liệu' without segment distance
+7. Planner technical details reset direct schedule and truthfully label connecting trips / estimated duration
 
 Task-ID: tsk_d45190c7-1380-48e0-9dc7-5239307f5a4b
 """
@@ -467,8 +468,110 @@ def run_tests():
         assert '7.7 km' in res_dist['kmElB'], f"Defect 6 FAIL: DOM km must display 7.7 km, got '{res_dist['kmElB']}'"
         print("   [PASS] Check 6: Planner distance does not fake segment distance from full-route distance.")
 
+        # -------------------------------------------------------------
+        # Defect 7: Planner technical details reset direct schedule & truthful copy
+        # -------------------------------------------------------------
+        print("\n>> [Check 7] Planner technical details reset direct schedule & truthful semantics...")
+        res_tech = runner.evaluate("""
+        (() => {
+            // Step 1: Search direct route with authentic schedule (Route 02) to populate legacy schedule fields
+            window.app.showTripResults('Bến xe Phía Nam', 'Bến xe Trung tâm');
+            const directLaterTime = document.getElementById('trip-later-time')?.textContent?.trim();
+            const directLaterNote = document.getElementById('trip-later-note')?.textContent?.trim();
+            const directDepLabel = document.getElementById('trip-departure-label')?.textContent?.trim();
+            const directTransferText = document.getElementById('trip-direct-transfer-text')?.textContent?.trim();
+
+            // Step 2: Now render a planner connecting result (2 legs, transfers: 1)
+            const r02 = window.busService.getRouteById('02');
+            const r05 = window.busService.getRouteById('05');
+            const connectingTrip = {
+                type: 'connecting',
+                transfers: 1,
+                totalDurationMinutes: 45,
+                totalWalkingMeters: 200,
+                fareText: '16.000đ',
+                rankingCategory: 'Nhanh nhất',
+                legs: [
+                    { type: 'walking', distanceMeters: 100, durationMinutes: 2, fromLabel: 'Điểm A', toLabel: 'Trạm 1' },
+                    { type: 'transit', routeNumber: '02', direction: 'outbound', route: r02, boardingStop: { name: 'Trạm 1' }, alightingStop: { name: 'Trạm 2' }, stopsCount: 4 },
+                    { type: 'walking', distanceMeters: 100, durationMinutes: 2 },
+                    { type: 'transit', routeNumber: '05', direction: 'outbound', route: r05, boardingStop: { name: 'Trạm 2' }, alightingStop: { name: 'Trạm 3' }, stopsCount: 3 },
+                    { type: 'walking', distanceMeters: 0, durationMinutes: 0, toLabel: 'Điểm B' }
+                ]
+            };
+            window.app.renderPlannerResults([connectingTrip]);
+
+            // Step 3: Open #trip-secondary-details-card
+            const techCard = document.getElementById('trip-secondary-details-card');
+            const btnTech = document.getElementById('btn-toggle-tech-details');
+            if (techCard && techCard.classList.contains('hidden') && btnTech) {
+                btnTech.click();
+            }
+
+            // Step 4: Extract current values from technical details card
+            const depLabel = document.getElementById('trip-departure-label')?.textContent?.trim();
+            const countdownTime = document.getElementById('trip-countdown-time')?.textContent?.trim();
+            const countdownTimer = document.getElementById('trip-countdown-timer')?.textContent?.trim();
+            const directDescHidden = document.getElementById('trip-direct-transfer-desc')?.classList.contains('hidden');
+            const directText = document.getElementById('trip-direct-transfer-text')?.textContent?.trim();
+            const laterTime = document.getElementById('trip-later-time')?.textContent?.trim();
+            const laterDiff = document.getElementById('trip-later-diff')?.textContent?.trim();
+            const laterNote = document.getElementById('trip-later-note')?.textContent?.trim();
+            const cardText = techCard?.textContent || '';
+            const cardHidden = techCard?.classList.contains('hidden');
+
+            return {
+                directLaterTime,
+                directLaterNote,
+                directDepLabel,
+                directTransferText,
+                cardHidden,
+                depLabel,
+                countdownTime,
+                countdownTimer,
+                directDescHidden,
+                directText,
+                laterTime,
+                laterDiff,
+                laterNote,
+                cardText,
+                hasDirectClaim: cardText.includes('Đi thẳng suốt tuyến không đổi xe'),
+                hasScheduleHeadingClaim: cardText.includes('Chuyến dự kiến theo lịch')
+            };
+        })()
+        """)
+        print(f"   Direct search initial: laterTime='{res_tech['directLaterTime']}', laterNote='{res_tech['directLaterNote']}', depLabel='{res_tech['directDepLabel']}'")
+        print(f"   Connecting planner result: depLabel='{res_tech['depLabel']}', time='{res_tech['countdownTime']}', timer='{res_tech['countdownTimer']}'")
+        print(f"   Connecting later: laterTime='{res_tech['laterTime']}', laterDiff='{res_tech['laterDiff']}', laterNote='{res_tech['laterNote']}'")
+        print(f"   Direct transfer row: hidden={res_tech['directDescHidden']}, text='{res_tech['directText']}', hasClaim={res_tech['hasDirectClaim']}")
+
+        # 1. Assert card opened
+        assert res_tech['cardHidden'] is False, "Defect 7 FAIL: #trip-secondary-details-card should be opened after clicking toggle!"
+
+        # 2. Assert direct result time/note is NOT leaked into planner
+        assert res_tech['laterTime'] != res_tech['directLaterTime'], f"Defect 7 FAIL: laterTime still contains leaked direct time: '{res_tech['laterTime']}'"
+        assert res_tech['laterNote'] != res_tech['directLaterNote'], f"Defect 7 FAIL: laterNote still contains leaked direct note: '{res_tech['laterNote']}'"
+        assert res_tech['laterNote'] != 'Xuất bến theo lịch trình công bố', f"Defect 7 FAIL: connecting trip must not retain static note 'Xuất bến theo lịch trình công bố'!"
+        assert res_tech['laterTime'] == 'Chưa có dữ liệu', f"Defect 7 FAIL: connecting trip laterTime must fail-closed to 'Chưa có dữ liệu', got '{res_tech['laterTime']}'"
+        assert res_tech['laterNote'] == 'Chưa có dữ liệu', f"Defect 7 FAIL: connecting trip laterNote must fail-closed to 'Chưa có dữ liệu', got '{res_tech['laterNote']}'"
+        assert res_tech['laterDiff'] == '', f"Defect 7 FAIL: connecting trip laterDiff must be empty, got '{res_tech['laterDiff']}'"
+
+        # 3. Assert no 'Đi thẳng suốt tuyến không đổi xe' for connecting trip
+        assert res_tech['directDescHidden'] is True, "Defect 7 FAIL: #trip-direct-transfer-desc must be hidden for connecting trip!"
+        assert not res_tech['hasDirectClaim'], "Defect 7 FAIL: secondary card must not contain 'Đi thẳng suốt tuyến không đổi xe' for connecting trip!"
+
+        # 4. Assert planner duration labeled 'Ước tính', NOT under 'Chuyến dự kiến theo lịch'
+        assert '~45p' in res_tech['countdownTime'], f"Defect 7 FAIL: countdownTime should show '~45p', got '{res_tech['countdownTime']}'"
+        assert 'Ước tính' in res_tech['depLabel'], f"Defect 7 FAIL: departure label must contain 'Ước tính', got '{res_tech['depLabel']}'"
+        assert not res_tech['hasScheduleHeadingClaim'], "Defect 7 FAIL: secondary card must not contain 'Chuyến dự kiến theo lịch' when displaying planner duration!"
+
+        # 5. Assert missing next-departure/schedule fails-closed to 'Chưa có dữ liệu'
+        assert res_tech['countdownTimer'] == 'Chưa có dữ liệu', f"Defect 7 FAIL: connecting trip timer pill must fail-closed to 'Chưa có dữ liệu', got '{res_tech['countdownTimer']}'"
+
+        print("   [PASS] Check 7: Planner technical details reset direct schedule & enforce truthful semantics.")
+
         print("\n" + "=" * 70)
-        print("ALL 6 REVIEW DEFECT REGRESSION TESTS PASSED STRICTLY (6/6 PASS)")
+        print("ALL 7 REVIEW DEFECT REGRESSION TESTS PASSED STRICTLY (7/7 PASS)")
         print("=" * 70)
     finally:
         runner.stop()

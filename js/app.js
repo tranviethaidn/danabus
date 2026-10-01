@@ -697,8 +697,15 @@ class DanabusApp {
     const dep = window.busService.calculateNextDeparture(route, { direction: this.matchedDirection });
     const timeEl = document.getElementById('trip-countdown-time');
     const timerEl = document.getElementById('trip-countdown-timer');
+    const depLabel = document.getElementById('trip-departure-label');
+    const directTransferDesc = document.getElementById('trip-direct-transfer-desc');
+    const directTransferText = document.getElementById('trip-direct-transfer-text');
+
+    if (directTransferDesc) directTransferDesc.classList.remove('hidden');
+    if (directTransferText) directTransferText.textContent = 'Đi thẳng suốt tuyến không đổi xe';
 
     if (dep.status === 'in_service') {
+      if (depLabel) depLabel.textContent = 'Chuyến dự kiến theo lịch';
       if (dep.timeStr && dep.minutesUntilDeparture != null) {
         timeEl.textContent = dep.timeStr;
         timerEl.textContent = `Theo lịch: Còn ${dep.minutesUntilDeparture} phút`;
@@ -707,21 +714,25 @@ class DanabusApp {
         timerEl.textContent = window.busService.formatRouteFrequency ? `Theo lịch: ${window.busService.formatRouteFrequency(route)}` : 'Hoạt động theo lịch';
       }
     } else if (dep.status === 'before_service') {
+      if (depLabel) depLabel.textContent = 'Chuyến dự kiến theo lịch';
       timeEl.textContent = dep.timeStr || '--:--';
       timerEl.textContent = (dep.minutesUntilDeparture != null)
         ? `Theo lịch: Chuyến đầu (sau ${dep.minutesUntilDeparture}p)`
         : `Chưa mở tuyến (${route.operatingHours?.start || '--:--'})`;
     } else if (dep.status === 'next_day') {
+      if (depLabel) depLabel.textContent = 'Chuyến dự kiến theo lịch';
       timeEl.textContent = dep.timeStr || '--:--';
       timerEl.textContent = (dep.minutesUntilDeparture != null)
         ? `Theo lịch: Ngày mai (sau ${dep.minutesUntilDeparture}p)`
         : 'Chưa mở tuyến';
     } else if (dep.status === 'after_service') {
+      if (depLabel) depLabel.textContent = 'Chuyến dự kiến theo lịch';
       timeEl.textContent = '--:--';
       timerEl.textContent = 'Theo lịch: Hết chuyến';
     } else {
+      if (depLabel) depLabel.textContent = 'Chưa có dữ liệu';
       timeEl.textContent = '--:--';
-      timerEl.textContent = 'Chưa có lịch';
+      timerEl.textContent = 'Chưa có dữ liệu';
     }
 
     const singleFare = window.busService.formatRouteFare(route);
@@ -737,14 +748,12 @@ class DanabusApp {
 
     // Later note: truthful schedule wording
     const laterNoteEl = document.getElementById('trip-later-note');
-    if (laterNoteEl) {
-      laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
-    }
-
-    // Next trip calculation
     const laterTimeEl = document.getElementById('trip-later-time');
     const laterDiffEl = document.getElementById('trip-later-diff');
+
+    // Next trip calculation
     if (dep.isOperating) {
+      if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
       if (dep.timeStr) {
         const parts = dep.timeStr.split(':');
         let interval = null;
@@ -768,8 +777,13 @@ class DanabusApp {
         if (laterTimeEl) laterTimeEl.textContent = (freqText && freqText !== 'Đang cập nhật') ? `Tần suất: ${freqText}` : (dep.message ? `Theo lịch: ${dep.message}` : 'Đang hoạt động theo lịch');
         if (laterDiffEl) laterDiffEl.textContent = '';
       }
+    } else if (dep.message && dep.status !== 'unknown') {
+      if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
+      if (laterTimeEl) laterTimeEl.textContent = `Theo lịch: ${dep.message}`;
+      if (laterDiffEl) laterDiffEl.textContent = '';
     } else {
-      if (laterTimeEl) laterTimeEl.textContent = dep.message ? `Theo lịch: ${dep.message}` : '--:--';
+      if (laterNoteEl) laterNoteEl.textContent = 'Chưa có dữ liệu';
+      if (laterTimeEl) laterTimeEl.textContent = 'Chưa có dữ liệu';
       if (laterDiffEl) laterDiffEl.textContent = '';
     }
 
@@ -1263,8 +1277,21 @@ class DanabusApp {
     const btnAlt = document.getElementById('btn-toggle-alternatives');
     if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
 
+    // Update secondary technical details card and reset legacy schedule fields
+    this.updateSecondaryTechDetails(journey, bestTrip, planMetadata);
+
+    // Render unified Journey Recommendation Timeline
+    this.renderJourneyRecommendation(journey, trips);
+
+    // Render Alternative Trip Options
+    this.renderTripOptions(trips, planMetadata);
+  }
+
+  updateSecondaryTechDetails(journey, trip, planMetadata = null) {
+    const isDirect = trip.type === 'direct';
+
     const badgeEl = document.getElementById('trip-route-badge');
-    if (badgeEl) badgeEl.textContent = bestTrip.type === 'direct' ? `TUYẾN ${bestTrip.route?.routeNumber || ''}` : 'KẾT HỢP';
+    if (badgeEl) badgeEl.textContent = isDirect ? `TUYẾN ${trip.route?.routeNumber || ''}` : 'KẾT HỢP';
 
     // Truthful Semantics Fix: Distance in km, never minutes!
     const kmEl = document.getElementById('trip-stat-km');
@@ -1277,29 +1304,47 @@ class DanabusApp {
     const timeElStrip = document.getElementById('trip-stat-time');
     const timeDotStrip = document.getElementById('trip-stat-time-dot');
     if (timeElStrip) {
-      const isExpanded = bestTrip.isExpandedRadius || planMetadata?.isExpandedRadius;
-      timeElStrip.textContent = `Đi bộ ước tính ~${bestTrip.totalWalkingMeters}m${isExpanded ? ' (Bán kính 1.5km)' : ''}`;
+      const isExpanded = trip.isExpandedRadius || planMetadata?.isExpandedRadius;
+      timeElStrip.textContent = `Đi bộ ước tính ~${trip.totalWalkingMeters}m${isExpanded ? ' (Bán kính 1.5km)' : ''}`;
       timeElStrip.classList.remove('hidden');
     }
     if (timeDotStrip) timeDotStrip.classList.remove('hidden');
 
+    // Truthful Semantics Fix: Planner total duration heading
+    const depLabel = document.getElementById('trip-departure-label');
+    if (depLabel) {
+      depLabel.textContent = 'Ước tính thời gian hành trình';
+    }
+
+    // Direct vs connecting transfer description
+    const directTransferDesc = document.getElementById('trip-direct-transfer-desc');
+    const directTransferText = document.getElementById('trip-direct-transfer-text');
+    if (isDirect) {
+      if (directTransferDesc) directTransferDesc.classList.remove('hidden');
+      if (directTransferText) directTransferText.textContent = 'Đi thẳng suốt tuyến không đổi xe';
+    } else {
+      if (directTransferDesc) directTransferDesc.classList.add('hidden');
+      if (directTransferText) directTransferText.textContent = '';
+    }
+
+    // Planner duration and departure schedule status pill
     const timeEl = document.getElementById('trip-countdown-time');
     const timerEl = document.getElementById('trip-countdown-timer');
-    if (timeEl) timeEl.textContent = `~${bestTrip.totalDurationMinutes}p`;
+    if (timeEl) timeEl.textContent = `~${trip.totalDurationMinutes}p`;
     if (timerEl) {
-      if (journey.departure?.status === 'in_service' && journey.departure.minutesUntilDeparture != null) {
+      if (isDirect && journey.departure?.status === 'in_service' && journey.departure.minutesUntilDeparture != null) {
         timerEl.textContent = `Theo lịch: Còn ${journey.departure.minutesUntilDeparture} phút`;
-      } else if (journey.departure?.status === 'before_service' || journey.departure?.status === 'after_service' || journey.departure?.status === 'next_day') {
+      } else if (isDirect && (journey.departure?.status === 'before_service' || journey.departure?.status === 'after_service' || journey.departure?.status === 'next_day')) {
         timerEl.textContent = `Theo lịch: ${journey.departure.message}`;
-      } else if (journey.departure?.message && journey.departure?.status !== 'unknown') {
+      } else if (isDirect && journey.departure?.message && journey.departure?.status !== 'unknown') {
         timerEl.textContent = `Theo lịch: ${journey.departure.message}`;
       } else {
-        timerEl.textContent = 'Thời gian ước tính';
+        timerEl.textContent = 'Chưa có dữ liệu';
       }
     }
 
     const fareEl = document.getElementById('trip-fare-value');
-    if (fareEl) fareEl.textContent = bestTrip.fareText || '--';
+    if (fareEl) fareEl.textContent = trip.fareText || '--';
 
     const freqEl = document.getElementById('trip-freq-value');
     if (freqEl) freqEl.textContent = journey.frequencyText || 'Chưa có dữ liệu';
@@ -1307,14 +1352,52 @@ class DanabusApp {
     // Fleet: Truthful provenance, never hardcoded "Xe buýt Danabus"
     const fleetEl = document.getElementById('trip-fleet-value');
     const fleetDescEl = document.getElementById('trip-fleet-desc');
-    if (fleetEl) fleetEl.textContent = journey.fleetInfo.brand || 'Chưa có dữ liệu';
-    if (fleetDescEl) fleetDescEl.textContent = journey.fleetInfo.description || 'Phương tiện';
+    if (fleetEl) fleetEl.textContent = journey.fleetInfo?.brand || 'Chưa có dữ liệu';
+    if (fleetDescEl) fleetDescEl.textContent = journey.fleetInfo?.description || 'Phương tiện';
 
-    // Render unified Journey Recommendation Timeline
-    this.renderJourneyRecommendation(journey, trips);
+    // Reset legacy schedule fields (trip-later-*) so prior direct search never leaks!
+    const laterTimeEl = document.getElementById('trip-later-time');
+    const laterDiffEl = document.getElementById('trip-later-diff');
+    const laterNoteEl = document.getElementById('trip-later-note');
 
-    // Render Alternative Trip Options
-    this.renderTripOptions(trips, planMetadata);
+    if (isDirect && journey.departure?.isOperating) {
+      if (journey.departure.timeStr) {
+        const parts = journey.departure.timeStr.split(':');
+        let interval = null;
+        const r = trip.route;
+        if (typeof r?.frequency?.peakMinutes === 'number' && Number.isFinite(r.frequency.peakMinutes) && r.frequency.peakMinutes > 0) {
+          interval = r.frequency.peakMinutes;
+        } else if (typeof r?.frequency?.offPeakMinutes === 'number' && Number.isFinite(r.frequency.offPeakMinutes) && r.frequency.offPeakMinutes > 0) {
+          interval = r.frequency.offPeakMinutes;
+        }
+        if (interval) {
+          const laterM = parseInt(parts[1], 10) + interval;
+          const laterH = parseInt(parts[0], 10) + Math.floor(laterM / 60);
+          const laterStr = `${String(laterH % 24).padStart(2, '0')}:${String(laterM % 60).padStart(2, '0')}`;
+          if (laterTimeEl) laterTimeEl.textContent = `Chuyến sau: ${laterStr}`;
+          if (laterDiffEl) laterDiffEl.textContent = `(sau ${interval} phút)`;
+          if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
+        } else {
+          if (laterTimeEl) laterTimeEl.textContent = journey.departure.message ? `Theo lịch: ${journey.departure.message}` : 'Đang hoạt động theo lịch';
+          if (laterDiffEl) laterDiffEl.textContent = '';
+          if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
+        }
+      } else {
+        const freqText = journey.frequencyText;
+        if (laterTimeEl) laterTimeEl.textContent = (freqText && freqText !== 'Chưa có dữ liệu') ? `Tần suất: ${freqText}` : (journey.departure.message ? `Theo lịch: ${journey.departure.message}` : 'Đang hoạt động theo lịch');
+        if (laterDiffEl) laterDiffEl.textContent = '';
+        if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
+      }
+    } else if (isDirect && journey.departure?.message && journey.departure.status !== 'unknown') {
+      if (laterTimeEl) laterTimeEl.textContent = `Theo lịch: ${journey.departure.message}`;
+      if (laterDiffEl) laterDiffEl.textContent = '';
+      if (laterNoteEl) laterNoteEl.textContent = 'Xuất bến theo lịch trình công bố';
+    } else {
+      // Connecting trip OR direct trip without operating schedule fail-closed
+      if (laterTimeEl) laterTimeEl.textContent = 'Chưa có dữ liệu';
+      if (laterDiffEl) laterDiffEl.textContent = '';
+      if (laterNoteEl) laterNoteEl.textContent = 'Chưa có dữ liệu';
+    }
   }
 
   renderTripOptions(trips, planMetadata = null) {
@@ -1430,6 +1513,7 @@ class DanabusApp {
           const btnAlt = document.getElementById('btn-toggle-alternatives');
           if (btnAlt) btnAlt.setAttribute('aria-expanded', 'false');
 
+          this.updateSecondaryTechDetails(journey, trip);
           this.renderJourneyRecommendation(journey, this.currentPlannedTrips);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }

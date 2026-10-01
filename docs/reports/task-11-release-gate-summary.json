@@ -1,8 +1,8 @@
 {
   "task_id": "tsk_fa69d045-fc12-452b-9c82-8f4da320fafc",
   "task_title": "End-to-End Release Acceptance & Production Gate",
-  "timestamp": "2026-10-01T04:30:37.933572+00:00",
-  "total_duration_seconds": 41.75,
+  "timestamp": "2026-10-01T04:31:49.333611+00:00",
+  "total_duration_seconds": 42.57,
   "release_identity": {
     "version": "v12",
     "build": "20261001_v12",
@@ -10,9 +10,9 @@
     "asset_query": "?v=20261001_v12"
   },
   "git_state": {
-    "head": "4d706d688a8e525bb6ceae4e2dade65f6115099e",
+    "head": "7c077010e9cb66664a8c1c1e3bc764cff615b75d",
     "branch": "main",
-    "status_line": "## main...origin/main [ahead 41]",
+    "status_line": "## main...origin/main [ahead 42]",
     "git_push_authorized": false,
     "push_policy_note": "git_push_authorized=OFF is expected policy, local commit created without push"
   },
@@ -31,7 +31,7 @@
       "name": "Trip Planner Core & Inactive Rejection",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 3.64
+      "duration_seconds": 3.71
     },
     {
       "id": "1.3",
@@ -59,21 +59,21 @@
       "name": "Map, GPS & Unverified Geometry Isolation",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.07
+      "duration_seconds": 0.06
     },
     {
       "id": "1.7",
       "name": "Consumer UX & Review Defects Regression",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 4.97
+      "duration_seconds": 5.01
     },
     {
       "id": "1.8",
       "name": "Task 4 Boundary Guard & Prohibited SDKs",
       "layer": "Layer 1",
       "status": "PASS",
-      "duration_seconds": 0.11
+      "duration_seconds": 0.1
     },
     {
       "id": "2.1",
@@ -87,7 +87,7 @@
       "name": "Static Secret & Credential Audit",
       "layer": "Layer 2",
       "status": "PASS",
-      "duration_seconds": 0.14
+      "duration_seconds": 0.15
     },
     {
       "id": "2.3",
@@ -101,28 +101,28 @@
       "name": "Browser Schedule & Fare Semantics",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 2.51
+      "duration_seconds": 2.55
     },
     {
       "id": "3.2",
       "name": "Browser UI Integrity & Offline Recovery",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 3.19
+      "duration_seconds": 3.02
     },
     {
       "id": "3.3",
       "name": "Browser Trip Planner E2E",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 6.54
+      "duration_seconds": 6.45
     },
     {
       "id": "3.4",
       "name": "Repeated Local Browser Smoke (3 rounds)",
       "layer": "Layer 3",
       "status": "PASS",
-      "duration_seconds": 18.59
+      "duration_seconds": 19.53
     }
   ],
   "deliverable_sha256": {
